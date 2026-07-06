@@ -1,0 +1,495 @@
+/* ==========================================================
+   LANDING SCREEN — CAIN RPG
+   Estética: Fundo escuro com overlay
+   ========================================================== */
+
+#landing-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-image: url('../assets/fundo.webp');
+  /* Dark theme overrides for landing only */
+  --bg-main: #0f0f1a;
+  --bg-paper: #1a1a2e;
+  --bg-card: #16213e;
+  --bg-card-alt: #1a1a2e;
+  --bg-header: #0a0a12;
+  --bg-input: rgba(255,255,255,0.08);
+  --ink-dark: #e2e8f0;
+  --ink-medium: #94a3b8;
+  --ink-faded: #64748b;
+  --ink-stamp: #cbd5e1;
+  --ink-on-dark: #f1f5f9;
+  --text-primary: var(--ink-on-dark);
+  --text-secondary: var(--ink-medium);
+  --border-color: #334155;
+  --border-color-dark: #1e293b;
+  --border-color-light: #475569;
+  --stamp-red: #dc2626;
+  --stamp-red-dark: #991b1b;
+  --stamp-cyan: #06b6d4;
+  --stamp-cyan-dark: #0891b2;
+  --shadow-card: 2px 3px 8px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);
+}
+
+#landing-screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Overlay mínimo — linhas de documento */
+.landing-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 31px,
+    rgba(80,60,40,0.05) 32px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Container central */
+.landing-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  width: 100%;
+  max-width: 860px;
+  padding: 28px 24px;
+}
+
+/* ==========================================================
+   CABEÇALHO — Estilo capa de relatório oficial
+   ========================================================== */
+.landing-header {
+  text-align: center;
+  width: 100%;
+  border-top: 3px solid var(--ink-dark);
+  border-bottom: 1px solid var(--ink-dark);
+  padding: 12px 24px;
+  position: relative;
+  background: var(--bg-card);
+}
+
+.landing-header::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  pointer-events: none;
+}
+
+.landing-title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-huge);
+  font-weight: 700;
+  letter-spacing: 10px;
+  text-transform: uppercase;
+  color: var(--ink-dark);
+  margin-bottom: 4px;
+}
+
+.landing-subtitle {
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  color: var(--ink-on-dark);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.landing-counter {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-sm);
+  color: var(--stamp-cyan);
+  margin-top: 8px;
+  letter-spacing: 1px;
+}
+
+/* Language Button */
+#btn-language {
+  font-size: 11px !important;
+  font-weight: bold !important;
+  padding: 6px 10px !important;
+  min-width: 45px;
+}
+
+/* ==========================================================
+   GRID DE PERSONAGENS
+   ========================================================== */
+.characters-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  width: 100%;
+}
+
+/* ==========================================================
+   CARD DE PERSONAGEM — Estilo Polaroid/formulário
+   ========================================================== */
+.character-card {
+  position: relative;
+  width: 140px;
+  height: 165px;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-color-dark);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  overflow: visible;
+  box-shadow: var(--shadow-card);
+}
+
+/* Fita adesiva no topo */
+.character-card::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 44px;
+  height: 14px;
+  background: rgba(210, 195, 160, 0.85);
+  border-left: 1px dashed rgba(100,80,50,0.15);
+  border-right: 1px dashed rgba(100,80,50,0.15);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.character-card:hover {
+  transform: translateY(-3px) rotate(0.5deg);
+  box-shadow: 4px 6px 16px rgba(0,0,0,0.5), 2px 2px 0 var(--border-color-dark);
+}
+
+/* Avatar */
+.char-card-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card-alt);
+  border: 1.5px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.char-card-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(20%) contrast(1.05);
+}
+
+.char-card-avatar-svg {
+  width: 32px;
+  height: 32px;
+  color: var(--ink-on-dark);
+  opacity: 0.5;
+}
+
+/* Nome */
+.char-card-name {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--ink-dark);
+  text-align: center;
+  padding: 0 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-top: 1px solid var(--border-color-light);
+  width: 100%;
+  padding-top: 6px;
+}
+
+/* ==========================================================
+   CARD DE CRIAÇÃO (+)
+   ========================================================== */
+.create-card {
+  border-style: dashed;
+  border-color: var(--border-color);
+  background: rgba(22,33,62,0.4);
+  box-shadow: none;
+}
+
+.create-card::before {
+  display: none;
+}
+
+.create-card:hover {
+  border-color: var(--border-color-dark);
+  background: var(--bg-card-alt);
+  transform: none;
+  box-shadow: var(--shadow-card);
+}
+
+.create-card .char-card-avatar {
+  background: transparent;
+  border-color: var(--border-color-light);
+}
+
+.char-card-plus-svg {
+  width: 32px;
+  height: 32px;
+  color: var(--ink-on-dark);
+  transition: color 0.15s ease;
+}
+
+.create-card:hover .char-card-plus-svg {
+  color: var(--ink-dark);
+}
+
+.create-card .char-card-name {
+  color: var(--ink-on-dark);
+  font-weight: 400;
+  border-top-color: transparent;
+}
+
+.create-card:hover .char-card-name {
+  color: var(--ink-medium);
+}
+
+/* ==========================================================
+   MENU DE AÇÕES DO CARD
+   ========================================================== */
+.char-actions {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 10;
+}
+
+.btn-char-action {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--ink-on-dark);
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  padding: 0;
+  box-shadow: 1px 1px 0 var(--border-color-dark);
+}
+
+.btn-char-action:hover {
+  background: var(--bg-card-alt);
+  color: var(--ink-dark);
+  border-color: var(--border-color-dark);
+}
+
+/* Dropdown */
+.char-actions-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-color-dark);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-card);
+  min-width: 155px;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.char-actions-dropdown.open {
+  display: block;
+  animation: dropdown-in 0.12s ease;
+}
+
+@keyframes dropdown-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.char-actions-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 9px 12px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-color-light);
+  color: var(--ink-medium);
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s, color 0.12s;
+}
+
+.char-actions-dropdown button:last-child {
+  border-bottom: none;
+}
+
+.char-actions-dropdown button:hover {
+  background: var(--bg-card-alt);
+  color: var(--ink-dark);
+}
+
+.char-actions-dropdown button svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+
+.btn-danger-dropdown {
+  color: var(--stamp-red) !important;
+}
+
+.btn-danger-dropdown:hover {
+  background: rgba(141,36,40,0.1) !important;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: var(--border-color-light);
+  margin: 0;
+}
+
+/* ==========================================================
+   ESTADO VAZIO
+   ========================================================== */
+.landing-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 28px;
+  color: var(--ink-on-dark);
+}
+
+.empty-icon {
+  width: 52px;
+  height: 52px;
+  opacity: 0.25;
+}
+
+.empty-title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--ink-on-dark);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.empty-sub {
+  font-size: var(--font-size-sm);
+  color: var(--ink-on-dark);
+  opacity: 0.6;
+}
+
+/* ==========================================================
+   BOTÕES DO RODAPÉ
+   ========================================================== */
+.landing-footer-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn-landing-primary {
+  background-color: var(--stamp-red);
+  border-color: var(--stamp-red-dark);
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+  color: var(--ink-on-dark);
+  padding: 10px 22px;
+  font-size: var(--font-size-sm);
+  letter-spacing: 1px;
+}
+
+.btn-landing-primary:hover:not(:disabled) {
+  background-color: #a02830;
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+}
+
+.btn-landing-secondary {
+  background-color: transparent;
+  border-color: var(--border-color);
+  box-shadow: var(--shadow-stamp);
+  color: var(--ink-medium);
+  padding: 10px 22px;
+  font-size: var(--font-size-sm);
+}
+
+.btn-landing-secondary:hover:not(:disabled) {
+  background-color: var(--bg-card-alt);
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--border-color-dark);
+}
+
+/* ==================== Mobile ==================== */
+@media (max-width: 600px) {
+  .btn-mobile-menu {
+    display: block;
+  }
+  .main-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 8px 12px;
+  }
+  .header-controls {
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .landing-content {
+    padding: 16px 12px;
+    max-width: 100%;
+    gap: 14px;
+  }
+  .landing-title {
+    font-size: var(--font-size-xxl);
+    letter-spacing: 4px;
+  }
+  .characters-grid {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .character-card {
+    width: 120px;
+    height: 145px;
+  }
+  .landing-footer-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+}

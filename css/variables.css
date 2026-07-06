@@ -1,0 +1,430 @@
+/* Design System — CAIN RPG | Estética Burocracia Sobrenatural */
+/* Papel envelhecido · Tinta preta · Typewriter · Horror cósmico */
+
+/* ============================================================
+   FONTES IMPORTADAS
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Oswald:wght@400;500;600;700&family=IM+Fell+English:ital@0;1&display=swap');
+
+:root {
+  /* ──────────────────────────────────────────────
+     PALETA — PAPEL ENVELHECIDO
+  ────────────────────────────────────────────── */
+  --bg-main: #cccccc;
+  /* Fundo geral — papel escuro */
+  --bg-paper: #cccccc;
+  /* Papel principal */
+  --bg-card: #cccccc;
+  /* Cards/painéis */
+  --bg-card-alt: #cccccc;
+  /* Cards alternados */
+  --bg-header: #000000;
+  /* Cabeçalho escuro */
+  --bg-input: rgba(255, 255, 255, 0.1);
+  /* Input field */
+  --bg-dark-box: #cccccc;
+  /* Caixas de alerta escuras */
+
+  /* ──────────────────────────────────────────────
+     TINTA / TEXTO
+  ────────────────────────────────────────────── */
+  --ink-dark: #222222;
+  /* Tinta quase preta -> branca */
+  --ink-medium: #444444;
+  /* Tinta média */
+  --ink-faded: #666666;
+  /* Tinta desbotada */
+  --ink-stamp: #888888;
+  /* Cor de carimbo */
+  --ink-on-dark: #222222;
+  /* Texto sobre fundo escuro */
+
+  /* Aliases de compatibilidade */
+  --text-primary: var(--ink-on-dark);
+  --text-secondary: var(--ink-on-dark);
+  --text-muted: var(--ink-faded);
+
+  /* ──────────────────────────────────────────────
+     BORDAS
+  ────────────────────────────────────────────── */
+  --border-color: #333333;
+  /* Borda padrão */
+  --border-color-dark: #444444;
+  /* Borda forte */
+  --border-color-light: #222222;
+  /* Borda suave */
+  --border-color-glow: #333333;
+  /* Alias legado */
+
+  /* ──────────────────────────────────────────────
+     ACENTOS TEMÁTICOS
+  ────────────────────────────────────────────── */
+  --stamp-red: #8d2428;
+  /* Vermelho carimbo */
+  --stamp-red-dark: #5e1114;
+  --stamp-cyan: #1a5060;
+  /* Ciano escuro */
+  --stamp-cyan-dark: #0d3340;
+  --purple: #9a11d7;
+
+
+
+  /* Mantendo aliases legados para não quebrar lógica JS */
+  --border-color: var(--stamp-cyan);
+  --border-color: var(--stamp-cyan-dark);
+  --color-rust: var(--stamp-red);
+  --color-rust-glow: #be3135;
+  --color-bronze: #8b6508;
+  --color-official-cyan: var(--stamp-cyan);
+  --color-official-cyan-dark: var(--stamp-cyan-dark);
+  --color-official-glow: var(--stamp-cyan);
+  --bg-official-card: var(--bg-card);
+
+
+  /* ──────────────────────────────────────────────
+     TIPOGRAFIA
+  ────────────────────────────────────────────── */
+  --font-heading: 'Oswald', 'Arial Narrow', sans-serif;
+  --font-body: 'Roboto Mono', monospace;
+  --font-accent: 'IM Fell English', Georgia, serif;
+
+  --font-size-xs: 10px;
+  --font-size-xm: 14px;
+  --font-size-sm: 15px;
+  --font-size-md: 16px;
+  --font-size-lg: 20px;
+  --font-size-xl: 24px;
+  --font-size-xxl: 28px;
+  --font-size-xxxl: 36px;
+  --font-size-huge: 48px;
+
+  /* ──────────────────────────────────────────────
+     BORDAS / RAIOS / SOMBRAS
+  ────────────────────────────────────────────── */
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease;
+
+  /* Sombras estilo papel/tinta */
+  --shadow-card: 2px 3px 8px rgba(30, 20, 10, 0.18), 1px 1px 0 rgba(30, 20, 10, 0.06);
+  --shadow-stamp: 2px 2px 0 var(--border-color-dark);
+  --glow-shadow: var(--shadow-stamp);
+  --glow-shadow-rust: var(--shadow-stamp);
+}
+
+/* ============================================================
+   RESET GERAL
+   ============================================================ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ============================================================
+   BODY — PAPEL COM TEXTURA
+   ============================================================ */
+body {
+  background-color: var(--bg-main);
+  color: var(--ink-dark);
+  font-family: var(--font-body);
+  line-height: 1.2;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  letter-spacing: 0.01em;
+}
+
+/* Textura de papel via SVG noise inline */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E"),
+    repeating-linear-gradient(transparent,
+      transparent 27px,
+      rgba(100, 80, 60, 0.06) 28px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 1;
+}
+
+body>* {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================
+   SCROLLBARS — Estilo tinta
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-card-alt);
+  border-left: 1px solid var(--border-color-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ink-stamp);
+  border-radius: 1px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-dark);
+}
+
+/* ============================================================
+   CABEÇALHO — Fundo escuro estilo capa de documento
+   ============================================================ */
+.main-header {
+  background-color: var(--bg-header);
+  border-bottom: 3px solid var(--ink-dark);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 10;
+}
+
+.btn-mobile-menu {
+  display: none;
+}
+
+.header-logo {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--font-size-xxl);
+  letter-spacing: 3px;
+  color: var(--ink-on-dark);
+  text-transform: uppercase;
+}
+
+.header-logo .logo-accent {
+  color: var(--stamp-red);
+}
+
+.header-logo .subtitle {
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+  color: rgba(240, 235, 224, 0.5);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ============================================================
+   INPUTS / SELECT / TEXTAREA GLOBAIS
+   ============================================================ */
+select,
+input[type="text"],
+input[type="number"],
+textarea {
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--ink-dark);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  outline: none;
+  transition: var(--transition-fast);
+}
+
+select:focus,
+input:focus,
+textarea:focus {
+  border-color: var(--border-color-dark);
+  box-shadow: 0 0 0 2px rgba(45, 40, 35, 0.12);
+}
+
+option,
+optgroup {
+  background-color: var(--bg-card);
+  color: var(--ink-dark);
+}
+
+/* ============================================================
+   BOTÕES — Estilo carimbo / tecla de máquina
+   ============================================================ */
+.btn {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: var(--transition-fast);
+
+  /* Padrão: estilo documento */
+  background-color: var(--bg-card-alt);
+  color: var(--ink-dark);
+  border: 1.5px solid var(--border-color-dark);
+  box-shadow: 2px 2px 0 var(--border-color-dark);
+}
+
+.btn:hover:not(:disabled) {
+  background-color: var(--bg-paper);
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--border-color-dark);
+}
+
+/* Sobre fundo escuro do header, botões ficam invertidos */
+.main-header .btn {
+  background-color: transparent;
+  color: white;
+  border-color: rgba(240, 235, 224, 0.3);
+}
+
+.main-header .btn:hover:not(:disabled) {
+  background-color: rgba(240, 235, 224, 0.1);
+  border-color: rgba(240, 235, 224, 0.6);
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+
+.export-json {
+  background-color: #3a5a10;
+  border-color: #2a4008;
+  box-shadow: 2px 2px 0 #2a4008;
+  color: var(--ink-on-dark);
+}
+
+.import-json {
+  border-color: #082030;
+  box-shadow: 2px 2px 0 #082030;
+  color: var(--ink-on-dark);
+}
+
+.btn-success {
+  background-color: #000000;
+  color: white;  
+  border-color: #082030;
+  box-shadow: 2px 2px 0 #082030;
+}
+
+.btn-success:hover:not(:disabled) {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 #082030;
+}
+
+.btn-danger {
+  background-color: var(--stamp-red);
+  color: var(--ink-on-dark);
+  border-color: var(--stamp-red-dark);
+  box-shadow: 2px 2px 0 var(--stamp-red-dark);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background-color: #a02830;
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--stamp-red-dark);
+}
+
+.btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.btn-sm {
+  padding: 5px 10px;
+  font-size: var(--font-size-xs);
+}
+
+.btn-blue {
+  background-color: var(--stamp-cyan-dark);
+  border-color: #082030;
+  color: var(--ink-on-dark);
+  box-shadow: 2px 2px 0 #082030;
+}
+
+.btn-blue:hover:not(:disabled) {
+  background-color: var(--stamp-cyan);
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 #082030;
+}
+
+.btn-block {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.btn-large {
+  padding: 12px 22px;
+  font-size: var(--font-size-md);
+  letter-spacing: 1px;
+}
+
+.btn-icon svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* ============================================================
+   ÁREA PRINCIPAL
+   ============================================================ */
+.main-content {
+  flex: 1;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  height: calc(100vh - 58px);
+  background-color: #000000;
+}
+
+/* ============================================================
+   TELAS
+   ============================================================ */
+.screen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition-normal);
+  padding: 10px;
+}
+
+.screen.card-glass {
+  margin: 16px;
+  width: calc(100% - 32px);
+  height: calc(100% - 32px);
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ============================================================
+   CARD BASE — Documento oficial com borda dupla
+   ============================================================ */
+.card-glass {
+  background: var(--bg-card);
+  position: relative;
+}

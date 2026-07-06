@@ -1,0 +1,292 @@
+/* ============================================================
+   CAIN RPG — CAIXA DE FERRAMENTAS (TOOLBOX) STYLES
+   ============================================================ */
+
+.sheet-toolbox {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 500px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-left: 2px solid var(--border-color-dark);
+  box-shadow: -8px 0 30px rgba(0, 0, 0, 0.85);
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(105%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  color: var(--ink-on-dark);
+}
+
+.sheet-toolbox.open {
+  transform: translateX(0);
+}
+
+/* Toolbox Header */
+.toolbox-header {
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.toolbox-title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--color-rust-glow);
+  text-transform: uppercase;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-toolbox-close {
+  background: none;
+  border: none;
+  color: var(--ink-on-dark);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  opacity: 0.7;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.btn-toolbox-close:hover {
+  opacity: 1;
+  transform: scale(1.1);
+  color: var(--color-rust-glow);
+}
+
+/* Search bar & glossary filter */
+.toolbox-filter-container {
+  padding: 12px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.toolbox-search-input {
+  width: 100%;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-sm);
+  color: var(--ink-on-dark);
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  outline: none;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.toolbox-search-input:focus {
+  border-color: var(--color-rust-glow);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Scrollable Container */
+.toolbox-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Toolbox Tab Navigation */
+.toolbox-tabs {
+  display: flex;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  margin-bottom: 12px;
+}
+
+.toolbox-tab-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+  font-size: var(--font-size-sm);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 8px 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: var(--radius-sm);
+  text-align: center;
+}
+
+.toolbox-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--ink-on-dark);
+}
+
+.toolbox-tab-btn.active {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--ink-on-dark);
+}
+
+/* Glossary quick terms */
+.toolbox-glossary {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.toolbox-glossary-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  padding: 8px 10px;
+  font-size: var(--font-size-sm);
+  font-family: var(--font-heading);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toolbox-glossary-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--border-color);
+  color: var(--ink-on-dark);
+}
+
+.toolbox-glossary-btn.active {
+  background: var(--color-rust);
+  border-color: var(--color-rust-glow);
+  color: white;
+  box-shadow: 0 0 10px rgba(190, 49, 53, 0.5);
+}
+
+/* Active term content */
+.toolbox-active-content {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.toolbox-active-title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-lg);
+  text-transform: uppercase;
+  margin: 0 0 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+.toolbox-active-desc {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  color: var(--ink-on-dark);
+  margin: 0 0 15px 0;
+  text-align: justify;
+}
+
+.toolbox-rules-header {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-md);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.toolbox-rules-list {
+  font-family: var(--font-body);
+  font-size: var(--font-size-md);
+  padding-left: 16px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toolbox-rules-list li {
+  line-height: 1.4;
+  font-size: var(--font-size-md);
+  font-weight: 600;
+}
+
+/* Visual cues on clickable fields */
+.cain-skill-name,
+.hooks-instructions .hooks-title,
+.stress-cell-content .stat-label {
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+}
+
+.cain-skill-name:hover,
+.hooks-instructions .hooks-title:hover,
+.stress-cell-content .stat-label:hover {
+  color: var(--purple) !important;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+  .sheet-toolbox {
+    width: 100%;
+    height: 100%;
+    transform: translateX(100%);
+  }
+}
+
+/* Toolbox left-edge toggle button tab */
+.toolbox-toggle-tab {
+  position: absolute;
+  left: -28px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 60px;
+  background: var(--bg-card);
+  border: 2px solid var(--border-color-dark);
+  border-right: none;
+  border-radius: 6px 0 0 6px;
+  color: var(--ink-on-dark);
+  font-size: var(--font-size-md);
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2100;
+  transition: all 0.2s ease;
+}
+
+.toolbox-toggle-tab:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-rust-glow);
+}

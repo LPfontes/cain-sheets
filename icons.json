@@ -1,0 +1,15 @@
+{
+  "beast": { "icon": "./assets/agendas/icons/Besta.webp"},
+  "condemned": { "icon": "./assets/agendas/icons/Condenado.webp" },
+  "guardian": { "icon": "./assets/agendas/icons/Guardiao.webp"},
+  "firefly": { "icon": "./assets/agendas/icons/Vaga_lume.webp"},
+  "solitary": { "icon": "./assets/agendas/icons/Solitario.webp"},
+  "rigorous": { "icon": "./assets/agendas/icons/Rigoroso.webp"},
+  "machine": { "icon": "./assets/agendas/icons/Maquina.webp" },
+  "moth": { "icon": "./assets/agendas/icons/Mariposa.webp"},
+  "torch": { "icon": "./assets/agendas/icons/Tocha.webp"},
+  "shadow": { "icon": "./assets/agendas/icons/Sombra.webp"},
+  "feiticeiro": { "icon": "./assets/agendas/icons/Feiticeiro.webp"},
+  "nightenga": { "icon": "./assets/agendas/icons/Rouxinol.webp"},
+  "demonio": { "icon": "./assets/agendas/icons/Demonio.webp" }
+}

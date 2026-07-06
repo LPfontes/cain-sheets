@@ -1,0 +1,365 @@
+/* WIZARD SCREEN STYLES — CAIN RPG */
+#wizard-screen {
+  max-width: 900px;
+  max-height: 80vh;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--glow-shadow);
+}
+
+.wizard-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 16px;
+}
+
+.wizard-header h2 {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-xxxl);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.wizard-progress {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.wizard-progress::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  transform: translateY(-50%);
+}
+
+.step-indicator {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #d8d2c4;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: var(--transition-fast);
+}
+
+.step-indicator.active {
+  background-color: var(--bg-main);
+  border-color: var(--ink-medium);
+  color: var(--ink-medium);
+  box-shadow: var(--glow-shadow);
+}
+
+.step-indicator.complete {
+  background-color: var(--ink-medium);
+  border-color: var(--ink-medium);
+  color: #000;
+}
+
+.wizard-steps-container {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 8px;
+  margin-bottom: 24px;
+}
+
+.wizard-step {
+  display: none;
+}
+
+.wizard-step.active {
+  display: block;
+}
+
+.wizard-step h3 {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-xl);
+  margin-bottom: 8px;
+}
+
+.step-help {
+  color: var(--ink-dark);
+  font-size: var(--font-size-lg);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: var(--font-size-lg);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  min-height: 30px;
+}
+
+.form-group textarea {
+  font-size: var(--font-size-md);
+  resize: vertical;
+  min-height: 60px;
+  padding: 6px;
+}
+
+.wizard-footer {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding-top: 16px;
+}
+
+/* Number Input */
+.number-input {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-input);
+}
+
+.number-input button {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: var(--font-size-lg);
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.number-input button:hover {
+  color: var(--stamp-cyan);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.number-input input,
+.number-input span {
+  border: none;
+  background: none;
+  text-align: center;
+  font-size: var(--font-size-md);
+  font-weight: bold;
+  pointer-events: none;
+  display: inline-block;
+  min-width: 20px;
+}
+
+/* Skills Wizard */
+.skills-wizard-container {
+  display: flex;
+  gap: 24px;
+}
+
+.skills-block-wiz {
+  flex: 1;
+}
+
+.skills-block-wiz h4 {
+  font-family: var(--font-heading);
+  color: var(--stamp-red);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 6px;
+  margin-bottom: 16px;
+}
+
+.skills-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skill-control-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(0, 0, 0, 0.02);
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.skill-control-row .name {
+  font-weight: 500;
+}
+
+/* Alert Info Box */
+.alert-info-box {
+  background-color: rgba(212, 128, 55, 0.1);
+  border-left: 4px solid var(--color-rust);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+}
+
+/* Traits Wizard List */
+.traits-wizard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 40vh;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.trait-wiz-item {
+  color: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 10px 10px;
+  border-radius: var(--radius-md);
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 10px;
+  align-items: center;
+  transition: var(--transition-fast);
+}
+
+.trait-wiz-item.owned {
+  border-color: var(--stamp-cyan);
+  background-color: rgba(26, 80, 96, 0.08);
+}
+.column{
+  display: flex;
+  align-items:flex-start;
+}
+
+.trait-wiz-item .info {
+  flex: 1;
+}
+
+.trait-wiz-item .name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.trait-wiz-item .name {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--font-size-md);
+}
+
+.trait-wiz-item .tag-cost {
+  background-color: var(--stamp-red);
+  color: #000;
+  font-size: var(--font-size-xs);
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+.trait-wiz-item .desc {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  
+}
+
+/* Package Cards (Agenda) */
+.packages-grid {
+  display: grid;
+}
+.trait-wiz-check{
+  width: 150px;
+  height: 40px;
+}
+.package-wiz-card {
+  background-color: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.package-wiz-card:hover {
+  border-color: var(--stamp-cyan);
+  background-color: rgba(26, 80, 96, 0.05);
+}
+
+.package-wiz-card.active {
+  border-color: var(--stamp-cyan);
+  background-color: rgba(26, 80, 96, 0.1);
+  box-shadow: var(--glow-shadow);
+}
+
+.package-wiz-card h4 {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-lg);
+  color: var(--stamp-cyan);
+}
+
+.package-wiz-card .items {
+  font-size: var(--font-size-sm);
+  color: var(--ink-dark);
+  padding-left: 10px;
+}
+
+/* Owned skill rows */
+.skill-control-row.owned {
+  border-color: var(--stamp-cyan);
+  background: rgba(26, 80, 96, 0.05);
+}
+.package-wiz-card-header{
+  display: flex;
+  align-items: center;
+}
+/* XP Tabs */
+.xp-tabs-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.xp-tab-buttons {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 8px;
+}
+
+.xp-tab-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: var(--transition-fast);
+}
+
+.xp-tab-btn.active {
+  background-color: rgba(26, 80, 96, 0.1);
+  color: var(--stamp-cyan);
+}
+
+.xp-tab-content {
+  display: none;
+}
+
+.xp-tab-content.active {
+  display: block;
+}

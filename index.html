@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAIN RPG - Gerenciador de Exorcistas</title>
+  <link rel="icon" type="image/png" href="assets/CAIN.png">
+  <link rel="apple-touch-icon" href="assets/CAIN.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#8c1d1d">
+  <!-- Fontes do Google: Oswald (Títulos condensados), Special Elite (Typewriter), IM Fell English (Accent) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Oswald:wght@400;500;600;700&family=IM+Fell+English:ital@0;1&family=Roboto+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/landing.css">
+  <link rel="stylesheet" href="css/world-sheets.css">
+  <link rel="stylesheet" href="css/mesa.css">
+  <link rel="stylesheet" href="css/toolbox.css">
+</head>
+
+<body>
+
+  <!-- Barra de Controle Principal (Superior) -->
+  <header class="main-header">
+    <div class="header-logo" style="display: flex; align-items: center;">
+      <button id="btn-home" type="button"
+        style="background:none; border:none; cursor:pointer; padding:0; display:flex; align-items:center;">
+        <img src="assets/logo.jpg" alt="cain RPG Logo" style="height: 60px; width: auto; max-width: 100%; display:block; border: 1px solid #000000;
+    border-radius: 10px;">
+      </button>
+    </div>
+
+    <button id="btn-mobile-menu" type="button" class="btn-mobile-menu" title="Abrir Menu">
+      <span class="menu-bar"></span>
+      <span class="menu-bar"></span>
+      <span class="menu-bar"></span>
+    </button>
+
+    <div class="header-controls">
+      <button id="btn-voltar-landing" class="btn hide-on-desktop" title="Voltar ao início"
+        style="border-color: var(--border-color); color: var(--border-color);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+        <span class="btn-text">Voltar</span>
+      </button>
+
+
+
+      <button id="btn-toggle-toolbox" class="btn" data-i18n-title="header.rules.title" title="Abrir/Fechar Regras">
+        <span style="font-size: 1.1em; margin-right: 4px;">📖</span> <span class="btn-text"
+          data-i18n="header.rules">Regras</span>
+      </button>
+
+      <button id="btn-new-char" class="btn" data-i18n-title="header.newChar.title" title="Criar Nova Ficha">
+        <span class="btn-icon" data-icon="plus"></span> <span class="btn-text" data-i18n="header.newChar">Nova
+          Ficha</span>
+      </button>
+      <button id="btn-import-json" class="btn import-json" data-i18n-title="header.import.title"
+        title="Importar Ficha JSON">
+        <span class="btn-icon" data-icon="import"></span> <span class="btn-text"
+          data-i18n="header.import">Importar</span>
+      </button>
+      <input type="file" id="file-import" accept=".json" style="display: none;">
+      <button id="btn-export-json" class="btn export-json" data-i18n-title="header.export.title"
+        title="Exportar Ficha JSON" disabled>
+        <span class="btn-icon" data-icon="export"></span> <span class="btn-text"
+          data-i18n="header.export">Exportar</span>
+      </button>
+      <button id="btn-assimilation-test" class="btn hide-on-desktop" data-i18n-title="header.assimilation.title"
+        title="Realizar Teste de Assimilação">
+        <span class="btn-icon" data-icon="assimilation_point"></span> <span class="btn-text"
+          data-i18n="header.assimilation">Teste de Assimilação</span>
+      </button>
+      <button id="btn-open-tarot-again" class="btn hide-on-desktop" data-i18n-title="header.tarot.title"
+        title="Refazer Leitura (Tarot)">
+        <span class="btn-icon" data-icon="ouros"></span> <span class="btn-text" data-i18n="header.tarot">Refazer
+          Tarot</span>
+      </button>
+      <button id="btn-delete-char" class="btn btn-danger" data-i18n-title="header.delete.title"
+        title="Apagar Personagem" disabled>
+        <span class="btn-icon" data-icon="trash"></span>
+      </button>
+      <button id="btn-cloud-sync" class="btn" data-i18n-title="header.sync.title" title="Sincronizar Nuvem"
+        style="position: relative;">
+        <span class="btn-icon" data-icon="cloud"></span>
+        <span id="cloud-sync-badge"
+          style="display:none; position:absolute; top:-2px; right:-2px; width:8px; height:8px; background-color:var(--color-orange); border-radius:50%;"></span>
+      </button>
+      <button id="btn-manage-items" class="btn" data-i18n-title="header.items.title" title="Gerenciar Itens">
+        <span class="btn-icon" data-icon="backpack"></span>
+      </button>
+      <button id="btn-settings" class="btn" data-i18n-title="header.settings.title" title="Configurações">
+        <span class="btn-icon" data-icon="settings"></span>
+      </button>
+      <button id="btn-language" class="btn" title="Mudar Idioma / Change Language"
+        style="font-size: 11px; font-weight: bold;">
+        🌐 EN
+      </button>
+    </div>
+  </header>
+
+  <!-- Container Principal de Conteúdo -->
+  <main class="main-content">
+
+    <!-- TELA 0: LANDING - Seleção de Personagens -->
+    <section id="landing-screen" class="screen">
+      <div class="landing-bg-overlay"></div>
+
+      <div class="landing-content">
+        <!-- Título / Subtítulo -->
+        <div class="landing-header">
+          <h1 class="landing-title" data-i18n="landing.title">Exorcistas</h1>
+          <p class="landing-subtitle" data-i18n="landing.subtitle">Selecione um Exorcista para continuar ou crie um novo
+          </p>
+          <div id="char-counter" class="landing-counter"></div>
+        </div>
+
+        <!-- Grid de personagens -->
+        <div id="characters-list" class="characters-grid"></div>
+
+        <!-- Estado vazio (sem personagens) -->
+        <div id="empty-state" class="landing-empty hidden">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="empty-icon">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <p class="empty-title" data-i18n="landing.empty.title">Nenhum exorcista registrado</p>
+          <p class="empty-sub" data-i18n="landing.empty.sub">Crie seu primeiro personagem para começar</p>
+        </div>
+
+        <!-- Ações do rodapé -->
+        <div class="landing-footer-actions">
+          <button id="btn-create-first-char" class="btn btn-landing-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            <span data-i18n="landing.new">Novo Registro</span>
+          </button>
+          <button id="btn-import-landing" class="btn btn-landing-secondary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+            </svg>
+            <span data-i18n="landing.import">Importar Registro</span>
+          </button>
+          <button id="btn-mesa-landing" class="btn btn-landing-secondary"
+            style="border-color:var(--color-gold-glow); color:var(--color-gold-glow);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+              <path d="M3 3h18v18H3z" />
+              <path d="M3 9h18M9 3v18" />
+            </svg>
+            <span data-i18n="landing.table">Mesa de Jogo</span>
+          </button>
+          <input type="file" id="file-import-landing" accept=".json" style="display:none">
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA DE MESA - Jogo Multiplayer -->
+    <section id="table-screen" class="screen hidden">
+      <div id="table-toolbar">
+        <span class="table-title">Mesa de Jogo</span>
+        <span class="room-code-badge" id="table-room-code-badge"></span>
+        <span id="table-host-badge"></span>
+        <button id="btn-open-roller-table" class="btn btn-sm table-roller-btn" title="Abrir Rolador de Dados">
+          <span style="font-size:1.1em;">🎲</span> Lançar Dados
+        </button>
+        <button id="btn-table-conflito" class="btn btn-sm table-conflito-btn hidden"
+          title="Ativar / Gerenciar Conflito">
+          ⚔️ Conflito
+        </button>
+        <button id="btn-table-cenas" class="btn btn-sm table-cenas-btn hidden" title="Gerenciar Cenas de Fundo">
+          🖼️ Cenas
+        </button>
+        <button class="btn btn-sm" id="btn-leave-table"
+          style="border-color:var(--color-rust); color:var(--color-rust-glow);">Sair da Mesa</button>
+      </div>
+
+      <!-- Painel de Conflito Ativo (banner abaixo da toolbar, só visível quando há conflito ativo) -->
+      <div id="table-conflito-banner" class="hidden">
+        <span id="table-conflito-banner-nome">Conflito</span>
+        <span id="table-conflito-banner-tipo" class="conflito-banner-tipo"></span>
+        <div class="conflito-banner-dice-row" id="table-conflito-dice-row">
+          <span class="conflito-dice-group">
+            <button class="btn-conf-tb-dec" data-sides="6">−</button>
+            <span class="conflito-dice-label">d6</span>
+            <input type="number" id="tb-conflito-d6" class="conflito-dice-input" min="0" max="20" value="1">
+            <button class="btn-conf-tb-inc" data-sides="6">+</button>
+          </span>
+          <span class="conflito-dice-group">
+            <button class="btn-conf-tb-dec" data-sides="10">−</button>
+            <span class="conflito-dice-label">d10</span>
+            <input type="number" id="tb-conflito-d10" class="conflito-dice-input" min="0" max="20" value="0">
+            <button class="btn-conf-tb-inc" data-sides="10">+</button>
+          </span>
+          <span class="conflito-dice-group">
+            <button class="btn-conf-tb-dec" data-sides="12">−</button>
+            <span class="conflito-dice-label">d12</span>
+            <input type="number" id="tb-conflito-d12" class="conflito-dice-input" min="0" max="20" value="0">
+            <button class="btn-conf-tb-inc" data-sides="12">+</button>
+          </span>
+          <button id="btn-tb-roll-conflito" class="btn btn-sm table-conflito-roll-btn" title="Rolar dados do conflito">
+            🎲 Rolar Conflito
+          </button>
+          <button id="btn-tb-ativacoes" class="btn btn-sm" title="Ativações do conflito" style="font-size:10px;">📋
+            Ativações</button>
+          <button id="btn-tb-end-conflito" class="btn btn-sm" title="Encerrar conflito ativo"
+            style="border-color:var(--color-rust);color:var(--color-rust-glow);font-size:10px;">✕</button>
+        </div>
+      </div>
+
+      <!-- Modal: Selecionar Ficha de Conflito -->
+      <div id="modal-table-conflito" class="ficha-picker-overlay hidden">
+        <div class="ficha-picker-box conflito-picker-box">
+          <div class="ficha-picker-header">
+            <span>⚔️ Selecionar Conflito</span>
+            <button id="btn-close-table-conflito-modal" class="btn btn-sm">✕</button>
+          </div>
+          <div class="ficha-picker-search-row">
+            <input type="text" id="conflito-picker-search" placeholder="Buscar conflito..." autocomplete="off">
+          </div>
+          <div id="conflito-picker-list" class="ficha-picker-list"></div>
+        </div>
+      </div>
+
+      <!-- Modal: Ativações do Conflito (card-glass overlay na mesa) -->
+      <div id="modal-mesa-ativacoes" class="mesa-ativacoes-overlay hidden">
+        <div class="card-glass mesa-ativacoes-panel">
+
+          <!-- Cabeçalho -->
+          <div class="mesa-ativacoes-header">
+            <div class="mesa-ativacoes-title-row">
+              <span class="mesa-ativacoes-title">⚔️ <span id="mesa-ativacoes-conflito-nome">Conflito</span></span>
+              <div id="mesa-ativacoes-last-roll" class="conflito-last-roll-counter" style="display:none;"></div>
+            </div>
+            <button id="btn-close-mesa-ativacoes" class="btn btn-sm" title="Fechar painel">✕</button>
+          </div>
+
+          <!-- Corpo com scroll -->
+          <div class="mesa-ativacoes-body">
+
+            <!-- Lista de Ativações do Conflito -->
+            <div class="mesa-ativacoes-section">
+              <div class="mesa-ativacoes-section-header">
+                <span class="mesa-section-label">Ativações</span>
+                <button id="btn-mesa-nova-ativacao-toggle" class="btn btn-sm" title="Nova ativação"
+                  style="font-size:10px;padding:2px 8px;">+ Nova</button>
+              </div>
+
+              <!-- Mini formulário de nova ativação (colapsável) -->
+              <div id="mesa-nova-ativacao-form" class="mesa-nova-ativacao-form hidden">
+                <div class="mesa-form-group">
+                  <label class="ws-label">Gatilho</label>
+                  <div class="mesa-gatilho-builder">
+                    <div class="mesa-gatilho-preview-row">
+                      <span id="mesa-gatilho-preview" class="mesa-gatilho-preview">Clique em +/− abaixo</span>
+                      <button type="button" id="btn-mesa-gatilho-clear" class="btn-mesa-clear">✕</button>
+                    </div>
+                    <div class="mesa-gatilho-dice-row">
+                      <div class="mesa-gatilho-dice-group">
+                        <img src="assets/d6/6(D6).webp" alt="S" class="mesa-dice-img">
+                        <div class="mesa-dice-btns">
+                          <button type="button" class="btn-mesa-gatilho-qty" data-type="S" data-dir="dec">−</button>
+                          <span id="mesa-gatilho-count-s" class="mesa-gatilho-count">0</span>
+                          <button type="button" class="btn-mesa-gatilho-qty" data-type="S" data-dir="inc">+</button>
+                        </div>
+                      </div>
+                      <div class="mesa-gatilho-dice-group">
+                        <img src="assets/d6/ad.webp" alt="A" class="mesa-dice-img">
+                        <div class="mesa-dice-btns">
+                          <button type="button" class="btn-mesa-gatilho-qty" data-type="A" data-dir="dec">−</button>
+                          <span id="mesa-gatilho-count-a" class="mesa-gatilho-count">0</span>
+                          <button type="button" class="btn-mesa-gatilho-qty" data-type="A" data-dir="inc">+</button>
+                        </div>
+                      </div>
+                      <div class="mesa-gatilho-dice-group">
+                        <img src="assets/d6/3-4(D6).webp" alt="P" class="mesa-dice-img">
+                        <div class="mesa-dice-btns">
+                          <button type="button" class="btn-mesa-gatilho-qty" data-type="P" data-dir="dec">−</button>
+                          <span id="mesa-gatilho-count-p" class="mesa-gatilho-count">0</span>
+                          <button type="button" class="btn-mesa-gatilho-qty" data-type="P" data-dir="inc">+</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mesa-form-group">
+                  <input type="text" id="mesa-nova-ativacao-titulo" placeholder="Título / Nome da Ação"
+                    class="mesa-form-input">
+                </div>
+                <div class="mesa-form-group">
+                  <textarea id="mesa-nova-ativacao-efeito" placeholder="Efeito / Descrição..."
+                    class="mesa-form-textarea" rows="2"></textarea>
+                </div>
+                <div class="mesa-form-actions">
+                  <button id="btn-mesa-cancel-ativacao" class="btn btn-sm btn-secondary">Cancelar</button>
+                  <button id="btn-mesa-confirm-ativacao" class="btn btn-sm btn-primary">Adicionar</button>
+                </div>
+              </div>
+
+              <div id="mesa-ativacoes-list" class="mesa-ativacoes-list"></div>
+            </div>
+
+            <!-- Ameaças Ativas -->
+            <div class="mesa-ativacoes-section" id="mesa-ameacas-section">
+              <div class="mesa-ativacoes-section-header">
+                <span class="mesa-section-label">Ameaças</span>
+              </div>
+              <div id="mesa-ameacas-list" class="mesa-ameacas-list"></div>
+            </div>
+
+          </div><!-- /body -->
+
+          <!-- Rodapé: botão rolar conflito -->
+          <div class="mesa-ativacoes-footer">
+            <button id="btn-mesa-ativacoes-roll" class="btn btn-sm table-conflito-roll-btn" style="width:100%;">
+              🎲 Rolar Conflito
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <div id="table-main-area">
+
+        <!-- Coluna esquerda: Jogadores -->
+        <div id="table-player-panel">
+          <div id="table-player-panel-header">
+            <span>Jogadores</span>
+            <button id="btn-add-ficha" class="btn btn-sm hidden" title="Adicionar ficha extra">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="12" height="12">
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+              </svg>
+              Ficha
+            </button>
+          </div>
+          <div id="table-player-list"></div>
+          <!-- fichas extras do mestre ficam aqui -->
+          <div id="table-extra-fichas"></div>
+        </div>
+
+        <!-- Centro: Mapa -->
+        <div id="table-map-panel">
+          <div id="table-map-viewport">
+            <img id="table-map-image" src="" alt="Mapa" style="display:none;">
+          </div>
+          <div id="table-map-placeholder">Aguardando mapa do Mestre...</div>
+          <div id="table-map-controls" class="hidden">
+            <button id="btn-zoom-out" class="btn btn-sm" title="Menos zoom">−</button>
+            <span id="zoom-level-display">100%</span>
+            <button id="btn-zoom-in" class="btn btn-sm" title="Mais zoom">+</button>
+            <button id="btn-zoom-reset" class="btn btn-sm" title="Resetar zoom">⟲</button>
+            <label for="btn-table-map-upload">Alterar Mapa</label>
+            <input type="file" id="btn-table-map-upload" accept="image/*" style="display:none">
+          </div>
+          <div id="table-cena-display" class="hidden">
+            <img id="table-cena-image" src="" alt="Cena">
+          </div>
+          <div id="table-cena-controls" class="hidden">
+            <button id="btn-back-to-map" class="btn btn-sm">Voltar ao Mapa</button>
+            <div id="table-cena-zoom">
+              <button id="btn-cena-zoom-out" class="btn btn-sm" title="Menos zoom">−</button>
+              <span id="cena-zoom-level-display">100%</span>
+              <button id="btn-cena-zoom-in" class="btn btn-sm" title="Mais zoom">+</button>
+              <button id="btn-cena-zoom-reset" class="btn btn-sm" title="Resetar zoom">⟲</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coluna direita: Rolagens -->
+        <div id="table-roll-panel">
+          <div id="table-roll-feed-container">
+            <div id="table-roll-feed-header">
+              <span>Rolagens: </span>
+              <span id="table-roll-count">0</span>
+              <button id="btn-clear-roll-feed" class="btn btn-sm"
+                style="margin-left:auto;font-size:9px;padding:2px 6px;" title="Limpar rolagens">Limpar</button>
+            </div>
+            <div id="table-roll-feed"></div>
+          </div>
+        </div>
+
+        <!-- Painel de Chat (overlay sobre o mapa, à direita do roll-panel) -->
+        <div id="table-chat-panel" class="collapsed">
+          <!-- Botão de toggle -->
+          <button id="btn-toggle-chat" title="Chat" aria-label="Abrir / Fechar Chat">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+              <path
+                d="M20 2H4a2 2 0 00-2 2v13a2 2 0 002 2h3l3 3 3-3h5a2 2 0 002-2V4a2 2 0 00-2-2zm-9 10H7v-2h4v2zm6 0h-4v-2h4v2zm0-4H7V6h10v2z" />
+            </svg>
+            <span id="chat-toggle-label">Chat</span>
+            <span id="chat-unread-badge" class="chat-unread-badge hidden">0</span>
+          </button>
+
+          <!-- Corpo do chat (visível quando expandido) -->
+          <div id="table-chat-body">
+            <div id="table-chat-header">
+              <span>💬 Chat da Mesa</span>
+              <button id="btn-close-chat" class="btn btn-sm" title="Fechar">✕</button>
+            </div>
+
+            <!-- Área de mensagens -->
+            <div id="table-chat-messages"></div>
+
+            <!-- Preview de imagem -->
+            <div id="table-chat-img-preview" class="hidden">
+              <img id="table-chat-img-preview-img" src="" alt="preview">
+              <button id="btn-cancel-chat-img" title="Cancelar imagem">✕</button>
+            </div>
+
+            <!-- Input bar -->
+            <div id="table-chat-input-bar">
+              <label for="table-chat-img-input" id="btn-chat-img-attach" title="Anexar imagem">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                  <path
+                    d="M21 19V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z" />
+                </svg>
+              </label>
+              <input type="file" id="table-chat-img-input" accept="image/*" style="display:none">
+              <textarea id="table-chat-text-input" placeholder="Mensagem... (Enter para enviar)" rows="1"></textarea>
+              <button id="btn-send-chat-msg" title="Enviar">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                  <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal: Adicionar Ficha Extra (só Mestre) -->
+      <div id="modal-add-ficha" class="ficha-picker-overlay hidden">
+        <div class="ficha-picker-box">
+          <div class="ficha-picker-header">
+            <span>📋 Adicionar Ficha ao Painel</span>
+            <button id="btn-close-add-ficha" class="btn btn-sm">✕</button>
+          </div>
+          <div class="ficha-picker-search-row">
+            <input type="text" id="ficha-picker-search" placeholder="Buscar ficha..." autocomplete="off">
+          </div>
+          <div id="ficha-picker-list" class="ficha-picker-list"></div>
+        </div>
+      </div>
+
+      <!-- Modal: Gerenciar Cenas -->
+      <div id="modal-cenas" class="ficha-picker-overlay hidden">
+        <div class="ficha-picker-box">
+          <div class="ficha-picker-header">
+            <span>🎨 Gerenciar Cenas</span>
+            <button id="btn-close-cenas-modal" class="btn btn-sm">✕</button>
+          </div>
+          <div class="ficha-picker-search-row" style="display:flex;gap:8px;">
+            <label for="btn-cenas-upload" class="btn btn-sm" style="cursor:pointer;flex:1;text-align:center;">+ Upload
+              de Imagem</label>
+            <input type="file" id="btn-cenas-upload" accept="image/*" style="display:none">
+          </div>
+          <div id="cenas-gallery-list" class="ficha-picker-list"></div>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- TELA 1: ASSISTENTE DE CRIAÇÃO (WIZARD) - CAIN -->
+    <section id="wizard-screen" class="screen card-glass hidden">
+
+      <div class="wizard-header">
+        <h2 data-i18n="wizard.title">Criação de Exorcista (CAIN)</h2>
+        <div class="wizard-progress">
+          <span class="step-indicator active" data-step="1">1</span>
+          <span class="step-indicator" data-step="2">2</span>
+          <span class="step-indicator" data-step="3">3</span>
+          <span class="step-indicator" data-step="4">4</span>
+          <span class="step-indicator" data-step="5">5</span>
+        </div>
+      </div>
+
+      <div class="wizard-steps-container">
+        <!-- Passo 1: Perguntas de Conceito -->
+        <div class="wizard-step active" data-step="1">
+          <h3 data-i18n="wizard.step1">Passo 1: O Papel do Exorcista</h3>
+          <p class="step-help" data-i18n="wizard.step1.help">Responda às seguintes perguntas.<br>Você pode compartilhar
+            com o grupo, se quiser.</p>
+          <div class="form-group">
+            <label for="wiz-q1" data-i18n="wizard.q1">Como você manifestou seus poderes pela primeira vez?</label>
+            <textarea id="wiz-q1" rows="3" placeholder="Descreva como seus poderes se manifestaram..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="wiz-q2" data-i18n="wizard.q2">Sua semente profana está no seu cérebro ou no seu coração?</label>
+            <textarea id="wiz-q2" rows="3" placeholder="Onde está sua semente profana..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="wiz-q3" data-i18n="wizard.q3">O que você esconde nas partes mais profundas de si?</label>
+            <textarea id="wiz-q3" rows="3" placeholder="Seu segredo mais profundo..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="wiz-q4" data-i18n="wizard.q4">Sua mão é realmente sua mão?</label>
+            <textarea id="wiz-q4" rows="3" placeholder="Sua mão é realmente sua mão..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="wiz-q5" data-i18n="wizard.q5">Você se lembra do rosto da sua mãe?</label>
+            <textarea id="wiz-q5" rows="3" placeholder="Você se lembra do rosto da sua mãe..."></textarea>
+          </div>
+        </div>
+
+        <!-- Passo 2: Identidade -->
+        <div class="wizard-step" data-step="2">
+          <h3 data-i18n="wizard.step2">Passo 2: Identidade do Exorcista</h3>
+          <p class="step-help" data-i18n="wizard.step2.help">Dê um nome ao seu exorcista e decida a aparência dele.
+            Anote o número de identificação interna e preencha os detalhes.</p>
+          <div style="display:grid; grid-template-columns: repeat(2,1fr); gap:6px;">
+            <div class="form-group">
+              <label for="wiz-name" data-i18n="wizard.name">Nome do Exorcista:</label>
+              <input type="text" id="wiz-name" placeholder="Ex: Alex Corvis, Sarah Moon...">
+            </div>
+            <div class="form-group">
+              <label for="wiz-xid" data-i18n="wizard.xid">Número de Identificação (CID):</label>
+              <input type="text" id="wiz-xid" placeholder="Ex: CX-4471" maxlength="10"
+                style="text-transform:uppercase;">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="wiz-appearance" data-i18n="wizard.appearance">Aparência:</label>
+            <textarea id="wiz-appearance" rows="3" placeholder="Descreva a aparência do seu exorcista..."></textarea>
+          </div>
+        </div>
+
+        <!-- Passo 3: Perícias -->
+        <div class="wizard-step" data-step="3">
+          <h3 data-i18n="wizard.step3">Passo 3: Perícias</h3>
+          <p class="step-help" data-i18n="wizard.step3.help">Todas as perícias começam em <strong>1</strong>. Em
+            seguida, <strong>aumente duas para 2</strong> e <strong>reduza três para 0</strong>.</p>
+          <div class="alert-info-box" style="margin-bottom: 16px;" data-i18n="wizard.step3.info">
+            Use + para aumentar 2 perícias até 2, e - para reduzir 3 perícias até 0. Total deve ser <strong>9
+              pontos</strong>.
+          </div>
+          <div class="skills-wizard-container" id="wiz-skills-list"></div>
+          <div
+            style="margin-top: 12px; text-align: center; font-size: var(--font-size-sm); color: var(--text-secondary);">
+            <span data-i18n="wizard.skill.points">Pontos distribuídos:</span> <strong id="wiz-skill-points">9</strong> /
+            9
+          </div>
+        </div>
+
+        <!-- Passo 4: Agenda -->
+        <div class="wizard-step" data-step="4">
+          <h3 data-i18n="wizard.step4">Passo 4: Agenda</h3>
+          <p class="step-help" data-i18n="wizard.step4.help">Escolha uma agenda e <strong>uma habilidade</strong> dessa
+            agenda.</p>
+          <div class="packages-grid" id="wiz-agenda-list"></div>
+        </div>
+
+        <!-- Passo 5: Blasfêmias -->
+        <div class="wizard-step" data-step="5">
+          <h3 data-i18n="wizard.step5">Passo 5: Blasfêmias</h3>
+          <p class="step-help" data-i18n="wizard.step5.help">Escolha uma blasfêmia e <strong>dois poderes</strong> dessa
+            blasfêmia.</p>
+          <div class="traits-wizard-list" id="wiz-blasphemies-list"></div>
+        </div>
+      </div>
+
+      <!-- Navegação do Wizard -->
+      <div class="wizard-footer" style="display: flex; justify-content: space-between;">
+        <button id="btn-wiz-cancel" class="btn"
+          style="background: var(--bg-card); border-color: var(--color-rust); color: var(--color-rust-glow);"
+          data-i18n="wizard.cancel">Cancelar</button>
+        <div style="display: flex; gap: 8px;">
+          <button id="btn-wiz-prev" class="btn" disabled data-i18n="wizard.prev">Anterior</button>
+          <button id="btn-wiz-next" class="btn" data-i18n="wizard.next">Próximo</button>
+          <button id="btn-wiz-finish" class="btn btn-success hidden" data-i18n="wizard.finish">Finalizar &
+            Salvar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA 2: FICHA DO EXORCISTA (CAIN) -->
+    <section id="sheet-screen" class="screen">
+      <div class="sheet-layout-grid">
+        <div class="sheet-pages-column">
+          <div class="sheet-redesign-container cain-sheet">
+
+            <!-- COLUNA ESQUERDA: PERFIL + STRESS + PSYCHE -->
+            <div class="sheet-cain-left">
+              <!-- CARD DO PERFIL — ID CARD OFICIAL -->
+              <div class="profile-card card-glass cain-profile">
+                <!-- LINHA 1: Foto + Campos principais -->
+                <div class="portrait-wrapper">
+                  <div class="image-wrapper">
+                    <div class="polaroid-frame" id="portrait-frame" title="Clique para alterar a foto">
+                      <img id="char-portrait-img" src="./assets/CAIN.png" alt="Retrato">
+                      <div class="portrait-overlay"><span>Alterar Foto</span></div>
+                    </div>
+                    <div class="xp-header">
+                      <span class="xp-label">XP</span>
+                      <div class="xp-controls">
+                        <button id="btn-dec-xp" class="btn btn-sm">-</button>
+                        <strong id="sheet-xp-value">0</strong>
+                        <button id="btn-inc-xp" class="btn btn-sm">+</button>
+                      </div>
+                    </div>
+
+
+                    <input type="file" id="char-portrait-input" accept="image/*" style="display: none;">
+                  </div>
+
+
+                  <div class="portrait-side-fields">
+                    <!-- Nome + XID -->
+                    <div class="profile-row">
+                      <div class="profile-field">
+                        <label for="char-name" data-i18n="sheet.name">Nome</label>
+                        <input type="text" id="char-name" class="sheet-input-text" placeholder="Nome do Exorcista"
+                          data-i18n-placeholder="sheet.profile.name.placeholder">
+                      </div>
+                    </div>
+
+                    <!-- Categoria -->
+                    <div class="profile-row">
+                      <div class="profile-field cat-field">
+                        <div class="profile-field">
+                          <label for="char-xid" data-i18n="sheet.xid">XID</label>
+                          <input type="text" id="char-xid" class="sheet-input-text" placeholder="CX-0000"
+                            data-i18n-placeholder="sheet.profile.xid.placeholder">
+                        </div>
+                        <div class="profile-field" style="display: flex; flex-direction: row; align-items: center;">
+                          <span id="char-cat-label" class="cat-label">CAT 1</span>
+                          <div id="cat-selector" class="cat-selector" title="Clique para trocar a categoria">
+                            <img id="char-cat-img" src="./assets/cat1.png" alt="CAT 1" class="cat-image">
+
+                            <div class="cat-arrows">
+                              <button type="button" class="cat-arrow cat-prev">&#9650;</button>
+                              <button type="button" class="cat-arrow cat-next">&#9660;</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- LINHA 2: Agenda + Blasfemia -->
+                    <div class="id-fields-row">
+                      <div class="profile-field">
+                        <label for="char-agenda" data-i18n="sheet.agenda">Agenda</label>
+                        <input type="text" id="char-agenda" class="sheet-input-text" placeholder="Agenda pessoal"
+                          data-i18n-placeholder="sheet.profile.agenda.placeholder">
+                      </div>
+                      <div class="profile-field">
+                        <label for="char-blasfemia" data-i18n="sheet.blasphemy">Blasfêmia</label>
+                        <input type="text" id="char-blasfemia" class="sheet-input-text" placeholder="Blasfêmia"
+                          data-i18n-placeholder="sheet.profile.blasphemy.placeholder">
+                      </div>
+                    </div>
+
+                    <!-- LINHA 3: Sexo + Cabelo -->
+                    <div class="id-fields-row">
+                      <div class="profile-field">
+                        <label for="char-sexo" data-i18n="sheet.sex">Sexo</label>
+                        <input type="text" id="char-sexo" class="sheet-input-text">
+                      </div>
+                      <div class="profile-field">
+                        <label for="char-cabelo" data-i18n="sheet.hair">Cabelo</label>
+                        <input type="text" id="char-cabelo" class="sheet-input-text">
+                      </div>
+                    </div>
+
+                    <!-- LINHA 4: Olhos + Idade -->
+                    <div class="id-fields-row">
+                      <div class="profile-field">
+                        <label for="char-olhos" data-i18n="sheet.eyes">Olhos</label>
+                        <input type="text" id="char-olhos" class="sheet-input-text">
+                      </div>
+                      <div class="profile-field">
+                        <label for="char-notas" data-i18n="sheet.age">Idade</label>
+                        <input type="text" id="char-notas" class="sheet-input-text">
+                      </div>
+                    </div>
+
+                    <!-- RODAPÉ: CID + CASTLE stamp -->
+                    <div class="id-card-footer">
+                      <div class="id-cid-field">
+                        <span class="id-cid-label">CID:</span>
+                        <input type="text" id="char-cid" class="sheet-input-text id-cid-input" placeholder="XXX"
+                          maxlength="10">
+                      </div>
+                      <div class="id-castle-stamp">
+                        <span class="castle-box">c</span>
+                        <span>CASTLE</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <!-- CHAT DE ROLAGENS -->
+              <div class="roll-chat-section" id="roll-chat">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <h3 style="margin: 0; padding: 0;">Chat de Rolagens</h3>
+                  <button class="btn btn-sm btn-danger" id="btn-clear-chat" title="Limpar">Limpar</button>
+                </div>
+                <div class="roll-chat-messages" id="roll-chat-messages">
+                  <div class="chat-placeholder">Nenhuma rolagem.</div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- COLUNA CENTRAL: PERÍCIAS & STATUS -->
+            <div class="sheet-cain-center">
+              <div class="grid-2-col">
+                <div class="cain-skills-card card-glass">
+                  <h3 class="status-header">PERÍCIAS</h3>
+                  <div id="skills-list-sheet" class="cain-skills-container">
+                    <!-- JS renderiza as perícias aqui -->
+                  </div>
+                  <!-- BOTÃO LANÇAR DADOS -->
+                  <div style="display: flex; gap: 8px; margin-top: 16px;">
+                    <button id="btn-open-roller" class="btn" style="flex:1;" data-i18n="sheet.roll">
+                      <span style="font-size: 1.2em;">🎲</span> Lançar Dados
+                    </button>
+                  </div>
+                </div>
+
+
+                <!-- CARD STRESS & SAÚDE -->
+                <div class="card-glass cain-stress-card">
+                  <div class="stress-layout">
+                    <!-- Coluna central: Strip com linhas -->
+                    <div class="stress-tracker" id="stress-tracker-sheet">
+                      <img src="./assets/exe.webp" alt="" class="stress-tracker-bg">
+                      <!-- JS renderiza linhas de estresse -->
+                    </div>
+                    <div>
+                      <h3 class="status-header">ESTRESSE</h3>
+                      <!-- Coluna esquerda: Feridas -->
+                      <div class="stress-left-controls">
+                        <!-- Feridas -->
+                        <button id="btn-injury-dec" class="btn btn-sm stress-ctrl-btn">-</button>
+                        <div class="stress-cell-content">
+                          <div class="stress-label-group">
+                            <span class="stat-label" data-toolbox="injuries" data-i18n="sheet.injuries">Feridas</span>
+                            <div style="display: flex; gap: 4px; margin-bottom: 6px">
+                              <button id="btn-injury-max-dec" class="btn extra-small-btn">-</button>
+                              <button id="btn-injury-max-inc" class="btn extra-small-btn">+</button>
+                            </div>
+
+                          </div>
+                          <div style="display: flex; gap: 8px;">
+                            <div class="injury-checkbox-group" id="injury-checkbox-group">
+                              <label class="injury-x"><input type="checkbox" disabled=""><span>X</span></label>
+                              <label class="injury-x"><input type="checkbox" disabled=""><span>X</span></label>
+                              <label class="injury-x"><input type="checkbox" disabled=""><span>X</span></label>
+                            </div>
+                            <img src="./assets/caveira.webp" id="injury-death-skull" class="injury-death-skull hidden"
+                              alt="Perigo de Morte" title="Perigo de Morte (3+ ferimentos)">
+                          </div>
+                        </div>
+                        <button id="btn-injury-inc" class="btn btn-sm stress-ctrl-btn">+</button>
+
+                        <!-- Corte -->
+                        <button id="btn-stress-dec" class="btn btn-sm stress-ctrl-btn">-</button>
+                        <div class="stress-cell-content">
+                          <div class="stress-label-group">
+                            <span class="stat-label" data-i18n="sheet.cut">Corte:</span>
+                            <span id="stress-current-sheet" class="stat-value">0</span>
+                          </div>
+                        </div>
+                        <button id="btn-stress-inc" class="btn btn-sm stress-ctrl-btn">+</button>
+
+                        <!-- Pecado -->
+                        <button id="btn-sin-dec" class="btn btn-sm stress-ctrl-btn">-</button>
+                        <div class="stress-cell-content">
+                          <div class="sin-row-container" style="border-top: none; margin-top: 0; padding-top: 0;">
+                            <span class="stat-label" data-toolbox="sin" data-i18n="sheet.sin">Pecado:</span>
+                            <div class="sin-checkbox-group" id="sin-checkbox-group">
+                              <!-- JS renderiza as 10 caveiras de pecado aqui -->
+                            </div>
+                            <div class="sin-overflow-warning" id="sin-overflow-warning" style="display:none;">
+                              RISCO DE VERTER PECADO!
+                            </div>
+                          </div>
+                        </div>
+                        <button id="btn-sin-inc" class="btn btn-sm stress-ctrl-btn">+</button>
+
+                        <!-- Pulsos Psíquicos -->
+                        <button id="btn-psyche-dec" class="btn btn-sm stress-ctrl-btn">-</button>
+                        <div class="stress-cell-content">
+                          <div class="psyche-row-container" style="border-top: none; margin-top: 0; padding-top: 0;">
+                            <span class="stat-label" style="font-size: var(--font-size-md);"
+                              data-toolbox="psychic pulses" data-i18n="sheet.psyche">Pulsos Psíquicos:</span>
+                            <div class="psyche-checkbox-group" id="psyche-checkbox-group">
+                              <label class="psyche-checkbox"><input type="checkbox" id="psyche-check-1"></label>
+                              <label class="psyche-checkbox"><input type="checkbox" id="psyche-check-2"></label>
+                              <label class="psyche-checkbox"><input type="checkbox" id="psyche-check-3"></label>
+                            </div>
+                          </div>
+                        </div>
+                        <button id="btn-psyche-inc" class="btn btn-sm stress-ctrl-btn">+</button>
+
+                        <!-- Piedade -->
+                        <button id="btn-piedade-dec" class="btn btn-sm stress-ctrl-btn">-</button>
+                        <div class="stress-cell-content">
+                          <div class="piedade-row" style="margin-bottom: 0;">
+                            <span class="stat-label" data-toolbox="piety" data-i18n="sheet.piety">Piedade:</span>
+                            <div class="piedade-checkbox-group" style="display: flex; gap: 8px;">
+                              <label class="piedade-checkbox"><input type="checkbox" id="piedade-check-1"><img
+                                  src="./assets/agonia.webp" class="piedade-icon" alt="Agonia"></label>
+                              <label class="piedade-checkbox"><input type="checkbox" id="piedade-check-2"><img
+                                  src="./assets/agonia.webp" class="piedade-icon" alt="Agonia"></label>
+                              <label class="piedade-checkbox"><input type="checkbox" id="piedade-check-3"><img
+                                  src="./assets/agonia.webp" class="piedade-icon" alt="Agonia"></label>
+                            </div>
+                          </div>
+                        </div>
+                        <button id="btn-piedade-inc" class="btn btn-sm stress-ctrl-btn">+</button>
+
+                        <!-- Agonia Divina Wrapper -->
+                        <div class="divine-agony-wrapper"
+                          style="grid-column: span 3; width: 100%; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 12px; margin-top: 8px;">
+                          <button id="btn-divine-agony" class="btn btn-divine-agony" style="width: 100%;"
+                            title="Agonia Divina: Queima toda Piedade, ganha +1D por Piedade queimada. Uma vez por sessão."
+                            data-i18n="sheet.divine.agony">
+                            Agonia Divina
+                          </button>
+                          <div class="divine-agony-info" id="divine-agony-info" style="display:none;">
+                            Ativado! +<span id="divine-agony-bonus">0</span>D nesta rolagem
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- AFLIGIMENTOS (AFFLICTIONS ROW) -->
+                  <div class="afflictions-row">
+                    <span class="stat-label" data-i18n="sheet.afflictions">Aflições:</span>
+                    <div id="afflictions-list-sheet" class="afflictions-list"></div>
+                  </div>
+                </div>
+              </div>
+
+
+              <!-- ROLAGENS PERSONALIZADAS -->
+              <div class="custom-rolls-card card-glass" id="custom-rolls-container" style="margin-top: 16px;">
+                <h3 class="status-header" style="display: flex; justify-content: space-between; align-items: center;">
+                  <div data-i18n="sheet.custom.title">🎲 ROLAGENS PERSONALIZADAS</div>
+                  <button id="btn-add-custom-roll" class="btn btn-sm" style="font-weight: bold;">+</button>
+                </h3>
+                <div class="custom-rolls-list" id="custom-rolls-list-sheet"
+                  style="display: flex; flex-direction: column; gap: 8px; margin-top: 12px;"></div>
+              </div>
+            </div>
+
+            <!-- COLUNA DIREITA: TABS CAIN -->
+            <div class="sheet-cain-right">
+              <div class="sheet-redesign-tabs-container">
+                <div class="sheet-redesign-tabs-nav card-glass">
+                  <button class="sheet-tab-btn active" data-tab="tab-cain-agenda" data-i18n="sheet.tab.agenda">Agenda</button>
+                  <button class="sheet-tab-btn" data-tab="tab-cain-blasphemy" data-i18n="sheet.tab.blasphemies">Blasfêmias</button>
+                  <button class="sheet-tab-btn" data-tab="tab-cain-sin-mark" data-i18n="sheet.tab.sinmarks">Marcas do Pecado</button>
+                  <button class="sheet-tab-btn" data-tab="tab-cain-equip" data-i18n="sheet.tab.equip">Equip.</button>
+                  <button class="sheet-tab-btn" data-tab="tab-cain-notes" data-i18n="sheet.tab.notes">Notas</button>
+                </div>
+
+                <div class="sheet-redesign-tabs-content card-glass">
+                  <!-- Aba 1: Agenda -->
+                  <div class="sheet-tab-panel active" id="tab-cain-agenda">
+                    <h3 class="section-title" data-i18n="sheet.agenda">AGENDA</h3>
+                    <div id="agenda-list-sheet" class="cain-agenda-list"></div>
+
+                    <!-- CARD GANCHOS (HOOKS) -->
+                    <div class="card-glass cain-hooks-card" style="margin-top: 16px;">
+                      <div class="hooks-layout">
+                        <!-- Coluna Esquerda: Instruções -->
+                        <div class="hooks-instructions">
+                          <h3 class="hooks-title" data-toolbox="hooks">GANCHOS</h3>
+                          <div class="hooks-columns">
+                            <!-- Gancho 1 -->
+                            <div class="hook-track-col">
+                              <div class="hook-track-header">
+                                <input type="text" id="hook-name-1" class="hook-name-input" placeholder="Gancho 1">
+                              </div>
+                              <div class="hook-boxes">
+                                <label class="hook-box"><input type="checkbox" id="hook-check-1-1"><span></span></label>
+                                <label class="hook-box"><input type="checkbox" id="hook-check-1-2"><span></span></label>
+                                <label class="hook-box"><input type="checkbox" id="hook-check-1-3"><span></span></label>
+                              </div>
+                              <div class="hook-visual-strip">
+                                <div class="diagonal-line line-1"></div>
+                                <div class="diagonal-line line-2"></div>
+                                <div class="diagonal-line line-3"></div>
+                              </div>
+                              <button type="button" class="hook-remove-button" title="Apagar Gancho">
+                                <i class="material-icons">Limpar</i>
+                              </button>
+                            </div>
+
+                            <!-- Gancho 2 -->
+                            <div class="hook-track-col">
+                              <div class="hook-track-header">
+                                <input type="text" id="hook-name-2" class="hook-name-input" placeholder="Gancho 2">
+                              </div>
+                              <div class="hook-boxes">
+                                <label class="hook-box"><input type="checkbox" id="hook-check-2-1"><span></span></label>
+                                <label class="hook-box"><input type="checkbox" id="hook-check-2-2"><span></span></label>
+                                <label class="hook-box"><input type="checkbox" id="hook-check-2-3"><span></span></label>
+                              </div>
+                              <div class="hook-visual-strip">
+                                <div class="diagonal-line line-1"></div>
+                                <div class="diagonal-line line-2"></div>
+                                <div class="diagonal-line line-3"></div>
+                              </div>
+                              <button type="button" class="hook-remove-button" title="Apagar Gancho">
+                                <i class="material-icons">Limpar</i>
+                              </button>
+                            </div>
+
+                            <!-- Gancho 3 -->
+                            <div class="hook-track-col">
+                              <div class="hook-track-header">
+                                <input type="text" id="hook-name-3" class="hook-name-input" placeholder="Gancho 3">
+                              </div>
+                              <div class="hook-boxes">
+                                <label class="hook-box"><input type="checkbox" id="hook-check-3-1"><span></span></label>
+                                <label class="hook-box"><input type="checkbox" id="hook-check-3-2"><span></span></label>
+                                <label class="hook-box"><input type="checkbox" id="hook-check-3-3"><span></span></label>
+                              </div>
+                              <div class="hook-visual-strip">
+                                <div class="diagonal-line line-1"></div>
+                                <div class="diagonal-line line-2"></div>
+                                <div class="diagonal-line line-3"></div>
+                              </div>
+                              <button type="button" class="hook-remove-button" title="Apagar Gancho">
+                                <i class="material-icons">Limpar</i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Aba 2: Blasfêmias -->
+                  <div class="sheet-tab-panel" id="tab-cain-blasphemy">
+                    <div style="display:flex; justify-content:space-between; align-items:center; ">
+                      <h3 class="section-title" style="margin:0;" data-i18n="sheet.blasphemies">BLASFÊMIAS</h3>
+                      <button id="btn-add-blasphemy" class="btn btn-sm">+</button>
+                    </div>
+                    <div id="blasphemies-list-sheet" class="cain-blasphemies-list"></div>
+                  </div>
+
+                  <!-- Aba 3: Marcas do Pecado -->
+                  <div class="sheet-tab-panel" id="tab-cain-sin-mark">
+                    <div style="display:flex; justify-content:space-between; align-items:center; ">
+                      <h3 class="section-title" style="margin:0;" data-i18n="sheet.tab.sinmarks">MARCAS DO PECADO</h3>
+                      <button id="btn-add-sin-mark" class="btn btn-sm">+</button>
+                    </div>
+                    <div id="sin-marks-list-sheet" class="cain-sinmarks-list"></div>
+                  </div>
+
+                  <!-- Aba 5: Equipamento -->
+                  <div class="sheet-tab-panel" id="tab-cain-equip">
+                    <h3 class="section-title" data-i18n="sheet.equipment">EQUIPAMENTO</h3>
+                    <div id="equipment-list-sheet" class="cain-equipment-list"></div>
+                    <hr style="border-color:rgba(255,255,255,0.05); margin:12px 0;">
+                    <h3 class="section-title" style="font-size:var(--font-size-sm);" data-i18n="sheet.hooks">GANCHOS
+                      (HOOKS)</h3>
+                    <div id="hooks-list-sheet" class="cain-hooks-list"></div>
+                    <button id="btn-add-hook" class="btn btn-sm" style="margin-top:8px;">+ Hook</button>
+                  </div>
+
+                  <!-- Aba 6: Anotações -->
+                  <div class="sheet-tab-panel" id="tab-cain-notes">
+                    <h3 class="section-title" data-i18n="sheet.notes">ANOTAÇÕES</h3>
+                    <textarea id="char-notes" class="notes-textarea"
+                      placeholder="Anotações de missão, contatos, segredos..."
+                      style="min-height: 400px; width: 100%;"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div> <!-- Fim .sheet-redesign-container -->
+        </div> <!-- Fim .sheet-pages-column -->
+      </div> <!-- Fim .sheet-layout-grid -->
+    </section>
+
+    <!-- MODAL: PAINEL DE ROLAGEM (DICE DRAWER) -->
+    <div id="dice-drawer" class="modal-overlay hidden">
+      <div class="modal-content card-glass" style="max-width: 500px;">
+        <button id="btn-close-drawer" class="modal-close">&times;</button>
+
+        <div class="drawer-content">
+          <h2 class="modal-title">🎲 Painel de Rolagem</h2>
+
+          <!-- Conteúdo do Painel CAIN -->
+          <div id="tab-cain-roll" style="margin-top: 15px;">
+            <h3 class="section-title">ROLAGEM CAIN</h3>
+            <div id="cain-roll-panel" class="cain-roll-panel"></div>
+          </div>
+        </div> <!-- Fim .drawer-content -->
+      </div> <!-- Fim .modal-content -->
+    </div>
+
+    <!-- TELA 3: FICHA DE REFÚGIO -->
+    <section id="refugio-screen" class="screen hidden"></section>
+
+    <!-- TELA 4: FICHA DE REGIÃO -->
+    <section id="regiao-screen" class="screen hidden"></section>
+
+    <!-- TELA 5: FICHA DE CONFLITO -->
+    <section id="conflito-screen" class="screen hidden"></section>
+
+    <!-- TELA 6: FICHA DE LOCAL -->
+    <section id="local-screen" class="screen hidden"></section>
+
+  </main>
+  <!-- MODAIS FLUTUANTES (Seleção de Mutações, Compra de Características, Confirmação) -->
+  <div id="modal-container" class="modal-overlay hidden">
+    <!-- Modal genérico inserido via JS -->
+    <div class="modal-content card-glass">
+      <button class="modal-close">&times;</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Modal de Sala (Mesa) -->
+  <div id="room-modal" class="conflito-modal hidden">
+    <div class="conflito-modal-content card-glass">
+      <div class="conflito-modal-header">
+        <h4 class="conflito-modal-title">Mesa de Jogo</h4>
+        <button type="button" class="btn-close-modal" id="btn-close-room-modal">&times;</button>
+      </div>
+      <div class="conflito-modal-body">
+        <div id="room-step-create" class="room-step">
+          <div class="room-tabs">
+            <div class="room-tab active" data-room-tab="criar">Criar Sala</div>
+            <div class="room-tab" data-room-tab="entrar">Entrar</div>
+            <div class="room-tab" data-room-tab="salas">Minhas Salas</div>
+          </div>
+          <div class="room-tab-content" id="room-tab-criar">
+            <label class="ws-label">Ficha do Personagem <small
+                style="color:var(--text-muted);font-weight:normal;">(opcional)</small></label>
+            <select id="room-char-select" class="conflito-form-input" style="width:100%; box-sizing:border-box;">
+              <option value="">-- Nenhuma (apenas Mestre) --</option>
+            </select>
+            <label class="ws-label" style="margin-top:8px;">Seu Nome</label>
+            <input type="text" id="room-player-name" placeholder="Seu nome na mesa" class="conflito-form-input"
+              style="width:100%; box-sizing:border-box;">
+            <button type="button" class="btn btn-sm btn-primary" id="btn-create-room"
+              style="width:100%; margin-top:8px;">Criar Sala</button>
+          </div>
+          <div class="room-tab-content hidden" id="room-tab-entrar">
+            <label class="ws-label">Código da Sala</label>
+            <input type="text" id="room-code-input" placeholder="Ex: ABC123" class="conflito-form-input"
+              style="width:100%; box-sizing:border-box; text-transform:uppercase;" maxlength="6">
+            <label class="ws-label" style="margin-top:8px;">Ficha do Personagem</label>
+            <select id="room-char-select-join" class="conflito-form-input" style="width:100%; box-sizing:border-box;">
+              <option value="">-- Selecione uma ficha (obrigatório) --</option>
+            </select>
+            <label class="ws-label" style="margin-top:8px;">Seu Nome</label>
+            <input type="text" id="room-player-name-join" placeholder="Seu nome na mesa" class="conflito-form-input"
+              style="width:100%; box-sizing:border-box;">
+            <button type="button" class="btn btn-sm btn-primary" id="btn-join-room"
+              style="width:100%; margin-top:8px;">Entrar na Sala</button>
+          </div>
+          <div class="room-tab-content hidden" id="room-tab-salas">
+            <div id="managed-rooms-list" class="managed-rooms-list"></div>
+          </div>
+        </div>
+        <div id="room-step-waiting" class="room-step hidden">
+          <p style="font-size:13px; color:var(--text-secondary); text-align:center;">Compartilhe o código abaixo com os
+            jogadores:</p>
+          <div class="room-code-display" id="room-code-display">------</div>
+          <div style="display:flex; gap:8px;">
+            <button type="button" class="btn btn-sm" id="btn-copy-room-code" style="flex:1;">Copiar Código</button>
+          </div>
+        </div>
+      </div>
+      <div class="conflito-modal-footer">
+        <button type="button" class="btn btn-sm btn-secondary" id="btn-cancel-room">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mini-Player Flutuante (canto inferior direito) -->
+  <div id="mini-player" class="mini-player hidden">
+    <div class="player-progress-bar" id="player-progress">
+      <div class="player-progress-fill" id="player-progress-fill"></div>
+    </div>
+    <div class="player-body">
+      <div class="player-track-art" id="player-track-art">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M16 12a4 4 0 01-8 0" stroke-width="2.5" />
+          <circle cx="12" cy="12" r="2" fill="currentColor" />
+        </svg>
+      </div>
+      <div class="player-info-group">
+        <div class="player-track-info" id="player-track-info-click">
+          <div class="player-track-name" id="player-track-name">Nenhuma faixa</div>
+          <div class="player-track-sub">Assimilação RPG</div>
+        </div>
+        <div class="player-row2">
+          <span class="player-time" id="player-time-current">00:00</span>
+          <span class="player-time-sep">/</span>
+          <span class="player-time" id="player-time-total">00:00</span>
+          <button class="player-btn player-btn-shuffle" id="player-btn-shuffle" title="Aleatório">
+            <svg id="player-shuffle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" style="opacity:0.4;">
+              <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5" />
+            </svg>
+          </button>
+          <button class="player-btn player-btn-repeat" id="player-btn-repeat" title="Repetir">
+            <svg id="player-repeat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" style="opacity:0.4;">
+              <path d="M4 4v5h5M20 20v-5h-5" />
+              <path d="M16 4a8 8 0 014.24 3.76M8 20a8 8 0 01-4.24-3.76" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="player-actions">
+        <button class="player-btn player-btn-prev" id="player-btn-prev" title="Anterior">
+          <svg viewBox="0 0 20 20" fill="currentColor">
+            <path d="M5 5h1.5v10H5V5zm3 5l7-5v10l-7-5z" />
+          </svg>
+        </button>
+        <button class="player-btn player-btn-play" id="player-btn-play" title="Play/Pause">
+          <svg viewBox="0 0 20 20" fill="currentColor">
+            <path id="player-play-icon" d="M6.5 4.5l9 5.5-9 5.5V4.5z" />
+          </svg>
+        </button>
+        <button class="player-btn player-btn-next" id="player-btn-next" title="Próxima">
+          <svg viewBox="0 0 20 20" fill="currentColor">
+            <path d="M13.5 5H15v10h-1.5V5zm-7 5l7-5v10l-7-5z" />
+          </svg>
+        </button>
+      </div>
+      <div class="player-volume-wrap">
+        <button class="player-btn" id="player-btn-volume" title="Volume">
+          <svg id="player-volume-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"
+            stroke-linecap="round">
+            <path d="M9 4L5 7.5H2v5h3l4 3.5V4z" />
+            <path d="M15.5 5.5a7 7 0 010 9M13 8a3.5 3.5 0 010 4" />
+          </svg>
+        </button>
+        <input type="range" class="player-volume-slider" id="player-volume-slider" min="0" max="1" step="0.05"
+          value="0.8">
+      </div>
+      <button class="player-btn player-btn-expand" id="player-btn-expand" title="Lista de faixas">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <polyline points="4 8 10 14 16 8" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Overlay de Rolagem (Canto Superior Direito) -->
+  <div id="dice-overlay" class="dice-overlay hidden">
+    <div class="dice-overlay-header">
+      <span class="overlay-title">🎲 ROLANDO DADOS</span>
+    </div>
+    <div class="dice-overlay-canvas-container">
+      <div id="dice-box-3d"></div>
+    </div>
+  </div>
+
+
+  <!-- Scripts -->
+  <script src="dice/libs/three.min.js" defer></script>
+  <script src="dice/libs/cannon.min.js" defer></script>
+  <script src="dice/libs/teal.js" defer></script>
+  <script src="dice/dice.js" defer></script>
+  <script type="module" src="app.js"></script>
+
+  <!-- Registro de Service Worker para suporte offline -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('Service Worker registrado com sucesso:', reg.scope))
+          .catch(err => console.error('Erro ao registrar Service Worker:', err));
+      });
+    }
+  </script>
+</body>
+
+</html>
