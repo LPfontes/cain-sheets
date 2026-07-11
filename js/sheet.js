@@ -78,7 +78,7 @@ export function renderStressHealthSheet() {
     if (img) el.stressTrackerSheet.appendChild(img);
     const maxStress = Math.max(0, (char.stressMax || 6) - (char.injuries || 0));
     const current = Math.min(char.stressCurrent, maxStress);
-    const total = 6;
+    const total = char.stressMax || 6;
     const rotations = [11, 6, 4, 8, -6, -11];
     for (let i = 1; i <= total; i++) {
       const line = document.createElement("div");
@@ -101,9 +101,20 @@ export function renderStressHealthSheet() {
   renderMissionsSurvived();
 
   if (el.afflictionsListSheet) {
-    el.afflictionsListSheet.innerHTML = (char.afflictions || []).map(a =>
-      `<span class="cain-affliction-tag">${a.name || a}</span>`
-    ).join("") || `<span class="cain-empty">${t("common.none")}</span>`;
+    const list = char.afflictions || [];
+    el.afflictionsListSheet.innerHTML = list.map((a, idx) => {
+      const name = a.name || a;
+      return `<span class="cain-affliction-tag btn-remove-affliction" data-index="${idx}" style="cursor: pointer;" title="${a.desc || 'Sem descrição (Clique para remover)'}">${name} <span style="margin-left: 4px; font-weight: bold; opacity: 0.7;">×</span></span>`;
+    }).join("") || `<span class="cain-empty">${t("common.none")}</span>`;
+
+    el.afflictionsListSheet.querySelectorAll(".btn-remove-affliction").forEach(tag => {
+      tag.onclick = () => {
+        const idx = parseInt(tag.getAttribute("data-index"));
+        char.afflictions.splice(idx, 1);
+        saveCurrentCharacter();
+        renderStressHealthSheet();
+      };
+    });
   }
 }
 
@@ -223,6 +234,71 @@ export function renderAgendaSheet() {
   }
 }
 
+export function showPowerDetailPopup(power) {
+  const existing = document.querySelector(`.power-detail-popup[data-power="${power.name}"]`);
+  if (existing) return;
+
+  const popup = document.createElement("div");
+  popup.className = "power-detail-popup card-glass";
+  popup.setAttribute("data-power", power.name);
+  popup.style.cssText = `
+    max-width:650px;padding:20px;display:flex;flex-direction:column;gap:12px;
+    position:fixed;z-index:1310;top:30%;left:40%;
+    border:2px solid var(--border-color-dark);
+    backdrop-filter:none;-webkit-backdrop-filter:none;
+    border-radius:var(--radius-md);box-shadow:4px 4px 15px rgba(0,0,0,0.4)
+  `;
+  popup.innerHTML = `
+    <button class="modal-close">&times;</button>
+    <h3 class="modal-title" style="margin:0;text-transform:uppercase;cursor:move;user-select:none">${power.name}</h3>
+    <div style="font-size:14px;line-height:1.5;color:var(--text-secondary);text-align:left;max-height:50vh;overflow-y:auto;padding-right:4px">
+      ${power.desc}
+    </div>
+    <div style="display:flex;justify-content:flex-end;margin-top:10px">
+      <button class="btn btn-secondary btn-popup-ok">Fechar</button>
+    </div>
+  `;
+
+  popup.querySelector(".modal-close").onclick = () => popup.remove();
+  popup.querySelector(".btn-popup-ok").onclick = () => popup.remove();
+
+  popup.addEventListener("click", (e) => {
+    const trigger = e.target.closest("[data-toolbox]");
+    if (trigger) {
+      const termKey = trigger.getAttribute("data-toolbox");
+      import("./toolbox.js").then(({ openToolbox }) => {
+        openToolbox(termKey);
+      });
+    }
+  });
+
+  const header = popup.querySelector(".modal-title");
+  let isDragging = false, startX, startY, initialLeft, initialTop;
+  const onMouseMove = (e) => {
+    if (!isDragging) return;
+    popup.style.left = `${initialLeft + e.clientX - startX}px`;
+    popup.style.top = `${initialTop + e.clientY - startY}px`;
+  };
+  const onMouseUp = () => {
+    isDragging = false;
+    window.removeEventListener("mousemove", onMouseMove);
+    window.removeEventListener("mouseup", onMouseUp);
+  };
+  header.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    const rect = popup.getBoundingClientRect();
+    initialLeft = rect.left;
+    initialTop = rect.top;
+    e.preventDefault();
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+  });
+
+  document.body.appendChild(popup);
+}
+
 export function renderBlasphemiesSheet() {
   const char = state.currentCharacter;
   if (!char || !el.blasphemiesListSheet) return;
@@ -243,31 +319,78 @@ export function renderBlasphemiesSheet() {
             </div>`;
       }
 
-      const activePowers = ["Canalizar", "Aprimorar", "Invocar"].filter(p => (char.blasphemyPowers || []).includes(p));
+      const activePowers = (b.powers || []).filter(p => (char.blasphemyPowers || []).includes(p.name));
 
-      return `<div class="cain-blasphemy-card card-glass">
-              <div class="cain-blasphemy-name">${b.name}</div>
-              <div class="cain-blasphemy-desc">${b.desc}</div>
-              ${b.passive ? `<div class="cain-blasphemy-passive" style="margin-top: 8px; font-weight: 600; padding: 6px; border-left: 2px solid var(--stamp-red); background: rgba(141,36,40,0.05); border-radius: 4px; line-height: 1.4;"><strong>Passiva:</strong> ${b.passive}</div>` : ''}
-              ${activePowers.length ? `
-                <div class="cain-blasphemy-powers" style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px;">
-                  <strong style="font-size: 0.9em; color: var(--stamp-red);">Poderes Selecionados:</strong>
-                  <ul style="margin: 4px 0 0 0; padding-left: 16px; color: var(--text-secondary); display: flex; flex-direction: column; gap: 4px;">
-                    ${activePowers.map(powerName => {
-        const customPower = b.powers?.find(p => p.name === powerName);
-        const descTemplate = customPower
-          ? customPower.desc
-          : (powerName === "Canalizar" ? `Canalize o poder da ${b.name} para infligir dano ou criar um efeito imediato.` :
-            powerName === "Aprimorar" ? `Aprimore uma ação existente usando o poder da ${b.name}.` :
-              powerName === "Invocar" ? `Invoque um efeito duradouro da ${b.name} que persiste por uma cena.` : "");
-        return `<li><strong>${powerName}</strong>: ${descTemplate}</li>`;
-      }).join("")}
-                  </ul>
-                </div>
-              ` : ''}
+      return `<div class="cain-blasphemy-card card-glass cain-blasphemy-accordion-card">
+              <button class="cain-blasphemy-card-trigger">
+                <span class="cain-blasphemy-name">${b.name}</span>
+                <span class="card-arrow">▼</span>
+              </button>
+              <div class="cain-blasphemy-card-content">
+                <div class="cain-blasphemy-desc">${b.desc}</div>
+                ${b.passive ? `<div class="cain-blasphemy-passive"><strong>Passiva:</strong> ${b.passive}</div>` : ''}
+                ${activePowers.length ? `
+                  <div class="cain-blasphemy-powers" style="margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px;">
+                    <strong class="cain-blasphemy-powers-title">Poderes Selecionados:</strong>
+                    <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 6px;">
+                      ${activePowers.map(p => `
+                        <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; padding: 6px 10px;">
+                          <span style="font-weight: bold; font-family: var(--font-heading); text-transform: uppercase; font-size: 13px; color: var(--text-secondary);">${p.name}</span>
+                          <button type="button" class="btn btn-sm btn-sheet-detail-power" data-blasphemy-id="${b.id}" data-power-name="${p.name}" style="font-size: 11px; padding: 3px 8px;">Detalhes</button>
+                        </div>
+                      `).join("")}
+                    </div>
+                  </div>
+                ` : ''}
+              </div>
             </div>`;
     }).join("")
     : `<span class="cain-empty">${t("sheet.blasphemies.none")}</span>`;
+
+  // Attach event listeners for card triggers
+  el.blasphemiesListSheet.querySelectorAll(".cain-blasphemy-card-trigger").forEach(trigger => {
+    trigger.addEventListener("click", () => {
+      const card = trigger.closest(".cain-blasphemy-accordion-card");
+      const content = card.querySelector(".cain-blasphemy-card-content");
+      const arrow = trigger.querySelector(".card-arrow");
+      const isOpen = card.classList.contains("open");
+
+      if (isOpen) {
+        content.style.maxHeight = content.scrollHeight + "px";
+        content.offsetHeight; // force reflow
+        card.classList.remove("open");
+        content.style.maxHeight = "0";
+        if (arrow) arrow.textContent = "▼";
+      } else {
+        card.classList.add("open");
+        content.style.maxHeight = content.scrollHeight + "px";
+        const handleTransitionEnd = (e) => {
+          if (e.propertyName === "max-height" && card.classList.contains("open")) {
+            content.style.maxHeight = "none";
+            content.removeEventListener("transitionend", handleTransitionEnd);
+          }
+        };
+        content.addEventListener("transitionend", handleTransitionEnd);
+        if (arrow) arrow.textContent = "▲";
+      }
+    });
+  });
+
+  // Attach event listeners for sheet power detail clicks
+  el.blasphemiesListSheet.querySelectorAll(".btn-sheet-detail-power").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const bId = btn.getAttribute("data-blasphemy-id");
+      const pName = btn.getAttribute("data-power-name");
+      const b = BLASPHEMIES.find(bb => bb.id === bId);
+      if (b) {
+        const power = (b.powers || []).find(p => p.name === pName);
+        if (power) {
+          showPowerDetailPopup(power);
+        }
+      }
+    });
+  });
 }
 
 export function renderSinMarksSheet() {
@@ -309,89 +432,78 @@ export function renderEquipmentSheet() {
 
   el.equipmentListSheet.innerHTML = `
     <!-- Top summary bar with edits -->
-    <div class="cain-kp-row" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px; background:rgba(255,255,255,0.02); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0.05);">
-      <div>
-        KP: <strong style="color:var(--border-color); font-size:16px;">${kp}</strong>
-        <button class="btn btn-xs btn-kp-adjust" data-action="dec" style="padding:1px 6px; margin-left:6px; background:rgba(255,255,255,0.1); color:white; border:none; border-radius:3px;">-</button>
-        <button class="btn btn-xs btn-kp-adjust" data-action="inc" style="padding:1px 6px; background:rgba(255,255,255,0.1); color:white; border:none; border-radius:3px;">+</button>
+    <div class="cain-kp-row">
+      <div class="cain-kp-col">
+        KP: <span class="cain-kp-value">${kp}</span>
+        <button class="btn-kp-adjust" data-action="dec">-</button>
+        <button class="btn-kp-adjust" data-action="inc">+</button>
       </div>
-      <div>
-        Scrip: <strong style="color:#fbbf24; font-size:16px;">${scrip}</strong>
-        <button class="btn btn-xs btn-scrip-adjust" data-action="dec" style="padding:1px 6px; margin-left:6px; background:rgba(255,255,255,0.1); color:white; border:none; border-radius:3px;">-</button>
-        <button class="btn btn-xs btn-scrip-adjust" data-action="inc" style="padding:1px 6px; background:rgba(255,255,255,0.1); color:white; border:none; border-radius:3px;">+</button>
+      <div class="cain-kp-col">
+        Scrip: <span class="cain-scrip-value">${scrip}</span>
+        <button class="btn-scrip-adjust" data-action="dec">-</button>
+        <button class="btn-scrip-adjust" data-action="inc">+</button>
       </div>
-      <button class="btn btn-xs" id="btn-reset-mission" style="padding:4px 10px; background:var(--border-color); color:black; font-weight:bold; border:none; border-radius:3px;">Iniciar Missão (5 KP)</button>
+      <button id="btn-reset-mission">Iniciar Missão (5 KP)</button>
     </div>
 
-    <!-- Kit Padrão Quick Choose -->
-    <div class="kit-options-container" style="background:rgba(255,255,255,0.01); padding:12px; border-radius:6px; margin-bottom:12px; border:1px dashed rgba(255,255,255,0.08);">
-      <div style="font-weight:600; font-size:11px; margin-bottom:8px; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.5px;">Adicionar do Kit Padrão:</div>
-      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px; margin-bottom:10px;">
-        <button class="btn btn-sm btn-kit-opt" data-name="Uniforme Padrão" data-cost="0" style="text-align:left; font-size:11px; justify-content:space-between; display:flex; padding:6px 8px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:white;">
-          <span>Uniforme Padrão (Colarinho, sapatos, broche)</span> <strong style="color:var(--text-muted);">0 KP</strong>
-        </button>
-        <button class="btn btn-sm btn-kit-opt" data-name="Caderno e Caneta" data-cost="1" style="text-align:left; font-size:11px; justify-content:space-between; display:flex; padding:6px 8px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:white;">
-          <span>Caderno e Caneta</span> <strong style="color:var(--border-color);">1 KP</strong>
-        </button>
-        <button class="btn btn-sm btn-kit-opt" data-name="Caixa de Fósforos e Lenço" data-cost="1" style="text-align:left; font-size:11px; justify-content:space-between; display:flex; padding:6px 8px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:white;">
-          <span>Fósforos (20 un) e Lenço limpo</span> <strong style="color:var(--border-color);">1 KP</strong>
-        </button>
-        <button class="btn btn-sm btn-kit-opt" data-name="Armas de Serviço" data-cost="2" style="text-align:left; font-size:11px; justify-content:space-between; display:flex; padding:6px 8px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:white;">
-          <span>Armas de Serviço (Fogo CAT 0 & Branca)</span> <strong style="color:var(--border-color);">2 KP</strong>
-        </button>
-      </div>
-
-      <!-- Add Custom Item -->
-      <div style="display:flex; margin-top:8px; gap:6px; align-items:center; border-top:1px solid rgba(255,255,255,0.05); padding-top:10px;">
-        <input type="text" id="custom-item-name" placeholder="Nome do item personalizado..." class="form-control" style="flex:1; font-size:11px; padding:6px 8px; height:28px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); color:white; border-radius:4px;">
-        <input type="number" id="custom-item-cost" placeholder="KP" min="0" max="5" value="1" class="form-control" style="width:50px; font-size:11px; padding:6px 8px; height:28px; text-align:center; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); color:white; border-radius:4px;">
-        <button class="btn btn-sm" id="btn-add-custom-item" style="padding:6px 12px; font-size:11px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:white; border-radius:4px; font-weight:bold;">+ Adicionar</button>
-      </div>
-    </div>
-
-    <!-- Service Weapons upgrading option -->
-    ${hasServiceWeapons ? `
-    <div class="weapon-upgrade-container" style="background:rgba(251,191,36,0.03); padding:12px; border-radius:6px; margin-bottom:12px; border:1px solid rgba(251,191,36,0.15);">
-      <div style="font-weight:600; font-size:12px; margin-bottom:4px; color:#fbbf24; display:flex; align-items:center; gap:6px;">
-        ⚔️ Armas de Serviço (Armaria do CASTLE)
-      </div>
-      <div style="font-size:11px; color:var(--text-muted); margin-bottom:10px; line-height:1.4;">
-        Você pode escolher a estética das suas armas. Podem ser melhoradas em +1 CAT gastando 3 Scrips (máximo CAT 3).
-      </div>
-      <div style="display:flex; flex-direction:column; gap:8px;">
-        <div style="display:flex; align-items:center; gap:8px;">
-          <span style="font-size:11px; color:var(--text-secondary); min-width:60px;">Estética:</span>
-          <input type="text" id="service-weapon-aesthetic" value="${weaponAesthetic}" placeholder="Ex: Revólver pesado e Faca tática..." class="form-control" style="flex:1; font-size:11px; padding:4px 8px; height:24px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); color:white; border-radius:4px;">
-        </div>
-        <div style="display:flex; align-items:center; justify-content:space-between; border-top:1px solid rgba(251,191,36,0.08); padding-top:8px; margin-top:4px;">
-          <span style="font-size:11px; color:var(--text-secondary);">Categoria Atual: <strong style="color:#fbbf24; font-size:12px;">CAT ${weaponCat}</strong></span>
-          <button class="btn btn-xs" id="btn-upgrade-weapon" style="background:#fbbf24; color:black; font-weight:bold; border:none; padding:3px 10px; font-size:10px; border-radius:3px; cursor:pointer;" ${weaponCat >= 3 ? "disabled" : ""}>
-            ${weaponCat >= 3 ? 'Máximo Atingido (CAT 3)' : 'Melhorar (+1 CAT | Custo: 3 Scrip)'}
+    <div class="cain-equip-col-left-split">
+      <!-- Kit Padrão Quick Choose -->
+      <div class="kit-options-container">
+        <div class="kit-options-title">Adicionar do Kit Padrão:</div>
+        <div class="kit-options-grid">
+          <button class="btn-kit-opt" data-name="Uniforme Padrão" data-cost="0">
+            <span>Uniforme Padrão (Colarinho, sapatos, broche)</span>
+            <span class="btn-kit-opt-cost-free">0 KP</span>
+          </button>
+          <button class="btn-kit-opt" data-name="Caderno e Caneta" data-cost="1">
+            <span>Caderno e Caneta</span>
+            <span class="btn-kit-opt-cost">1 KP</span>
+          </button>
+          <button class="btn-kit-opt" data-name="Caixa de Fósforos e Lenço" data-cost="1">
+            <span>Fósforos (20 un) e Lenço limpo</span>
+            <span class="btn-kit-opt-cost">1 KP</span>
+          </button>
+          <button class="btn-kit-opt" data-name="Armas de Serviço" data-cost="2">
+            <span>Armas de Serviço (Fogo CAT 0 & Branca)</span>
+            <span class="btn-kit-opt-cost">2 KP</span>
           </button>
         </div>
+
+        <!-- Add Custom Item -->
+        <div class="custom-item-row">
+          <input type="text" id="custom-item-name" placeholder="Nome..." class="custom-item-name-input">
+          <input type="text" id="custom-item-desc" placeholder="Descrição/Detalhes..." class="custom-item-desc-input">
+          <input type="number" id="custom-item-cost" placeholder="KP" min="0" max="5" value="1" class="custom-item-cost-input">
+          <button id="btn-add-custom-item">Adicionar</button>
+        </div>
       </div>
     </div>
-    ` : ''}
-
-    <!-- Equipped list -->
-    <div style="font-weight:600; font-size:11px; margin-bottom:8px; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.5px;">Itens Equipados na Missão:</div>
-    <div class="cain-equipped-items-list" style="display:flex; flex-direction:column; gap:6px;">
-      ${equipment.length
-      ? equipment.map((eq, index) =>
-        `<div class="cain-equip-item" style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:rgba(0,0,0,0.2); border-radius:4px; border-left:3px solid ${eq.name === "Armas de Serviço" ? "#fbbf24" : "var(--border-color)"};">
-              <div>
-                <span class="cain-equip-name" style="font-weight:500;">${eq.name}</span>
-                ${eq.name === "Armas de Serviço" ? `<div style="font-size:10px; color:var(--text-muted); margin-top:2px;">CAT ${eq.cat || 0} • ${eq.aesthetic || "Padrão"}</div>` : ""}
-              </div>
-              <div style="display:flex; align-items:center; gap:8px;">
-                <span class="cain-equip-cost" style="font-size:10px; background:rgba(255,255,255,0.05); padding:2px 6px; border-radius:4px;">${eq.kpCost} KP</span>
-                <button class="btn-remove-item" data-index="${index}" style="background:none; border:none; color:#f87171; cursor:pointer; font-size:14px; padding:0 4px; line-height:1;">&times;</button>
-              </div>
-            </div>`
-      ).join("")
-      : `<span class="cain-empty">${t("sheet.equipment.none")}</span>`}
-    </div>
   `;
+
+  const equippedContainer = document.getElementById("equipped-items-list-sheet");
+  if (equippedContainer) {
+    equippedContainer.innerHTML = `
+      <div class="cain-equipped-items-container">
+        <div class="cain-equipped-items-title">Itens Equipados na Missão:</div>
+        <div class="cain-equipped-items-list">
+          ${equipment.length
+        ? equipment.map((eq, index) =>
+          `<div class="cain-equip-item ${eq.name === "Armas de Serviço" ? "service-weapon" : "normal-item"}">
+                  <div>
+                    <span class="cain-equip-name">${eq.name}</span>
+                    ${eq.name === "Armas de Serviço" ? `<div class="cain-equip-meta">CAT ${eq.cat || 0} • ${eq.aesthetic || "Padrão"}</div>` : (eq.desc ? `<div class="cain-equip-meta">${eq.desc}</div>` : "")}
+                  </div>
+                  <div class="cain-equip-right">
+                    <span class="cain-equip-cost">${eq.kpCost} KP</span>
+                    <button class="btn-remove-item" data-index="${index}">&times;</button>
+                  </div>
+                </div>`
+        ).join("")
+        : `<span class="cain-empty">${t("sheet.equipment.none")}</span>`}
+        </div>
+      </div>
+    `;
+  }
 
   // Attach event listeners dynamically
   // KP Adjust
@@ -466,8 +578,10 @@ export function renderEquipmentSheet() {
   // Add Custom Item
   el.equipmentListSheet.querySelector("#btn-add-custom-item")?.addEventListener("click", () => {
     const nameInput = el.equipmentListSheet.querySelector("#custom-item-name");
+    const descInput = el.equipmentListSheet.querySelector("#custom-item-desc");
     const costInput = el.equipmentListSheet.querySelector("#custom-item-cost");
     const name = nameInput.value.trim();
+    const desc = descInput ? descInput.value.trim() : "";
     const cost = parseInt(costInput.value) || 0;
 
     if (!name) {
@@ -482,7 +596,7 @@ export function renderEquipmentSheet() {
 
     char.kitPoints = kp - cost;
     if (!char.equipment) char.equipment = [];
-    char.equipment.push({ name, kpCost: cost });
+    char.equipment.push({ name, kpCost: cost, desc });
 
     saveCurrentCharacter();
     renderEquipmentSheet();
@@ -515,7 +629,8 @@ export function renderEquipmentSheet() {
   }
 
   // Remove Item
-  el.equipmentListSheet.querySelectorAll(".btn-remove-item").forEach(btn => {
+  const removeButtons = equippedContainer ? equippedContainer.querySelectorAll(".btn-remove-item") : [];
+  removeButtons.forEach(btn => {
     btn.addEventListener("click", () => {
       const idx = parseInt(btn.getAttribute("data-index"));
       const removed = equipment[idx];
@@ -579,10 +694,11 @@ export function renderPsycheBursts() {
   if (!char) return;
   const group = document.getElementById("psyche-checkbox-group");
   if (!group) return;
+  const psycheMax = char.psycheMax !== undefined ? char.psycheMax : 3;
 
-  const current = char.psycheBursts !== undefined ? char.psycheBursts : 3;
+  const current = char.psycheBursts !== undefined ? char.psycheBursts : 0;
   group.innerHTML = "";
-  for (let i = 1; i <= 3; i++) {
+  for (let i = 1; i <= psycheMax; i++) {
     const label = document.createElement("label");
     const checked = i <= current;
     label.className = `psyche-checkbox ${checked ? 'checked' : ''}`;
@@ -619,14 +735,15 @@ export function renderSinTracker() {
   // Alienação modifier check
   const hasAliena = char.agendaSkill === "Alienação" || char.agendaSkill === "Alienação (Alienação)";
 
-  let sinLimit = 10 - 2 * sinMarksCount - 1 * extraBlasphemies;
+  const sinMax = char.sinMax !== undefined ? char.sinMax : 10;
+  let sinLimit = sinMax - 2 * sinMarksCount - 1 * extraBlasphemies;
   if (hasAliena) {
     sinLimit += 2;
   }
-  sinLimit = Math.max(0, Math.min(10, sinLimit));
+  sinLimit = Math.max(0, Math.min(sinMax, sinLimit));
 
   group.innerHTML = "";
-  for (let i = 1; i <= 10; i++) {
+  for (let i = 1; i <= sinMax; i++) {
     const box = document.createElement("div");
     const isLocked = i > sinLimit;
     const isChecked = i <= sinCurrent && !isLocked;

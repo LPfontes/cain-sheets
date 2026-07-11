@@ -76,8 +76,8 @@ export function renderCainRollPanel() {
           <input type="checkbox" id="cain-use-psyche" ${usePsyche && psycheAvailable > 0 ? 'checked' : ''} ${psycheAvailable <= 0 ? 'disabled' : ''}>
           Psyche Burst <span class="cain-psyche-badge">${psycheAvailable}</span>
         </label>
-        <label class="cain-divine-agony-toggle ${divineAgonyUsed || piedadeAvailable <= 0 ? 'disabled' : ''}">
-          <input type="checkbox" id="cain-use-divine-agony" ${useDivineAgony ? 'checked' : ''} ${divineAgonyUsed || piedadeAvailable <= 0 ? 'disabled' : ''}>
+        <label class="cain-divine-agony-toggle">
+          <input type="checkbox" id="cain-use-divine-agony" ${useDivineAgony ? 'checked' : ''}>
           Agonia Divina <span class="cain-piedade-badge">${piedadeAvailable}</span>
         </label>
       </div>
@@ -149,12 +149,6 @@ export function executeCainRoll() {
 
   const useDivineAgony = state.cainRollState?.useDivineAgony || false;
   const piedade = char.piedadeCurrent || 0;
-  if (useDivineAgony && (char.divineAgonyUsed || piedade <= 0)) {
-    alert("Agonia Divina não disponível!");
-    state.cainRollState.useDivineAgony = false;
-    renderCainRollPanel();
-    return;
-  }
 
   const isDifficult = state.cainRollState?.isDifficult || false;
 

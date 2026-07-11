@@ -676,6 +676,7 @@
 .sheet-tab-panel {
   display: none;
   width: 100%;
+  height: 100%;
 }
 
 .sheet-tab-panel.active {
@@ -1744,11 +1745,12 @@
 }
 
 .stress-ctrl-btn {
-  width: 40px;
-  height: 40px;
-  font-size: 20px;
+  width: var(--stress-input-size, 40px);
+  height: var(--stress-input-size, 40px);
+  font-size: calc(var(--stress-input-size, 40px) * 0.5);
   font-weight: bold;
   padding: 0;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
 }
@@ -1916,7 +1918,6 @@
   }
 }
 
-.hook-track-header {}
 
 .hook-name-input {
   width: 150px;
@@ -1980,7 +1981,8 @@
 }
 
 .psyche-checkbox-group {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   align-items: center;
   gap: 8px;
 }
@@ -2225,7 +2227,8 @@
 }
 
 .injury-checkbox-group {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
   align-items: center;
   gap: 6px;
 }
@@ -2437,6 +2440,7 @@
 .cain-blasphemies-list {
   display: flex;
   flex-direction: column;
+  margin-top: 6px;
   gap: 8px;
 }
 
@@ -2469,11 +2473,146 @@
   border-radius: 8px;
 }
 
+.cain-blasphemy-passive {
+  margin-top: 8px;
+  font-weight: 600;
+  padding: 6px;
+  border-left: 2px solid var(--stamp-red);
+  background: rgba(141, 36, 40, 0.05);
+  border-radius: 4px;
+  line-height: 1.4;
+  font-size: var(--font-size-sm);
+}
+
+.cain-blasphemy-powers {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 8px;
+  margin-top: 8px;
+}
+
+.cain-blasphemy-powers-title {
+  font-size: 0.9em;
+  color: var(--stamp-red);
+  font-weight: bold;
+}
+
+.cain-blasphemy-accordion {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cain-blasphemy-accordion-item {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+  transition: background-color 0.2s ease;
+}
+
+.cain-blasphemy-accordion-item.open {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.cain-blasphemy-accordion-trigger {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-primary);
+  font-weight: bold;
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  font-size: var(--font-size-md);
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.2s ease;
+}
+
+.cain-blasphemy-accordion-trigger:hover {
+  color: var(--stamp-red);
+}
+
+.accordion-arrow {
+  font-size: 10px;
+  transition: transform 0.2s ease;
+  opacity: 0.7;
+}
+
+.cain-blasphemy-accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  border-top: 1px solid transparent;
+}
+
+.cain-blasphemy-accordion-item.open .cain-blasphemy-accordion-content {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cain-blasphemy-accordion-content p {
+  padding: 10px 12px;
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.cain-blasphemy-accordion-card {
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.cain-blasphemy-card-trigger {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-primary);
+  cursor: pointer;
+  text-align: left;
+}
+
+.cain-blasphemy-card-trigger:hover .cain-blasphemy-name {
+  color: var(--stamp-red);
+}
+
+.cain-blasphemy-card-trigger .cain-blasphemy-name {
+  margin-bottom: 0 !important;
+}
+
+.card-arrow {
+  font-size: 12px;
+  transition: transform 0.2s ease;
+  opacity: 0.7;
+}
+
+.cain-blasphemy-card-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease-out;
+}
+
+.cain-blasphemy-accordion-card.open .cain-blasphemy-card-content {
+  padding: 0 12px 12px 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+
 /* Sin Marks */
 .cain-sinmarks-list {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-top: 6px;
 }
 
 .cain-sinmark-card {
@@ -2484,7 +2623,7 @@
   font-family: var(--font-heading);
   font-weight: bold;
   font-size: var(--font-size-md);
-  color: #a78bfa;
+  color: #2c05a3;
   margin-bottom: 4px;
 }
 
@@ -2496,8 +2635,7 @@
 }
 
 .cain-sinmark-penalty {
-  font-size: 11px;
-  color: #f87171;
+  color: #800606;
   padding: 2px 8px;
   background: rgba(248, 113, 113, 0.1);
   border-radius: 4px;
@@ -2505,8 +2643,7 @@
 }
 
 .cain-sinmark-benefit {
-  font-size: 11px;
-  color: #4ade80;
+  color: #065322;
   padding: 2px 8px;
   background: rgba(74, 222, 128, 0.1);
   border-radius: 4px;
@@ -2521,7 +2658,6 @@
 
 .cain-kp-row {
   font-size: var(--font-size-md);
-  margin-bottom: 8px;
   color: var(--text-secondary);
 }
 
@@ -2533,16 +2669,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 6px 10px;
-  background: rgba(0, 0, 0, 0.2);
+  padding: 8px 10px;
+  border: 1px solid var(--border-color-dark);
   border-radius: 4px;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
+
 }
 
 .cain-equip-cost {
-  font-size: 11px;
-  color: var(--text-muted);
-  background: rgba(255, 255, 255, 0.05);
+  font-size: var(--font-size-md);
+  border: 1px solid var(--border-color-dark);
   padding: 2px 8px;
   border-radius: 8px;
 }
@@ -2946,3 +3082,348 @@ input[type="checkbox"].trait-wiz-check:hover,
   border-color: var(--purple, #9a11d7);
   box-shadow: 0 0 6px rgba(154, 17, 215, 0.3);
 }
+
+/* Equipment Tab styles */
+.cain-kp-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cain-kp-col {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cain-kp-value {
+  color: var(--border-color);
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.cain-scrip-value {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.btn-kp-adjust, .btn-scrip-adjust {
+  padding: 6px 8px;
+  background: var(--bg-card-alt);
+  color: var(--ink-dark);
+  border: 1px solid var(--border-color-dark);
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: 900;
+  font-size: 14px;
+}
+
+.btn-kp-adjust:hover, .btn-scrip-adjust:hover {
+  background: var(--bg-paper);
+}
+
+#btn-reset-mission {
+  padding: 4px 10px;
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: var(--font-size-md);
+}
+
+#btn-reset-mission:hover {
+  filter: brightness(1.1);
+}
+
+.kit-options-container {
+  background: rgba(255, 255, 255, 0.01);
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+.kit-options-title {
+  font-weight: 600;
+  font-size: var(--font-size-lg);
+  margin-bottom: 8px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.kit-options-grid {
+  display: grid;
+  gap: 6px;
+}
+
+@media (max-width: 600px) {
+  .kit-options-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.btn-kit-opt {
+  text-align: left;
+  font-weight: 900;
+  justify-content: space-between;
+  display: flex;
+  padding: 6px 8px;
+  background: var(--bg-card-alt);
+  border: 1.5px solid var(--border-color-dark);
+  color: var(--ink-dark);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-kit-opt:hover {
+  background: var(--bg-paper);
+}
+
+.btn-kit-opt-cost {
+  color: var(--border-color);
+}
+
+.btn-kit-opt-cost-free {
+  color: var(--text-muted);
+}
+
+.custom-item-row {
+  display: flex;
+  margin-top: 8px;
+  gap: 6px;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 10px;
+}
+
+.custom-item-name-input {
+  flex: 1;
+  font-size: 11px;
+  padding: 6px 8px;
+  height: 28px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--ink-dark);
+  border-radius: 4px;
+}
+
+.custom-item-desc-input {
+  flex: 1.5;
+  font-size: 11px;
+  padding: 6px 8px;
+  height: 28px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--ink-dark);
+  border-radius: 4px;
+}
+
+.custom-item-cost-input {
+  width: 50px;
+  font-size: 11px;
+  padding: 6px 8px;
+  height: 28px;
+  text-align: center;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--ink-dark);
+  border-radius: 4px;
+}
+
+#btn-add-custom-item {
+  padding: 6px 12px;
+  font-size: 11px;
+  background: var(--bg-card-alt);
+  border: 1.5px solid var(--border-color-dark);
+  color: var(--ink-dark);
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#btn-add-custom-item:hover {
+  background: var(--bg-paper);
+}
+
+.weapon-upgrade-container {
+  background: rgba(251, 191, 36, 0.03);
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(251, 191, 36, 0.15);
+}
+
+.weapon-upgrade-title {
+  font-weight: 600;
+  font-size: 12px;
+  margin-bottom: 4px;
+  color: var(--purple);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.weapon-upgrade-info {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.weapon-upgrade-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.weapon-upgrade-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.weapon-upgrade-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  min-width: 60px;
+}
+
+.weapon-upgrade-input {
+  flex: 1;
+  font-size: 11px;
+  padding: 4px 8px;
+  height: 24px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--ink-dark);
+  border-radius: 4px;
+}
+
+.weapon-upgrade-action-row {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-top: 1px solid rgba(251, 191, 36, 0.08);
+  padding: 6px;
+}
+
+.weapon-upgrade-status {
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+}
+
+.weapon-upgrade-status strong {
+  color: var(--purple);
+  font-size: 12px;
+}
+
+#btn-upgrade-weapon {
+  background: var(--purple);
+  color: black;
+  font-weight: bold;
+  border: none;
+  padding: 3px 10px;
+  font-size: var(--font-size-md);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: filter 0.2s ease;
+}
+
+#btn-upgrade-weapon:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+#btn-upgrade-weapon:disabled {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.cain-equipped-items-title {
+  font-weight: 600;
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cain-equipped-items-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+
+.cain-equip-item.service-weapon {
+  border-left: 3px solid var(--purple)
+}
+
+.cain-equip-item.normal-item {
+  border-left: 3px solid var(--border-color);
+}
+
+.cain-equip-name {
+  font-weight: 500;
+}
+
+.cain-equip-meta {
+  font-size: var(--font-size-sm);
+  margin-top: 2px;
+}
+
+.cain-equip-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cain-equip-cost {
+  font-size: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.btn-remove-item {
+  background: none;
+  border: none;
+  color: #f87171;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0 4px;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.btn-remove-item:hover {
+  color: #ef4444;
+}
+
+/* Equipment Grid Layout (Stacked vertically) */
+.cain-equip-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+/* Split equipment configurations inside left column into 2 side-by-side columns */
+.cain-equip-col-left-split {
+  display: grid;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .cain-equip-col-left-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+

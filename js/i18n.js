@@ -102,13 +102,13 @@ const TRANSLATIONS = {
     "sheet.rollchat.placeholder": "Nenhuma rolagem.",
     "sheet.rollchat.clear": "Limpar",
     "sheet.sin.warning": "RISCO DE VERTER PECADO!",
-    
+
     // Sheet tabs
-    "sheet.tab.agenda": "📜 Agenda",
-    "sheet.tab.blasphemies": "🔥 Blasfêmias",
-    "sheet.tab.sinmarks": "👁️ Marcas do Pecado",
-    "sheet.tab.equip": "🎒 Equip.",
-    "sheet.tab.notes": "✏️ Notas",
+    "sheet.tab.agenda": "Agenda",
+    "sheet.tab.blasphemies": "Blasfêmias",
+    "sheet.tab.sinmarks": "Marcas do Pecado",
+    "sheet.tab.equip": "Equip.",
+    "sheet.tab.notes": "Notas",
 
     // Dynamic Sheet Content
     "sheet.agenda.activeSkill": "Habilidade de Agenda Ativa",
@@ -143,12 +143,6 @@ const TRANSLATIONS = {
     "common.degree": "Grau",
     "common.conflict": "Conflito",
 
-    // Sheet types
-    "sheet.type.refugio": "🏕️ Refúgio",
-    "sheet.type.regiao": "🗺️ Região",
-    "sheet.type.conflito": "⚔️ Conflito",
-    "sheet.type.local": "📍 Local",
-
     // Landing card options
     "landing.card.export": "Exportar Ficha",
     "landing.card.duplicate": "Duplicar Ficha",
@@ -180,7 +174,7 @@ const TRANSLATIONS = {
     "skills.Connection": "Conexão",
     "skills.Psique": "Psique",
     "sheet.profile.xid.placeholder": "CX-0000",
-    "sheet.profile.agenda.placeholder": "Agenda pessoal",
+    "sheet.profile.agenda.placeholder": "Agenda",
     "sheet.profile.blasphemy.placeholder": "Blasfêmia",
   },
   en: {
@@ -272,7 +266,7 @@ const TRANSLATIONS = {
     "sheet.roll": "Roll Dice",
     "sheet.change.photo": "Change Photo",
     "sheet.piedade": "Mercy",
-    "sheet.divine.agony": "⚡ Divine Agony",
+    "sheet.divine.agony": "Divine Agony",
     "sheet.divine.agony.active": "Active! +{bonus}D on this roll",
     "sheet.age": "Age",
     "sheet.cut": "Cut:",
@@ -287,11 +281,11 @@ const TRANSLATIONS = {
     "sheet.sin.warning": "RISK OF SIN OVERFLOW!",
 
     // Sheet tabs
-    "sheet.tab.agenda": "📜 Agenda",
-    "sheet.tab.blasphemies": "🔥 Blasphemies",
-    "sheet.tab.sinmarks": "👁️ Sin Marks",
-    "sheet.tab.equip": "🎒 Equip.",
-    "sheet.tab.notes": "✏️ Notes",
+    "sheet.tab.agenda": "Agenda",
+    "sheet.tab.blasphemies": "Blasphemies",
+    "sheet.tab.sinmarks": "Sin Marks",
+    "sheet.tab.equip": "Equip.",
+    "sheet.tab.notes": "Notes",
 
     // Dynamic Sheet Content
     "sheet.agenda.activeSkill": "Active Agenda Skill",
@@ -325,12 +319,6 @@ const TRANSLATIONS = {
     "common.noName": "No name",
     "common.degree": "Grade",
     "common.conflict": "Conflict",
-
-    // Sheet types
-    "sheet.type.refugio": "🏕️ Refuge",
-    "sheet.type.regiao": "🗺️ Region",
-    "sheet.type.conflito": "⚔️ Conflict",
-    "sheet.type.local": "📍 Location",
 
     // Landing card options
     "landing.card.export": "Export Sheet",

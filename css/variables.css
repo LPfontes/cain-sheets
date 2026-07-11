@@ -70,8 +70,6 @@
 
 
   /* Mantendo aliases legados para não quebrar lógica JS */
-  --border-color: var(--stamp-cyan);
-  --border-color: var(--stamp-cyan-dark);
   --color-rust: var(--stamp-red);
   --color-rust-glow: #be3135;
   --color-bronze: #8b6508;
@@ -137,6 +135,7 @@ body {
   flex-direction: column;
   overflow: hidden;
   letter-spacing: 0.01em;
+  font-weight: bold;
 }
 
 /* Textura de papel via SVG noise inline */
@@ -238,6 +237,7 @@ select,
 input[type="text"],
 input[type="number"],
 textarea {
+  padding: 6px;
   background: var(--bg-input);
   border: 1px solid var(--border-color);
   color: var(--ink-dark);
@@ -319,7 +319,7 @@ optgroup {
 
 .btn-success {
   background-color: #000000;
-  color: white;  
+  color: white;
   border-color: #082030;
   box-shadow: 2px 2px 0 #082030;
 }
@@ -354,6 +354,30 @@ optgroup {
   font-size: var(--font-size-xs);
 }
 
+.btn-primary {
+  color: var(--ink-on-dark);
+  border-color: #082030;
+  box-shadow: 2px 2px 0 #082030;
+}
+
+.btn-primary:hover:not(:disabled) {
+
+  box-shadow: 1px 1px 0 #082030;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--ink-dark);
+  border-color: var(--border-color-dark);
+  box-shadow: 2px 2px 0 var(--border-color-dark);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--bg-paper);
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--border-color-dark);
+}
+
 .btn-blue {
   background-color: var(--stamp-cyan-dark);
   border-color: #082030;
@@ -362,8 +386,7 @@ optgroup {
 }
 
 .btn-blue:hover:not(:disabled) {
-  background-color: var(--stamp-cyan);
-  transform: translate(1px, 1px);
+ 
   box-shadow: 1px 1px 0 #082030;
 }
 
@@ -427,4 +450,9 @@ optgroup {
 .card-glass {
   background: var(--bg-card);
   position: relative;
+}
+
+.power-detail-popup.card-glass {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }

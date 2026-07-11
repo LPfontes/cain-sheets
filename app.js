@@ -1,6 +1,6 @@
 import { el, state, loadCharactersFromStorage, saveCurrentCharacter, loadCharacter, deleteActiveCharacter, importCharacterFile, getCustomTraits, getCustomMutations, updateCloudSyncBadge, saveCurrentCharacterImmediate } from "./js/state.js";
 import { startWizard, wizardPrevStep, wizardNextStep, wizardFinish } from "./js/wizard.js";
-import { openSettingsModal, openExportModal } from "./js/modals.js";
+import { openSettingsModal, openExportModal, openStressSettingsModal } from "./js/modals.js";
 import { ICONS } from "./icons.js";
 import { logger } from "./js/logger.js";
 import { initLandingScreen, showLandingScreen } from "./js/landing.js";
@@ -13,10 +13,15 @@ import { initToolbox } from "./js/toolbox.js";
 // ==========================================
 // INICIALIZAÇÃO DA APLICAÇÃO
 // ==========================================
-document.addEventListener("DOMContentLoaded", () => {
+function initializeApp() {
   logger.info("Aplicação carregada. Inicializando components...");
   renderIcons();
   loadCharactersFromStorage();
+  // Inicializa o tamanho dos controles de estresse
+  const savedStressSize = localStorage.getItem("stress_input_size");
+  if (savedStressSize) {
+    document.documentElement.style.setProperty("--stress-input-size", `${savedStressSize}px`);
+  }
   updateCloudSyncBadge();
 
   // Carrega todos os novos tipos de ficha do mundo
@@ -44,7 +49,14 @@ document.addEventListener("DOMContentLoaded", () => {
   import("./js/sheet.js").then(({ initStaticHooksListeners }) => {
     initStaticHooksListeners();
   });
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initializeApp);
+} else {
+  initializeApp();
+}
+
 
 // Renderização dos ícones SVG inline baseados em data-icon
 function renderIcons() {
@@ -85,7 +97,7 @@ function setupEventListeners() {
   if (el.btnSettings) {
     el.btnSettings.addEventListener("click", openSettingsModal);
   }
-  
+    document.getElementById("btn-stress-settings")?.addEventListener("click", openStressSettingsModal);
   // Language toggle
   const btnLanguage = document.getElementById("btn-language");
   if (btnLanguage) {
@@ -551,38 +563,13 @@ function setupEventListeners() {
     import("./js/sheet.js").then(({ renderStressHealthSheet }) => renderStressHealthSheet());
   });
 
-  // Injury Max Inc/Dec (add and remove boxes)
-  document.getElementById("btn-injury-max-dec")?.addEventListener("click", () => {
-    const char = state.currentCharacter;
-    if (!char) return;
-    const maxInjuries = char.injuriesMax !== undefined ? char.injuriesMax : 3;
-    if (maxInjuries > 0) {
-      char.injuriesMax = maxInjuries - 1;
-      if ((char.injuries || 0) > char.injuriesMax) {
-        char.injuries = char.injuriesMax;
-      }
-      const currentMax = Math.max(0, (char.stressMax || 6) - (char.injuries || 0));
-      if (char.stressCurrent > currentMax) {
-        char.stressCurrent = currentMax;
-      }
-      saveCurrentCharacter();
-      import("./js/sheet.js").then(({ renderStressHealthSheet }) => renderStressHealthSheet());
-    }
-  });
-  document.getElementById("btn-injury-max-inc")?.addEventListener("click", () => {
-    const char = state.currentCharacter;
-    if (!char) return;
-    const maxInjuries = char.injuriesMax !== undefined ? char.injuriesMax : 3;
-    char.injuriesMax = maxInjuries + 1;
-    saveCurrentCharacter();
-    import("./js/sheet.js").then(({ renderStressHealthSheet }) => renderStressHealthSheet());
-  });
+  
 
   // Psyche Inc/Dec
   document.getElementById("btn-psyche-dec")?.addEventListener("click", () => {
     const char = state.currentCharacter;
     if (!char) return;
-    char.psycheBursts = Math.max(0, (char.psycheBursts !== undefined ? char.psycheBursts : 3) - 1);
+    char.psycheBursts = Math.max(0, (char.psycheBursts !== undefined ? char.psycheBursts : 0) - 1);
     saveCurrentCharacter();
     import("./js/sheet.js").then(({ renderStressHealthSheet }) => renderStressHealthSheet());
     import("./js/cain-roller.js").then(({ renderCainRollPanel }) => renderCainRollPanel());
@@ -590,7 +577,8 @@ function setupEventListeners() {
   document.getElementById("btn-psyche-inc")?.addEventListener("click", () => {
     const char = state.currentCharacter;
     if (!char) return;
-    char.psycheBursts = Math.min(3, (char.psycheBursts !== undefined ? char.psycheBursts : 3) + 1);
+    const maxPsyche = char.psycheMax !== undefined ? char.psycheMax : 3;
+    char.psycheBursts = Math.min(maxPsyche, (char.psycheBursts !== undefined ? char.psycheBursts : 0) + 1);
     saveCurrentCharacter();
     import("./js/sheet.js").then(({ renderStressHealthSheet }) => renderStressHealthSheet());
     import("./js/cain-roller.js").then(({ renderCainRollPanel }) => renderCainRollPanel());
@@ -600,7 +588,8 @@ function setupEventListeners() {
   document.getElementById("btn-sin-dec")?.addEventListener("click", () => {
     const char = state.currentCharacter;
     if (!char) return;
-    char.sinCurrent = Math.max(0, (char.sinCurrent || 0) - 1);
+    const maxSin = char.sinMax !== undefined ? char.sinMax : 10;
+    char.sinCurrent = Math.min(maxSin, (char.sinCurrent || 0) + 1);
     saveCurrentCharacter();
     import("./js/sheet.js").then(({ renderStressHealthSheet }) => renderStressHealthSheet());
   });
@@ -616,7 +605,8 @@ function setupEventListeners() {
   document.getElementById("btn-piedade-dec")?.addEventListener("click", () => {
     const char = state.currentCharacter;
     if (!char) return;
-    char.piedadeCurrent = Math.max(0, (char.piedadeCurrent || 0) - 1);
+    const maxPiedade = char.piedadeMax !== undefined ? char.piedadeMax : 3;
+    char.piedadeCurrent = Math.min(maxPiedade, (char.piedadeCurrent || 0) + 1);
     saveCurrentCharacter();
     updatePiedadeDisplay();
   });
@@ -628,20 +618,6 @@ function setupEventListeners() {
     updatePiedadeDisplay();
   });
 
-  // Piedade Checkboxes
-  [1, 2, 3].forEach(n => {
-    document.getElementById(`piedade-check-${n}`)?.addEventListener("change", () => {
-      const char = state.currentCharacter;
-      if (!char) return;
-      let count = 0;
-      [1, 2, 3].forEach(i => {
-        if (document.getElementById(`piedade-check-${i}`)?.checked) count++;
-      });
-      char.piedadeCurrent = count;
-      saveCurrentCharacter();
-      updatePiedadeDisplay();
-    });
-  });
 
   // Agonia Divina
   document.getElementById("btn-divine-agony")?.addEventListener("click", () => {
@@ -689,15 +665,9 @@ function setupEventListeners() {
 
   // Add Sin Mark
   document.getElementById("btn-add-sin-mark")?.addEventListener("click", () => {
-    const names = ["olho_do_pecado", "toque_necrosado", "lingua_do_abismo", "sede_de_sangue", "marca_da_condenacao"];
-    const input = prompt(`Adicionar Marca do Pecado (ID):\nDisponíveis: ${names.join(", ")}`);
-    if (!input) return;
-    const char = state.currentCharacter;
-    if (!char) return;
-    if (!char.sinMarks) char.sinMarks = [];
-    char.sinMarks.push(input.trim());
-    saveCurrentCharacter();
-    import("./js/sheet.js").then(({ renderSinMarksSheet }) => renderSinMarksSheet());
+    import("./js/modals/sinmarks-modal.js").then(({ openSinMarksModal }) => {
+      openSinMarksModal();
+    });
   });
 
   // Add Hook
@@ -713,7 +683,26 @@ function setupEventListeners() {
   });
 
 }
-
+// Add Affliction
+  document.getElementById("btn-add-affliction")?.addEventListener("click", () => {
+    const char = state.currentCharacter;
+    const nameEl = document.getElementById("input-affliction-name");
+    const descEl = document.getElementById("input-affliction-desc");
+    if (!nameEl || !descEl) return;
+    const name = nameEl.value.trim();
+    const desc = descEl.value.trim();
+    if (name) {
+      if (!char.afflictions) char.afflictions = [];
+       char.afflictions.push({ name, desc });
+      saveCurrentCharacter();
+       // Clear inputs
+      nameEl.value = "";
+      descEl.value = "";
+      import("./js/sheet.js").then(({ renderStressHealthSheet }) => renderStressHealthSheet());
+    }else {
+      alert("Por favor, digite pelo menos o nome da aflição.");
+    }
+  });
 function updateLanguageButton() {
   const btnLanguage = document.getElementById("btn-language");
   if (btnLanguage) {
@@ -764,22 +753,34 @@ function updatePiedadeDisplay() {
   const char = state.currentCharacter;
   if (!char) return;
   
-  const piedade = char.piedadeCurrent || 0;
-  let remaining = piedade;
-  [1, 2, 3].forEach(n => {
-    const cb = document.getElementById(`piedade-check-${n}`);
-    if (cb) {
-      const isChecked = remaining > 0;
-      cb.checked = isChecked;
-      const label = cb.closest(".piedade-checkbox");
-      if (label) {
-        if (isChecked) label.classList.add("checked");
-        else label.classList.remove("checked");
-      }
-      if (remaining > 0) remaining--;
+  const group = document.getElementById("piedade-checkbox-group");
+  if (group) {
+    const piedadeMax = char.piedadeMax !== undefined ? char.piedadeMax : 3;
+    const piedadeCurrent = char.piedadeCurrent || 0;
+    group.innerHTML = "";
+    for (let i = 1; i <= piedadeMax; i++) {
+      const checked = i <= piedadeCurrent;
+      const label = document.createElement("label");
+      label.className = `piedade-checkbox ${checked ? 'checked' : ''}`;
+      label.innerHTML = `
+        <input type="checkbox" id="piedade-check-${i}" ${checked ? 'checked' : ''}>
+        <img src="./assets/agonia.webp" class="piedade-icon" alt="Agonia">
+      `;
+      label.querySelector("input").addEventListener("change", () => {
+        const char = state.currentCharacter;
+        if (!char) return;
+        let count = 0;
+        group.querySelectorAll("input").forEach(cb => {
+          if (cb.checked) count++;
+        });
+        char.piedadeCurrent = count;
+        saveCurrentCharacter();
+        updatePiedadeDisplay();
+      });
+      group.appendChild(label);
     }
-  });
-  
+  }
+  const piedade = char.piedadeCurrent || 0;
   const divineBtn = document.getElementById("btn-divine-agony");
   if (divineBtn) {
     divineBtn.disabled = char.divineAgonyUsed || piedade <= 0;

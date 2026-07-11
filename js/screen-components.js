@@ -92,7 +92,7 @@ export function renderRefPanelMulti(label, containerId, ids, stateKey) {
   const addHtml = (available.length > 0 || items.length > 0)
     ? `<div style="margin-top:8px;">
          <button class="btn btn-sm btn-secondary btn-open-ref-modal" data-refcontainer="${containerId}" data-reflabel="${esc(label)}" data-statekey="${stateKey}" data-currentids="${(ids||[]).join(',')}">
-           + Adicionar
+          Adicionar
          </button>
        </div>`
     : "";

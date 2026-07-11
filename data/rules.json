@@ -1,0 +1,33 @@
+{
+  "cat_table": {
+    "1": { "label": "CAT 1 — Iniciante", "skillPoints": 3, "blasphemies": 1, "desc": "Recém-ingresso em CASTLE. Poderes limitados." },
+    "2": { "label": "CAT 2 — Operador", "skillPoints": 5, "blasphemies": 2, "desc": "Já provou seu valor em campo." },
+    "3": { "label": "CAT 3 — Veterano", "skillPoints": 7, "blasphemies": 3, "desc": "Exorcista experiente com poderes consolidados." },
+    "4": { "label": "CAT 4 — Elite", "skillPoints": 9, "blasphemies": 4, "desc": "Força-tarefa de elite. Temido pelos Pecados." },
+    "5": { "label": "CAT 5 — Lenda", "skillPoints": 12, "blasphemies": 5, "desc": "Poder quase incontrolável. Lenda viva." }
+  },
+  "narrative_categories": {
+    "0": "Inferno",
+    "1": "Aparição",
+    "2": "Revenant",
+    "3": "Espectro",
+    "4": "Demônio",
+    "5": "Deus",
+    "6": "Deus-Demônio",
+    "7": "Deus-Demônio Celestial"
+  },
+  "fate_roll": {
+    "1": "Pior resultado",
+    "2": "Resultado ruim",
+    "3": "Resultado ruim",
+    "4": "Bom resultado",
+    "5": "Bom resultado",
+    "6": "Melhor resultado"
+  },
+  "roll_results": {
+    "1": "Pior resultado (Falha crítica ou complicação séria)",
+    "2-3": "Resultado ruim (Sucesso com complicação ou falha simples)",
+    "4-5": "Bom resultado (Sucesso limpo)",
+    "6": "Melhor resultado (Sucesso excepcional ou crítico)"
+  }
+}

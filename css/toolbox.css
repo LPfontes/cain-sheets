@@ -98,6 +98,7 @@
   padding: 10px;
   display: flex;
   flex-direction: column;
+  min-height: 0;
 }
 
 /* Toolbox Tab Navigation */
@@ -139,8 +140,9 @@
 
 /* Glossary quick terms */
 .toolbox-glossary {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 .toolbox-glossary-btn {
@@ -289,4 +291,15 @@
 .toolbox-toggle-tab:hover {
   background: rgba(255, 255, 255, 0.05);
   color: var(--color-rust-glow);
+}
+
+.toolbox-link {
+  color: var(--purple);
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: bold;
+  transition: opacity 0.2s;
+}
+.toolbox-link:hover {
+  opacity: 0.8;
 }

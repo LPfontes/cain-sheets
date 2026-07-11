@@ -517,15 +517,58 @@
           <h3 data-i18n="wizard.step2">Passo 2: Identidade do Exorcista</h3>
           <p class="step-help" data-i18n="wizard.step2.help">Dê um nome ao seu exorcista e decida a aparência dele.
             Anote o número de identificação interna e preencha os detalhes.</p>
-          <div style="display:grid; grid-template-columns: repeat(2,1fr); gap:6px;">
+          <div style="display:grid; grid-template-columns: repeat(2,1fr); gap:12px;">
             <div class="form-group">
               <label for="wiz-name" data-i18n="wizard.name">Nome do Exorcista:</label>
               <input type="text" id="wiz-name" placeholder="Ex: Alex Corvis, Sarah Moon...">
             </div>
             <div class="form-group">
-              <label for="wiz-xid" data-i18n="wizard.xid">Número de Identificação (CID):</label>
+              <label for="wiz-xid" data-i18n="wizard.xid">Número de Identificação (XID):</label>
               <input type="text" id="wiz-xid" placeholder="Ex: CX-4471" maxlength="10"
                 style="text-transform:uppercase;">
+            </div>
+            <div class="form-group">
+              <label for="wiz-cat">Categoria (CAT):</label>
+              <select id="wiz-cat" class="sheet-input-text"
+                style="width: 100%; height: 38px; border: 1.5px solid var(--border-color-dark); background: var(--bg-card-alt); border-radius: var(--radius-sm); font-family: var(--font-body); padding: 0 8px;">
+                <option value="1">CAT 1</option>
+                <option value="2">CAT 2</option>
+                <option value="3">CAT 3</option>
+                <option value="4" selected>CAT 4</option>
+                <option value="5">CAT 5</option>
+                <option value="6">CAT 6</option>
+                <option value="7">CAT 7</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="wiz-cid">CID:</label>
+              <input type="text" id="wiz-cid" placeholder="Ex: CX-0000">
+            </div>
+            <div class="form-group">
+              <label for="wiz-agenda">Agenda:</label>
+              <input type="text" id="wiz-agenda" placeholder="Agenda">
+            </div>
+            <div class="form-group">
+              <label for="wiz-blasfemia">Blasfêmia:</label>
+              <input type="text" id="wiz-blasfemia" placeholder="Blasfêmia">
+            </div>
+            <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; grid-column: span 2;">
+              <div class="form-group">
+                <label for="wiz-sexo">Sexo:</label>
+                <input type="text" id="wiz-sexo" placeholder="Sexo">
+              </div>
+              <div class="form-group">
+                <label for="wiz-cabelo">Cabelo:</label>
+                <input type="text" id="wiz-cabelo" placeholder="Cabelo">
+              </div>
+              <div class="form-group">
+                <label for="wiz-olhos">Olhos:</label>
+                <input type="text" id="wiz-olhos" placeholder="Olhos">
+              </div>
+              <div class="form-group">
+                <label for="wiz-idade">Idade:</label>
+                <input type="text" id="wiz-idade" placeholder="Idade">
+              </div>
             </div>
           </div>
           <div class="form-group">
@@ -649,7 +692,7 @@
                     <div class="id-fields-row">
                       <div class="profile-field">
                         <label for="char-agenda" data-i18n="sheet.agenda">Agenda</label>
-                        <input type="text" id="char-agenda" class="sheet-input-text" placeholder="Agenda pessoal"
+                        <input type="text" id="char-agenda" class="sheet-input-text" placeholder="Agenda"
                           data-i18n-placeholder="sheet.profile.agenda.placeholder">
                       </div>
                       <div class="profile-field">
@@ -739,7 +782,13 @@
                       <!-- JS renderiza linhas de estresse -->
                     </div>
                     <div>
-                      <h3 class="status-header">ESTRESSE</h3>
+                      <h3 class="status-header"
+                        style="display: flex; align-items: center; justify-content: space-between;">
+                        <span>ESTRESSE</span>
+                        <button id="btn-stress-settings" class="btn btn-sm"
+                          style="padding: 2px 6px; font-size: 14px; border: none; background: none; box-shadow: none; cursor: pointer; color: var(--ink-faded);"
+                          title="Definir tamanho dos botões">⚙</button>
+                      </h3>
                       <!-- Coluna esquerda: Feridas -->
                       <div class="stress-left-controls">
                         <!-- Feridas -->
@@ -747,10 +796,7 @@
                         <div class="stress-cell-content">
                           <div class="stress-label-group">
                             <span class="stat-label" data-toolbox="injuries" data-i18n="sheet.injuries">Feridas</span>
-                            <div style="display: flex; gap: 4px; margin-bottom: 6px">
-                              <button id="btn-injury-max-dec" class="btn extra-small-btn">-</button>
-                              <button id="btn-injury-max-inc" class="btn extra-small-btn">+</button>
-                            </div>
+
 
                           </div>
                           <div style="display: flex; gap: 8px;">
@@ -810,40 +856,36 @@
                         <div class="stress-cell-content">
                           <div class="piedade-row" style="margin-bottom: 0;">
                             <span class="stat-label" data-toolbox="piety" data-i18n="sheet.piety">Piedade:</span>
-                            <div class="piedade-checkbox-group" style="display: flex; gap: 8px;">
-                              <label class="piedade-checkbox"><input type="checkbox" id="piedade-check-1"><img
-                                  src="./assets/agonia.webp" class="piedade-icon" alt="Agonia"></label>
-                              <label class="piedade-checkbox"><input type="checkbox" id="piedade-check-2"><img
-                                  src="./assets/agonia.webp" class="piedade-icon" alt="Agonia"></label>
-                              <label class="piedade-checkbox"><input type="checkbox" id="piedade-check-3"><img
-                                  src="./assets/agonia.webp" class="piedade-icon" alt="Agonia"></label>
+                            <div class="piedade-checkbox-group" id="piedade-checkbox-group"
+                              style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+                              <!-- Renderizado dinamicamente -->
                             </div>
                           </div>
                         </div>
                         <button id="btn-piedade-inc" class="btn btn-sm stress-ctrl-btn">+</button>
-
-                        <!-- Agonia Divina Wrapper -->
-                        <div class="divine-agony-wrapper"
-                          style="grid-column: span 3; width: 100%; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 12px; margin-top: 8px;">
-                          <button id="btn-divine-agony" class="btn btn-divine-agony" style="width: 100%;"
-                            title="Agonia Divina: Queima toda Piedade, ganha +1D por Piedade queimada. Uma vez por sessão."
-                            data-i18n="sheet.divine.agony">
-                            Agonia Divina
-                          </button>
-                          <div class="divine-agony-info" id="divine-agony-info" style="display:none;">
-                            Ativado! +<span id="divine-agony-bonus">0</span>D nesta rolagem
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </div>
                   <!-- AFLIGIMENTOS (AFFLICTIONS ROW) -->
-                  <div class="afflictions-row">
+                  <div class="afflictions-row"
+                    style="display: flex; flex-direction: column; gap: 8px; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 12px; margin-top: 8px;">
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                     <span class="stat-label" data-i18n="sheet.afflictions">Aflições:</span>
                     <div id="afflictions-list-sheet" class="afflictions-list"></div>
                   </div>
+                  <div class="affliction-inputs-group"
+                    style="display: flex; gap: 6px; align-items: center; width: 100%;">
+                    <input type="text" id="input-affliction-name" class="sheet-input-text" placeholder="Nome da Aflição"
+                      style="flex: 2; height: 30px; font-size: var(--font-size-xs);">
+                    <input type="text" id="input-affliction-desc" class="sheet-input-text" placeholder="Descrição"
+                      style="flex: 3; height: 30px; font-size: var(--font-size-xs);">
+                    <button id="btn-add-affliction" class="btn" style="padding: 0 10px; height: 30px; font-size: 12px;"
+                      title="Adicionar Aflição">Adicionar</button>
+                  </div>
                 </div>
               </div>
+
 
 
               <!-- ROLAGENS PERSONALIZADAS -->
@@ -861,9 +903,12 @@
             <div class="sheet-cain-right">
               <div class="sheet-redesign-tabs-container">
                 <div class="sheet-redesign-tabs-nav card-glass">
-                  <button class="sheet-tab-btn active" data-tab="tab-cain-agenda" data-i18n="sheet.tab.agenda">Agenda</button>
-                  <button class="sheet-tab-btn" data-tab="tab-cain-blasphemy" data-i18n="sheet.tab.blasphemies">Blasfêmias</button>
-                  <button class="sheet-tab-btn" data-tab="tab-cain-sin-mark" data-i18n="sheet.tab.sinmarks">Marcas do Pecado</button>
+                  <button class="sheet-tab-btn active" data-tab="tab-cain-agenda"
+                    data-i18n="sheet.tab.agenda">Agenda</button>
+                  <button class="sheet-tab-btn" data-tab="tab-cain-blasphemy"
+                    data-i18n="sheet.tab.blasphemies">Blasfêmias</button>
+                  <button class="sheet-tab-btn" data-tab="tab-cain-sin-mark" data-i18n="sheet.tab.sinmarks">Marcas do
+                    Pecado</button>
                   <button class="sheet-tab-btn" data-tab="tab-cain-equip" data-i18n="sheet.tab.equip">Equip.</button>
                   <button class="sheet-tab-btn" data-tab="tab-cain-notes" data-i18n="sheet.tab.notes">Notas</button>
                 </div>
@@ -966,13 +1011,18 @@
 
                   <!-- Aba 5: Equipamento -->
                   <div class="sheet-tab-panel" id="tab-cain-equip">
-                    <h3 class="section-title" data-i18n="sheet.equipment">EQUIPAMENTO</h3>
-                    <div id="equipment-list-sheet" class="cain-equipment-list"></div>
-                    <hr style="border-color:rgba(255,255,255,0.05); margin:12px 0;">
-                    <h3 class="section-title" style="font-size:var(--font-size-sm);" data-i18n="sheet.hooks">GANCHOS
-                      (HOOKS)</h3>
-                    <div id="hooks-list-sheet" class="cain-hooks-list"></div>
-                    <button id="btn-add-hook" class="btn btn-sm" style="margin-top:8px;">+ Hook</button>
+                    <div class="cain-equip-grid-layout">
+                      <!-- Coluna Esquerda: Equipamento -->
+                      <div class="cain-equip-col-left">
+                        <h3 class="section-title" data-i18n="sheet.equipment">EQUIPAMENTO</h3>
+                        <div id="equipment-list-sheet" class="cain-equipment-list"></div>
+                      </div>
+
+                      <!-- Coluna Direita: Equipados & Ganchos -->
+                      <div class="cain-equip-col-right">
+                        <div id="equipped-items-list-sheet"></div>
+                      </div>
+                    </div>
                   </div>
 
                   <!-- Aba 6: Anotações -->
@@ -980,7 +1030,7 @@
                     <h3 class="section-title" data-i18n="sheet.notes">ANOTAÇÕES</h3>
                     <textarea id="char-notes" class="notes-textarea"
                       placeholder="Anotações de missão, contatos, segredos..."
-                      style="min-height: 400px; width: 100%;"></textarea>
+                      style="height: 90%; width: 100%;"></textarea>
                   </div>
                 </div>
               </div>

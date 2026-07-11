@@ -214,6 +214,59 @@ const TOOLBOX_DATA = {
         "Gastar e utilizar poderes de Blasfêmia gera acúmulo de Pecado.",
         "Ao transbordar o Pecado, a semente da Blasfêmia pode causar mutações graves e marcas permanentes."
       ]
+    },
+    temporal_instability: {
+      title: "Instabilidade Temporal",
+      desc: "Muitos dos seus poderes lhe conferem esse gancho.",
+      rules: [
+        "Quando o gancho se resolver, role 1d6:",
+        "<strong>1:</strong> Adicione permanentemente à sua agenda: 'Prove que você é você mesmo'. Se você obtiver esse resultado novamente, verta pecado imediatamente.",
+        "<strong>2:</strong> Ferimentos misteriosos surgem. Você desmaia de dor, ficando fora da cena atual e sofrendo um ferimento.",
+        "<strong>3:</strong> Você desaparece até o descanso. Você retorna se houver uma cena de conflito. Você não se lembra de onde estava. Ao retornar, você sofre 2 de estresse.",
+        "<strong>4:</strong> Você descobre que está vestindo as roupas de outra pessoa. Apague todo o seu equipamento desta missão, mas recupere quaisquer pontos de kit gastos.",
+        "<strong>5:</strong> Seu corpo está diferente. Pelo restante desta missão, escolha uma perícia na qual você tenha 1 ou mais dados. Ela agora rola 0d. Após a missão, você terá tempo para treinar e se acostumar com isso, revertendo este efeito, embora mantendo quaisquer mudanças físicas.",
+        "<strong>6:</strong> Seu rosto parece um pouco diferente. As mudanças são permanentes."
+      ]
+    },
+    sombra: {
+      title: "Sombra",
+      desc: "A Sombra é intangível e invisível para todos, até mesmo para aqueles com sensibilidade psíquica. Ela só pode interagir fracamente com o mundo físico e possui mente e sentidos próprios.",
+      rules: [
+        "Seu alcance é curto a partir de você.",
+        "Ela pode atravessar paredes e superfícies facilmente, mas se retrai para dentro do seu corpo quando exposta a luz forte, impedindo-a de fazer qualquer coisa.",
+        "Você pode se comunicar telepaticamente com ela, mas isso é perigoso e causa 1 ponto de estresse após o término de qualquer interação.",
+        "Ela não tem obrigação de lhe dizer a verdade, a menos que você use seus poderes.",
+        "Você pode se comunicar com ela com segurança usando suas habilidades, e ela conhece o futuro.",
+        "O Administrador responderá por ela."
+      ]
+    },
+    pecado_vinculado: {
+      title: "Pecado Vinculado",
+      desc: "Seu Pecado Vinculado tem forma e habilidades animalescas — você pode determinar qual forma ele assume.",
+      rules: [
+        "Ele pode entender a linguagem, mas não pode falar, e é invisível para humanos.",
+        "Ele pode segui-lo a curta distância, obedecer a ordens simples e usar suas habilidades para fazer qualquer coisa. Suas capacidades gerais são CAT 0.",
+        "Se ele sofrer qualquer estresse, será banido pelo resto da cena; no entanto, você pode absorver psiquicamente todo o estresse sofrido por ele para evitar esse efeito.",
+        "Em uma cena de conflito, você pode sacrificar sua capacidade de agir em seu turno para permitir que seu pecado aja em seu lugar, dando-lhe comandos.",
+        "Caso contrário, ele não age de forma independente nessas cenas."
+      ]
+    },
+    ausencia: {
+      title: "Ausência",
+      desc: "Você pode ganhar este gancho com sua passiva. Se este gancho se encher, você sofre um ferimento e desmaia por alguns instantes.",
+      rules: [
+        "Ao acordar, você estará sem uma parte do corpo (role 1d6). Ela simplesmente desaparece (Um ferimento limpo) como se nunca tivesse existido, deixando um toco ou buraco.",
+        "Ela não retorna, mesmo se você curar o ferimento.",
+        "Se você não tiver mais nenhuma parte do corpo para perder (ao rolar), reduza o resultado em 1. Se o resultado for 0, você perde a cabeça e sofre uma (horripilante) morte instantânea.",
+        "A falta de partes do corpo pode tornar algumas rolagens difíceis ou arriscadas, dependendo da situação.",
+        "Você se adapta a qualquer deficiência após a missão, e ela não tem mais efeitos.",
+        "<strong>1:</strong> Olho",
+        "<strong>2:</strong> Nariz",
+        "<strong>3:</strong> Orelha",
+        "<strong>4:</strong> Dedo",
+        "<strong>5:</strong> Dedo do pé",
+        "<strong>6:</strong> Nada"
+      ]
     }
   },
   en: {
@@ -385,6 +438,59 @@ const TOOLBOX_DATA = {
         "Spending and using Blasphemy powers generates Sin accumulation.",
         "When Sin overflows, the Blasphemy seed can cause severe mutations and permanent marks."
       ]
+    },
+    temporal_instability: {
+      title: "Temporal Instability",
+      desc: "Many of your powers grant you this hook.",
+      rules: [
+        "When the hook resolves, roll 1d6:",
+        "<strong>1:</strong> Permanently add to your agenda: 'Prove that you are yourself'. If you get this result again, immediately trigger sin overflow.",
+        "<strong>2:</strong> Mysterious wounds appear. You pass out from pain, leaving the current scene and suffering an injury.",
+        "<strong>3:</strong> You disappear until you rest. You return if there is a conflict scene. You don't remember where you were. Upon returning, you suffer 2 stress.",
+        "<strong>4:</strong> You find out you are wearing someone else's clothes. Erase all your equipment for this mission, but recover any spent kit points.",
+        "<strong>5:</strong> Your body is different. For the remainder of this mission, choose a skill in which you have 1 or more dice. It now rolls 0d. After the mission, you will have time to train and get used to it, reversing this effect while keeping physical changes.",
+        "<strong>6:</strong> Your face looks slightly different. The changes are permanent."
+      ]
+    },
+    sombra: {
+      title: "Shadow",
+      desc: "The Shadow is intangible and invisible to everyone, even those with psychic sensitivity. It can only interact weakly with the physical world and has its own mind and senses.",
+      rules: [
+        "Its range is short from you.",
+        "It can easily pass through walls and surfaces, but retreats into your body when exposed to bright light, preventing it from doing anything.",
+        "You can communicate telepathically with it, but this is dangerous and causes 1 stress after any interaction ends.",
+        "It is not obligated to tell you the truth, unless you use your powers.",
+        "You can communicate with it safely using your abilities, and it knows the future.",
+        "The GM will answer for it."
+      ]
+    },
+    pecado_vinculado: {
+      title: "Bound Sin",
+      desc: "Your Bound Sin has an animalistic form and abilities — you may determine what form it takes.",
+      rules: [
+        "It can understand language, but cannot speak, and is invisible to humans.",
+        "It can follow you at short range, obey simple orders, and use your skills to do anything. Its general capabilities are CAT 0.",
+        "If it suffers any stress, it will be banished for the rest of the scene; however, you can psychically absorb all stress it suffered to prevent this effect.",
+        "In a conflict scene, you can sacrifice your ability to act on your turn to allow your sin to act in your place, giving it commands.",
+        "Otherwise, it does not act independently in such scenes."
+      ]
+    },
+    ausencia: {
+      title: "Absence",
+      desc: "You can gain this hook through your passive. If this hook fills up, you suffer an injury and pass out for a few moments.",
+      rules: [
+        "When you wake up, you are missing a body part (roll 1d6). It simply disappears (a clean injury) as if it never existed, leaving a stump or hole.",
+        "It does not return, even if you heal the injury.",
+        "If you have no more body parts to lose (when rolling), reduce the result by 1. If the result is 0, you lose your head and suffer (horrifying) instant death.",
+        "Missing body parts can make some rolls difficult or risky, depending on the situation.",
+        "You adapt to any disability after the mission, and it no longer has any effects.",
+        "<strong>1:</strong> Eye",
+        "<strong>2:</strong> Nose",
+        "<strong>3:</strong> Ear",
+        "<strong>4:</strong> Finger",
+        "<strong>5:</strong> Toe",
+        "<strong>6:</strong> Nothing"
+      ]
     }
   }
 };
@@ -408,6 +514,14 @@ const TERM_MAP = {
   "pecado": "sin",
   "pulsos psíquicos": "psyche",
   "piedade": "piety",
+  "instabilidade temporal": "temporal_instability",
+  "temporal instability": "temporal_instability",
+  "ausência": "ausencia",
+  "absence": "ausencia",
+  "sombra": "sombra",
+  "shadow": "sombra",
+  "pecado vinculado": "pecado_vinculado",
+  "bound sin": "pecado_vinculado",
 
   "agenda": "agenda",
   "blasfêmia": "blasphemy",
@@ -430,7 +544,8 @@ const TERM_MAP = {
   "sin": "sin",
   "psychic pulses": "psychic pulses",
   "piety": "piety",
-  "mercy": "mercy"
+  "mercy": "mercy",
+  "temporal instability": "temporal_instability"
 };
 
 let toolboxElement = null;
@@ -438,7 +553,7 @@ let activeTab = "pericias";
 const CATEGORY_MAP = {
   pericias: ["force", "conditioning", "coordination", "covert", "interfacing", "investigation", "surveillance", "negotiation", "authority", "connection", "psique"],
   estresse: ["hooks", "injuries", "sin", "psyche", "psychic pulses", "piety"],
-  habilidade: ["agenda", "blasphemy"]
+  habilidade: ["agenda", "blasphemy","temporal_instability", "ausencia", "sombra", "pecado_vinculado"]
 };
 
 export function initToolbox() {
@@ -468,7 +583,6 @@ export function initToolbox() {
     </div>
     <div class="toolbox-filter-container" style="display: flex; gap: 10px; align-items: center;">
       <input type="text" class="toolbox-search-input" id="toolbox-search" placeholder="Buscar regra ou perícia..." data-i18n-placeholder="toolbox.search.placeholder" style="flex: 1;">
-      <button class="btn-toolbox-close" id="btn-toolbox-close-filter" title="Fechar" style="font-size: 24px; padding: 0; line-height: 1; min-width: auto; background: none; border: none;">&times;</button>
     </div>
     <div class="toolbox-body">
       <div class="toolbox-tabs">

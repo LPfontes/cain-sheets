@@ -73,7 +73,7 @@ function openSheetTypeModal() {
         <span class="type-desc">${t("modal.sheet.type.missao.desc")}</span>
       </div>
       <div class="sheet-type-card" data-type="pecado" tabindex="0">
-        <span class="type-emoji">👁️</span>
+        <span class="type-emoji"></span>
         <span class="type-label" style="color:hsl(28,70%,60%);">${t("modal.sheet.type.pecado")}</span>
         <span class="type-desc">${t("modal.sheet.type.pecado.desc")}</span>
       </div>
@@ -296,8 +296,8 @@ async function _deleteWorldSheet(type, id) {
   if (!confirm(`Excluir este ${labels[type] || "item"}? Esta ação não pode ser desfeita.`)) return;
   const ws = await import("./world-state.js");
   switch (type) {
-    case "missao":  ws.deleteRefugio(id);  break;
-    case "pecado":   ws.deleteRegiao(id);   break;
+    case "missao": ws.deleteRefugio(id); break;
+    case "pecado": ws.deleteRegiao(id); break;
   }
   renderCharactersList();
 }

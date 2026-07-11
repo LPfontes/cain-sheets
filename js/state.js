@@ -166,7 +166,7 @@ export function loadCharactersFromStorage() {
     try {
       state.characters = JSON.parse(data);
       state.characters.forEach(c => {
-        c.psycheBursts = 3;
+        if (c.psycheBursts === undefined) c.psycheBursts = 0;
       });
       logger.info(`${state.characters.length} ficha(s) de Exorcista(s) carregada(s).`);
     } catch (e) {
@@ -200,7 +200,7 @@ export function createTestCharacter() {
     stressMax: 6,
     injuries: 0,
     afflictions: [],
-    psycheBursts: 3,
+    psycheBursts: 0,
     sinCurrent: 0,
     agendaNormal: ["Proteger um civil inocente", "Coletar informações sobre um Pecado"],
     agendaBold: ["Destruir um Pecado maior sozinho"],
@@ -291,7 +291,9 @@ export function loadCharacter(charId) {
     return;
   }
   state.currentCharacter = char;
-  state.currentCharacter.psycheBursts = 3;
+  if (state.currentCharacter.psycheBursts === undefined) {
+    state.currentCharacter.psycheBursts = 0;
+  }
   logger.info(`Carregando Exorcista: "${char.name}" (${charId})`);
   updateCharSelector();
   
@@ -308,6 +310,7 @@ export function loadCharacter(charId) {
   if (el.charBlasfemia) el.charBlasfemia.value = char.blasfemiaText || "";
   if (el.charSexo)     el.charSexo.value     = char.sexo      || "";
   if (el.charCabelo)   el.charCabelo.value   = char.cabelo    || "";
+    if (el.charIdade)    el.charIdade.value    = char.idade     || "";
   if (el.charOlhos)    el.charOlhos.value    = char.olhos     || "";
   if (el.charAltura)   el.charAltura.value   = char.altura    || "";
   if (el.charPeso)     el.charPeso.value     = char.peso      || "";
@@ -455,6 +458,7 @@ function bindIdCardFields() {
     { el: el.charSexo,     key: "sexo" },
     { el: el.charCabelo,   key: "cabelo" },
     { el: el.charOlhos,    key: "olhos" },
+    { el: el.charIdade,    key: "idade" },
     { el: el.charAltura,   key: "altura" },
     { el: el.charPeso,     key: "peso" },
     { el: el.charCid,      key: "cid" },
@@ -478,7 +482,7 @@ export function setCharCat(newCat) {
   saveCurrentCharacter();
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function initializeState() {
   bindIdCardFields();
 
   el.catSelector?.addEventListener("click", (e) => {
@@ -488,4 +492,11 @@ document.addEventListener("DOMContentLoaded", () => {
       setCharCat((state.currentCharacter?.cat || 1) - 1);
     }
   });
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initializeState);
+} else {
+  initializeState();
+}
+

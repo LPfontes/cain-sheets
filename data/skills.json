@@ -1,0 +1,33 @@
+{
+  "physical": {
+    "label": "Físicas",
+    "skills": {
+      "Force": { "name": "Força", "desc": "Força direta, violência, lutar, quebrar, cortar" },
+      "Conditioning": { "name": "Atletismo", "desc": "Deslocamento, correr, escalar, nadar, equilibrar, fadiga" },
+      "Coordination": { "name": "Coordenação", "desc": "Habilidade manual, precisão, atirar, arremessar, pegar" }
+    }
+  },
+  "investigation": {
+    "label": "Investigação",
+    "skills": {
+      "Covert": { "name": "Furtividade", "desc": "Ações secretas, mover-se em silêncio, arrombar fechaduras" },
+      "Interfacing": { "name": "Interface", "desc": "Computadores, hacking, eletrônicos, sistemas" },
+      "Investigation": { "name": "Investigação", "desc": "Analisar registros, pesquisar, deduzir pistas" },
+      "Surveillance": { "name": "Observação", "desc": "Notar detalhes, vigiar, patrulhar, perceber ameaças" }
+    }
+  },
+  "social": {
+    "label": "Sociais",
+    "skills": {
+      "Negotiation": { "name": "Negociação", "desc": "Barganhar, convencer, persuadir, diplomacia" },
+      "Authority": { "name": "Autoridade", "desc": "Intimidar, comandar, liderar, impor respeito" },
+      "Connection": { "name": "Conexão", "desc": "Contatos, obter boatos, rede de informações" }
+    }
+  },
+  "psique": {
+    "label": "Psíquica",
+    "skills": {
+      "Psique": { "name": "Psique", "desc": "Metade da categoria, arredondado para cima" }
+    }
+  }
+}
