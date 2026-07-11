@@ -1,6 +1,5 @@
 import { renderSkillsSheet, renderStressHealthSheet, renderAgendaSheet, renderBlasphemiesSheet, renderSinMarksSheet, renderEquipmentSheet, renderSavedMacrosSheet, renderStaticHooks } from "./sheet.js";
-import { renderCainRollPanel } from "./cain-roller.js";
-import { resetDiceDrawerSelections } from "./roller.js";
+import { renderCainRollPanel, renderCainRollHistory } from "./cain-roller.js";
 import { logger } from "./logger.js";
 
 // ==========================================
@@ -332,9 +331,8 @@ export function loadCharacter(charId) {
   renderStaticHooks();
 
   renderCainRollPanel();
+  renderCainRollHistory();
 
-  resetDiceDrawerSelections();
-  
   // Update piedade display
   if (typeof window.updatePiedadeDisplay === 'function') {
     window.updatePiedadeDisplay();

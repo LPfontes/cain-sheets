@@ -853,7 +853,7 @@
   width: 100%;
 
   resize: none;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(0, 0, 0, 0.05);
   padding: 12px;
   font-size: var(--font-size-sm);

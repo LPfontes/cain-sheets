@@ -2228,7 +2228,7 @@
 
 .injury-checkbox-group {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   align-items: center;
   gap: 6px;
 }
@@ -2375,6 +2375,31 @@
 
 }
 
+.cain-skill-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cain-skill-roll-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  padding: 2px 4px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  line-height: 1;
+  filter: grayscale(0.4);
+}
+.cain-skill-row:hover .cain-skill-roll-btn {
+  opacity: 0.6;
+}
+.cain-skill-roll-btn:hover {
+  opacity: 1 !important;
+  filter: grayscale(0);
+}
+
 .cain-skill-dots {
   display: flex;
   gap: 3px;
@@ -2409,10 +2434,10 @@
 }
 
 .cain-agenda-section h4 {
-  font-family: var(--font-heading);
-  font-size: var(--font-size-sm);
+  margin-top: 6px;
+  font-size: var(--font-size-md);
   color: black;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .cain-agenda-item {
@@ -2424,6 +2449,11 @@
   padding: 4px 0;
   cursor: pointer;
   color: var(--text-primary);
+}
+
+.cain-agenda-check {
+  width: 20px;
+  height: 20px;
 }
 
 .cain-agenda-item.b {
@@ -2569,8 +2599,8 @@
 
 .cain-blasphemy-card-trigger {
   width: 100%;
-  background: none;
-  border: none;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid black;
   padding: 12px;
   display: flex;
   justify-content: space-between;
@@ -2581,7 +2611,7 @@
 }
 
 .cain-blasphemy-card-trigger:hover .cain-blasphemy-name {
-  color: var(--stamp-red);
+  color: var(--purple);
 }
 
 .cain-blasphemy-card-trigger .cain-blasphemy-name {
@@ -2728,7 +2758,7 @@
 }
 
 .cain-sheet .sheet-tab-btn {
-  font-size: 11px;
+  font-size: var(--font-size-md);
   padding: 6px 10px;
 }
 
@@ -2745,8 +2775,16 @@
 }
 
 .cain-roll-field label {
-  display: block;
+  display: flex;
   font-size: var(--font-size-md);
+}
+
+.cain-roll-field-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-around;
+
 }
 
 .cain-roll-select {
@@ -2840,18 +2878,19 @@
 }
 
 .cain-roll-results {
+  color: white;
   min-height: 40px;
 }
 
 .cain-roll-result-card {
+  background-color:  rgba(0, 0, 0, 0.7);
   padding: 12px;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .cain-roll-header {
-  font-size: 13px;
+  font-size: var(--font-size-md);
   font-weight: 600;
-  color: var(--border-color);
   margin-bottom: 8px;
 }
 
@@ -2860,7 +2899,7 @@
   gap: 8px;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 8px 0;
+  margin: 12px 0;
 }
 
 .cain-roll-die {
@@ -2885,7 +2924,7 @@
 
 .cain-roll-die.fail {
   border-color: rgba(255, 255, 255, 0.1);
-  color: var(--text-muted);
+  color: rgb(200, 60, 60)
 }
 
 .cain-roll-die.cain-risk-die {
@@ -2897,7 +2936,7 @@
 .cain-roll-die.cain-risk-die::after {
   content: "RISCO";
   position: absolute;
-  bottom: -14px;
+  bottom: -20px;
   font-size: var(--font-size-sm);
   font-weight: 700;
   letter-spacing: 1px;
@@ -2933,13 +2972,11 @@
 }
 
 .cain-roll-risk-effect.safe {
-  color: var(--text-muted);
   font-weight: 600;
 }
 
 .cain-roll-stats {
   text-align: center;
-  color: var(--text-muted);
   margin-top: 4px;
 }
 
@@ -2949,8 +2986,6 @@
   gap: 4px;
   max-height: 180px;
   overflow-y: auto;
-  margin-top: 8px;
-  padding-top: 8px;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
@@ -2965,24 +3000,27 @@
 }
 
 .cain-history-skill {
-  color: var(--border-color);
-  font-weight: 500;
+  font-size: var(--font-size-lg);
+  font-weight: 900;
   min-width: 80px;
+  color: white;
 }
 
 .cain-history-dice {
-  color: var(--text-muted);
-  font-family: monospace;
+  font-size: var(--font-size-lg);
+  font-weight: 900;
+  color: white;
 }
 
 .cain-history-successes {
-  color: #86efac;
-  font-weight: 600;
+  font-size: var(--font-size-lg);
+  font-weight: 900;
+  color: #32a15b;
 }
 
 .cain-history-risk {
-  color: #fbbf24;
-  font-size: 10px;
+  font-size: var(--font-size-lg);
+  font-weight: 900;
 }
 
 /* ============= CAT SELECTOR ============= */

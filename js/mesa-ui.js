@@ -6,7 +6,6 @@ import { logger } from "./logger.js";
 import { DICE_MAP, executeCustomRoll } from "./roller.js";
 import { getDieSymbolsHtml, getDieFaceImgSrc } from "./chat.js";
 import { ICONS } from "../icons.js";
-import { getCurrentHealthLevel } from "./health.js";
 import { worldState, saveConflito } from "./world-state.js";
 
 const tableScreen = document.getElementById("table-screen");

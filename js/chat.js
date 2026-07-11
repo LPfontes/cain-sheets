@@ -1,9 +1,6 @@
 import { el, state, saveCurrentCharacter } from "./state.js";
 import { ICONS } from "../icons.js";
 import { logger } from "./logger.js";
-import { getCurrentHealthLevel } from "./health.js";
-import { worldState } from "./world-state.js";
-
 // ==========================================
 // CHAT E HISTÓRICO DE RESULTADOS PERSISTIDO
 // ==========================================
@@ -150,17 +147,7 @@ export function renderChatHistory() {
     let penalidadeA = 0;
     let penalidadeB = 0;
     let healthLvlName = "Saudável";
-    const healthLvl = roll.healthLvl !== undefined ? roll.healthLvl : (char ? getCurrentHealthLevel(char) : 6);
-    if (healthLvl === 4 || healthLvl === 3) {
-      penalidadeA = 1;
-      healthLvlName = healthLvl === 4 ? "Laceração" : "Ferimentos";
-    } else if (healthLvl === 2) {
-      penalidadeA = 2;
-      healthLvlName = "Debilitação";
-    } else if (healthLvl === 1) {
-      penalidadeB = 2;
-      healthLvlName = "Incapacitação";
-    }
+    const healthLvl = 6;
     
     const finalSucessos = Math.max(0, sucessos - penalidadeA);
     const finalAdaptacoes = Math.max(0, adaptacoes - penalidadeB);
@@ -360,17 +347,7 @@ export function renderChatHistory() {
         let penalidadeA = 0;
         let penalidadeB = 0;
         let healthLvlName = "Saudável";
-        const healthLvl = lastRoll.healthLvl !== undefined ? lastRoll.healthLvl : (char ? getCurrentHealthLevel(char) : 6);
-        if (healthLvl === 4 || healthLvl === 3) {
-          penalidadeA = 1;
-          healthLvlName = healthLvl === 4 ? "Laceração" : "Ferimentos";
-        } else if (healthLvl === 2) {
-          penalidadeA = 2;
-          healthLvlName = "Debilitação";
-        } else if (healthLvl === 1) {
-          penalidadeB = 2;
-          healthLvlName = "Incapacitação";
-        }
+        const healthLvl = 6;
         
         const finalSucessos = Math.max(0, sucessos - penalidadeA);
         const finalAdaptacoes = Math.max(0, adaptacoes - penalidadeB);

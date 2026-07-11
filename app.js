@@ -5,8 +5,6 @@ import { ICONS } from "./icons.js";
 import { logger } from "./js/logger.js";
 import { initLandingScreen, showLandingScreen } from "./js/landing.js";
 import { initPlayer } from "./js/player.js";
-import { worldState, loadAllWorldData } from "./js/world-state.js";
-import { initMesaUI, minimizeMesa } from "./js/mesa-ui.js";
 import { applyTranslations, toggleLanguage, getLang } from "./js/i18n.js";
 import { initToolbox } from "./js/toolbox.js";
 
@@ -17,25 +15,17 @@ function initializeApp() {
   logger.info("Aplicação carregada. Inicializando components...");
   renderIcons();
   loadCharactersFromStorage();
-  // Inicializa o tamanho dos controles de estresse
+  // Centraliza e inicializa o tamanho dos controles de estresse
   const savedStressSize = localStorage.getItem("stress_input_size");
   if (savedStressSize) {
     document.documentElement.style.setProperty("--stress-input-size", `${savedStressSize}px`);
   }
   updateCloudSyncBadge();
 
-  // Carrega todos os novos tipos de ficha do mundo
-  loadAllWorldData();
-  // Expõe para uso em landing.js (acesso síncrono sem import dinâmico)
-  window._worldState = worldState;
-
   initDiceBox();
   setupEventListeners();
-  setupRoomTabs();
-  
   // Inicializa a tela de entrada (Landing)
   initLandingScreen();
-  initMesaUI();
   showLandingScreen();
 
   initPlayer();
@@ -117,7 +107,6 @@ function setupEventListeners() {
   const btnHome = document.getElementById("btn-home");
   if (btnHome) {
     btnHome.addEventListener("click", () => {
-      minimizeMesa(); // no-op se a mesa não estiver ativa
       goToLanding();
     });
   }
@@ -476,36 +465,18 @@ function setupEventListeners() {
     }
   });
 
-  // Enviar resultado para a Mesa
-  document.getElementById("btn-send-normal-to-mesa")?.addEventListener("click", () => {
-    import("./js/roller.js").then(({ sendRollToMesa }) => sendRollToMesa(false));
-  });
-  document.getElementById("btn-send-instinto-to-mesa")?.addEventListener("click", () => {
-    import("./js/roller.js").then(({ sendRollToMesa }) => sendRollToMesa(true));
-  });
-
-  const btnClearChat = document.getElementById("btn-clear-chat");
-  if (btnClearChat) {
-    btnClearChat.addEventListener("click", () => {
-      import("./js/chat.js").then(({ clearChatHistory }) => clearChatHistory());
-    });
-  }
-
-  // Roteamento de eventos customizados
   document.addEventListener("start-wizard", startWizard);
   document.addEventListener("load-new-character", (e) => {
     loadCharacter(e.detail);
   });
-  document.addEventListener("render-chat-history", () => {
-    import("./js/chat.js").then(({ renderChatHistory }) => renderChatHistory());
+  document.getElementById("btn-clear-chat")?.addEventListener("click", () => {
+    const char = state.currentCharacter;
+    if (char) {
+      char.rollHistory = [];
+      saveCurrentCharacter();
+      import("./js/cain-roller.js").then(({ renderCainRollHistory }) => renderCainRollHistory());
+    }
   });
-
-  // Ouvintes para gerenciamento de rolagens personalizadas (macros)
-  if (el.btnAddCustomRoll) {
-    el.btnAddCustomRoll.addEventListener("click", () => {
-      import("./js/modals.js").then(({ openCustomRollModal }) => openCustomRollModal());
-    });
-  }
 
   // ==========================================
   // CAIN SHEET CONTROLS
@@ -588,15 +559,15 @@ function setupEventListeners() {
   document.getElementById("btn-sin-dec")?.addEventListener("click", () => {
     const char = state.currentCharacter;
     if (!char) return;
-    const maxSin = char.sinMax !== undefined ? char.sinMax : 10;
-    char.sinCurrent = Math.min(maxSin, (char.sinCurrent || 0) + 1);
+    char.sinCurrent = Math.max(0, (char.sinCurrent || 0) - 1);
     saveCurrentCharacter();
     import("./js/sheet.js").then(({ renderStressHealthSheet }) => renderStressHealthSheet());
   });
   document.getElementById("btn-sin-inc")?.addEventListener("click", () => {
     const char = state.currentCharacter;
     if (!char) return;
-    char.sinCurrent = Math.min(10, (char.sinCurrent || 0) + 1);
+    const maxSin = char.sinMax !== undefined ? char.sinMax : 10;
+    char.sinCurrent = Math.min(maxSin, (char.sinCurrent || 0) + 1);
     saveCurrentCharacter();
     import("./js/sheet.js").then(({ renderStressHealthSheet }) => renderStressHealthSheet());
   });
@@ -605,15 +576,15 @@ function setupEventListeners() {
   document.getElementById("btn-piedade-dec")?.addEventListener("click", () => {
     const char = state.currentCharacter;
     if (!char) return;
-    const maxPiedade = char.piedadeMax !== undefined ? char.piedadeMax : 3;
-    char.piedadeCurrent = Math.min(maxPiedade, (char.piedadeCurrent || 0) + 1);
+    char.piedadeCurrent = Math.max(0, (char.piedadeCurrent || 0) - 1);
     saveCurrentCharacter();
     updatePiedadeDisplay();
   });
   document.getElementById("btn-piedade-inc")?.addEventListener("click", () => {
     const char = state.currentCharacter;
     if (!char) return;
-    char.piedadeCurrent = Math.min(3, (char.piedadeCurrent || 0) + 1);
+    const maxPiedade = char.piedadeMax !== undefined ? char.piedadeMax : 3;
+    char.piedadeCurrent = Math.min(maxPiedade, (char.piedadeCurrent || 0) + 1);
     saveCurrentCharacter();
     updatePiedadeDisplay();
   });
@@ -718,25 +689,7 @@ function goToLanding() {
   });
 }
 
-function setupRoomTabs() {
-  const tabs = document.querySelectorAll(".room-tab");
-  tabs.forEach(tab => {
-    tab.addEventListener("click", () => {
-      tabs.forEach(t => t.classList.remove("active"));
-      tab.classList.add("active");
-      const target = tab.dataset.roomTab;
-      document.querySelectorAll(".room-tab-content").forEach(c => c.classList.add("hidden"));
-      const content = document.getElementById("room-tab-" + target);
-      if (content) content.classList.remove("hidden");
-    });
-  });
-  const joinStep = document.getElementById("room-step-join");
-  if (joinStep) {
-    document.querySelector("[data-room-tab='entrar']")?.addEventListener("click", () => {
-      document.getElementById("room-step-join")?.classList.remove("hidden");
-    });
-  }
-}
+
 
 function updateXpDisplay() {
   const char = state.currentCharacter;

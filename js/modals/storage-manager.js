@@ -1,5 +1,4 @@
 import { el, state, saveCurrentCharacter, loadCharacter, updateCloudSyncBadge, updateCharSelector } from "../state.js";
-import { worldState, saveItemToDb } from "../world-state.js";
 import { getFirebaseConfig } from "../config.js";
 import { getCustomTraits, getCustomMutations } from "../state.js";
 import { logger } from "../logger.js";
@@ -8,7 +7,7 @@ import { logger } from "../logger.js";
 // SISTEMA DE SINCRONIZAÇÃO EM NUVEM E LIMITAÇÃO DE ESPAÇO (SIMULADO / FIREBASE)
 // ============================================================================
 
-const MOCK_CLOUD_DB_KEY = "assimilação_mock_cloud_db";
+const MOCK_CLOUD_DB_KEY = "cain_mock_cloud_db";
 let cloudCharactersCache = [];
 
 let firebaseApp = null;
@@ -77,10 +76,6 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
   logger.info("Modal: Abrindo gerenciador de armazenamento.");
   el.modalContainer.classList.remove("hidden");
 
-  const { worldState, deleteRefugio, deleteRegiao, deleteConflito, deleteLocal, loadAllWorldData } = await import("../world-state.js");
-
-  loadAllWorldData();
-
   let activeTab = defaultTab;
 
   const config = await getFirebaseConfig();
@@ -145,7 +140,7 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
         cloudCharactersCache = updatedSheets;
         if (state.currentCharacter && state.currentCharacter.id === characterId) {
           state.hasUnsavedCloudChanges = false;
-          localStorage.setItem("assimilação_has_unsaved_changes", "false");
+          localStorage.setItem("cain_has_unsaved_changes", "false");
         }
         logger.info(`Sincronização Firestore: Ficha de "${char.name}" salva com sucesso.`);
 
@@ -190,7 +185,7 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
 
       if (state.currentCharacter && state.currentCharacter.id === characterId) {
         state.hasUnsavedCloudChanges = false;
-        localStorage.setItem("assimilação_has_unsaved_changes", "false");
+        localStorage.setItem("cain_has_unsaved_changes", "false");
       }
       logger.info(`Sincronização: Ficha de "${char.name}" sincronizada com a nuvem.`);
 
@@ -225,30 +220,7 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
           </div>
         `}
       `;
-    } else if (activeTab === "mundo") {
-      const renderWorldList = (items, label, color, exportClass, deleteClass, emptyMsg) => `
-        <h4 class="section-heading" style="color:${color};">${label} (${items.length})</h4>
-        <div class="scrollable-list" style="margin-bottom:16px; max-height:120px;">
-          ${items.length === 0 ? `<p class="text-secondary-xs">${emptyMsg}</p>` :
-          items.map(item => `
-              <div class="list-item-row">
-                <span class="text-secondary-xs" style="color:var(--text-primary);">${item.nome}</span>
-                <div style="display:flex; gap:6px;">
-                  <button class="btn btn-xs ${exportClass}" data-id="${item.id}" class="btn-tiny">📥 Exportar</button>
-                  <button class="btn btn-xs ${deleteClass}" data-id="${item.id}" class="btn-tiny">❌ Excluir</button>
-                </div>
-              </div>
-            `).join('')
-        }
-        </div>
-      `;
 
-      html = `
-        ${renderWorldList(worldState.refugios, "Refúgios", "var(--border-color)", "btn-export-refugio", "btn-delete-refugio", "Nenhum refúgio salvo.")}
-        ${renderWorldList(worldState.regioes, "Regiões", "var(--color-conhecimentos)", "btn-export-regiao", "btn-delete-regiao", "Nenhuma região salva.")}
-        ${renderWorldList(worldState.conflitos, "Conflitos", "var(--color-danger)", "btn-export-conflito", "btn-delete-conflito", "Nenhum conflito salvo.")}
-        ${renderWorldList(worldState.locais, "Locais", "var(--color-praticas)", "btn-export-local", "btn-delete-local", "Nenhum local salvo.")}
-      `;
     } else if (activeTab === "homebrew") {
       const customTraits = getCustomTraits();
       const customMutations = getCustomMutations();
@@ -439,7 +411,6 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
       
       <div class="lib-tab-bar" style="margin-top:16px; margin-bottom:16px;">
         <button class="lib-tab ${activeTab === 'fichas' ? 'active' : ''}" data-tab="fichas">👤 Fichas</button>
-        <button class="lib-tab ${activeTab === 'mundo' ? 'active' : ''}" data-tab="mundo">🌍 Mundo</button>
         <button class="lib-tab ${activeTab === 'homebrew' ? 'active' : ''}" data-tab="homebrew">🧪 Custom</button>
         <button class="lib-tab ${activeTab === 'nuvem' ? 'active' : ''}" data-tab="nuvem">☁️ Nuvem</button>
         <button class="lib-tab ${activeTab === 'backup' ? 'active' : ''}" data-tab="backup">💾 Backup</button>
@@ -493,7 +464,7 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
             const index = state.characters.findIndex(c => c.id === id);
             if (index !== -1) {
               state.characters.splice(index, 1);
-              localStorage.setItem("assimilação_rpg_characters", JSON.stringify(state.characters));
+              localStorage.setItem("cain_exorcists", JSON.stringify(state.characters));
 
               if (state.currentCharacter && state.currentCharacter.id === id) {
                 if (state.characters.length > 0) {
@@ -512,39 +483,7 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
       });
     }
 
-    if (activeTab === "mundo") {
-      const setupWorldEvents = (selectorExport, selectorDelete, arrayProp, deleteFn, filenamePrefix) => {
-        el.modalBody.querySelectorAll(selectorExport).forEach(btn => {
-          btn.addEventListener("click", () => {
-            const id = btn.getAttribute("data-id");
-            const item = worldState[arrayProp].find(i => i.id === id);
-            if (!item) return;
-            const blob = new Blob([JSON.stringify(item, null, 2)], { type: "application/json" });
-            const a = document.createElement("a");
-            a.href = URL.createObjectURL(blob);
-            a.download = `${filenamePrefix}_${item.nome.toLowerCase().replace(/\s+/g, "_")}.json`;
-            a.click();
-          });
-        });
 
-        el.modalBody.querySelectorAll(selectorDelete).forEach(btn => {
-          btn.addEventListener("click", () => {
-            const id = btn.getAttribute("data-id");
-            const item = worldState[arrayProp].find(i => i.id === id);
-            if (!item) return;
-            if (confirm(`Tem certeza de que deseja deletar "${item.nome}"? Esta ação não pode ser desfeita.`)) {
-              deleteFn(id);
-              renderContent();
-            }
-          });
-        });
-      };
-
-      setupWorldEvents(".btn-export-refugio", ".btn-delete-refugio", "refugios", deleteRefugio, "refugio");
-      setupWorldEvents(".btn-export-regiao", ".btn-delete-regiao", "regioes", deleteRegiao, "regiao");
-      setupWorldEvents(".btn-export-conflito", ".btn-delete-conflito", "conflitos", deleteConflito, "conflito");
-      setupWorldEvents(".btn-export-local", ".btn-delete-local", "locais", deleteLocal, "local");
-    }
 
     if (activeTab === "homebrew") {
       el.modalBody.querySelectorAll(".btn-delete-custom-trait").forEach(btn => {
@@ -554,7 +493,7 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
           const name = traits[idx]?.nome;
           if (confirm(`Tem certeza de que deseja excluir a característica customizada "${name}"?`)) {
             traits.splice(idx, 1);
-            localStorage.setItem("assimilação_homebrew_traits", JSON.stringify(traits));
+            localStorage.setItem("cain_homebrew_traits", JSON.stringify(traits));
             import("../sheet.js").then(({ renderHomebrewSheet }) => renderHomebrewSheet());
             renderContent();
           }
@@ -568,7 +507,7 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
           const name = mutations[idx]?.name;
           if (confirm(`Tem certeza de que deseja excluir a mutação customizada "${name}"?`)) {
             mutations.splice(idx, 1);
-            localStorage.setItem("assimilação_homebrew_mutations", JSON.stringify(mutations));
+            localStorage.setItem("cain_homebrew_mutations", JSON.stringify(mutations));
             import("../sheet.js").then(({ renderHomebrewSheet }) => renderHomebrewSheet());
             renderContent();
           }
@@ -593,7 +532,7 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
                   displayName: result.user.displayName,
                   email: result.user.email
                 };
-                localStorage.setItem("assimilação_mock_user", JSON.stringify(state.currentUser));
+                localStorage.setItem("cain_mock_user", JSON.stringify(state.currentUser));
                 logger.info(`Autenticação: Logado via Google (Real) - ${state.currentUser.displayName}`);
 
                 const { getDocs, collection, query, where } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js");
@@ -611,7 +550,7 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
               alert("Falha no login com Google. Verifique seu arquivo .env.");
             }
           } else {
-            const name = prompt("Digite seu nome para simular o login do Google:", "Jogador Assimilado");
+            const name = prompt("Digite seu nome para simular o login do Google:", "Jogador Exorcista");
             if (name === null) return;
             const email = prompt("Digite seu e-mail do Google:", "jogador@gmail.com");
             if (!email) return;
@@ -623,7 +562,7 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
             };
 
             state.currentUser = mockUser;
-            localStorage.setItem("assimilação_mock_user", JSON.stringify(mockUser));
+            localStorage.setItem("cain_mock_user", JSON.stringify(mockUser));
             logger.info("Autenticação: Login efetuado com sucesso via conta Google (Simulado).");
             renderContent();
             updateCloudSyncBadge();
@@ -690,8 +629,8 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
             state.currentUser = null;
             state.hasUnsavedCloudChanges = false;
             cloudCharactersCache = [];
-            localStorage.removeItem("assimilação_mock_user");
-            localStorage.removeItem("assimilação_has_unsaved_changes");
+            localStorage.removeItem("cain_mock_user");
+            localStorage.removeItem("cain_has_unsaved_changes");
             logger.info("Autenticação: Desconexão efetuada.");
             renderContent();
             updateCloudSyncBadge();
@@ -759,7 +698,7 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
               }
             });
 
-            localStorage.setItem("assimilação_rpg_characters", JSON.stringify(state.characters));
+            localStorage.setItem("cain_exorcists", JSON.stringify(state.characters));
             import("../state.js").then(({ updateCharSelector, loadCharacter }) => {
               updateCharSelector();
               if (state.currentCharacter) {
@@ -771,7 +710,7 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
             });
 
             state.hasUnsavedCloudChanges = false;
-            localStorage.setItem("assimilação_has_unsaved_changes", "false");
+            localStorage.setItem("cain_has_unsaved_changes", "false");
             logger.info("Sincronização: Fichas carregadas da nuvem.");
             alert("Fichas importadas da nuvem com sucesso!");
             renderContent();
@@ -799,14 +738,10 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
     if (activeTab === "backup") {
       document.getElementById("btn-export-all-backup").addEventListener("click", () => {
         const backup = {
-          format: "assimilacao_full_backup",
+          format: "cain_full_backup",
           version: 1,
           timestamp: Date.now(),
           characters: state.characters,
-          refugios: worldState.refugios,
-          regioes: worldState.regioes,
-          conflitos: worldState.conflitos,
-          locais: worldState.locais,
           traits: getCustomTraits(),
           mutations: getCustomMutations()
         };
@@ -814,7 +749,7 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
         const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
         const a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
-        a.download = `backup_completo_assimilacao_${new Date().toISOString().slice(0, 10)}.json`;
+        a.download = `backup_completo_cain_${new Date().toISOString().slice(0, 10)}.json`;
         a.click();
       });
 
@@ -831,8 +766,8 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
         reader.onload = (evt) => {
           try {
             const data = JSON.parse(evt.target.result);
-            if (data.format !== "assimilacao_full_backup") {
-              alert("Formato de arquivo inválido! Por favor, selecione um arquivo de backup do Assimilação RPG.");
+            if (data.format !== "cain_full_backup") {
+              alert("Formato de arquivo inválido! Por favor, selecione um arquivo de backup do CAIN RPG.");
               return;
             }
 
@@ -846,37 +781,18 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
                     state.characters.push(char);
                   }
                 });
-                localStorage.setItem("assimilação_rpg_characters", JSON.stringify(state.characters));
+                localStorage.setItem("cain_exorcists", JSON.stringify(state.characters));
               }
-
-              const mergeWorld = (importList, localList, storageKey) => {
-                if (importList && Array.isArray(importList)) {
-                  importList.forEach(item => {
-                    const existingIdx = localList.findIndex(i => i.id === item.id);
-                    if (existingIdx !== -1) {
-                      localList[existingIdx] = item;
-                    } else {
-                      localList.push(item);
-                    }
-                  });
-                  localStorage.setItem(storageKey, JSON.stringify(localList));
-                }
-              };
-
-              mergeWorld(data.refugios, worldState.refugios, "assimilação_rpg_refugios");
-              mergeWorld(data.regioes, worldState.regioes, "assimilação_rpg_regioes");
-              mergeWorld(data.conflitos, worldState.conflitos, "assimilação_rpg_conflitos");
-              mergeWorld(data.locais, worldState.locais, "assimilação_rpg_locais");
 
               if (data.traits && Array.isArray(data.traits)) {
                 const existing = getCustomTraits();
                 const merged = [...existing, ...data.traits.filter(t => !existing.some(et => et.id === t.id))];
-                localStorage.setItem("assimilação_homebrew_traits", JSON.stringify(merged));
+                localStorage.setItem("cain_homebrew_traits", JSON.stringify(merged));
               }
               if (data.mutations && Array.isArray(data.mutations)) {
                 const existing = getCustomMutations();
                 const merged = [...existing, ...data.mutations.filter(m => !existing.some(em => em.id === m.id))];
-                localStorage.setItem("assimilação_homebrew_mutations", JSON.stringify(merged));
+                localStorage.setItem("cain_homebrew_mutations", JSON.stringify(merged));
               }
 
               alert("Backup importado e mesclado com sucesso! O aplicativo será recarregado.");

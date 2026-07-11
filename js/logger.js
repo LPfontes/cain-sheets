@@ -1,5 +1,4 @@
-// ==========================================
-// CENTRAL DE LOGS - ASSIMILAÇÃO RPG
+// CENTRAL DE LOGS - CAIN RPG
 // ==========================================
 
 const LOG_STYLES = {

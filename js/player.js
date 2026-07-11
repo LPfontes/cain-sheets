@@ -347,7 +347,7 @@ function renderExpandedContent() {
       </div>
       <div class="player-expanded-info">
         <div class="player-expanded-title" id="player-expanded-title">${playlist[currentIndex]?.title || "Nenhuma faixa"}</div>
-        <div class="player-expanded-sub">Assimilação RPG - Trilha Sonora</div>
+        <div class="player-expanded-sub">CAIN RPG - Trilha Sonora</div>
       </div>
     </div>
     <div class="player-expanded-list">`;

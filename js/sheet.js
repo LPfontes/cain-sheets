@@ -1,6 +1,7 @@
 import { el, state, saveCurrentCharacter } from "./state.js";
 import { BLASPHEMIES, SIN_MARKS, AGENDAS, CAIN_SKILLS } from "./cain-data.js";
 import { openAgendaModal, openBlasphemiesModal } from "./modals.js";
+import { openCainRollForSkill } from "./cain-roller.js";
 import { logger } from "./logger.js";
 import { t } from "./i18n.js";
 
@@ -30,13 +31,20 @@ export function renderSkillsSheet() {
       const item = document.createElement("div");
       item.className = "cain-skill-row";
       item.innerHTML = `
-        <span class="cain-skill-name">${t("skills." + key)}</span>
+        <div class="cain-skill-left">
+          <span class="cain-skill-name">${t("skills." + key)}</span>
+          <button class="cain-skill-roll-btn" data-skill="${key}" title="Rolar ${t("skills." + key)}">🎲</button>
+        </div>
         <div class="cain-skill-dots">
           ${Array.from({ length: 3 }, (_, i) =>
         `<span class="cain-skill-dot ${i < val ? 'filled' : ''}" data-skill="${key}" data-level="${i + 1}"></span>`
       ).join("")}
         </div>
       `;
+      item.querySelector(".cain-skill-roll-btn")?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        openCainRollForSkill(key);
+      });
       item.querySelectorAll(".cain-skill-dot").forEach(dot => {
         dot.addEventListener("click", () => {
           const newLevel = parseInt(dot.dataset.level);
@@ -57,7 +65,10 @@ export function renderSkillsSheet() {
   psiqueSection.innerHTML = `
     <span class="cain-skill-group-label">${t("skills.psychic")}</span>
     <div class="cain-skill-row">
-      <span class="cain-skill-name">${t("skills.Psique")}</span>
+      <div class="cain-skill-left">
+        <span class="cain-skill-name">${t("skills.Psique")}</span>
+        <button class="cain-skill-roll-btn" data-skill="Psique" title="Rolar ${t("skills.Psique")}">🎲</button>
+      </div>
       <div class="cain-skill-dots">
         ${Array.from({ length: 3 }, (_, i) =>
     `<span class="cain-skill-dot ${i < psiqueVal ? 'filled' : ''}"></span>`
@@ -66,6 +77,10 @@ export function renderSkillsSheet() {
     </div>
   `;
   el.skillsListSheet.appendChild(psiqueSection);
+  psiqueSection.querySelector(".cain-skill-roll-btn")?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    openCainRollForSkill("Psique");
+  });
 }
 
 export function renderStressHealthSheet() {
@@ -125,6 +140,7 @@ export function renderInjuryCheckboxes() {
   if (!group) return;
   const injuries = char.injuries || 0;
   const maxInjuries = char.injuriesMax !== undefined ? char.injuriesMax : 3;
+  group.style.gridTemplateColumns = `repeat(${maxInjuries}, 1fr)`;
   group.innerHTML = "";
   for (let i = 0; i < maxInjuries; i++) {
     const label = document.createElement("label");
@@ -183,13 +199,13 @@ export function renderAgendaSheet() {
   el.agendaListSheet.innerHTML = `
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
       <h4 class="cain-agenda-subtitle" style="margin: 0;">${t("sheet.agenda.activeSkill")}</h4>
-      <button id="btn-edit-agenda" class="btn btn-sm">Editar Agenda</button>
+      <button id="btn-edit-agenda" class="btn">Editar Agenda</button>
     </div>
     <div class="cain-agenda-section">
         ${skillName ? `
           <div class="cain-agenda-item b" style="display:flex; flex-direction:column; gap:4px; padding: 10px; border-left: 3px solid var(--color-rust-glow); background: rgba(59, 130, 246, 0.03);">
             <strong style="font-size: 1.1em;">${skillName}</strong>
-            ${skillDesc ? `<span style="font-size:var(--font-size-md); line-height: 1.4;">${skillDesc}</span>` : ''}
+            ${skillDesc ? `<span style="font-size:var(--font-size-xm); line-height: 1.4;">${skillDesc}</span>` : ''}
           </div>
         ` : `<span class="cain-empty">${t("sheet.agenda.noActiveSkill")}</span>`}
       </div>

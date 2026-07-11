@@ -5,10 +5,14 @@ import { renderAptitudesSheet, renderStressHealthSheet } from "../sheet.js";
 export function openSettingsModal() {
   logger.info("Modal: Abrindo modal de configurações.");
   el.modalContainer.classList.remove("hidden");
+  const modalContent = el.modalBody.closest(".modal-content");
+  if (modalContent) {
+    modalContent.style.maxWidth = "";
+  }
 
-  const disable3D = localStorage.getItem("assimilação_disable_3d") === "true";
+  const disable3D = localStorage.getItem("cain_disable_3d") === "true" || localStorage.getItem("assimilação_disable_3d") === "true";
   const char = state.currentCharacter;
-  const currentMaxBubbles = (char && char.maxValueBubbles) || parseInt(localStorage.getItem("assimilação_max_value_bubbles")) || 5;
+  const currentMaxBubbles = (char && char.maxValueBubbles) || parseInt(localStorage.getItem("cain_max_value_bubbles")) || parseInt(localStorage.getItem("assimilação_max_value_bubbles")) || 5;
 
   el.modalBody.innerHTML = `
     <div class="settings-modal-content">
@@ -24,18 +28,6 @@ export function openSettingsModal() {
             <input type="checkbox" id="settings-disable-3d" ${disable3D ? "checked" : ""}>
             <span class="slider"></span>
           </label>
-        </div>
-      </div>
-
-      <div class="setting-row -with-divider">
-        <div class="setting-info">
-          <div class="setting-label">Máximo de Bolhas de Valor (Aptidões)</div>
-          <div class="setting-desc">Define a quantidade máxima de bolhas para Instintos, Conhecimentos e Práticas (Mínimo: 5).</div>
-        </div>
-        <div class="setting-control">
-          <button id="btn-bubbles-dec" class="btn btn-sm" style="padding: 2px 8px;">-</button>
-          <strong id="val-bubbles-max" style="font-size: 14px; min-width: 20px; text-align: center;">${currentMaxBubbles}</strong>
-          <button id="btn-bubbles-inc" class="btn btn-sm" style="padding: 2px 8px;">+</button>
         </div>
       </div>
 
@@ -78,29 +70,9 @@ export function openSettingsModal() {
 
   const checkbox = document.getElementById("settings-disable-3d");
   checkbox.addEventListener("change", (e) => {
-    localStorage.setItem("assimilação_disable_3d", e.target.checked ? "true" : "false");
-    logger.info(`Configurações: assimilação_disable_3d alterada para ${e.target.checked}`);
-  });
-
-  const updateBubblesMax = (newVal) => {
-    newVal = Math.max(5, newVal);
-    document.getElementById("val-bubbles-max").textContent = newVal;
-    localStorage.setItem("assimilação_max_value_bubbles", newVal.toString());
-    if (char) {
-      char.maxValueBubbles = newVal;
-      saveCurrentCharacter();
-      renderAptitudesSheet();
-    }
-  };
-
-  document.getElementById("btn-bubbles-dec").addEventListener("click", () => {
-    const curVal = (char && char.maxValueBubbles) || parseInt(localStorage.getItem("assimilação_max_value_bubbles")) || 5;
-    updateBubblesMax(curVal - 1);
-  });
-
-  document.getElementById("btn-bubbles-inc").addEventListener("click", () => {
-    const curVal = (char && char.maxValueBubbles) || parseInt(localStorage.getItem("assimilação_max_value_bubbles")) || 5;
-    updateBubblesMax(curVal + 1);
+    localStorage.setItem("cain_disable_3d", e.target.checked ? "true" : "false");
+    localStorage.removeItem("assimilação_disable_3d");
+    logger.info(`Configurações: cain_disable_3d alterada para ${e.target.checked}`);
   });
 
   const clearStorageBtn = document.getElementById("btn-clear-local-storage");
@@ -163,6 +135,12 @@ export function openStressSettingsModal() {
   const piedadeMax = char.piedadeMax !== undefined ? char.piedadeMax : 3;
   const injuriesMax = char.injuriesMax !== undefined ? char.injuriesMax : 3;
   el.modalContainer.classList.remove("hidden");
+
+  const modalContent = el.modalBody.closest(".modal-content");
+  if (modalContent) {
+    modalContent.style.maxWidth = "450px"; // Define a largura personalizada
+  }
+
   el.modalBody.innerHTML = `
     <h3 class="modal-title">Limites de Status</h3>
     <p style="margin-bottom: 16px; color: var(--text-secondary);">Defina a quantidade máxima permitida de cada recurso e limite de Feridas.</p>
@@ -204,6 +182,13 @@ export function openStressSettingsModal() {
     }
   };
 
+  const closeModal = () => {
+    el.modalContainer.classList.add("hidden");
+    if (modalContent) {
+      modalContent.style.maxWidth = ""; // Reseta a largura para o padrão
+    }
+  };
+
   // Bind increment/decrement buttons
   const bindControl = (decId, incId, lblId, min, max, getValue, setValue) => {
     document.getElementById(decId).onclick = () => {
@@ -240,7 +225,15 @@ export function openStressSettingsModal() {
   bindControl("btn-modal-piedademax-dec", "btn-modal-piedademax-inc", "lbl-modal-piedademax", 1, 6, () => currentPiedadeMax, (v) => currentPiedadeMax = v);
   bindControl("btn-modal-injuriesmax-dec", "btn-modal-injuriesmax-inc", "lbl-modal-injuriesmax", 1, 6, () => currentInjuriesMax, (v) => currentInjuriesMax = v);
 
-  document.getElementById("btn-stress-settings-close").onclick = () => {
-    el.modalContainer.classList.add("hidden");
+  document.getElementById("btn-stress-settings-close").onclick = closeModal;
+
+  const genericCloseBtn = el.modalContainer.querySelector(".modal-close");
+  if (genericCloseBtn) {
+    genericCloseBtn.onclick = closeModal;
+  }
+  el.modalContainer.onclick = (e) => {
+    if (e.target === el.modalContainer) {
+      closeModal();
+    }
   };
 }

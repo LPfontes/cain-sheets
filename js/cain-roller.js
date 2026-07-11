@@ -23,7 +23,7 @@ export function renderCainRollPanel() {
   const isDifficult = rs.isDifficult || false;
   
   const usePsyche = rs.usePsyche && psycheAvailable > 0;
-  const useDivineAgony = rs.useDivineAgony && !divineAgonyUsed && piedadeAvailable > 0;
+  const useDivineAgony = rs.useDivineAgony && piedadeAvailable > 0;
   
   const poolSize = selectedSkillKey ? skillVal + advantages + (usePsyche ? 1 : 0) + (useDivineAgony ? piedadeAvailable : 0) : 0;
 
@@ -39,6 +39,7 @@ export function renderCainRollPanel() {
 
   container.innerHTML = `
     <div class="cain-roll-panel-inner">
+    <div class="cain-roll-field-row">
       <div class="cain-roll-field">
         <label for="cain-roll-skill">Perícia:</label>
         <select id="cain-roll-skill" class="cain-roll-select">
@@ -56,16 +57,16 @@ export function renderCainRollPanel() {
           <button id="btn-cain-adv-inc" class="btn btn-sm">+</button>
         </div>
       </div>
-
+    </div>
       <!-- DIFICULDADE -->
       <div class="cain-roll-field">
         <label>Dificuldade:</label>
         <div class="cain-diff-toggle-group">
           <label class="cain-diff-opt">
-            <input type="radio" name="cain-difficulty" value="normal" ${!isDifficult ? 'checked' : ''}> Normal (4+)
+            <input type="radio" name="cain-difficulty" value="normal" style="width:20px; height:20px;" ${!isDifficult ? 'checked' : ''}> Normal (4+)
           </label>
           <label class="cain-diff-opt">
-            <input type="radio" name="cain-difficulty" value="hard" ${isDifficult ? 'checked' : ''}> Difícil (6)
+            <input type="radio" name="cain-difficulty" value="hard" style="width:20px; height:20px;" ${isDifficult ? 'checked' : ''}> Difícil (6)
           </label>
         </div>
       </div>
@@ -73,21 +74,53 @@ export function renderCainRollPanel() {
       <div class="cain-roll-info-row">
         <span class="cain-pool-display">Pool: <strong id="cain-pool-size">${poolSize}</strong>d6 ${poolSize === 0 && selectedSkillKey ? '<span class="cain-zero-pool-warning">(Rola 2d6, pega o menor)</span>' : ''}</span>
         <label class="cain-psyche-toggle ${psycheAvailable <= 0 ? 'disabled' : ''}">
-          <input type="checkbox" id="cain-use-psyche" ${usePsyche && psycheAvailable > 0 ? 'checked' : ''} ${psycheAvailable <= 0 ? 'disabled' : ''}>
+          <input type="checkbox" id="cain-use-psyche" style="width:20px; height:20px;" ${usePsyche && psycheAvailable > 0 ? 'checked' : ''} ${psycheAvailable <= 0 ? 'disabled' : ''}>
           Psyche Burst <span class="cain-psyche-badge">${psycheAvailable}</span>
         </label>
-        <label class="cain-divine-agony-toggle">
-          <input type="checkbox" id="cain-use-divine-agony" ${useDivineAgony ? 'checked' : ''}>
-          Agonia Divina <span class="cain-piedade-badge">${piedadeAvailable}</span>
-        </label>
+        <div class="cain-divine-agony-wrapper" style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px;">
+          <label class="cain-divine-agony-toggle">
+            <input type="checkbox" id="cain-use-divine-agony" style="width:20px; height:20px;" ${useDivineAgony ? 'checked' : ''}>
+            Agonia Divina
+          </label>
+          <div class="piedade-checkbox-group" id="cain-roller-piedade-checkbox-group" style="display: flex; gap: 4px; align-items: center;"></div>
+        </div>
       </div>
       <button id="btn-cain-roll" class="btn btn-primary" ${!selectedSkillKey ? 'disabled' : ''}>
         🎲 Rolar ${selectedSkillKey ? (poolSize > 0 ? `(${poolSize}d6)` : "(2d6 menor)") : ""}
       </button>
       <div id="cain-roll-results" class="cain-roll-results"></div>
-      <div id="cain-roll-history" class="cain-roll-history"></div>
     </div>
   `;
+
+  const rollerGroup = document.getElementById("cain-roller-piedade-checkbox-group");
+  if (rollerGroup) {
+    const piedadeMax = char.piedadeMax !== undefined ? char.piedadeMax : 3;
+    const piedadeCurrent = char.piedadeCurrent || 0;
+    rollerGroup.innerHTML = "";
+    for (let i = 1; i <= piedadeMax; i++) {
+      const checked = i <= piedadeCurrent;
+      const label = document.createElement("label");
+      label.className = `piedade-checkbox ${checked ? 'checked' : ''}`;
+      label.style.margin = "0 -2px";
+      label.innerHTML = `
+        <input type="checkbox" id="cain-roller-piedade-check-${i}" ${checked ? 'checked' : ''}>
+        <img src="./assets/agonia.webp" class="piedade-icon" alt="Agonia" style="width:40px; height:20px;">
+      `;
+      label.querySelector("input").addEventListener("change", () => {
+        let count = 0;
+        rollerGroup.querySelectorAll("input").forEach(cb => {
+          if (cb.checked) count++;
+        });
+        char.piedadeCurrent = count;
+        saveCurrentCharacter();
+        if (typeof window.updatePiedadeDisplay === 'function') {
+          window.updatePiedadeDisplay();
+        }
+        renderCainRollPanel();
+      });
+      rollerGroup.appendChild(label);
+    }
+  }
 
   document.getElementById("cain-roll-skill")?.addEventListener("change", (e) => {
     if (!state.cainRollState) state.cainRollState = { skill: "", advantages: 0, isDifficult: false, usePsyche: false, useDivineAgony: false };
@@ -168,7 +201,7 @@ export function executeCainRoll() {
 
   // Try 3D dice engine, fall back to math roll
   const box = state.diceBox || window.diceBox;
-  const disable3D = localStorage.getItem("assimilação_disable_3d") === "true";
+  const disable3D = localStorage.getItem("cain_disable_3d") === "true" || localStorage.getItem("assimilação_disable_3d") === "true";
 
   if (box && !disable3D) {
     perform3DCainRoll(box, poolSize, skillKey, skillVal, usePsyche, isDifficult);
@@ -189,10 +222,9 @@ function performMathCainRoll(poolSize, skillKey, skillVal, usedPsyche, isDifficu
     results.push(Math.floor(Math.random() * 6) + 1);
   }
 
-  const riskDie = results[0];
   let successes = 0;
   const threshold = isDifficult ? 6 : 4;
-  
+
   if (isZeroPool) {
     const activeDie = Math.min(results[0], results[1]);
     successes = activeDie >= threshold ? 1 : 0;
@@ -200,35 +232,11 @@ function performMathCainRoll(poolSize, skillKey, skillVal, usedPsyche, isDifficu
     successes = results.filter(r => r >= threshold).length;
   }
 
-  let stressGained = 0;
-  let psycheGained = 0;
-  let riskEffect = "";
-
-  if (riskDie === 1) {
-    stressGained = 1;
-    char.stressCurrent = (char.stressCurrent || 0) + 1;
-    riskEffect = "💥 Stress +1";
-
-    if (char.stressCurrent >= 6) {
-      char.stressCurrent = 0;
-      const maxInj = char.injuriesMax !== undefined ? char.injuriesMax : 3;
-      char.injuries = Math.min((char.injuries || 0) + 1, maxInj);
-      riskEffect = "💥 FERIDA! Stress reset.";
-    }
-  } else if (riskDie === 6) {
-    psycheGained = 1;
-    char.psycheBursts = (char.psycheBursts || 0) + 1;
-    riskEffect = "✨ Psyche Burst +1!";
-  }
-
-  saveCurrentCharacter();
-
   getSkillName(skillKey).then(skillName => {
-    renderCainResult(results, riskDie, successes, riskEffect, skillName, skillVal, poolSize, usedPsyche, isZeroPool, isDifficult);
-    appendToHistory(results, successes, riskEffect, skillName, isZeroPool, isDifficult);
+    renderCainResult(results, successes, skillName, skillVal, poolSize, usedPsyche, isZeroPool, isDifficult);
+    appendToHistory(results, successes, skillName, isZeroPool, isDifficult);
   });
 
-  import("./sheet.js").then(({ renderStressHealthSheet }) => renderStressHealthSheet());
   renderCainRollPanel();
 }
 
@@ -242,7 +250,7 @@ function perform3DCainRoll(box, poolSize, skillKey, skillVal, usedPsyche, isDiff
 
   box.setDice(notation);
   box.start_throw(null, (notationResult) => {
-    el.diceOverlay.classList.add("hidden");
+    setTimeout(() => { el.diceOverlay.classList.add("hidden"); }, 6000);
 
     if (!notationResult.result || notationResult.result.length === 0 || notationResult.result[0] < 0) {
       alert("Erro na simulação 3D. Usando rolagem matemática.");
@@ -251,10 +259,9 @@ function perform3DCainRoll(box, poolSize, skillKey, skillVal, usedPsyche, isDiff
     }
 
     const results = notationResult.result.slice(0, diceToRoll);
-    const riskDie = results[0];
     let successes = 0;
     const threshold = isDifficult ? 6 : 4;
-    
+
     if (isZeroPool) {
       const activeDie = Math.min(results[0], results[1]);
       successes = activeDie >= threshold ? 1 : 0;
@@ -262,32 +269,11 @@ function perform3DCainRoll(box, poolSize, skillKey, skillVal, usedPsyche, isDiff
       successes = results.filter(r => r >= threshold).length;
     }
 
-    const char = state.currentCharacter;
-    if (!char) return;
-
-    let riskEffect = "";
-    if (riskDie === 1) {
-      char.stressCurrent = (char.stressCurrent || 0) + 1;
-      riskEffect = "💥 Stress +1";
-      if (char.stressCurrent >= 6) {
-        char.stressCurrent = 0;
-        const maxInj = char.injuriesMax !== undefined ? char.injuriesMax : 3;
-        char.injuries = Math.min((char.injuries || 0) + 1, maxInj);
-        riskEffect = "💥 FERIDA! Stress reset.";
-      }
-    } else if (riskDie === 6) {
-      char.psycheBursts = (char.psycheBursts || 0) + 1;
-      riskEffect = "✨ Psyche Burst +1!";
-    }
-
-    saveCurrentCharacter();
-
     getSkillName(skillKey).then(skillName => {
-      renderCainResult(results, riskDie, successes, riskEffect, skillName, skillVal, poolSize, usedPsyche, isZeroPool, isDifficult);
-      appendToHistory(results, successes, riskEffect, skillName, isZeroPool, isDifficult);
+      renderCainResult(results, successes, skillName, skillVal, poolSize, usedPsyche, isZeroPool, isDifficult);
+      appendToHistory(results, successes, skillName, isZeroPool, isDifficult);
     });
 
-    import("./sheet.js").then(({ renderStressHealthSheet }) => renderStressHealthSheet());
     renderCainRollPanel();
   });
 }
@@ -299,13 +285,13 @@ async function getSkillName(key) {
   return key;
 }
 
-function renderCainResult(results, riskDie, successes, riskEffect, skillName, skillVal, poolSize, usedPsyche, isZeroPool, isDifficult) {
+function renderCainResult(results, successes, skillName, skillVal, poolSize, usedPsyche, isZeroPool, isDifficult) {
   const el = document.getElementById("cain-roll-results");
   if (!el) return;
 
   const threshold = isDifficult ? 6 : 4;
   let diceHtml = "";
-  
+
   if (isZeroPool) {
     const minVal = Math.min(results[0], results[1]);
     let minOccurenceUsed = false;
@@ -314,14 +300,14 @@ function renderCainResult(results, riskDie, successes, riskEffect, skillName, sk
       if (isMin) minOccurenceUsed = true;
       const statusClass = isMin ? (val >= threshold ? 'success' : 'fail') : 'ignored';
       return `
-        <span class="cain-roll-die ${i === 0 ? 'cain-risk-die' : ''} ${statusClass}" title="${isMin ? 'Dado Escolhido (Menor)' : 'Dado Ignorado'}">
+        <span class="cain-roll-die ${statusClass}" title="${isMin ? 'Dado Escolhido (Menor)' : 'Dado Ignorado'}">
           ${val}
         </span>
       `;
     }).join("");
   } else {
     diceHtml = results.map((val, i) => `
-      <span class="cain-roll-die ${i === 0 ? 'cain-risk-die' : ''} ${val >= threshold ? 'success' : 'fail'}">
+      <span class="cain-roll-die ${val >= threshold ? 'success' : 'fail'}">
         ${val}
       </span>
     `).join("");
@@ -335,7 +321,6 @@ function renderCainResult(results, riskDie, successes, riskEffect, skillName, sk
       </div>
       <div class="cain-roll-summary">
         <span class="cain-roll-successes">${successes > 0 ? 'Sucesso!' : 'Falha'} (${successes} sucesso${successes !== 1 ? 's' : ''})</span>
-        ${riskEffect ? `<span class="cain-roll-risk-effect">${riskEffect}</span>` : '<span class="cain-roll-risk-effect safe">Sem efeito</span>'}
       </div>
       <div class="cain-roll-stats">
         <small>Pool: ${poolSize}d6 ${usedPsyche ? '(com Psyche Burst)' : ''} ${isZeroPool ? '(Reserva 0, pegou menor)' : ''}</small>
@@ -344,30 +329,58 @@ function renderCainResult(results, riskDie, successes, riskEffect, skillName, sk
   `;
 }
 
-function appendToHistory(results, successes, riskEffect, skillName, isZeroPool, isDifficult) {
-  if (!state.cainRollHistory) state.cainRollHistory = [];
+export function renderCainRollHistory() {
+  const historyEl = document.getElementById("cain-roll-history");
+  if (!historyEl) return;
 
-  state.cainRollHistory.unshift({
+  const char = state.currentCharacter;
+  const history = char?.rollHistory || [];
+  if (history.length === 0) {
+    historyEl.innerHTML = '<div class="chat-placeholder">Nenhuma rolagem.</div>';
+    return;
+  }
+
+  historyEl.innerHTML = history.map(entry => {
+    return `
+      <div class="cain-history-item">
+        <div style="display:flex; flex-direction:column; gap:2px; flex:1;">
+          <span class="cain-history-skill"><strong>${entry.skillName}</strong> ${entry.isDifficult ? '(Difícil)' : ''}</span>
+          <span class="cain-history-dice">[${entry.results.join(", ")}] ${entry.isZeroPool ? '(Reserva 0)' : ''}</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span class="cain-history-successes">${entry.successes} S</span>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function appendToHistory(results, successes, skillName, isZeroPool, isDifficult) {
+  const char = state.currentCharacter;
+  if (!char) return;
+  if (!char.rollHistory) char.rollHistory = [];
+
+  char.rollHistory.unshift({
     skillName,
     results: [...results],
     successes,
-    riskEffect,
     isZeroPool,
     isDifficult,
     timestamp: Date.now()
   });
 
-  if (state.cainRollHistory.length > 20) state.cainRollHistory.length = 20;
+  if (char.rollHistory.length > 20) char.rollHistory.length = 20;
 
-  const historyEl = document.getElementById("cain-roll-history");
-  if (!historyEl) return;
+  import("./state.js").then(({ saveCurrentCharacter }) => saveCurrentCharacter());
 
-  historyEl.innerHTML = state.cainRollHistory.map(entry => `
-    <div class="cain-history-item">
-      <span class="cain-history-skill">${entry.skillName} ${entry.isDifficult ? '(Difícil)' : ''}</span>
-      <span class="cain-history-dice">[${entry.results.join(",")}] ${entry.isZeroPool ? '(Reserva 0)' : ''}</span>
-      <span class="cain-history-successes">${entry.successes}s</span>
-      ${entry.riskEffect ? `<span class="cain-history-risk">${entry.riskEffect}</span>` : ""}
-    </div>
-  `).join("");
+  renderCainRollHistory();
+}
+
+export function openCainRollForSkill(skillKey) {
+  if (!state.cainRollState) {
+    state.cainRollState = { skill: "", advantages: 0, isDifficult: false, usePsyche: false, useDivineAgony: false };
+  }
+  state.cainRollState.skill = skillKey;
+  if (el.diceDrawer) el.diceDrawer.classList.remove("hidden");
+  renderCainRollPanel();
 }
