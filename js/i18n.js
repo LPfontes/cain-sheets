@@ -176,7 +176,10 @@ const TRANSLATIONS = {
     "skills.Psique": "Psique",
     "sheet.profile.xid.placeholder": "CX-0000",
     "sheet.profile.agenda.placeholder": "Agenda",
-    "sheet.profile.blasphemy.placeholder": "Blasfêmia",
+    "sheet.profile.blasphemy.placeholder": "Blaspêmia",
+    "pecado.status.defeated": "DERROTADO / EXECUTADO!",
+    "pecado.status.fled": "FUGIU PARA O PALÁCIO (Fugiu para o Palácio)!",
+    "pecado.status.fled4": "FUGIU PARA O PALÁCIO (Fugiu após 4 cortes fora do Palácio)!",
   },
   en: {
     // Landing
@@ -355,6 +358,9 @@ const TRANSLATIONS = {
     "sheet.profile.xid.placeholder": "CX-0000",
     "sheet.profile.agenda.placeholder": "Personal agenda",
     "sheet.profile.blasphemy.placeholder": "Blasphemy",
+    "pecado.status.defeated": "DEFEATED / EXECUTED!",
+    "pecado.status.fled": "FLED TO THE PALACE (Fled to the Palace)!",
+    "pecado.status.fled4": "FLED TO THE PALACE (Fled after 4 cuts outside the Palace)!",
   }
 };
 

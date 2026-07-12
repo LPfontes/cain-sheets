@@ -46,8 +46,8 @@ export function openSinMarksModal() {
 
       <!-- Tab Navigation -->
       <div class="sinmarks-tab-bar">
-        <button id="btn-tab-roll" class="btn sinmarks-tab-btn ${rollingState.mode === 'roll' ? 'btn-primary' : 'btn-secondary'}">🎲 Rolar Marca</button>
-        <button id="btn-tab-choose" class="btn sinmarks-tab-btn ${rollingState.mode === 'choose' ? 'btn-primary' : 'btn-secondary'}">📋 Escolha Manual</button>
+        <button id="btn-tab-roll" class="btn sinmarks-tab-btn ${rollingState.mode === 'roll' ? 'btn-primary' : 'btn-secondary'}">Rolar Marca</button>
+        <button id="btn-tab-choose" class="btn sinmarks-tab-btn ${rollingState.mode === 'choose' ? 'btn-primary' : 'btn-secondary'}">Escolha Manual</button>
       </div>
 
       <div class="modal-scroll-content sinmarks-scroll-area">
@@ -93,7 +93,7 @@ export function openSinMarksModal() {
           <div class="sinmarks-step-title">Passo 1: Categoria da Marca (1d6)</div>
           
           ${rollingState.categoryRoll === null ? `
-            <button id="btn-roll-category" class="btn btn-primary sinmarks-btn-full">🎲 Rolar Categoria (1d6)</button>
+            <button id="btn-roll-category" class="btn btn-primary sinmarks-btn-full">Rolar Categoria (1d6)</button>
           ` : `
             <div class="sinmarks-result-row">
               <span>Resultado do Dado: <strong>d6 = ${rollingState.categoryRoll}</strong></span>
@@ -104,7 +104,7 @@ export function openSinMarksModal() {
             </div>
             ${rollingState.isEvolution ? `
               <div class="sinmarks-evolution-badge">
-                🔄 Marca já possuída! A marca irá evoluir (concedendo nova habilidade).
+                Marca já possuída! A marca irá evoluir (concedendo nova habilidade).
               </div>
             ` : ''}
           `}
@@ -130,7 +130,7 @@ export function openSinMarksModal() {
             <div class="sinmarks-step-title">Passo 2: Habilidade da Marca (1d6)</div>
             
             ${rollingState.optionRoll === null ? `
-              <button id="btn-roll-option" class="btn btn-primary sinmarks-btn-full">🎲 Rolar Habilidade (1d6)</button>
+              <button id="btn-roll-option" class="btn btn-primary sinmarks-btn-full">Rolar Habilidade (1d6)</button>
             ` : `
               <div class="sinmarks-result-row">
                 <span>Resultado do Dado: <strong>d6 = ${rollingState.optionRoll}</strong></span>

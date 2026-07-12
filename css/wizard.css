@@ -147,7 +147,7 @@
 }
 
 .number-input button:hover {
-  none background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .number-input input,
@@ -214,7 +214,6 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-height: 40vh;
   overflow-y: auto;
   padding-right: 8px;
 }
@@ -232,7 +231,7 @@
 }
 
 .trait-wiz-item.owned {
-  border-none background-color: rgba(26, 80, 96, 0.08);
+  background-color: rgba(26, 80, 96, 0.08);
 }
 
 .column {
@@ -294,18 +293,17 @@
 }
 
 .package-wiz-card:hover {
-  border-none background-color: rgba(26, 80, 96, 0.05);
+   background-color: rgba(26, 80, 96, 0.05);
 }
 
 .package-wiz-card.active {
-  border-none background-color: rgba(26, 80, 96, 0.1);
+   background-color: rgba(26, 80, 96, 0.1);
   box-shadow: var(--glow-shadow);
 }
 
 .package-wiz-card h4 {
   font-family: var(--font-heading);
   font-size: var(--font-size-lg);
-  none
 }
 
 .package-wiz-card .items {
@@ -316,7 +314,7 @@
 
 /* Owned skill rows */
 .skill-control-row.owned {
-  border-none background: rgba(26, 80, 96, 0.05);
+   background: rgba(26, 80, 96, 0.05);
 }
 
 .package-wiz-card-header {
@@ -352,7 +350,6 @@
 
 .xp-tab-btn.active {
   background-color: rgba(26, 80, 96, 0.1);
-  none
 }
 
 .xp-tab-content {
@@ -426,7 +423,7 @@
 
 .blasphemy-wiz-card:hover {
   transform: translateY(-2px);
-  border-none
+  
 }
 
 .blasphemy-wiz-card:hover img {
@@ -435,7 +432,7 @@
 }
 
 .blasphemy-wiz-card.selected {
-  border-none border-style: solid;
+   border-style: solid;
   box-shadow: 0 0 10px rgba(26, 80, 96, 0.4);
 }
 
@@ -444,7 +441,7 @@
 }
 
 .blasphemy-wiz-card.selected .blasphemy-wiz-name {
-  none text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9), 0 0 5px rgba(26, 80, 96, 0.8);
+   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9), 0 0 5px rgba(26, 80, 96, 0.8);
 }
 
 .packages-grid {
@@ -457,7 +454,7 @@
   position: absolute;
   top: 8px;
   right: 8px;
-  background-none color: white;
+  background-color: white;
   font-size: var(--font-size-xs);
   font-weight: bold;
   padding: 2px 6px;
@@ -492,8 +489,6 @@
 .blasphemy-details-header img {
   width: 200px;
   border-radius: var(--radius-md);
-  border: 2px solid var(--border-color-dark);
-  aspect-ratio: 3/4;
   object-fit: cover;
 }
 
@@ -519,7 +514,7 @@
 }
 
 .blasphemy-details-layout .selected-tag {
-  background-none color: white;
+  background-color: white;
   padding: 4px 8px;
   border-radius: var(--radius-sm);
   font-size: 11px;

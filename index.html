@@ -909,21 +909,22 @@
                   </div>
                   <!-- AFLIGIMENTOS (AFFLICTIONS ROW) -->
                   <div class="afflictions-row"
-                    style="display: flex; flex-direction: column; gap: 8px; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 12px; margin-top: 8px;">
+                    style="display: flex; flex-direction: column; gap: 8px; border-top: 1px solid rgba(255, 255, 255, 0.08);">
+                    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                      <span class="stat-label" data-i18n="sheet.afflictions">Aflições:</span>
+                      <div id="afflictions-list-sheet" class="afflictions-list"></div>
+                    </div>
+                    <div class="affliction-inputs-group"
+                      style="display: flex; gap: 6px; align-items: center; width: 100%;">
+                      <input type="text" id="input-affliction-name" class="sheet-input-text" placeholder="Nome da Aflição"
+                        style="flex: 2; height: 30px; font-size: var(--font-size-xs);">
+                      <input type="text" id="input-affliction-desc" class="sheet-input-text" placeholder="Descrição"
+                        style="flex: 3; height: 30px; font-size: var(--font-size-xs);">
+                      <button id="btn-add-affliction" class="btn" style="padding: 0 10px; height: 30px; font-size: 12px;"
+                        title="Adicionar Aflição">Adicionar</button>
+                    </div>
                   </div>
-                  <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                    <span class="stat-label" data-i18n="sheet.afflictions">Aflições:</span>
-                    <div id="afflictions-list-sheet" class="afflictions-list"></div>
-                  </div>
-                  <div class="affliction-inputs-group"
-                    style="display: flex; gap: 6px; align-items: center; width: 100%;">
-                    <input type="text" id="input-affliction-name" class="sheet-input-text" placeholder="Nome da Aflição"
-                      style="flex: 2; height: 30px; font-size: var(--font-size-xs);">
-                    <input type="text" id="input-affliction-desc" class="sheet-input-text" placeholder="Descrição"
-                      style="flex: 3; height: 30px; font-size: var(--font-size-xs);">
-                    <button id="btn-add-affliction" class="btn" style="padding: 0 10px; height: 30px; font-size: 12px;"
-                      title="Adicionar Aflição">Adicionar</button>
-                  </div>
+                    
                 </div>
               </div>
 
@@ -1063,7 +1064,7 @@
                     <h3 class="section-title" data-i18n="sheet.notes">ANOTAÇÕES</h3>
                     <textarea id="char-notes" class="notes-textarea"
                       placeholder="Anotações de missão, contatos, segredos..."
-                      style="height: 90%; width: 100%;"></textarea>
+                      style="height: 90%; width: 100%; background-color:#00000088"></textarea>
                   </div>
                 </div>
               </div>

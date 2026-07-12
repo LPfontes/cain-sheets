@@ -624,6 +624,7 @@
   flex-direction: column;
   max-height: 70vh;
   gap: 6px;
+  padding: 10px;
 }
 
 .blasphemy-details-header {
@@ -636,13 +637,12 @@
 }
 
 .blasphemy-details-img-wrapper {
+  width: 200px;
   border-radius: 6px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.05);
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .blasphemy-details-img-wrapper img {
@@ -659,7 +659,7 @@
 .blasphemy-details-desc {
   line-height: 1.5;
   color: var(--text-secondary);
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-md);
 
 }
 
@@ -681,6 +681,25 @@
   border-radius: 4px;
   font-size: var(--font-size-lg);
   line-height: 1.4;
+}
+
+.blasphemy-details-col .agenda-triggers {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.blasphemy-details-col .agenda-trigger {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.blasphemy-details-col .agenda-skills-title {
+  margin: 8px 0;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-md);
+  color: var(--ink-dark);
 }
 
 .passive-popup .modal-title {
@@ -766,9 +785,7 @@
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  margin-top: 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: 16px;
 }
 
 .btn-blasphemy-save {

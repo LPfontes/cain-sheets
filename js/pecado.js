@@ -1,5 +1,6 @@
 import { el, state, saveCurrentSin } from "./state.js";
 import { hideAllScreens, goToLanding, esc, setupImageUpload } from "./screen-utils.js";
+import { t } from "./i18n.js";
 import { ICONS } from "../icons.js";
 
 let sinsData = [];
@@ -198,8 +199,9 @@ export function renderPecadoSheet() {
                 <button id="btn-pressure-inc" class="btn btn-sm stress-ctrl-btn flex-shrink-0">+</button>
               </div>
               <div id="pressure-warning" class="warning-box">
-                <strong>FORA DE CONTROLE (Pressão ${maxPressure}+):</strong> O pecado ganha +1 CAT temporário e efeitos ambientais secundários graves.
-              </div>
+                <strong>FORA DE CONTROLE (Pressão ${maxPressure}+):</strong>
+                <p>O pecado ganha +1 CAT temporário e efeitos ambientais secundários graves.</p>
+                </div>
             </div>
 
             <!-- Talismã de Tensão -->
@@ -402,12 +404,12 @@ function _renderExecutionCuts(sin, maxExecution) {
   if (img) container.appendChild(img);
 
   const cuts = sin.executionCuts || 0;
-  const rotations = [8, -5, 3, -7, 6, -9, 4, -8, 2, -6, 5, -10];
+  const rotations = [20, -10, -20, -10, 8, -18, 8, -8, 2, -9, 18];
 
   for (let i = 1; i <= maxExecution; i++) {
     const line = document.createElement("div");
     line.className = "execution-cut-line" + (i <= cuts ? " filled" : "");
-    line.style.left = `${15 + ((i - 1) / Math.max(maxExecution - 1, 1)) * 70}%`;
+    line.style.left = `${5 + ((i - 1) / Math.max(maxExecution - 1, 1)) * 85}%`;
     line.style.setProperty('--rotate', `${rotations[(i - 1) % rotations.length]}deg`);
     
     line.addEventListener("click", () => {
@@ -426,14 +428,14 @@ function _renderExecutionCuts(sin, maxExecution) {
   if (statusMsg) {
     if (cuts >= maxExecution) {
       if (sin.insidePalace) {
-        statusMsg.textContent = "DEFEATED / EXECUTED!";
+        statusMsg.textContent = t("pecado.status.defeated");
         statusMsg.style.color = "#125e30ff";
       } else {
-        statusMsg.textContent = "FLED TO THE PALACE (Fugiu para o Palácio)!";
+        statusMsg.textContent = t("pecado.status.fled");
         statusMsg.style.color = "#000000ff";
       }
     } else if (!sin.insidePalace && cuts >= 4) {
-      statusMsg.textContent = "FLED TO THE PALACE (Fugiu após 4 cortes fora do Palácio)!";
+      statusMsg.textContent = t("pecado.status.fled4");
       statusMsg.style.color = "#000000ff";
     } else {
       statusMsg.textContent = "";
@@ -453,7 +455,7 @@ function _renderPressureTrack(sin) {
 
   const pressure = sin.pressure || 0;
   const maxPressure = sin.pressureMax !== undefined ? sin.pressureMax : 6;
-  const rotations = [8, -5, 3, -7, 6, -9];
+  const rotations = [19, -15, 3, -10, 6, -9];
 
   for (let i = 1; i <= maxPressure; i++) {
     const line = document.createElement("div");
@@ -490,7 +492,7 @@ function _renderTensionTrack(sin) {
 
   const tension = sin.tension || 0;
   const maxTension = sin.tensionMax !== undefined ? sin.tensionMax : 3;
-  const rotations = [8, -5, 3];
+  const rotations = [8, -5, 3 , 6, -9, 2, -3, -6, 7, 5, -8, 11];
 
   for (let i = 1; i <= maxTension; i++) {
     const line = document.createElement("div");

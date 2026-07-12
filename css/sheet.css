@@ -1853,12 +1853,10 @@
 }
 
 .afflictions-row {
-  margin-top: 16px;
-  padding-top: 12px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 6px;
   width: 100%;
 }
 
@@ -2377,14 +2375,13 @@
 .cain-skill-left {
   display: flex;
   align-items: center;
-  gap: 6px;
 }
 
 .cain-skill-roll-btn {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 20px;
   padding: 2px 4px;
   opacity: 0;
   transition: opacity 0.2s;
@@ -2480,6 +2477,7 @@
 
 .cain-blasphemy-name {
   color: white;
+  text-shadow: 1px 1px 2px black;
   font-family: var(--font-heading);
   font-weight: bold;
   font-size: var(--font-size-lg);
@@ -2599,7 +2597,7 @@
 
 .cain-blasphemy-card-trigger {
   width: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgb(130 130 130 / 40%);
   border: 1px solid black;
   padding: 12px;
   display: flex;
@@ -3000,26 +2998,26 @@
 }
 
 .cain-history-skill {
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-md);
   font-weight: 900;
   min-width: 80px;
   color: white;
 }
 
 .cain-history-dice {
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-md);
   font-weight: 900;
   color: white;
 }
 
 .cain-history-successes {
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-md);
   font-weight: 900;
   color: #32a15b;
 }
 
 .cain-history-risk {
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-md);
   font-weight: 900;
 }
 
@@ -3255,9 +3253,8 @@ input[type="checkbox"].trait-wiz-check:hover,
 
 .custom-item-desc-input {
   flex: 1.5;
-  font-size: 11px;
-  padding: 6px 8px;
-  height: 28px;
+  padding: 8px 8px;
+  height: 30px;
   background: var(--bg-input);
   border: 1px solid var(--border-color);
   color: var(--ink-dark);
@@ -3266,9 +3263,8 @@ input[type="checkbox"].trait-wiz-check:hover,
 
 .custom-item-cost-input {
   width: 50px;
-  font-size: 11px;
-  padding: 6px 8px;
-  height: 28px;
+  padding: 8px 8px;
+  height: 30px;
   text-align: center;
   background: var(--bg-input);
   border: 1px solid var(--border-color);
@@ -3278,7 +3274,6 @@ input[type="checkbox"].trait-wiz-check:hover,
 
 #btn-add-custom-item {
   padding: 6px 12px;
-  font-size: 11px;
   background: var(--bg-card-alt);
   border: 1.5px solid var(--border-color-dark);
   color: var(--ink-dark);
@@ -3448,7 +3443,7 @@ input[type="checkbox"].trait-wiz-check:hover,
 .cain-equip-grid-layout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 20px;
+  gap: 10px;
   align-items: start;
 }
 

@@ -32,8 +32,8 @@ export function renderSkillsSheet() {
       item.className = "cain-skill-row";
       item.innerHTML = `
         <div class="cain-skill-left">
-          <span class="cain-skill-name">${t("skills." + key)}</span>
-          <button class="cain-skill-roll-btn" data-skill="${key}" title="Rolar ${t("skills." + key)}">🎲</button>
+        <button class="cain-skill-roll-btn" data-skill="${key}" title="Rolar ${t("skills." + key)}">🎲</button>  
+        <span class="cain-skill-name">${t("skills." + key)}</span>
         </div>
         <div class="cain-skill-dots">
           ${Array.from({ length: 3 }, (_, i) =>
@@ -66,8 +66,8 @@ export function renderSkillsSheet() {
     <span class="cain-skill-group-label">${t("skills.psychic")}</span>
     <div class="cain-skill-row">
       <div class="cain-skill-left">
+        <button class="cain-skill-roll-btn" data-skill="Psique" title="Rolar ${t("skills.Psique")}">🎲</button>  
         <span class="cain-skill-name">${t("skills.Psique")}</span>
-        <button class="cain-skill-roll-btn" data-skill="Psique" title="Rolar ${t("skills.Psique")}">🎲</button>
       </div>
       <div class="cain-skill-dots">
         ${Array.from({ length: 3 }, (_, i) =>

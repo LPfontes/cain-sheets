@@ -268,7 +268,7 @@ function openWizardAgendaModal(agendaId) {
     el.modalBody.innerHTML = `
       <h3 class="modal-title">Habilidades de ${agenda.name}</h3>
       <p class="step-help" style="margin-bottom: 16px; color: var(--text-secondary);">Escolha sua Habilidade Ativa inicial.<br>Ela definirá seu papel.</p>
-      <div class="traits-wizard-list" id="wiz-modal-skills-list">
+      <div class="traits-wizard-list" id="wiz-modal-skills-list" style="max-height: 100%;">
         ${agenda.habilidades.map(hab => {
           const isSelected = tempSelectedSkillName === hab.name;
           return `
