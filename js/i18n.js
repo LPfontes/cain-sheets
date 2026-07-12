@@ -3,6 +3,7 @@ const TRANSLATIONS = {
   pt: {
     // Landing
     "landing.title": "Exorcistas",
+    "landing.tabs.exorcists": "Exorcistas",
     "landing.subtitle": "Selecione um Exorcista para continuar ou crie um novo",
     "landing.counter": "Exorcista(s) registrado(s)",
     "landing.empty.title": "Nenhum exorcista registrado",
@@ -180,6 +181,7 @@ const TRANSLATIONS = {
   en: {
     // Landing
     "landing.title": "Exorcists",
+    "landing.tabs.exorcists": "Exorcists",
     "landing.subtitle": "Select an Exorcist to continue or create a new one",
     "landing.counter": "Exorcist(s) registered",
     "landing.empty.title": "No exorcists registered",

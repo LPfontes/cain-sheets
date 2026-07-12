@@ -36,11 +36,11 @@ const DICE = (function() {
             shininess: 40,
             shading: THREE.FlatShading,
         },
-        label_color: '#dd0df9', //numbers on dice
-        dice_color: '#111111',
+        label_color: '#e3dac9', //numbers on dice
+        dice_color: '#1111119d',
         ambient_light_color: 0xf0f0f0,
         spot_light_color: 0xefefef,
-        desk_color: '#55555596', //canvas background
+        desk_color: '#929292cc', //canvas background
         desk_opacity: 0.5,
         use_shadows: true,
         use_adapvite_timestep: false 
@@ -51,7 +51,7 @@ const DICE = (function() {
         known_types: ['d4', 'd6', 'd8', 'd9', 'd10', 'd12', 'd20', 'd100'],
         dice_face_range: { 'd4': [1, 4], 'd6': [1, 6], 'd8': [1, 8], 'd9': [0, 9], 'd10': [0, 9], 
             'd12': [1, 12], 'd20': [1, 20], 'd100': [0, 9] },
-        dice_mass: { 'd4': 900, 'd6': 600, 'd8': 1020, 'd9': 1050, 'd10': 1050, 'd12': 750, 'd20': 1200, 'd100': 1050 },
+        dice_mass: { 'd4': 900, 'd6': 700, 'd8': 1020, 'd9': 1050, 'd10': 1050, 'd12': 750, 'd20': 1200, 'd100': 1050 },
         dice_inertia: { 'd4': 5, 'd6': 10, 'd8': 10, 'd9': 9, 'd10': 9, 'd12': 8, 'd20': 6, 'd100': 9 },
         
         standart_d20_dice_face_labels: [' ', '0', '1', '2', '3', '4', '5', '6', '7', '8',

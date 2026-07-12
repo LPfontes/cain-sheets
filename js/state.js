@@ -113,6 +113,8 @@ export const el = {
 export const state = {
   characters: [],
   currentCharacter: null,
+  sins: [],
+  currentSin: null,
   diceBox: null,
   cainRollState: { skill: "", usePsyche: false },
   cainRollHistory: [],
@@ -441,7 +443,86 @@ export function saveCustomMutations(mutations) {
 
 window.addEventListener("beforeunload", () => {
   saveCurrentCharacterImmediate();
+  saveCurrentSinImmediate();
 });
+
+// ==========================================
+// GERENCIADOR DE ESTADO & ARMAZENAMENTO - PECADOS
+// ==========================================
+export function loadSinsFromStorage() {
+  logger.info("Carregando fichas de Pecados do LocalStorage...");
+  const data = localStorage.getItem("cain_sins");
+  if (data) {
+    try {
+      state.sins = JSON.parse(data);
+      logger.info(`${state.sins.length} ficha(s) de Pecado(s) carregada(s).`);
+    } catch (e) {
+      logger.error("Erro ao ler dados de pecados do LocalStorage:", e);
+      state.sins = [];
+    }
+  } else {
+    logger.warn("Nenhum Pecado encontrado no LocalStorage.");
+    state.sins = [];
+  }
+}
+
+let sinSaveTimeout = null;
+
+export function saveCurrentSin() {
+  if (!state.currentSin) return;
+  const index = state.sins.findIndex(s => s.id === state.currentSin.id);
+  if (index !== -1) {
+    state.sins[index] = state.currentSin;
+  } else {
+    state.sins.push(state.currentSin);
+  }
+
+  if (sinSaveTimeout) clearTimeout(sinSaveTimeout);
+
+  sinSaveTimeout = setTimeout(() => {
+    try {
+      localStorage.setItem("cain_sins", JSON.stringify(state.sins));
+      logger.info(`[DEBOUNCED SAVE] Ficha de Pecado "${state.currentSin.name}" salva.`);
+    } catch (e) {
+      logger.error("Erro ao salvar Pecado no LocalStorage:", e);
+    }
+  }, 500);
+  window.dispatchEvent(new CustomEvent("sin-saved", { detail: { id: state.currentSin.id } }));
+}
+
+export function saveCurrentSinImmediate() {
+  if (!state.currentSin) return;
+  if (sinSaveTimeout) clearTimeout(sinSaveTimeout);
+  try {
+    localStorage.setItem("cain_sins", JSON.stringify(state.sins));
+    logger.info(`[IMMEDIATE SAVE] Ficha de Pecado "${state.currentSin.name}" persistida.`);
+  } catch (e) {
+    logger.error("Erro ao salvar Pecado imediatamente:", e);
+  }
+}
+
+export function loadSin(sinId) {
+  const sin = state.sins.find(s => s.id === sinId);
+  if (!sin) {
+    logger.error(`Pecado não encontrado: ${sinId}`);
+    return;
+  }
+  state.currentSin = sin;
+  logger.info(`Carregando Pecado: "${sin.name}" (${sinId})`);
+
+  document.getElementById("landing-screen")?.classList.add("hidden");
+  el.wizardScreen.classList.add("hidden");
+  el.sheetScreen.classList.add("hidden");
+  
+  const pecadoScreen = document.getElementById("pecado-screen");
+  if (pecadoScreen) {
+    pecadoScreen.classList.remove("hidden");
+  }
+
+  import("./pecado.js").then(({ renderPecadoSheet }) => {
+    renderPecadoSheet();
+  });
+}
 
 // ==========================================
 // LISTENERS DOS CAMPOS DO ID CARD

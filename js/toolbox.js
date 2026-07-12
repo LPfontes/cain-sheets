@@ -267,6 +267,84 @@ const TOOLBOX_DATA = {
         "<strong>5:</strong> Dedo do pé",
         "<strong>6:</strong> Nada"
       ]
+    },
+    alma_de_ferro: {
+      title: "Alma de Ferro",
+      desc: "Passiva de Tensão. Quando estiver prestes a preencher seu talismã de execução e sofrer um ferimento, você pode rolar 1d6.",
+      rules: [
+        "Com um resultado de 4 ou mais, você fica com 1 ponto de estresse abaixo do máximo e ignora qualquer excesso, perdendo o uso desta passiva até descansar."
+      ]
+    },
+    fornalha_interna: {
+      title: "Fornalha Interna",
+      desc: "Passiva de Ardência. Você pode adquirir um gancho 'Poder Instável' ao usar qualquer poder de Ardência para aumentar o CAT do poder em até +2.",
+      rules: [
+        "Quando o gancho se enche, você queima por dentro, sofrendo um ferimento e encerrando o gancho.",
+        "Se esse ferimento for fatal, você explode em uma área igual ao seu CAT, aniquilando a si mesmo e tudo dentro dela em uma explosão massiva."
+      ]
+    },
+    roubar_tempo: {
+      title: "Roubar Tempo",
+      desc: "Passiva de Fluxo. Uma vez por caçada, você pode rolar novamente todos os seus dados de descanso para si mesmo ou para um aliado.",
+      rules: [
+        "Considere o segundo resultado como definitivo."
+      ]
+    },
+    freio: {
+      title: "Freio",
+      desc: "Passiva de Vetor. Remove automaticamente a velocidade de todos os projéteis que o atingiriam.",
+      rules: [
+        "Causa -1 de estresse a eles."
+      ]
+    },
+    bolso_extradimensional: {
+      title: "Bolso Extradimensional",
+      desc: "Passiva de Portão. Você pode inserir um rasgo comprimido no espaço em uma peça de roupa que esteja vestindo.",
+      rules: [
+        "Você ganha +1 PK.",
+        "Você pode guardar ou retirar itens dentro do seu bolso, que pode conter um total combinado de itens no valor de até 3 PK.",
+        "Uma vez dentro, os itens são armazenados em um espaço extradimensional, ocultos e seguros, independentemente do tamanho.",
+        "O bolso está preso às suas roupas e, se elas forem destruídas, os itens dentro dele saltam para fora."
+      ]
+    },
+    mimica: {
+      title: "Mímica",
+      desc: "Passiva de Editar. Você pode alterar pequenos detalhes da sua aparência.",
+      rules: [
+        "Características físicas: altura e peso.",
+        "Características estéticas: traços faciais, cor da pele, cabelo e apresentação de gênero.",
+        "Idade: de 13 a 88 anos.",
+        "Você sempre tem uma aparência vagamente semelhante à sua, como um parente distante.",
+        "Isso não altera suas habilidades, nem restaura partes do corpo perdidas ou esconde marcas de pecado."
+      ]
+    },
+    conexao_fantasma: {
+      title: "Conexão Fantasma",
+      desc: "Passiva de Assombração. Você pode conectar sua mente telepaticamente com um número de pessoas dispostas igual a CAT.",
+      rules: [
+        "Enquanto estiverem a uma longa distância um do outro, vocês podem conversar telepaticamente e sentir o estado emocional um do outro.",
+        "Esse efeito dura até que você o use novamente, até que alguém fique inconsciente ou até que você ou outra pessoa encerre a conexão."
+      ]
+    },
+    santuario: {
+      title: "Santuário",
+      desc: "Passiva de Palácio. Você e os aliados com quem você descansa podem entrar em seu palácio psíquico enquanto descansam.",
+      rules: [
+        "Isso melhora os testes de descanso de você e de um aliado à sua escolha que esteja descansando com você em +1.",
+        "O palácio é uma projeção mental, um espaço onírico que assume a forma de uma grande casa, residência ou mansão.",
+        "Sofrer dano em um palácio instantaneamente expulsa a pessoa de lá, despertando-a.",
+        "Entrar mentalmente no palácio requer apenas fechar os olhos e se concentrar, deixando seu corpo externo indefeso."
+      ]
+    },
+    ressonancia: {
+      title: "Ressonância",
+      desc: "Passiva de Simpatia. No início da missão, role na tabela de ressonância.",
+      rules: [
+        "Role 1d3, depois 1d6 e verifique as tabelas de ressonância.",
+        "Quando você estiver realizando uma rolagem de ação e estiver usando um item com o qual você tenha ressonância, você recebe um bônus de +1D.",
+        "Você pode gastar um pulso psíquico a qualquer momento para rolar uma ressonância adicional.",
+        "Você pode manter até três ressonâncias ativas simultaneamente."
+      ]
     }
   },
   en: {
@@ -491,6 +569,84 @@ const TOOLBOX_DATA = {
         "<strong>5:</strong> Toe",
         "<strong>6:</strong> Nothing"
       ]
+    },
+    alma_de_ferro: {
+      title: "Iron Soul",
+      desc: "Tensão passive. When you are about to fill your execution talisman and suffer an injury, you may roll 1d6.",
+      rules: [
+        "With a result of 4 or more, you stay 1 stress below the maximum and ignore any excess, losing use of this passive until rest."
+      ]
+    },
+    fornalha_interna: {
+      title: "Internal Furnace",
+      desc: "Ardência passive. You may acquire a 'Unstable Power' hook when using any Ardência power to increase the power's CAT by up to +2.",
+      rules: [
+        "When the hook fills, you burn inside, suffering an injury and ending the hook.",
+        "If this injury is fatal, you explode in an area equal to your CAT, annihilating yourself and everything within it."
+      ]
+    },
+    roubar_tempo: {
+      title: "Steal Time",
+      desc: "Fluxo passive. Once per hunt, you may reroll all your rest dice for yourself or an ally.",
+      rules: [
+        "Consider the second result as definitive."
+      ]
+    },
+    freio: {
+      title: "Brake",
+      desc: "Vetor passive. Automatically removes speed from all projectiles that would hit you.",
+      rules: [
+        "Causes -1 stress to them."
+      ]
+    },
+    bolso_extradimensional: {
+      title: "Extradimensional Pocket",
+      desc: "Portão passive. You can insert a compressed tear in space into a piece of clothing you are wearing.",
+      rules: [
+        "You gain +1 PK.",
+        "You can store or retrieve items inside your pocket, which can hold a combined total of up to 3 PK worth of items.",
+        "Once inside, items are stored in an extradimensional space, hidden and safe, regardless of size.",
+        "The pocket is attached to your clothes; if they are destroyed, the items inside pop out."
+      ]
+    },
+    mimica: {
+      title: "Mimicry",
+      desc: "Editar passive. You can alter small details of your appearance.",
+      rules: [
+        "Physical traits: height and weight.",
+        "Aesthetic traits: facial features, skin color, hair, and gender presentation.",
+        "Age: from 13 to 88 years old.",
+        "You always look vaguely similar to yourself, like a distant relative.",
+        "This does not change your abilities, nor restore lost body parts or hide sin marks."
+      ]
+    },
+    conexao_fantasma: {
+      title: "Ghost Connection",
+      desc: "Assombração passive. You can telepathically connect your mind with a number of willing people equal to CAT.",
+      rules: [
+        "While at long distance from each other, you can talk telepathically and feel each other's emotional state.",
+        "This effect lasts until you use it again, until someone becomes unconscious, or until you or someone else ends the connection."
+      ]
+    },
+    santuario: {
+      title: "Sanctuary",
+      desc: "Palácio passive. You and allies you rest with may enter your psychic palace while resting.",
+      rules: [
+        "This improves rest tests for you and one ally of your choice who is resting with you by +1.",
+        "The palace is a mental projection, a dreamlike space taking the form of a large house or mansion.",
+        "Suffering damage in the palace instantly expels the person from it, waking them up.",
+        "Entering the palace mentally requires only closing your eyes and concentrating, leaving your outer body defenseless."
+      ]
+    },
+    ressonancia: {
+      title: "Resonance",
+      desc: "Simpatia passive. At the start of the mission, roll on the resonance table.",
+      rules: [
+        "Roll 1d3, then 1d6 and check the resonance tables.",
+        "When making an action roll using an item you have resonance with, you gain +1D.",
+        "You may spend a psychic pulse at any time to roll an additional resonance.",
+        "You can maintain up to three active resonances simultaneously."
+      ]
     }
   }
 };
@@ -522,6 +678,25 @@ const TERM_MAP = {
   "shadow": "sombra",
   "pecado vinculado": "pecado_vinculado",
   "bound sin": "pecado_vinculado",
+
+  "alma de ferro": "alma_de_ferro",
+  "iron soul": "alma_de_ferro",
+  "fornalha interna": "fornalha_interna",
+  "internal furnace": "fornalha_interna",
+  "roubar tempo": "roubar_tempo",
+  "steal time": "roubar_tempo",
+  "freio": "freio",
+  "brake": "freio",
+  "bolso extradimensional": "bolso_extradimensional",
+  "extradimensional pocket": "bolso_extradimensional",
+  "mímica": "mimica",
+  "mimicry": "mimica",
+  "conexão fantasma": "conexao_fantasma",
+  "ghost connection": "conexao_fantasma",
+  "santuário": "santuario",
+  "sanctuary": "santuario",
+  "ressonância": "ressonancia",
+  "resonance": "ressonancia",
 
   "agenda": "agenda",
   "blasfêmia": "blasphemy",

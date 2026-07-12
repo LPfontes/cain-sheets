@@ -1,0 +1,736 @@
+/* ==========================================================
+   PECADO.CSS — Folha de Estilo para a Ficha de Pecado
+   Assimilação RPG / CAIN
+   ========================================================== */
+
+#pecado-screen .world-sheet-body {
+  display: grid;
+  grid-template-columns: 300px 1fr 1fr;
+  gap: 16px;
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  #pecado-screen .world-sheet-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Polaroides de Pecado */
+#pecado-image-frame {
+  background: #f7f5ee !important;
+  padding: 12px 12px 36px 12px !important;
+  border-radius: 2px !important;
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.35), inset 0 0 10px rgba(0,0,0,0.03) !important;
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#pecado-image-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#pecado-image-frame .local-image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  text-align: center;
+  font-size: 11px;
+  padding: 6px 0;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+#pecado-image-frame:hover .local-image-overlay {
+  opacity: 1;
+}
+
+/* Talismãs & Marcadores */
+.talisman-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.talisman-tracker {
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.talisman-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.talisman-title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-md);
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  color: var(--color-rust-glow);
+  text-transform: uppercase;
+}
+
+.talisman-value {
+  font-size: var(--font-size-lg);
+  font-weight: bold;
+  font-family: monospace;
+}
+
+/* Talismã de Execução (Cuts) - Estilo Stress Tracker */
+.execution-tracker {
+  position: relative;
+  width: 100%;
+  min-height: 100px;
+  height: fit-content;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.execution-tracker-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 0;
+  padding-top: 10px;
+}
+
+.execution-cut-line {
+  position: absolute;
+  top: 10%;
+  bottom: 10%;
+  width: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  z-index: 1;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s;
+  height: 90px;
+}
+
+.execution-cut-line:hover {
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.execution-cut-line.filled {
+  background: var(--stamp-red);
+  box-shadow: 0 0 10px var(--color-rust-glow), 0 0 20px rgba(190, 49, 53, 0.6);
+  transform: rotate(var(--rotate, 0deg));
+}
+
+/* Talismã de Pressão (0 a 6) */
+.pressure-track {
+  position: relative;
+  width: 100%;
+  min-height: 80px;
+  height: fit-content;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.pressure-tracker-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.pressure-cut-line {
+  position: absolute;
+  top: 0%;
+  bottom: 10%;
+  width: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  z-index: 1;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s;
+  height: 80px;
+}
+
+.pressure-cut-line:hover {
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.pressure-cut-line.filled {
+  background: var(--color-rust);
+  box-shadow: 0 0 10px var(--color-rust-glow), 0 0 20px rgba(190, 49, 53, 0.6);
+  transform: rotate(var(--rotate, 0deg));
+}
+
+@keyframes shakeWarning {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-2px); }
+}
+
+/* Talismã de Tensão (3 segmentos) */
+.tension-track {
+  position: relative;
+  width: 100%;
+  min-height: 80px;
+  height: fit-content;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.tension-tracker-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 0;
+  padding-top: 10px;
+}
+
+.tension-cut-line {
+  position: absolute;
+  top: 10%;
+  bottom: 10%;
+  width: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  z-index: 1;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s;
+  height: 90px;
+}
+
+.tension-cut-line:hover {
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.tension-cut-line.filled {
+  background: #000000;
+  box-shadow: 0 0 10px rgba(143, 143, 143, 0.5), 0 0 20px rgba(136, 136, 136, 0.3);
+  transform: rotate(var(--rotate, 0deg));
+}
+
+/* Seção de Traumas */
+.trauma-card-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.trauma-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.trauma-revealed-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Lacaios / Vestígios */
+.minions-section-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.minion-item-card {
+  padding: 10px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  position: relative;
+}
+
+.minion-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.minion-name-input {
+  background: transparent;
+  border: none;
+  font-weight: bold;
+  color: var(--text-primary);
+  font-size: var(--font-size-md);
+  outline: none;
+  width: 70%;
+}
+
+.minion-talisman-input {
+  width: 50px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff;
+  text-align: center;
+  border-radius: 3px;
+  font-size: var(--font-size-sm);
+  font-weight: bold;
+}
+
+.minion-desc-textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  resize: vertical;
+  min-height: 40px;
+  outline: none;
+  margin-top: 4px;
+}
+
+.btn-remove-minion {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 16px;
+  transition: color 0.15s;
+  padding: 2px 6px;
+}
+
+.btn-remove-minion:hover {
+  color: var(--stamp-red);
+}
+
+/* Domínios Custom */
+.domain-checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.01);
+  border: 1px solid rgba(255,255,255,0.04);
+  margin-bottom: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.domain-checkbox-row:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+.domain-checkbox-row.selected {
+  border-color: rgba(190, 49, 53, 0.35);
+  background: rgba(190, 49, 53, 0.05);
+}
+
+/* Layout utilities and styling cleanups */
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+.gap-6 { gap: 6px; }
+.gap-8 { gap: 8px; }
+.gap-10 { gap: 10px; }
+.gap-12 { gap: 12px; }
+.gap-16 { gap: 16px; }
+.flex-1 { flex: 1; }
+.flex-shrink-0 { flex-shrink: 0; }
+.object-fit-cover { object-fit: cover; }
+.w-100 { width: 100%; }
+.box-border { box-sizing: border-box; }
+
+.pecado-header-row {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pecado-title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.pecado-back-btn {
+  padding: 6px 12px;
+}
+
+.pecado-back-svg {
+  vertical-align: middle;
+}
+
+.pecado-name-input {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-weight: bold;
+  background: transparent;
+  border: none;
+  color: #fff;
+  outline: none;
+  border-bottom: 1px dashed rgba(255,255,255,0.2);
+  width: 60%;
+}
+
+.pecado-header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.pecado-delete-btn {
+  padding: 6px 12px;
+}
+
+.pecado-file-input {
+  display: none;
+}
+
+.pecado-card-padding {
+  padding: 16px;
+}
+
+.pecado-section-title-line {
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.pecado-profile-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.pecado-field-input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.pecado-field-h80 {
+  height: 80px;
+}
+
+.pecado-field-h60 {
+  height: 60px;
+}
+
+.pecado-field-h50 {
+  height: 50px;
+}
+
+.pecado-field-h45 {
+  height: 45px;
+}
+
+/* Talismãs Layout */
+.talisman-align-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.talisman-align-group label {
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.talisman-align-group input {
+  vertical-align: middle;
+}
+
+.talisman-formula-text {
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.tracker-control-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-msg-executed {
+  font-weight: bold;
+  font-size: var(--font-size-sm);
+}
+
+.warning-box {
+  margin-top: 10px;
+  display: none;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ff3333;
+  background: rgba(255, 0, 0, 0.1);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.tension-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.tension-info-text {
+  color: var(--text-muted);
+}
+
+.vazar-tension-btn {
+  background: rgba(255, 204, 0, 0.08);
+  padding: 2px 8px;
+  font-size: 12px;
+}
+
+/* Traumas */
+.trauma-text-muted {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.trauma-fields-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Domains */
+.domain-card-desc {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.domain-details-btn {
+  font-size: 11px;
+  padding: 2px 6px;
+  z-index: 10;
+}
+
+.domain-checkbox-checkbox {
+  margin-top: 3px;
+}
+
+.domain-row-flex {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  text-align: left;
+  gap: 8px;
+}
+
+.domain-row-content-header {
+  font-weight: bold;
+  font-size: var(--font-size-md);
+  color: #000000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.custom-domain-name-input {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+/* Minions */
+.pecado-empty-list {
+  text-align: center;
+  padding: 10px;
+  color: var(--text-muted);
+}
+
+.pecado-minion-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pecado-minion-header-label {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.pecado-minions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+}
+
+.pecado-minions-title {
+  margin-bottom: 0;
+  border: none;
+  padding: 0;
+}
+
+.pecado-add-minion-btn {
+  padding: 2px 8px;
+  font-size: 11px;
+}
+
+/* Combat */
+.pecado-reaction-box {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  line-height: 1.4;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.mb-8 { margin-bottom: 8px; }
+.mt-4 { margin-top: 4px; }
+.trauma-question {
+  flex: 1;
+  font-weight: bold;
+  background: transparent !important;
+  border: none !important;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+  outline: none;
+}
+
+/* Abas da 3ª Coluna */
+.pecado-third-col-tabs {
+  display: flex;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 4px;
+  gap: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.pecado-third-tab-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-heading);
+  font-size: var(--font-size-sm);
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-align: center;
+}
+
+.pecado-third-tab-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.pecado-third-tab-btn.active {
+  color: #fff;
+  background: var(--color-rust);
+  box-shadow: 0 2px 8px rgba(190, 49, 53, 0.3);
+}
+
+.pecado-profile-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .pecado-profile-grid-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pecado-status-settings-btn {
+  padding: 2px 6px;
+  font-size: 18px;
+  border: none;
+  background: none;
+  box-shadow: none;
+  cursor: pointer;
+  color: var(--ink-faded);
+  transition: color 0.15s;
+}
+
+.pecado-status-settings-btn:hover {
+  color: var(--text-primary);
+}
+
+.pecado-settings-desc {
+  margin-bottom: 16px;
+  color: var(--text-secondary);
+}
+
+.pecado-settings-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+  margin-top: 16px;
+}
+
+.pecado-settings-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pecado-settings-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pecado-settings-btn-padding {
+  padding: 2px 8px;
+}
+
+.pecado-settings-footer {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+}

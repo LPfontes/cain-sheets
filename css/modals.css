@@ -623,6 +623,7 @@
   display: flex;
   flex-direction: column;
   max-height: 70vh;
+  gap: 6px;
 }
 
 .blasphemy-details-header {
@@ -662,6 +663,17 @@
 
 }
 
+.blasphemy-details-fato {
+  margin-top: 8px;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.08);
+  border-left: 3px solid #0000009a;
+  border-radius: 4px;
+  font-size: var(--font-size-sm);
+  line-height: 1.4;
+  color: #000000;
+}
+
 .blasphemy-details-passive {
   padding: 10px;
   background: rgba(248, 113, 113, 0.05);
@@ -669,6 +681,21 @@
   border-radius: 4px;
   font-size: var(--font-size-lg);
   line-height: 1.4;
+}
+
+.passive-popup .modal-title {
+  cursor: move;
+  user-select: none;
+}
+
+.passive-popup .toolbox-link {
+  color: var(--border-color);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.passive-popup .toolbox-link:hover {
+  color: var(--color-rust-glow);
 }
 
 .blasphemy-details-status span {

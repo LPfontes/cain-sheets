@@ -24,7 +24,7 @@
 }
 
 .ref-area-left {
-  grid-area: left;
+
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -627,4 +627,4 @@
 .refugio-building-remove-btn:hover {
   color: #ef4444;
 }
-
+

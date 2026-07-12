@@ -235,6 +235,7 @@
   cursor: pointer;
   position: relative;
   transition: color 0.2s;
+  text-shadow: 1px 1px 1px #ffffff;
 }
 
 .cain-skill-name:hover,

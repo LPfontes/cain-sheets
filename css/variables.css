@@ -331,7 +331,7 @@ optgroup {
 
 .btn-danger {
   background-color: var(--stamp-red);
-  color: var(--ink-on-dark);
+  color: white;
   border-color: var(--stamp-red-dark);
   box-shadow: 2px 2px 0 var(--stamp-red-dark);
 }

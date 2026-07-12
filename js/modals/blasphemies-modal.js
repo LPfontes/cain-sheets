@@ -57,11 +57,11 @@ export function openBlasphemiesModal() {
               </div>
             </div>
           </div>
-
+          ${activeB.fato ? `<div class="blasphemy-details-fato"><strong>Fato:</strong> ${activeB.fato}</div>` : ''}
           <!-- Passiva -->
           ${activeB.passive ? `
             <div class="blasphemy-details-passive">
-              ${activeB.passive}
+              <button class="btn btn-sm btn-passive-detail" style="font-weight: bold; background: rgba(248, 113, 113, 0.1); border: 1px solid var(--stamp-red); color: var(--stamp-red);">Ver Passiva</button>
             </div>
           ` : ''}
 
@@ -77,7 +77,7 @@ export function openBlasphemiesModal() {
           <!-- Escolha de Poderes Ativos se Possuída -->
           ${isOwned ? `
             <div class="section-divider" style="margin-top: auto;">
-              <button id="btn-manage-blasphemy-powers" class="btn btn-md" style="width: 100%; font-weight: bold; background: rgba(0,0,0,0.1); border: 1px solid var(--border-color);">
+              <button id="btn-manage-blasphemy-powers" class="btn btn-md" style="width: 50%; font-weight: bold; background: rgba(0,0,0,0.1); border: 1px solid var(--border-color); margin-bottom: 6px;">
                 Gerenciar Poderes Ativos (${(activeB.powers || []).filter(p => tempPowers.includes(p.name)).length})
               </button>
             </div>
@@ -94,9 +94,17 @@ export function openBlasphemiesModal() {
       </div>
     `;
 
+    // Restore grid scroll position
+    const gridCol = el.modalBody.querySelector(".blasphemies-grid-col");
+    if (gridCol && window._blasphemyGridScroll != null) {
+      gridCol.scrollTop = window._blasphemyGridScroll;
+    }
+
     // Event: Click on Blasphemy card in grid
     el.modalBody.querySelectorAll(".blasphemy-grid-card").forEach(card => {
       card.addEventListener("click", () => {
+        const grid = el.modalBody.querySelector(".blasphemies-grid-col");
+        window._blasphemyGridScroll = grid ? grid.scrollTop : 0;
         activeBlasphemyId = card.getAttribute("data-id");
         renderModalContent();
       });
@@ -119,6 +127,14 @@ export function openBlasphemiesModal() {
           }
         }
         renderModalContent();
+      });
+    }
+
+    // Event: Open Passive Popup
+    const btnPassiveDetail = document.querySelector(".btn-passive-detail");
+    if (btnPassiveDetail) {
+      btnPassiveDetail.addEventListener("click", () => {
+        showPassivePopup(activeB);
       });
     }
 
@@ -247,18 +263,6 @@ export function openBlasphemyPowersModal(blasphemy, currentPowers, onSave) {
       </div>
       <div style="padding:16px;overflow-y:auto;flex:1;">
         <div class="blasphemy-details-content">
-          <div class="blasphemy-details-header">
-            ${blasphemy.img ? `<img src="${blasphemy.img}" alt="${blasphemy.name}">` : ''}
-            <div class="desc">
-              ${blasphemy.desc}
-            </div>
-          </div>
-
-          ${blasphemy.passive ? `
-            <div class="passive">
-              ${blasphemy.passive}
-            </div>
-          ` : ''}
 
           <div class="blasphemy-powers-section">
             <h4>Poderes da Blasfêmia</h4>
@@ -350,5 +354,75 @@ export function openBlasphemyPowersModal(blasphemy, currentPowers, onSave) {
 
   renderContent();
   document.body.appendChild(panel);
+}
+
+function showPassivePopup(blasphemy) {
+  const existing = document.querySelector(`.passive-popup[data-blasphemy="${blasphemy.id}"]`);
+  if (existing) { existing.remove(); return; }
+
+  const popup = document.createElement("div");
+  popup.className = "passive-popup card-glass";
+  popup.setAttribute("data-blasphemy", blasphemy.id);
+  popup.style.cssText = `
+    max-width: 600px; padding: 20px; display: flex; flex-direction: column; gap: 12px;
+    position: fixed; z-index: 1310; top: 25%; left: 50%; transform: translateX(-50%);
+    border: 2px solid var(--border-color-dark);
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+    border-radius: var(--radius-md); box-shadow: 4px 4px 15px rgba(0,0,0,0.4);
+    max-height: 70vh;
+  `;
+
+  const passiveHtml = blasphemy.passive || "";
+
+  popup.innerHTML = `
+    <button class="modal-close">&times;</button>
+    <h3 class="modal-title" style="margin: 0; text-transform: uppercase; cursor: move; user-select: none;">${blasphemy.name} — Passiva</h3>
+    <div style="font-size: 14px; line-height: 1.6; color: var(--text-secondary); overflow-y: auto; padding-right: 4px;">
+      ${passiveHtml}
+    </div>
+    <div class="modal-footer" style="margin-top: 10px;">
+      <button class="btn btn-secondary btn-popup-ok">Fechar</button>
+    </div>
+  `;
+
+  popup.querySelector(".modal-close").onclick = () => popup.remove();
+  popup.querySelector(".btn-popup-ok").onclick = () => popup.remove();
+
+  popup.addEventListener("click", (e) => {
+    const trigger = e.target.closest("[data-toolbox]");
+    if (trigger) {
+      const termKey = trigger.getAttribute("data-toolbox");
+      import("../toolbox.js").then(({ openToolbox }) => {
+        openToolbox(termKey);
+      });
+    }
+  });
+
+  const header = popup.querySelector(".modal-title");
+  let isDragging = false, startX, startY, initialLeft, initialTop;
+  const onMouseMove = (e) => {
+    if (!isDragging) return;
+    popup.style.left = `${initialLeft + e.clientX - startX}px`;
+    popup.style.top = `${initialTop + e.clientY - startY}px`;
+    popup.style.transform = "none";
+  };
+  const onMouseUp = () => {
+    isDragging = false;
+    window.removeEventListener("mousemove", onMouseMove);
+    window.removeEventListener("mouseup", onMouseUp);
+  };
+  header.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    const rect = popup.getBoundingClientRect();
+    initialLeft = rect.left;
+    initialTop = rect.top;
+    e.preventDefault();
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+  });
+
+  document.body.appendChild(popup);
 }
 

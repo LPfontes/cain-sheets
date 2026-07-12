@@ -115,7 +115,7 @@
 .landing-counter {
   font-family: var(--font-heading);
   font-size: var(--font-size-sm);
-  none margin-top: 8px;
+  margin-top: 8px;
   letter-spacing: 1px;
 }
 
@@ -136,6 +136,7 @@
   gap: 16px;
   justify-content: center;
   width: 100%;
+  margin-bottom: 10px;
 }
 
 /* ==========================================================
@@ -487,11 +488,6 @@
     letter-spacing: 4px;
   }
 
-  .characters-grid {
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
 
   .character-card {
     width: 120px;
