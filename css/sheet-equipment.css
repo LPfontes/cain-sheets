@@ -1,0 +1,490 @@
+/* css/sheet-equipment.css - Loja e Inventário */
+
+.cain-equipment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cain-kp-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cain-kp-col {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cain-kp-value {
+  color: var(--border-color);
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.cain-scrip-value {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.btn-kp-adjust, .btn-scrip-adjust {
+  padding: 6px 8px;
+  background: var(--bg-card-alt);
+  color: var(--ink-dark);
+  border: 1px solid var(--border-color-dark);
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: 900;
+  font-size: 14px;
+}
+
+.btn-kp-adjust:hover, .btn-scrip-adjust:hover {
+  background: var(--bg-paper);
+}
+
+#btn-reset-mission {
+  padding: 4px 10px;
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: var(--font-size-md);
+}
+
+#btn-reset-mission:hover {
+  filter: brightness(1.1);
+}
+
+.kit-options-container {
+  background: rgba(255, 255, 255, 0.01);
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+.kit-options-title {
+  font-weight: 600;
+  font-size: var(--font-size-lg);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.kit-options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+@media (max-width: 600px) {
+  .kit-options-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.btn-kit-opt {
+  text-align: left;
+  font-weight: 900;
+  justify-content: space-between;
+  display: flex;
+  padding: 6px 8px;
+  background: var(--bg-card-alt);
+  border: 1.5px solid var(--border-color-dark);
+  color: var(--ink-dark);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-kit-opt:hover {
+  background: var(--bg-paper);
+}
+
+.btn-kit-opt-cost {
+  color: var(--border-color);
+}
+
+.btn-kit-opt-cost-free {
+  color: var(--text-muted);
+}
+
+.custom-item-row {
+  display: flex;
+  margin-top: 8px;
+  gap: 6px;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 10px;
+}
+
+.custom-item-name-input {
+  flex: 1;
+  font-size: 11px;
+  padding: 6px 8px;
+  height: 28px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--ink-dark);
+  border-radius: 4px;
+}
+
+.custom-item-desc-input {
+  flex: 1.5;
+  padding: 8px 8px;
+  height: 30px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--ink-dark);
+  border-radius: 4px;
+}
+
+.custom-item-cost-input {
+  width: 50px;
+  padding: 8px 8px;
+  height: 30px;
+  text-align: center;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--ink-dark);
+  border-radius: 4px;
+}
+
+#btn-add-custom-item {
+  padding: 6px 12px;
+  background: var(--bg-card-alt);
+  border: 1.5px solid var(--border-color-dark);
+  color: var(--ink-dark);
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#btn-add-custom-item:hover {
+  background: var(--bg-paper);
+}
+
+.weapon-upgrade-container {
+  background: rgba(251, 191, 36, 0.03);
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(251, 191, 36, 0.15);
+}
+
+.weapon-upgrade-title {
+  font-weight: 600;
+  font-size: 12px;
+  margin-bottom: 4px;
+  color: var(--purple);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.weapon-upgrade-info {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.weapon-upgrade-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.weapon-upgrade-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.weapon-upgrade-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  min-width: 60px;
+}
+
+.weapon-upgrade-input {
+  flex: 1;
+  font-size: 11px;
+  padding: 4px 8px;
+  height: 24px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--ink-dark);
+  border-radius: 4px;
+}
+
+.weapon-upgrade-action-row {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-top: 1px solid rgba(251, 191, 36, 0.08);
+  padding: 6px;
+}
+
+.weapon-upgrade-status {
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+}
+
+.weapon-upgrade-status strong {
+  color: var(--purple);
+  font-size: 12px;
+}
+
+#btn-upgrade-weapon {
+  background: var(--purple);
+  color: black;
+  font-weight: bold;
+  border: none;
+  padding: 3px 10px;
+  font-size: var(--font-size-md);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: filter 0.2s ease;
+}
+
+#btn-upgrade-weapon:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+#btn-upgrade-weapon:disabled {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.cain-equipped-items-title {
+  font-weight: 600;
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cain-equipped-items-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+
+.cain-equip-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  border: 1px solid var(--border-color-dark);
+  border-radius: 4px;
+  font-size: var(--font-size-md);
+}
+
+.cain-equip-item.service-weapon {
+  border-left: 3px solid var(--purple)
+}
+
+.cain-equip-item.normal-item {
+  border-left: 3px solid var(--border-color);
+}
+
+.cain-equip-name {
+  font-weight: 500;
+}
+
+.cain-equip-meta {
+  font-size: var(--font-size-sm);
+  margin-top: 2px;
+}
+
+.cain-equip-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cain-equip-cost {
+  font-size: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.btn-remove-item {
+  background: none;
+  border: none;
+  color: #f87171;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0 4px;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.btn-remove-item:hover {
+  color: #ef4444;
+}
+
+/* Equipment Grid Layout (Stacked vertically) */
+.cain-equip-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+/* Split equipment configurations inside left column into 2 side-by-side columns */
+.cain-equip-col-left-split {
+  display: grid;
+  align-items: start;
+  grid-template-columns: 1fr;
+}
+
+@media (max-width: 768px) {
+  .cain-equip-col-left-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Equipment Tab Navigation & List Styles */
+.cain-equip-tabs {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  scrollbar-width: none;
+  padding-bottom: 8px;
+}
+
+.cain-equip-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.btn-equip-tab {
+  padding: 4px 8px;
+  font-size: 10px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* Shop Item Styling */
+.cain-equip-shop-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+.cain-equip-shop-info {
+  flex: 1;
+  padding-right: 8px;
+  text-align: left;
+}
+
+.cain-equip-shop-name {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.cain-equip-shop-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.btn-buy-equip {
+  padding: 4px 8px;
+  font-size: 12px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+/* Kit Options Styles Overrides */
+.btn-kit-opt {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  cursor: pointer;
+  color: inherit;
+  width: 100%;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-kit-opt:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.btn-kit-opt strong {
+  font-size: 14px;
+}
+
+.btn-kit-opt span {
+  font-size: 14px;
+  opacity: 0.8;
+  margin-top: 2px;
+}
+
+.btn-kit-opt .btn-kit-opt-cost,
+.btn-kit-opt .btn-kit-opt-cost-free {
+  margin-top: 6px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.btn-kit-opt-cost {
+  color: #3b82f6;
+}
+
+.btn-kit-opt-cost-free {
+  color: #10b981;
+}
+
+/* Custom Item Builder Form Container */
+.custom-item-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 12px;
+  border-radius: 4px;
+}
+
+.custom-item-field {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 4px;
+}
+
+.custom-item-field label {
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--text-muted);
+}
+
+.custom-item-field-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}

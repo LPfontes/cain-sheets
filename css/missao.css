@@ -4,8 +4,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
   width: 100%;
+  padding: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .missao-name-input {
@@ -29,8 +30,12 @@
 .missao-grid-3 {
   display: grid;
   grid-template-columns: 1.2fr 1fr 1fr;
-  gap: 20px;
+  gap: 10px;
   align-items: start;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  padding-bottom: 16px;
 }
 
 @media (max-width: 1024px) {
@@ -40,25 +45,25 @@
 }
 
 .missao-card-padding {
-  padding: 16px;
+  padding: 12px;
 }
 
 .missao-section-title-line {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding-bottom: 8px;
-  margin-bottom: 16px;
+  color: white;
 }
 
 /* Coluna 1: Campos Form */
 .missao-form-group {
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 
 .missao-form-group label {
   display: block;
   font-size: var(--font-size-xs);
   font-weight: bold;
-  color: var(--text-secondary);
+  color: white;
   margin-bottom: 6px;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -70,7 +75,7 @@
   background: var(--bg-input);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
-  color: var(--ink-dark);
+  color: white;
   font-family: inherit;
   font-size: var(--font-size-sm);
   padding: 8px 10px;
@@ -93,6 +98,40 @@
   gap: 12px;
 }
 
+/* Grupo de Traumas - agrupamento visual */
+.missao-traumas-group {
+  background: rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  margin-bottom: 14px;
+}
+
+.missao-traumas-group .missao-form-group:last-child {
+  margin-bottom: 0;
+}
+
+.missao-traumas-group > .missao-traumas-label {
+  font-size: var(--font-size-xs);
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Notas customizadas */
+.missao-custom-notes {
+  margin-top: 8px;
+}
+
+.missao-custom-notes textarea {
+  height: 100px;
+  resize: vertical;
+}
+
 /* Coluna 2: Banco de Pistas / Nós */
 .nodes-category-container {
   margin-bottom: 16px;
@@ -100,8 +139,8 @@
 
 .nodes-category-header {
   font-family: var(--font-heading);
-  font-size: var(--font-size-xs);
-  color: var(--text-primary);
+  font-size: var(--font-size-md);
+  color: white;
   font-weight: bold;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -111,9 +150,10 @@
 }
 
 .nodes-list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 8px;
+  color: white;
 }
 
 .node-item {
@@ -126,18 +166,27 @@
   padding: 8px 12px;
   cursor: pointer;
   transition: all 0.15s ease-in-out;
+  border-left: 2px solid transparent;
 }
 
-.node-item:hover, .node-item.active {
+.node-item:hover {
   background: rgba(255, 255, 255, 0.06);
   border-color: var(--border-color);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border-left-color: rgba(255, 255, 255, 0.15);
+}
+
+.node-item.active {
+  background: rgba(0, 0, 0, 0.1);
+  border-color: var(--color-missao-border);
+  border-left-color: var(--color-missao);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .node-item-name {
   font-weight: bold;
-  font-size: var(--font-size-sm);
-  color: var(--ink-dark);
+  font-size: var(--font-size-md);
+  color: white;
 }
 
 .node-item-actions {
@@ -162,10 +211,19 @@
 .badge-cat-obstaculo { background: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff; }
 
 /* Coluna 3: Detalhes do Nó & Conexões */
+.missao-node-details-header-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.06);
+}
+
 .node-details-header {
-  border-bottom: 1.5px solid rgba(255, 255, 255, 0.08);
-  padding-bottom: 12px;
-  margin-bottom: 16px;
+  flex: 1;
+  min-width: 0;
 }
 
 .node-details-title-row {
@@ -173,6 +231,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 6px;
+  height: 100%;
 }
 
 .node-details-title {
@@ -185,8 +244,10 @@
 
 .node-connections-section {
   margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 14px;
+  background: rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-sm);
 }
 
 .node-connections-title {
@@ -209,10 +270,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(255, 255, 255, 0.015);
+  background: rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.04);
   border-radius: var(--radius-sm);
   padding: 6px 10px;
+  transition: background 0.15s;
+}
+
+.node-connection-row:hover {
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .node-connection-link {
@@ -254,4 +320,41 @@
   color: var(--ink-dark);
   font-size: var(--font-size-xs);
   padding: 6px;
+}
+
+/* Card hover sutil nas colunas */
+#missao-screen .card-glass {
+  transition: box-shadow 0.2s ease;
+}
+
+#missao-screen .card-glass:hover {
+  box-shadow: 2px 3px 14px rgba(0, 0, 0, 0.12);
+}
+
+/* Responsivo: tablets */
+@media (max-width: 1024px) {
+  .missao-host-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .missao-grid-3 {
+    gap: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .missao-header-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .missao-header-row > div {
+    justify-content: space-between;
+  }
+
+  .missao-name-input {
+    max-width: 100%;
+    font-size: var(--font-size-lg);
+  }
 }

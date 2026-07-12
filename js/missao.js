@@ -57,111 +57,57 @@ export function loadMissionSheet(mission) {
   renderMissionSheet();
 }
 
+let staticListenersAttached = false;
+
 export function renderMissionSheet() {
   const mission = state.currentMission;
   const screen = document.getElementById("missao-screen");
   if (!mission || !screen) return;
 
-  const sinsOptions = state.sins.map(s => `
-    <option value="${s.id}" ${s.id === mission.sinId ? "selected" : ""}>${esc(s.name)}</option>
-  `).join("");
+  // Atualizar valores dos inputs estáticos
+  const nameHeader = document.getElementById("missao-name-header");
+  if (nameHeader) nameHeader.value = mission.name;
 
-  screen.innerHTML = `
-    <div class="world-sheet-container card-glass">
-      <!-- HEADER -->
-      <div class="missao-header-row">
-        <div style="display:flex; align-items:center; gap:12px;">
-          <button id="btn-missao-back" class="btn btn-sm btn-secondary flex-shrink-0" style="display:flex; align-items:center; gap:6px;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="15 18 9 12 15 6" />
-            </svg> Voltar
-          </button>
-          <input type="text" id="missao-name-header" class="missao-name-input" value="${esc(mission.name)}" placeholder="Nome do Caso">
-        </div>
-        <div>
-          <button id="btn-missao-delete" class="btn btn-sm btn-danger" style="color: white;">
-            Excluir Caso
-          </button>
-        </div>
-      </div>
+  const hookTextarea = document.getElementById("missao-hook");
+  if (hookTextarea) hookTextarea.value = mission.hook || "";
 
-      <!-- MAIN LAYOUT (3 COLUMNS) -->
-      <div class="missao-grid-3">
-        
-        <!-- COLUNA 1: INFORMAÇÕES ESSENCIAIS -->
-        <div class="flex-col gap-16">
-          <div class="card-glass missao-card-padding">
-            <h3 class="ws-section-title missao-section-title-line">Informações Essenciais</h3>
-            
-            <div class="missao-form-group">
-              <label>Gancho Inicial / Incidente Incitante</label>
-              <textarea id="missao-hook" class="missao-form-input" style="height: 70px; resize: vertical;" placeholder="O Incidente Incitante...">${esc(mission.hook || "")}</textarea>
-            </div>
+  const hostNameInput = document.getElementById("missao-host-name");
+  if (hostNameInput) hostNameInput.value = mission.hostName || "";
 
-            <div class="missao-form-group">
-              <label>Pecado Associado</label>
-              <select id="missao-sin-id" class="missao-form-input">
-                <option value="">Nenhum</option>
-                ${sinsOptions}
-              </select>
-            </div>
+  const hostStatusInput = document.getElementById("missao-host-status");
+  if (hostStatusInput) hostStatusInput.value = mission.hostStatus || "";
 
-            <div class="missao-form-group">
-              <label>Hospedeiro (Nome, Status, Identidade)</label>
-              <div class="missao-host-grid">
-                <input type="text" id="missao-host-name" class="missao-form-input" placeholder="Nome" value="${esc(mission.hostName || "")}">
-                <input type="text" id="missao-host-status" class="missao-form-input" placeholder="Status / Identidade" value="${esc(mission.hostStatus || "")}">
-              </div>
-            </div>
+  const trauma1Textarea = document.getElementById("missao-trauma1");
+  if (trauma1Textarea) trauma1Textarea.value = mission.trauma1 || "";
 
-            <div class="missao-form-group">
-              <label>Trauma 1 (Revelação)</label>
-              <textarea id="missao-trauma1" class="missao-form-input" style="height: 50px; resize: vertical;" placeholder="Resposta ao Trauma 1...">${esc(mission.trauma1 || "")}</textarea>
-            </div>
+  const trauma2Textarea = document.getElementById("missao-trauma2");
+  if (trauma2Textarea) trauma2Textarea.value = mission.trauma2 || "";
 
-            <div class="missao-form-group">
-              <label>Trauma 2 (Revelação)</label>
-              <textarea id="missao-trauma2" class="missao-form-input" style="height: 50px; resize: vertical;" placeholder="Resposta ao Trauma 2...">${esc(mission.trauma2 || "")}</textarea>
-            </div>
+  const trauma3Textarea = document.getElementById("missao-trauma3");
+  if (trauma3Textarea) trauma3Textarea.value = mission.trauma3 || "";
 
-            <div class="missao-form-group">
-              <label>Trauma 3 (Revelação)</label>
-              <textarea id="missao-trauma3" class="missao-form-input" style="height: 50px; resize: vertical;" placeholder="Resposta ao Trauma 3...">${esc(mission.trauma3 || "")}</textarea>
-            </div>
+  const palaceTextarea = document.getElementById("missao-palace");
+  if (palaceTextarea) palaceTextarea.value = mission.palaceLoc || "";
 
-            <div class="missao-form-group">
-              <label>Localização do Palácio</label>
-              <textarea id="missao-palace" class="missao-form-input" style="height: 50px; resize: vertical;" placeholder="Onde fica o Palácio e como entrar...">${esc(mission.palaceLoc || "")}</textarea>
-            </div>
-          </div>
-        </div>
+  const customNotesTextarea = document.getElementById("missao-custom-notes");
+  if (customNotesTextarea) customNotesTextarea.value = mission.customNotes || "";
 
-        <!-- COLUNA 2: BANCO DE PISTAS (NÓS) -->
-        <div class="flex-col gap-16">
-          <div class="card-glass missao-card-padding">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-              <h3 class="ws-section-title" style="margin:0;">Banco de Pistas</h3>
-              <button id="btn-add-node" class="btn btn-sm btn-primary">+ Pista</button>
-            </div>
-            
-            <div id="nodes-categories-list">
-              <!-- Renderizado dinamicamente -->
-            </div>
-          </div>
-        </div>
-
-        <!-- COLUNA 3: DETALHES DO NÓ & CONEXÕES -->
-        <div class="flex-col gap-16" id="node-details-container">
-          <!-- Renderizado dinamicamente -->
-        </div>
-
-      </div>
-    </div>
-  `;
+  // Renderizar opções de Pecados no select
+  const sinSelect = document.getElementById("missao-sin-id");
+  if (sinSelect) {
+    const sinsOptions = state.sins.map(s => `
+      <option value="${s.id}" ${s.id === mission.sinId ? "selected" : ""}>${esc(s.name)}</option>
+    `).join("");
+    sinSelect.innerHTML = `<option value="">Nenhum</option>${sinsOptions}`;
+  }
 
   _renderNodesList(mission);
   _renderNodeDetails(mission);
-  _attachListeners(mission);
+
+  if (!staticListenersAttached) {
+    _attachListeners();
+    staticListenersAttached = true;
+  }
 }
 
 function _renderNodesList(mission) {
@@ -190,7 +136,7 @@ function _renderNodesList(mission) {
       <div class="nodes-category-container">
         <div class="nodes-category-header">${cat.label}</div>
         <div class="nodes-list">
-          ${nodesHtml || `<p style="color:var(--text-muted); font-size:11px; margin:4px 0 12px 0;">Nenhuma pista nesta categoria.</p>`}
+          ${nodesHtml || `<p style="font-size:14px; margin:4px 0 12px 0;">Nenhuma pista nesta categoria.</p>`}
         </div>
       </div>
     `;
@@ -239,24 +185,25 @@ function _renderNodeDetails(mission) {
 
   container.innerHTML = `
     <div class="card-glass missao-card-padding">
-      <div class="node-details-header">
-        <div class="node-details-title-row">
-          <input type="text" id="node-name" class="missao-name-input" style="font-size: var(--font-size-md); padding:0; margin:0;" value="${esc(node.name)}" placeholder="Nome da Pista">
-          <button id="btn-delete-node" class="btn btn-sm btn-danger" style="padding: 2px 8px;">Apagar</button>
+      <div class="missao-node-details-header-container">
+        <div class="node-details-header">
+          <div class="node-details-title-row">
+            <input type="text" id="node-name" class="missao-name-input" style="font-size: var(--font-size-md); padding:0; margin:0;" value="${esc(node.name)}" placeholder="Nome da Pista">
+          </div>
         </div>
-      </div>
 
-      <div class="missao-form-group">
-        <label>Categoria</label>
-        <select id="node-type" class="missao-form-input">
-          <option value="pessoa" ${node.type === "pessoa" ? "selected" : ""}>Pessoa / NPC</option>
-          <option value="local" ${node.type === "local" ? "selected" : ""}>Local</option>
-          <option value="evidencia" ${node.type === "evidencia" ? "selected" : ""}>Evidência</option>
-          <option value="objeto" ${node.type === "objeto" ? "selected" : ""}>Objeto</option>
-          <option value="obstaculo" ${node.type === "obstaculo" ? "selected" : ""}>Obstáculo / Inimigo</option>
-        </select>
+        <div class="missao-form-group">
+          <label style="color:black;">Categoria</label>
+          <select id="node-type" class="missao-form-input" style="color:black;">
+            <option value="pessoa" ${node.type === "pessoa" ? "selected" : ""}>Pessoa / NPC</option>
+            <option value="local" ${node.type === "local" ? "selected" : ""}>Local</option>
+            <option value="evidencia" ${node.type === "evidencia" ? "selected" : ""}>Evidência</option>
+            <option value="objeto" ${node.type === "objeto" ? "selected" : ""}>Objeto</option>
+            <option value="obstaculo" ${node.type === "obstaculo" ? "selected" : ""}>Obstáculo / Inimigo</option>
+          </select>
+        </div>
+        <button id="btn-delete-node" class="btn btn-sm btn-danger" style="padding: 2px 8px;">Apagar</button>
       </div>
-
       <div class="missao-form-group">
         <label>Descrição / Informações Secretas</label>
         <textarea id="node-desc" class="missao-form-input" style="height: 100px; resize: vertical;" placeholder="Descreva os detalhes desta pista...">${esc(node.desc || "")}</textarea>
@@ -361,8 +308,9 @@ function _renderNodeDetails(mission) {
   });
 }
 
-function _attachListeners(mission) {
+function _attachListeners() {
   const screen = document.getElementById("missao-screen");
+  if (!screen) return;
 
   // Back Button
   screen.querySelector("#btn-missao-back")?.addEventListener("click", () => {
@@ -372,12 +320,16 @@ function _attachListeners(mission) {
 
   // Name header
   screen.querySelector("#missao-name-header")?.addEventListener("input", (e) => {
+    const mission = state.currentMission;
+    if (!mission) return;
     mission.name = e.target.value || "Nova Investigação";
     saveCurrentMission();
   });
 
   // Delete Case
   screen.querySelector("#btn-missao-delete")?.addEventListener("click", () => {
+    const mission = state.currentMission;
+    if (!mission) return;
     if (confirm(`Deseja realmente apagar permanentemente a investigação "${mission.name}"?`)) {
       const idx = state.missions.findIndex(m => m.id === mission.id);
       if (idx !== -1) {
@@ -394,51 +346,87 @@ function _attachListeners(mission) {
 
   // Core fields updates
   screen.querySelector("#missao-hook")?.addEventListener("input", (e) => {
-    mission.hook = e.target.value;
-    saveCurrentMission();
+    const mission = state.currentMission;
+    if (mission) {
+      mission.hook = e.target.value;
+      saveCurrentMission();
+    }
   });
 
   screen.querySelector("#missao-sin-id")?.addEventListener("change", (e) => {
-    mission.sinId = e.target.value;
-    saveCurrentMission();
+    const mission = state.currentMission;
+    if (mission) {
+      mission.sinId = e.target.value;
+      saveCurrentMission();
+    }
   });
 
   screen.querySelector("#missao-host-name")?.addEventListener("input", (e) => {
-    mission.hostName = e.target.value;
-    saveCurrentMission();
+    const mission = state.currentMission;
+    if (mission) {
+      mission.hostName = e.target.value;
+      saveCurrentMission();
+    }
   });
 
   screen.querySelector("#missao-host-status")?.addEventListener("input", (e) => {
-    mission.hostStatus = e.target.value;
-    saveCurrentMission();
+    const mission = state.currentMission;
+    if (mission) {
+      mission.hostStatus = e.target.value;
+      saveCurrentMission();
+    }
   });
 
   screen.querySelector("#missao-trauma1")?.addEventListener("input", (e) => {
-    mission.trauma1 = e.target.value;
-    saveCurrentMission();
+    const mission = state.currentMission;
+    if (mission) {
+      mission.trauma1 = e.target.value;
+      saveCurrentMission();
+    }
   });
 
   screen.querySelector("#missao-trauma2")?.addEventListener("input", (e) => {
-    mission.trauma2 = e.target.value;
-    saveCurrentMission();
+    const mission = state.currentMission;
+    if (mission) {
+      mission.trauma2 = e.target.value;
+      saveCurrentMission();
+    }
   });
 
   screen.querySelector("#missao-trauma3")?.addEventListener("input", (e) => {
-    mission.trauma3 = e.target.value;
-    saveCurrentMission();
+    const mission = state.currentMission;
+    if (mission) {
+      mission.trauma3 = e.target.value;
+      saveCurrentMission();
+    }
   });
 
   screen.querySelector("#missao-palace")?.addEventListener("input", (e) => {
-    mission.palaceLoc = e.target.value;
-    saveCurrentMission();
+    const mission = state.currentMission;
+    if (mission) {
+      mission.palaceLoc = e.target.value;
+      saveCurrentMission();
+    }
+  });
+
+  screen.querySelector("#missao-custom-notes")?.addEventListener("input", (e) => {
+    const mission = state.currentMission;
+    if (mission) {
+      mission.customNotes = e.target.value;
+      saveCurrentMission();
+    }
   });
 
   // Add Clue Node button
   screen.querySelector("#btn-add-node")?.addEventListener("click", () => {
+    const mission = state.currentMission;
+    if (!mission) return;
+    const typeSelect = document.getElementById("new-node-type");
+    const selectedType = typeSelect ? typeSelect.value : "pessoa";
     const newNode = {
       id: "node_" + Date.now() + "_" + Math.floor(Math.random() * 1000),
       name: "Nova Pista",
-      type: "pessoa",
+      type: selectedType,
       desc: "",
       connections: []
     };

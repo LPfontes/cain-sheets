@@ -1,0 +1,459 @@
+/* css/sheet-agenda-blasphemy.css - Abas, Aptidões, Agendas e Blasphemias */
+
+.aptitudes-columns-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.aptitude-column-card {
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--bg-card);
+  box-shadow: var(--shadow-card);
+}
+
+.aptitude-column-header {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--ink-dark);
+  border-bottom: 1.5px solid var(--border-color);
+  padding-bottom: 6px;
+  margin-bottom: 2px;
+}
+
+.instintos-header {
+  color: var(--color-instintos);
+  border-color: var(--color-instintos);
+}
+
+.conhecimentos-header {
+  color: var(--color-conhecimentos);
+  border-color: var(--color-conhecimentos);
+}
+
+.praticas-header {
+  color: var(--color-praticas);
+  border-color: var(--color-praticas);
+}
+
+.instintos-list {
+  color: var(--color-instintos);
+  border-color: var(--color-instintos);
+}
+
+.conhecimentos-list {
+  color: var(--color-conhecimentos);
+  border-color: var(--color-conhecimentos);
+}
+
+.praticas-list {
+  color: var(--color-praticas);
+  border-color: var(--color-praticas);
+}
+
+.aptitude-list {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.aptitude-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 7px;
+  border-radius: var(--radius-sm);
+  background-color: rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--border-color-light);
+  transition: var(--transition-fast);
+  cursor: pointer;
+}
+
+.aptitude-item:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-color: var(--border-color);
+}
+
+.aptitude-item.selected-for-roll {
+  border-color: var(--ink-dark);
+  background-color: rgba(255, 255, 255, 0.6);
+  box-shadow: inset 0 0 0 1px var(--ink-dark);
+}
+
+.aptitude-item .name {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.sheet-redesign-tabs-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.sheet-redesign-tabs-nav {
+  display: flex;
+  gap: 3px;
+  border-bottom: 2px solid var(--border-color-dark);
+  border-radius: 0;
+  padding: 4px 10px 0 10px;
+  z-index: 5;
+  background: var(--bg-card-alt);
+}
+
+.sheet-tab-btn {
+  background: none;
+  border: 1px solid transparent;
+  border-bottom: none;
+  color: var(--ink-faded);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--font-size-xs);
+  letter-spacing: 1px;
+  padding: 7px 12px;
+  cursor: pointer;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  transition: var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  text-transform: uppercase;
+}
+
+.sheet-tab-btn:hover {
+  color: var(--ink-medium);
+  background-color: var(--bg-paper);
+}
+
+.sheet-tab-btn.active {
+  color: var(--ink-dark);
+  background-color: var(--bg-card);
+  border: 1.5px solid var(--border-color-dark);
+  border-bottom: 2px solid var(--bg-card);
+  box-shadow: none;
+  margin-bottom: -2px;
+  font-weight: 700;
+}
+
+.sheet-redesign-tabs-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  border-top: none !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  padding: 14px;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-color-dark);
+  border-top: none;
+}
+
+.sheet-tab-panel {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.sheet-tab-panel.active {
+  display: block;
+  animation: tabFadeIn 0.2s ease-out;
+}
+
+@keyframes tabFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sheet-inner-section {
+  margin-bottom: 20px;
+}
+
+.sheet-inner-section:last-child {
+  margin-bottom: 0;
+}
+
+.sheet-section {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  border: 1px solid var(--border-color-light) !important;
+  border-radius: var(--radius-sm);
+  padding: 12px !important;
+  margin-bottom: 14px !important;
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-stamp);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 5px;
+}
+
+.section-title::before,
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-color);
+}
+
+.section-title::before {
+  max-width: 12px;
+  flex: 0 0 12px;
+}
+
+.cain-agenda-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.cain-agenda-section h4 {
+  margin-top: 6px;
+  font-size: var(--font-size-md);
+  color: black;
+  margin-bottom: 6px;
+}
+
+.cain-agenda-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  padding: 4px 0;
+  cursor: pointer;
+  color: var(--text-primary);
+}
+
+.cain-agenda-check {
+  width: 20px;
+  height: 20px;
+}
+
+.cain-agenda-item.b {
+  font-weight: bold;
+  color: black;
+}
+
+.cain-agenda-item input[type="checkbox"] {
+  margin-top: 2px;
+  accent-color: black;
+}
+
+.cain-blasphemies-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 6px;
+  gap: 8px;
+}
+
+.cain-blasphemy-card {
+  padding: 12px;
+  position: relative;
+}
+
+.cain-blasphemy-name {
+  color: white;
+  text-shadow: 1px 1px 2px black;
+  font-family: var(--font-heading);
+  font-weight: bold;
+  font-size: var(--font-size-lg);
+  margin-bottom: 4px;
+}
+
+.cain-blasphemy-desc {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.cain-blasphemy-cat {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 10px;
+  background: rgba(250, 204, 21, 0.15);
+  padding: 2px 8px;
+  border-radius: 8px;
+}
+
+.cain-blasphemy-passive {
+  margin-top: 8px;
+  font-weight: 600;
+  padding: 6px;
+  border-left: 2px solid var(--stamp-red);
+  background: rgba(141, 36, 40, 0.05);
+  border-radius: 4px;
+  line-height: 1.4;
+  font-size: var(--font-size-sm);
+}
+
+.cain-blasphemy-powers {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 8px;
+  margin-top: 8px;
+}
+
+.cain-blasphemy-powers-title {
+  font-size: 0.9em;
+  color: var(--stamp-red);
+  font-weight: bold;
+}
+
+.cain-blasphemy-accordion {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cain-blasphemy-accordion-item {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+  transition: background-color 0.2s ease;
+}
+
+.cain-blasphemy-accordion-item.open {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.cain-blasphemy-accordion-trigger {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-primary);
+  font-weight: bold;
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  font-size: var(--font-size-md);
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.2s ease;
+}
+
+.cain-blasphemy-accordion-trigger:hover {
+  color: var(--stamp-red);
+}
+
+.accordion-arrow {
+  font-size: 10px;
+  transition: transform 0.2s ease;
+  opacity: 0.7;
+}
+
+.cain-blasphemy-accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  border-top: 1px solid transparent;
+}
+
+.cain-blasphemy-accordion-item.open .cain-blasphemy-accordion-content {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cain-blasphemy-accordion-content p {
+  padding: 10px 12px;
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.cain-blasphemy-accordion-card {
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.cain-blasphemy-card-trigger {
+  width: 100%;
+  background: rgb(130 130 130 / 40%);
+  border: 1px solid black;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-primary);
+  cursor: pointer;
+  text-align: left;
+}
+
+.cain-blasphemy-card-trigger:hover .cain-blasphemy-name {
+  color: var(--purple);
+}
+
+.cain-blasphemy-card-trigger .cain-blasphemy-name {
+  margin-bottom: 0 !important;
+}
+
+.card-arrow {
+  font-size: 12px;
+  transition: transform 0.2s ease;
+  opacity: 0.7;
+}
+
+.cain-blasphemy-card-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease-out;
+}
+
+.cain-blasphemy-accordion-card.open .cain-blasphemy-card-content {
+  padding: 0 12px 12px 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cain-sheet~.sheet-redesign-tabs-nav {
+  flex-wrap: wrap;
+}
+
+.cain-sheet .sheet-tab-btn {
+  font-size: var(--font-size-md);
+  padding: 6px 10px;
+}
+
+@media (max-width: 640px) {
+  .sheet-redesign-tabs-nav {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    padding: 6px 8px 0 8px !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none !important;
+  }
+}

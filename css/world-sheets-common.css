@@ -17,12 +17,15 @@
   /* vermelho escuro */
   --color-local: hsl(270, 45%, 38%);
   /* roxo */
+  --color-missao: hsl(195, 84.6%, 43.3%);
+  /* ciano */
 
   --color-infectado-border: hsl(145, 60%, 22%);
   --color-refugio-border: hsl(28, 70%, 26%);
   --color-regiao-border: hsl(205, 55%, 22%);
   --color-conflito-border: hsl(0, 60%, 24%);
   --color-local-border: hsl(270, 45%, 26%);
+  --color-missao-border: hsl(195, 84.6%, 28%);
 }
 
 /* ----------------------------------------------------------
@@ -179,6 +182,11 @@
   color: #fff;
 }
 
+.badge-missao {
+  background: var(--color-missao);
+  color: #fff;
+}
+
 /* Borda colorida dos cards por tipo */
 .character-card[data-sheet-type="infectado"] {
   border-color: var(--color-infectado-border);
@@ -198,6 +206,10 @@
 
 .character-card[data-sheet-type="local"] {
   border-color: var(--color-local-border);
+}
+
+.character-card[data-sheet-type="missao"] {
+  border-color: var(--color-missao-border);
 }
 
 /* ----------------------------------------------------------
@@ -528,7 +540,7 @@
 .ws-section-title {
   font-family: var(--font-heading);
   font-size: var(--font-size-sm);
-  color: var(--text-secondary);
+  color: white;
   text-transform: uppercase;
   letter-spacing: 1px;
 }

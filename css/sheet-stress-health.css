@@ -1,0 +1,483 @@
+/* css/sheet-stress-health.css - Estresse, Saúde, Surtos e Alienação */
+
+.saude-card {
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  background: var(--bg-card);
+  box-shadow: var(--shadow-card);
+}
+
+.health-formula-info {
+  font-size: var(--font-size-sm);
+  font-weight: normal;
+  color: var(--text-secondary);
+  margin-left: 6px;
+}
+
+.cain-stress-card {
+  padding: 10px;
+}
+
+.stress-layout {
+  display: grid;
+  grid-template-columns: 30% 65%;
+  gap: 10px;
+}
+
+.stress-left-controls {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  justify-items: center;
+  gap: 12px 10px;
+  padding-top: 10px;
+}
+
+.stress-right-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+.stress-cell-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  gap: 2px;
+}
+
+.stress-line-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.stress-ctrl-btn {
+  width: var(--stress-input-size, 40px);
+  height: var(--stress-input-size, 40px);
+  font-size: calc(var(--stress-input-size, 40px) * 0.5);
+  font-weight: bold;
+  padding: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.small-btn {
+  width: 25px;
+  height: 25px;
+  font-size: 12px;
+}
+
+.extra-small-btn {
+  width: 20px;
+  height: 20px;
+  font-size: 10px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.stress-label-group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.stress-label-group .stat-label {
+  min-width: auto;
+  text-align: center;
+}
+
+#btn-add-injury {
+  width: 24px;
+  height: 24px;
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+.stress-label-group .stat-value {
+  font-size: var(--font-size-xl);
+}
+
+.stress-tracker {
+  flex: 1;
+  position: relative;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  min-height: 450px;
+  height: fit-content;
+}
+
+.stress-tracker-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 0;
+  padding: 10px;
+}
+
+.stress-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  z-index: 1;
+}
+
+.stress-line.filled {
+  background: var(--color-rust-glow);
+  box-shadow: 0 0 8px var(--color-rust-glow), 0 0 16px rgba(190, 49, 53, 0.4);
+  transform: rotate(var(--rotate, 0deg));
+}
+
+.stress-line.locked {
+  background: rgba(239, 68, 68, 0.2) !important;
+  border: 1px dashed rgba(239, 68, 68, 0.4);
+  box-shadow: none !important;
+}
+
+.stress-line.locked::after {
+  content: "✕";
+  color: rgba(239, 68, 68, 0.7);
+  font-size: 10px;
+  font-weight: bold;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1;
+}
+
+.afflictions-row {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.afflictions-row .stat-label {
+  font-size: var(--font-size-md);
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+}
+
+.stat-label {
+  font-size: var(--font-size-xl);
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.stat-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stat-value {
+  font-size: var(--font-size-lg);
+  font-weight: bold;
+  min-width: 20px;
+  text-align: center;
+  color: var(--color-rust-glow);
+}
+
+.afflictions-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.cain-affliction-tag {
+  background: rgba(141, 36, 40, 0.2);
+  border: 1px solid rgba(141, 36, 40, 0.3);
+  color: #f87171;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.psyche-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.psyche-row-container {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-sm);
+  flex-direction: column;
+}
+
+.psyche-checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  gap: 8px;
+}
+
+.psyche-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.psyche-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.psyche-burst-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  opacity: 0.6;
+  filter: grayscale(100%);
+  transition: all 0.2s ease;
+}
+
+.psyche-checkbox.checked .psyche-burst-icon {
+  opacity: 1;
+  filter: grayscale(0%) drop-shadow(0 0 5px rgba(168, 85, 247, 0.8));
+}
+
+.sin-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sin-row-container {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-sm);
+  flex-direction: column;
+}
+
+.sin-checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
+  gap: 6px;
+}
+
+.sin-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.sin-box input[type="checkbox"] {
+  display: none;
+}
+
+.sin-sphere {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6);
+  transition: all 0.2s ease;
+}
+
+.sin-box.checked .sin-sphere {
+  background: radial-gradient(circle at 4px 4px, #444, #111, #000);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.9), inset 0 -1px 3px rgba(255, 255, 255, 0.1);
+}
+
+.sin-box.locked .sin-sphere {
+  opacity: 0.15;
+  border-color: rgba(239, 68, 68, 0.3);
+  cursor: not-allowed;
+}
+
+.sin-box.locked::after {
+  content: "✕";
+  color: rgba(239, 68, 68, 0.7);
+  font-size: 11px;
+  font-weight: bold;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.sin-overflow-warning {
+  margin-top: 8px;
+  color: black;
+  font-size: var(--font-size-md);
+  font-weight: bold;
+  text-align: center;
+  animation: pulse-red-warning 1.5s infinite;
+}
+
+@keyframes pulse-red-warning {
+  0% {
+    opacity: 0.6;
+    text-shadow: 0 0 2px rgba(239, 68, 68, 0.4);
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 0 0 10px rgba(239, 68, 68, 0.9);
+  }
+  100% {
+    opacity: 0.6;
+    text-shadow: 0 0 2px rgba(239, 68, 68, 0.4);
+  }
+}
+
+.piedade-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.piedade-row {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-sm);
+  flex-direction: column;
+}
+
+.piedade-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.piedade-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.piedade-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  opacity: 0.6;
+  filter: grayscale(100%);
+  transition: all 0.2s ease;
+}
+
+.piedade-checkbox.checked .piedade-icon {
+  opacity: 1;
+  filter: grayscale(0%) drop-shadow(0 0 5px rgba(239, 68, 68, 0.8));
+}
+
+.injury-death-skull {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.injury-death-skull.hidden {
+  display: none !important;
+}
+
+.injury-x {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.injury-x input[type="checkbox"] {
+  display: none;
+}
+
+.injury-x span {
+  font-size: 30px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.5);
+  transition: 0.2s;
+}
+
+.injury-checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  gap: 6px;
+}
+
+.injury-x input[type="checkbox"]:checked+span {
+  color: var(--color-rust-glow);
+}
+
+.piedade-max {
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+  margin-left: 4px;
+}
+
+.btn-divine-agony {
+  width: 100%;
+  background: rgb(0, 0, 0);
+  border-color: rgba(177, 30, 182, 0.4);
+  text-shadow: 1px 1px 1px #707070;
+  color: var(--purple);
+  justify-content: center;
+  font-weight: 600;
+}
+
+.btn-divine-agony:hover {
+  background: rgba(220, 180, 50, 0.25);
+  border-color: rgba(220, 180, 50, 0.6);
+}
+
+.btn-divine-agony:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.divine-agony-info {
+  text-align: center;
+  font-size: var(--font-size-xs);
+  color: #fbbf24;
+  margin-top: 6px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cain-xp-card {
+  padding: 12px 16px;
+}
+
+.xp-bar {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.xp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--border-color), #00ff88);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.xp-bar-label {
+  position: absolute;
+  right: 4px;
+  top: -14px;
+  font-size: 10px;
+  color: var(--text-muted);
+}

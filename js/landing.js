@@ -671,13 +671,13 @@ export function renderMissionsList() {
     `;
 
     return `
-      <article class="character-card square-card" data-mission-id="${esc(item.id)}" data-sheet-type="conflito">
+      <article class="character-card square-card" data-mission-id="${esc(item.id)}" data-sheet-type="missao">
         <div class="char-card-avatar">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="char-card-avatar-svg" style="color: var(--color-fluxo);"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="char-card-avatar-svg" style="color: var(--color-missao);"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
         </div>
         <div class="char-card-name">${esc(name)}</div>
         <div class="char-card-sub-info">
-          <span class="sheet-type-badge badge-fluxo">Caso</span>
+          <span class="sheet-type-badge badge-missao">Caso</span>
           ${subInfo ? `<div class="char-card-sub-info" style="font-size:11px; margin-top:2px; opacity:0.8;">${esc(subInfo)}</div>` : ""}
         </div>
         ${actionsHtml}
@@ -802,10 +802,11 @@ function showCreateMissionModal() {
 }
 
 function handleLoadMission(missionId) {
-  landingScreen.classList.add("hidden");
   import("./state.js").then(({ loadMission }) => {
     loadMission(missionId);
-    import("./missao.js").then(({ renderMissionSheet }) => renderMissionSheet());
+    import("./missao.js").then(({ loadMissionSheet }) => {
+      loadMissionSheet(state.currentMission);
+    });
   });
 }
 
