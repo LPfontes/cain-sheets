@@ -3188,7 +3188,6 @@ input[type="checkbox"].trait-wiz-check:hover,
 .kit-options-title {
   font-weight: 600;
   font-size: var(--font-size-lg);
-  margin-bottom: 8px;
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -3196,6 +3195,7 @@ input[type="checkbox"].trait-wiz-check:hover,
 
 .kit-options-grid {
   display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 6px;
 }
 
@@ -3451,6 +3451,7 @@ input[type="checkbox"].trait-wiz-check:hover,
 .cain-equip-col-left-split {
   display: grid;
   align-items: start;
+  grid-template-columns: 1fr;
 }
 
 @media (max-width: 768px) {
@@ -3458,5 +3459,139 @@ input[type="checkbox"].trait-wiz-check:hover,
     grid-template-columns: 1fr;
   }
 }
+
+/* Equipment Tab Navigation & List Styles */
+.cain-equip-tabs {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  scrollbar-width: none;
+  padding-bottom: 8px;
+}
+
+.cain-equip-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.btn-equip-tab {
+  padding: 4px 8px;
+  font-size: 10px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* Shop Item Styling */
+.cain-equip-shop-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+.cain-equip-shop-info {
+  flex: 1;
+  padding-right: 8px;
+  text-align: left;
+}
+
+.cain-equip-shop-name {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.cain-equip-shop-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.btn-buy-equip {
+  padding: 4px 8px;
+  font-size: 12px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+/* Kit Options Styles Overrides */
+.btn-kit-opt {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  cursor: pointer;
+  color: inherit;
+  width: 100%;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-kit-opt:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.btn-kit-opt strong {
+  font-size: 14px;
+}
+
+.btn-kit-opt span {
+  font-size: 14px;
+  opacity: 0.8;
+  margin-top: 2px;
+}
+
+.btn-kit-opt .btn-kit-opt-cost,
+.btn-kit-opt .btn-kit-opt-cost-free {
+  margin-top: 6px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.btn-kit-opt-cost {
+  color: #3b82f6;
+}
+
+.btn-kit-opt-cost-free {
+  color: #10b981;
+}
+
+/* Custom Item Builder Form Container */
+.custom-item-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 12px;
+  border-radius: 4px;
+}
+
+.custom-item-field {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 4px;
+}
+
+.custom-item-field label {
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--text-muted);
+}
+
+.custom-item-field-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}
+
 
 

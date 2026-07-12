@@ -73,5 +73,23 @@
     { "name": "Kit de Necrotério", "cost": 1, "desc": "Concentração. Kit oficial de exorcistas que realizam trabalho forense em corpos confidenciais de humanos comuns trazidos para as instalações da CAIN. Gaste 1 PK para retirar um dos seguintes itens: pinça, lupa compacta, bisturi, coletor de amostras, máscara respiratória compacta, lenços umedecidos." },
     { "name": "Kit de Carregador", "cost": 1, "desc": "Visivel. Kit oficial de exorcistas que trabalham como carregadores em suas instalações internas cavernosas. Gaste 1 PK para retirar um dos seguintes itens: Mochila resistente, escada dobrável, pitons, picareta de gelo, 9 metros de corda de boa qualidade para carga de segurança, lanterna." },
     { "name": "Kit de Estudo", "cost": 1, "desc": "Kit oficial para estudantes de todas as idades que continuam seus estudos nas instalações escolares enquanto trabalham. Gaste 1 PK para escolher um dos seguintes itens: dicionário eletrônico, guia de tradução, mapa local, estojo, caderno ou livro didático sobre um assunto relevante (2 PK)." }
+  ],
+  "esteticos": [
+    { "name": "Uniforme de serviço", "cost": 0, "desc": "Uniforme padrão de serviço gratuito, incluindo faixa, sapatos e fivela para capa. Não é feito sob medida. Os sapatos são reciclados. Estéticos não trazem benefícios mecânicos. Todos têm 0 PK. O código de vestimenta da CAIN é rigorosamente regulamentado (ver doutrina CASTLE c9800)." },
+    { "name": "Uniforme emitido", "cost": 1, "desc": "Batina ou manto. Feito sob medida. Confeccionado em tecido de alta qualidade e confortável. Inclui cobertura opcional para a cabeça ou o rosto para maior discrição." },
+    { "name": "Sapatos confortáveis", "cost": 1, "desc": "Sapatos feito sob medida. Produção de acordo com disponibilidade." },
+    { "name": "Terno", "cost": 3, "desc": "Terno sob medida de alta qualidade, disponível apenas para exorcistas de CAT 2+." },
+    { "name": "Roupas casuais", "cost": 4, "desc": "Traje casual autorizado que permite contornar as restrições de vestimenta da CAIN quando fora de serviço. Estritamente proibido para uso em missões. Disponível apenas para exorcistas de CAT 3+." },
+    { "name": "Roupas formais", "cost": 6, "desc": "Traje formal autorizado para eventos da organização. Corte impecável. Não aprovado para uso em campo. Inclui permissão para o uso de joias. Disponível apenas para exorcistas de CAT 2+." },
+    { "name": "Sobretudo", "cost": 4, "desc": "Sobretudo que cobre todos os uniformes. Resistente a chuva, feito sob medida e de altíssima qualidade. Algumas opções de personalização. Disponível apenas para exorcistas de CAT 4+." },
+    { "name": "Uniforme de gala", "cost": 3, "desc": "Uniforme formal incluindo meia capa, originalmente para uso em eventos cerimoniais. Disponível apenas para exorcistas de CAT 3+." }
+  ],
+  "posses": [
+    { "name": "Celular", "cost": 1, "desc": "Telefone celular pessoal. Pague 3 scrip para ter um com mais opções e acesso à internet." },
+    { "name": "Cartão de Crédito", "cost": 1, "desc": "Cartão que funciona com a maioria das moedas e com um saldo pré-carregado para compras do dia a dia. Nunca é suficiente para comprar nada de mais caro." },
+    { "name": "Kit Clerical", "cost": 4, "desc": "Concentração. Kit oficial de exorcistas que desempenham funções administrativas ou de pesquisa para a equipe sênior da CAIN. Gaste 1 PK para adquirir um dos seguintes itens: cópia impressa de um almanaque do arquivo SEER (2 unidades), óculos de boa qualidade, algumas canetas de boa qualidade, pastas grossas, anotações sobre a história da região." },
+    { "name": "Kit de Limpeza", "cost": 4, "desc": "Visível. Kit oficial de exorcistas que realizam tarefas de limpeza em seu tempo livre, encarregados de limpar os vestígios de outras caçadas. Trabalho odioso. Gaste 1 PK para pegar um dos seguintes itens: Macacão impermeável e antimanchas, óculos de proteção, máscara de gás, luvas grossas, antitoxina (2 pacotes, 1 carga)." },
+    { "name": "Kit de Delinquente", "cost": 3, "desc": "Não autorizado pelo comissario, maioria através do mercado negro. Gaste 1 PK para retirar um dos seguintes itens: canivete, isqueiro, faca de bota, maço de cigarros variados, grampos de cabelo, pomada para cabelo." },
+    { "name": "Kit de Pilotagem", "cost": 7, "desc": "Visível. Alocado com aprovação. Você possui luvas de direção de boa qualidade (1 pacote) e acesso a um carro em missões. O carro tem um talismã de 10 para danos e acomoda confortavelmente quatro pessoas. Se for personalizado, você será descontado em 2 scrips para uma substituição." }
   ]
 }

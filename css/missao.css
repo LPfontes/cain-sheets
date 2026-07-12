@@ -1,0 +1,257 @@
+/* css/missao.css - Estilos para a Ficha de Investigação/Missão de CAIN */
+
+.missao-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.missao-name-input {
+  background: transparent;
+  border: none;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-2xl);
+  font-weight: bold;
+  color: white;
+  width: 100%;
+  max-width: 500px;
+  padding: 4px 8px;
+}
+
+.missao-name-input:focus {
+  background: rgba(255, 255, 255, 0.05);
+  outline: 1.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+
+.missao-grid-3 {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .missao-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.missao-card-padding {
+  padding: 16px;
+}
+
+.missao-section-title-line {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+}
+
+/* Coluna 1: Campos Form */
+.missao-form-group {
+  margin-bottom: 14px;
+}
+
+.missao-form-group label {
+  display: block;
+  font-size: var(--font-size-xs);
+  font-weight: bold;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.missao-form-input {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--ink-dark);
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  padding: 8px 10px;
+  transition: all 0.2s;
+}
+
+.missao-form-input:focus {
+  border-color: var(--border-color-dark);
+  background: var(--bg-input-focus);
+  outline: none;
+}
+
+.missao-form-input::placeholder {
+  color: var(--text-muted);
+}
+
+.missao-host-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 12px;
+}
+
+/* Coluna 2: Banco de Pistas / Nós */
+.nodes-category-container {
+  margin-bottom: 16px;
+}
+
+.nodes-category-header {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-xs);
+  color: var(--text-primary);
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+}
+
+.nodes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.node-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+.node-item:hover, .node-item.active {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--border-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.node-item-name {
+  font-weight: bold;
+  font-size: var(--font-size-sm);
+  color: var(--ink-dark);
+}
+
+.node-item-actions {
+  display: flex;
+  gap: 6px;
+}
+
+/* Categoria badges no banco */
+.node-cat-badge {
+  font-size: 9px;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.5px;
+}
+
+.badge-cat-pessoa    { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+.badge-cat-local     { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+.badge-cat-evidencia { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+.badge-cat-objeto    { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+.badge-cat-obstaculo { background: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff; }
+
+/* Coluna 3: Detalhes do Nó & Conexões */
+.node-details-header {
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.node-details-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.node-details-title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-lg);
+  font-weight: bold;
+  color: white;
+  margin: 0;
+}
+
+.node-connections-section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.node-connections-title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.node-connections-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.node-connection-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.015);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+}
+
+.node-connection-link {
+  font-weight: bold;
+  font-size: var(--font-size-xs);
+  color: var(--ink-dark);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.node-connection-link:hover {
+  color: var(--text-primary);
+}
+
+.btn-remove-connection {
+  background: none;
+  border: none;
+  color: #f87171;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0 4px;
+  transition: color 0.15s;
+}
+
+.btn-remove-connection:hover {
+  color: #ef4444;
+}
+
+.connection-add-row {
+  display: flex;
+  gap: 8px;
+}
+
+.connection-add-select {
+  flex: 1;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--ink-dark);
+  font-size: var(--font-size-xs);
+  padding: 6px;
+}

@@ -117,6 +117,9 @@
           <button id="tab-pecados" class="btn btn-landing-tab" style="background: transparent; border: none; color: var(--text-muted); font-size: var(--font-size-lg); font-weight: bold; cursor: pointer; opacity: 0.6; padding: 4px 12px; border-radius: 4px; transition: all 0.2s;">
             <span>Pecados</span>
           </button>
+          <button id="tab-missoes" class="btn btn-landing-tab" style="background: transparent; border: none; color: var(--text-muted); font-size: var(--font-size-lg); font-weight: bold; cursor: pointer; opacity: 0.6; padding: 4px 12px; border-radius: 4px; transition: all 0.2s;">
+            <span data-i18n="landing.tabs.missions">Investigações</span>
+          </button>
         </div>
 
         <!-- Seção de Exorcistas -->
@@ -200,6 +203,48 @@
               <span>Importar Pecado</span>
             </button>
             <input type="file" id="file-import-sin" accept=".json" style="display:none">
+          </div>
+        </div>
+
+        <!-- Seção de Investigações -->
+        <div id="missoes-section" class="hidden">
+          <!-- Título / Subtítulo -->
+          <div class="landing-header">
+            <h1 class="landing-title" data-i18n="missions.title">Investigações</h1>
+            <p class="landing-subtitle">Estruture as investigações de mistérios para sua campanha</p>
+            <div id="mission-counter" class="landing-counter"></div>
+          </div>
+
+          <!-- Grid de Investigações -->
+          <div id="missions-list" class="characters-grid"></div>
+
+          <!-- Estado vazio -->
+          <div id="missions-empty-state" class="landing-empty hidden">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="empty-icon">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <p class="empty-title" data-i18n="missions.empty.title">Nenhuma investigação registrada</p>
+            <p class="empty-sub" data-i18n="missions.empty.sub">Crie sua primeira investigação para começar</p>
+          </div>
+
+          <!-- Ações do rodapé -->
+          <div class="landing-footer-actions">
+            <button id="btn-create-mission" class="btn btn-landing-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              <span data-i18n="missions.new">Nova Investigação</span>
+            </button>
+            <button id="btn-import-mission" class="btn btn-landing-secondary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+              </svg>
+              <span data-i18n="missions.import">Importar</span>
+            </button>
+            <input type="file" id="file-import-mission" accept=".json" style="display:none">
           </div>
         </div>
       </div>
@@ -1092,20 +1137,11 @@
       </div> <!-- Fim .modal-content -->
     </div>
 
-    <!-- TELA 3: FICHA DE REFÚGIO -->
-    <section id="refugio-screen" class="screen hidden"></section>
-
-    <!-- TELA 4: FICHA DE REGIÃO -->
-    <section id="regiao-screen" class="screen hidden"></section>
-
-    <!-- TELA 5: FICHA DE CONFLITO -->
-    <section id="conflito-screen" class="screen hidden"></section>
-
-    <!-- TELA 6: FICHA DE LOCAL -->
-    <section id="local-screen" class="screen hidden"></section>
-
     <!-- TELA 7: FICHA DE PECADO -->
     <section id="pecado-screen" class="screen hidden"></section>
+
+    <!-- TELA 8: FICHA DE INVESTIGAÇÃO -->
+    <section id="missao-screen" class="screen hidden"></section>
 
   </main>
   <!-- MODAIS FLUTUANTES (Seleção de Mutações, Compra de Características, Confirmação) -->

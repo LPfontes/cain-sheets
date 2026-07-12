@@ -1,5 +1,5 @@
 export function hideAllScreens() {
-  ["refugio-screen", "regiao-screen", "conflito-screen", "local-screen", "sheet-screen", "pecado-screen"].forEach(id => {
+  ["sheet-screen", "pecado-screen", "missao-screen"].forEach(id => {
     document.getElementById(id)?.classList.add("hidden");
   });
 }

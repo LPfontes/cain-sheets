@@ -18,6 +18,11 @@ export const BLASPHEMIES = blasphemiesData;
 export const SIN_MARKS = sinmarksData;
 
 export const EQUIPMENT_BY_KP = equipmentData.equipment_by_kp;
+export const CONFORTO_CARREIRA = equipmentData.conforto_carreira;
+export const OCULTO_MEDICO = equipmentData.oculto_medico;
+export const KITS = equipmentData.kits;
+export const ESTETICOS = equipmentData.esteticos;
+export const POSSES = equipmentData.posses;
 
 export function getSkillPointsForCat(cat) {
   return CAT_TABLE[cat]?.skillPoints || 3;

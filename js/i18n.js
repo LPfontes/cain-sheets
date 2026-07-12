@@ -11,6 +11,13 @@ const TRANSLATIONS = {
     "landing.new": "Novo Registro",
     "landing.import": "Importar Registro",
     "landing.table": "Mesa de Jogo",
+    "landing.tabs.missions": "Investigações",
+    "missions.title": "Investigações",
+    "missions.empty.title": "Nenhuma investigação registrada",
+    "missions.empty.sub": "Crie sua primeira investigação para começar",
+    "missions.new": "Nova Investigação",
+    "missions.import": "Importar",
+    "missions.counter": "Investigação(ões) registrada(s)",
 
     // Header Controls
     "header.rules": "Regras",
@@ -192,6 +199,13 @@ const TRANSLATIONS = {
     "landing.new": "New Record",
     "landing.import": "Import Record",
     "landing.table": "Game Table",
+    "landing.tabs.missions": "Investigations",
+    "missions.title": "Investigations",
+    "missions.empty.title": "No investigations registered",
+    "missions.empty.sub": "Create your first investigation to get started",
+    "missions.new": "New Investigation",
+    "missions.import": "Import",
+    "missions.counter": "Investigation(s) registered",
 
     // Header Controls
     "header.rules": "Rules",

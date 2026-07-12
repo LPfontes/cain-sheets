@@ -428,12 +428,11 @@
 }
 
 .btn-landing-primary {
+  color: white;
   background-color: var(--stamp-red);
   border-color: var(--stamp-red-dark);
   box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
-  color: var(--ink-on-dark);
-  padding: 10px 22px;
-  font-size: var(--font-size-sm);
+  padding: 6px 10px;
   letter-spacing: 1px;
 }
 

@@ -1,4 +1,4 @@
-import { el, state, loadCharactersFromStorage, saveCurrentCharacter, loadCharacter, deleteActiveCharacter, importCharacterFile, getCustomTraits, getCustomMutations, updateCloudSyncBadge, saveCurrentCharacterImmediate, loadSinsFromStorage } from "./js/state.js";
+import { el, state, loadCharactersFromStorage, saveCurrentCharacter, loadCharacter, deleteActiveCharacter, importCharacterFile, getCustomTraits, getCustomMutations, updateCloudSyncBadge, saveCurrentCharacterImmediate, loadSinsFromStorage, loadMissionsFromStorage } from "./js/state.js";
 import { startWizard, wizardPrevStep, wizardNextStep, wizardFinish } from "./js/wizard.js";
 import { openSettingsModal, openExportModal, openStressSettingsModal } from "./js/modals.js";
 import { ICONS } from "./icons.js";
@@ -16,6 +16,7 @@ function initializeApp() {
   renderIcons();
   loadCharactersFromStorage();
   loadSinsFromStorage();
+  loadMissionsFromStorage();
   // Centraliza e inicializa o tamanho dos controles de estresse
   const savedStressSize = localStorage.getItem("stress_input_size");
   if (savedStressSize) {

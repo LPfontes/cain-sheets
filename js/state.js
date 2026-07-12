@@ -11,6 +11,15 @@ export const el = {
   sheetScreen: document.getElementById("sheet-screen"),
   modalContainer: document.getElementById("modal-container"),
   modalBody: document.getElementById("modal-body"),
+  tabMissoes: document.getElementById("tab-missoes"),
+  missoesSection: document.getElementById("missoes-section"),
+  missionsList: document.getElementById("missions-list"),
+  missionsEmptyState: document.getElementById("missions-empty-state"),
+  missionCounter: document.getElementById("mission-counter"),
+  btnCreateMission: document.getElementById("btn-create-mission"),
+  btnImportMission: document.getElementById("btn-import-mission"),
+  fileImportMission: document.getElementById("file-import-mission"),
+  missaoScreen: document.getElementById("missao-screen"),
   
   // Header Controls
   btnNewChar: document.getElementById("btn-new-char"),
@@ -115,6 +124,8 @@ export const state = {
   currentCharacter: null,
   sins: [],
   currentSin: null,
+  missions: [],
+  currentMission: null,
   diceBox: null,
   cainRollState: { skill: "", usePsyche: false },
   cainRollHistory: [],
@@ -578,4 +589,68 @@ if (document.readyState === "loading") {
 } else {
   initializeState();
 }
+
+// ==========================================
+// GERENCIADOR DE ESTADO & ARMAZENAMENTO - INVESTIGAÇÕES
+// ==========================================
+export function loadMissionsFromStorage() {
+  logger.info("Carregando fichas de Investigações do LocalStorage...");
+  const data = localStorage.getItem("cain_missions");
+  if (data) {
+    try {
+      state.missions = JSON.parse(data);
+      logger.info(`${state.missions.length} ficha(s) de Investigação(ões) carregada(s).`);
+    } catch (e) {
+      logger.error("Erro ao ler dados de investigações do LocalStorage:", e);
+      state.missions = [];
+    }
+  } else {
+    logger.warn("Nenhuma Investigação encontrada no LocalStorage.");
+    state.missions = [];
+  }
+}
+
+let missionSaveTimeout = null;
+
+export function saveCurrentMission() {
+  if (!state.currentMission) return;
+  const index = state.missions.findIndex(m => m.id === state.currentMission.id);
+  if (index !== -1) {
+    state.missions[index] = state.currentMission;
+  } else {
+    state.missions.push(state.currentMission);
+  }
+
+  if (missionSaveTimeout) clearTimeout(missionSaveTimeout);
+
+  missionSaveTimeout = setTimeout(() => {
+    try {
+      localStorage.setItem("cain_missions", JSON.stringify(state.missions));
+      logger.info(`[DEBOUNCED SAVE] Ficha de Investigação "${state.currentMission.name}" salva.`);
+    } catch (e) {
+      logger.error("Erro ao salvar Investigação no LocalStorage:", e);
+    }
+  }, 500);
+}
+
+export function saveCurrentMissionImmediate() {
+  if (!state.currentMission) return;
+  if (missionSaveTimeout) clearTimeout(missionSaveTimeout);
+  try {
+    localStorage.setItem("cain_missions", JSON.stringify(state.missions));
+    logger.info(`[IMMEDIATE SAVE] Ficha de Investigação "${state.currentMission.name}" persistida.`);
+  } catch (e) {
+    logger.error("Erro ao salvar Investigação imediatamente:", e);
+  }
+}
+
+export function loadMission(missionId) {
+  const mission = state.missions.find(m => m.id === missionId);
+  if (!mission) {
+    logger.error(`Investigação não encontrada: ${missionId}`);
+    return;
+  }
+  state.currentMission = mission;
+}
+
 
