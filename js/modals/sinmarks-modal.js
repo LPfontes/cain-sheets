@@ -27,7 +27,8 @@ export function openSinMarksModal() {
     optionRoll: null,
     selectedOption: null,
     isEvolution: false,
-    rollingLog: []
+    rollingLog: [],
+    chooseTab: 0
   };
 
   const renderModal = () => {
@@ -162,42 +163,50 @@ export function openSinMarksModal() {
   };
 
   const renderChooseMode = () => {
+    const selectedTab = rollingState.chooseTab || 0;
+    const currentCat = CATEGORIES[selectedTab];
+    const options = SIN_MARKS.filter(sm => sm.id.startsWith(currentCat.prefix));
+
     return `
       <div class="sinmarks-choose-mode">
-        ${CATEGORIES.map(cat => {
-      const options = SIN_MARKS.filter(sm => sm.id.startsWith(cat.prefix));
-      return `
-            <div class="sinmarks-category-block">
-              <div class="sinmarks-category-header">
-                <div>
-                  <strong >${cat.name}</strong>
-                  <div class="sinmarks-category-sub">${cat.appearance}</div>
-                </div>
-              </div>
-              <div class="sinmarks-options-list">
-                ${options.map((opt, i) => {
-        const alreadyHas = (char.sinMarks || []).includes(opt.id);
-        return `
-                    <div class="sinmarks-option-row ${alreadyHas ? 'owned' : ''}">
-                      <div class="sinmarks-option-info">
-                        <span class="sinmarks-option-name">${i + 1}. ${opt.name}</span>
-                        <div class="sinmarks-option-desc">${opt.desc}</div>
-                        <div class="sinmarks-option-benefit">✦ ${opt.benefit}</div>
-                      </div>
-                      <div>
-                        ${alreadyHas ? `
-                          <span class="sinmarks-owned-label">Adquirido</span>
-                        ` : `
-                          <button class="btn btn-xs btn-add-manual-sm sinmarks-add-btn" data-id="${opt.id}">Adicionar</button>
-                        `}
-                      </div>
-                    </div>
-                  `;
-      }).join("")}
-              </div>
+        <!-- Category Tabs -->
+        <div class="sinmarks-category-tabs">
+          ${CATEGORIES.map((cat, i) => `
+            <button class="btn btn-sm sinmarks-cat-tab ${i === selectedTab ? 'btn-primary' : 'btn-secondary'}" data-tab="${i}">
+              ${cat.name}
+            </button>
+          `).join("")}
+        </div>
+
+        <div class="sinmarks-category-block">
+          <div class="sinmarks-category-header">
+            <div>
+              <strong>${currentCat.name}</strong>
+              <div class="sinmarks-category-sub">${currentCat.appearance}</div>
             </div>
-          `;
+          </div>
+          <div class="sinmarks-options-list">
+            ${options.map((opt, i) => {
+      const alreadyHas = (char.sinMarks || []).includes(opt.id);
+      return `
+                <div class="sinmarks-option-row ${alreadyHas ? 'owned' : ''}">
+                  <div class="sinmarks-option-info">
+                    <span class="sinmarks-option-name">${i + 1}. ${opt.name}</span>
+                    <div class="sinmarks-option-desc">${opt.desc}</div>
+                    <div class="sinmarks-option-benefit">✦ ${opt.benefit}</div>
+                  </div>
+                  <div>
+                    ${alreadyHas ? `
+                      <span class="sinmarks-owned-label">Adquirido</span>
+                    ` : `
+                      <button class="btn btn-xs btn-add-manual-sm sinmarks-add-btn" data-id="${opt.id}">Adicionar</button>
+                    `}
+                  </div>
+                </div>
+              `;
     }).join("")}
+          </div>
+        </div>
       </div>
     `;
   };
@@ -338,6 +347,13 @@ export function openSinMarksModal() {
           saveCurrentCharacter();
           renderSinMarksSheet();
         }
+        renderModal();
+      };
+    });
+
+    el.modalBody.querySelectorAll(".sinmarks-cat-tab").forEach(btn => {
+      btn.onclick = () => {
+        rollingState.chooseTab = parseInt(btn.getAttribute("data-tab"));
         renderModal();
       };
     });

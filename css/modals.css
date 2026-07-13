@@ -48,7 +48,6 @@
   background: none;
   border: none;
   color: var(--ink-faded);
-  font-size: var(--font-size-xxl);
   cursor: pointer;
   transition: var(--transition-fast);
 }
@@ -1242,12 +1241,10 @@
 }
 
 .sinmarks-result-value {
-  color: #10b981;
   font-weight: bold;
 }
 
 .sinmarks-appearance-text {
-  font-size: 12px;
   color: var(--text-secondary);
   line-height: 1.4;
 }
@@ -1259,7 +1256,6 @@
   border: 1px solid rgba(168, 85, 247, 0.2);
   border-radius: 4px;
   color: #d8b4fe;
-  font-size: 12px;
   font-weight: 500;
 }
 
@@ -1270,7 +1266,6 @@
 }
 
 .sinmarks-choice-label {
-  font-size: 12px;
   color: var(--text-secondary);
   margin-bottom: 8px;
 }
@@ -1294,13 +1289,11 @@
 }
 
 .sinmarks-benefit-desc {
-  font-size: 12px;
   color: var(--text-secondary);
   margin-bottom: 4px;
 }
 
 .sinmarks-benefit-text {
-  font-size: 13px;
   font-weight: 500;
 }
 
@@ -1319,7 +1312,6 @@
 
 .sinmarks-log-header {
   font-weight: bold;
-  font-size: 12px;
   color: var(--text-muted);
   text-transform: uppercase;
   margin-bottom: 6px;
@@ -1334,7 +1326,6 @@
   padding: 4px 0;
   border-bottom: 1px dashed rgba(255, 255, 255, 0.03);
   color: var(--text-secondary);
-  font-size: 13px;
 }
 
 .sinmarks-footer {
@@ -1347,6 +1338,20 @@
 }
 
 /* Choose Mode */
+.sinmarks-category-tabs {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.sinmarks-cat-tab {
+  flex: 1;
+  min-width: 0;
+  font-size: 11px;
+  padding: 6px 4px;
+  text-align: center;
+}
+
 .sinmarks-category-block {
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 6px;
@@ -1364,7 +1369,6 @@
 }
 
 .sinmarks-category-sub {
-  font-size: 11px;
   color: var(--text-muted);
   margin-top: 2px;
 }
@@ -1397,7 +1401,7 @@
 }
 
 .sinmarks-option-name {
-  font-size: 13px;
+  font-size: var(--font-size-lg);
   font-weight: bold;
   color: var(--text-secondary);
 }
@@ -1407,23 +1411,19 @@
 }
 
 .sinmarks-option-desc {
-  font-size: 11px;
   color: var(--text-muted);
   margin-top: 2px;
 }
 
 .sinmarks-option-benefit {
-  font-size: 12px;
   margin-top: 3px;
 }
 
 .sinmarks-owned-label {
-  font-size: 11px;
   color: var(--text-muted);
   font-weight: bold;
 }
 
 .sinmarks-add-btn {
   padding: 4px 8px;
-  font-size: 11px;
 }

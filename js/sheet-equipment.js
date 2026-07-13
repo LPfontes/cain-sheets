@@ -249,7 +249,7 @@ function renderStoreModalContent() {
       </div>
     `).join("");
     tabContent = `
-      <div style="max-height: 250px; overflow-y: auto; padding-right:4px;">
+      <div class="cain-equip-shop-content">
         ${itemsHtml || '<p style="font-size:11px; color:var(--text-muted);">Nenhum item disponível.</p>'}
       </div>
     `;

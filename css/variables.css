@@ -356,8 +356,8 @@ optgroup {
 
 .btn-primary {
   color: var(--ink-on-dark);
-  border-color: #082030;
-  box-shadow: 2px 2px 0 #082030;
+  border-color: #000000;
+  box-shadow: 2px 2px 0 #000000;
 }
 
 .btn-primary:hover:not(:disabled) {

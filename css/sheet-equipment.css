@@ -371,8 +371,8 @@
 }
 
 .btn-equip-tab {
-  padding: 4px 8px;
-  font-size: 10px;
+  padding: 8px 8px;
+  font-size: 16px;
   white-space: nowrap;
   cursor: pointer;
 }
@@ -390,7 +390,7 @@
 }
 
 .cain-equip-shop-content {
-  max-height: 250px;
+  max-height: 400px;
   overflow-y: auto;
   padding-right: 4px;
 }
@@ -403,18 +403,16 @@
 
 .cain-equip-shop-name {
   font-weight: bold;
-  font-size: 14px;
+    
 }
 
 .cain-equip-shop-desc {
-  font-size: 14px;
   color: var(--text-muted);
   margin-top: 2px;
 }
 
 .btn-buy-equip {
   padding: 4px 8px;
-  font-size: 12px;
   flex-shrink: 0;
   cursor: pointer;
 }
