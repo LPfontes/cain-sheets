@@ -540,7 +540,7 @@
 .ws-section-title {
   font-family: var(--font-heading);
   font-size: var(--font-size-sm);
-  color: white;
+  color: rgb(0, 0, 0);
   text-transform: uppercase;
   letter-spacing: 1px;
 }

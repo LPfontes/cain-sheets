@@ -90,7 +90,7 @@ export function showPowerDetailPopup(power) {
   popup.setAttribute("data-power", power.name);
   popup.style.cssText = `
     max-width:650px;padding:20px;display:flex;flex-direction:column;gap:12px;
-    position:fixed;z-index:1310;top:30%;left:40%;
+    position:fixed;z-index:1310;top:30%;
     border:2px solid var(--border-color-dark);
     backdrop-filter:none;-webkit-backdrop-filter:none;
     border-radius:var(--radius-md);box-shadow:4px 4px 15px rgba(0,0,0,0.4)
@@ -121,27 +121,43 @@ export function showPowerDetailPopup(power) {
 
   const header = popup.querySelector(".modal-title");
   let isDragging = false, startX, startY, initialLeft, initialTop;
-  const onMouseMove = (e) => {
+  const onMove = (clientX, clientY) => {
     if (!isDragging) return;
-    popup.style.left = `${initialLeft + e.clientX - startX}px`;
-    popup.style.top = `${initialTop + e.clientY - startY}px`;
+    popup.style.left = `${initialLeft + clientX - startX}px`;
+    popup.style.top = `${initialTop + clientY - startY}px`;
   };
-  const onMouseUp = () => {
+  const onMouseMove = (e) => onMove(e.clientX, e.clientY);
+  const onTouchMove = (e) => {
+    if (!isDragging) return;
+    onMove(e.touches[0].clientX, e.touches[0].clientY);
+    e.preventDefault();
+  };
+  const onEnd = () => {
     isDragging = false;
     window.removeEventListener("mousemove", onMouseMove);
-    window.removeEventListener("mouseup", onMouseUp);
+    window.removeEventListener("mouseup", onEnd);
+    window.removeEventListener("touchmove", onTouchMove);
+    window.removeEventListener("touchend", onEnd);
   };
-  header.addEventListener("mousedown", (e) => {
+  const onStart = (clientX, clientY) => {
     isDragging = true;
-    startX = e.clientX;
-    startY = e.clientY;
+    startX = clientX;
+    startY = clientY;
     const rect = popup.getBoundingClientRect();
     initialLeft = rect.left;
     initialTop = rect.top;
-    e.preventDefault();
     window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onMouseUp);
+    window.addEventListener("mouseup", onEnd);
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onEnd);
+  };
+  header.addEventListener("mousedown", (e) => {
+    e.preventDefault();
+    onStart(e.clientX, e.clientY);
   });
+  header.addEventListener("touchstart", (e) => {
+    onStart(e.touches[0].clientX, e.touches[0].clientY);
+  }, { passive: true });
 
   document.body.appendChild(popup);
 }

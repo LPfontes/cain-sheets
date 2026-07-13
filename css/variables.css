@@ -431,7 +431,7 @@ optgroup {
   display: flex;
   flex-direction: column;
   transition: var(--transition-normal);
-  padding: 10px;
+  padding: 20px;
 }
 
 .screen.card-glass {
@@ -455,4 +455,19 @@ optgroup {
 .power-detail-popup.card-glass {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
+}
+
+/* Mobile font sizes */
+@media (max-width: 768px) {
+  :root {
+    --font-size-xs: 9px;
+    --font-size-xm: 11px;
+    --font-size-sm: 12px;
+    --font-size-md: 13px;
+    --font-size-lg: 16px;
+    --font-size-xl: 20px;
+    --font-size-xxl: 24px;
+    --font-size-xxxl: 28px;
+    --font-size-huge: 36px;
+  }
 }

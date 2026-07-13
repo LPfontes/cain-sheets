@@ -250,7 +250,7 @@ function perform3DCainRoll(box, poolSize, skillKey, skillVal, usedPsyche, isDiff
 
   box.setDice(notation);
   box.start_throw(null, (notationResult) => {
-    setTimeout(() => { el.diceOverlay.classList.add("hidden"); }, 6000);
+    setTimeout(() => { el.diceOverlay.classList.add("hidden"); }, 4000);
 
     if (!notationResult.result || notationResult.result.length === 0 || notationResult.result[0] < 0) {
       alert("Erro na simulação 3D. Usando rolagem matemática.");

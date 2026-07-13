@@ -958,7 +958,7 @@ export function openToolbox(termKey) {
       ${termData.rules.map(rule => `<li>${rule}</li>`).join("")}
     </ul>
     <div style="margin-top: 24px;">
-      <button class="btn btn-sm" id="btn-toolbox-close-bottom" style="width: 100%; border-color: var(--color-rust); color: var(--color-rust-glow);">${lang === "pt" ? "Fechar Guia" : "Close Guide"}</button>
+      <button class="btn" id="btn-toolbox-close-bottom" style="width: 100%; border-color: var(--color-rust); color: var(--color-rust-glow);">${lang === "pt" ? "Fechar Guia" : "Close Guide"}</button>
     </div>
   `;
 

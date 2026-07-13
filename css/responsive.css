@@ -2,6 +2,9 @@
 
 /* TABLETS (Largura até 1024px) */
 @media (max-width: 1024px) {
+  #landing-screen {
+    height: 100vh !important;
+  }
   body {
     overflow-y: auto !important;
     height: auto !important;
@@ -24,7 +27,9 @@
     height: auto !important;
     overflow: visible !important;
   }
-
+  .cain-equip-shop-content{
+    max-height: none !important;
+  }
   .sheet-redesign-container {
     grid-template-columns: 1fr !important;
     display: flex !important;
@@ -35,6 +40,7 @@
   }
 
   .sheet-redesign-left,
+  .desheet-redesign-container,
   .sheet-redesign-center,
   .sheet-redesign-right {
     height: auto !important;
@@ -55,6 +61,30 @@
 
 /* SMARTPHONES (Largura até 768px) */
 @media (max-width: 768px) {
+  #landing-screen {
+    height: 100vh !important;
+  }
+
+  .main-content {
+    height: auto !important;
+    overflow-y: visible !important;
+    padding: 8px !important;
+    flex-direction: column !important;
+  }
+
+  .sheet-cain-center {
+    overflow-y: visible !important;
+    height: auto !important;
+  }
+
+  .hooks-instructions {
+    padding: 6px !important;
+  }
+
+  .hooks-columns {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
 
   /* Cabeçalho Responsivo */
   .main-header {
@@ -80,11 +110,12 @@
     justify-content: space-between;
     width: 24px;
     height: 18px;
-    background: none;
+    background: white;
     border: none;
     cursor: pointer;
     padding: 0;
     z-index: 1001;
+
   }
 
   .btn-mobile-menu .menu-bar {
@@ -204,6 +235,100 @@
     cursor: default !important;
   }
 
+  .modal-overlay {
+    align-items: flex-end !important;
+  }
+
+  .modal-title {
+    font-size: var(--font-size-lg) !important;
+    padding-bottom: 4px !important;
+  }
+
+  .modal-close {
+    top: 10px !important;
+    right: 10px !important;
+    font-size: var(--font-size-xl) !important;
+    padding: 8px !important;
+  }
+  .polaroid-frame {
+    transform: none !important;
+    width: 200px !important;
+    height: 240px !important;
+  }
+  .modal-actions {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .modal-actions .btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .modal-footer {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .modal-footer .btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .blasphemies-modal-layout {
+    grid-template-columns: 0.6fr 1fr;
+    min-height: auto !important;
+    max-height: none !important;
+  }
+
+  .blasphemy-card-img-wrapper {
+    width: 60px !important;
+  }
+
+  
+
+  .blasphemy-details-header {
+    grid-template-columns: 1fr !important;
+    text-align: center !important;
+  }
+
+  .blasphemy-details-img-wrapper {
+    width: 120px !important;
+    margin: 0 auto !important;
+  }
+
+  .sinmarks-tab-bar {
+    flex-direction: column !important;
+    gap: 4px !important;
+  }
+
+  .sinmarks-stats-banner {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .grid-2,
+  .grid-3 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .setting-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  .library-modal-list {
+    max-height: 40vh !important;
+  }
+
+  .modal-content.wide-modal {
+    width: 100% !important;
+    max-width: none !important;
+    height: 90vh !important;
+  }
+
   .grid-2-col-d,
   .grid-2-col {
     grid-template-columns: 1fr !important;
@@ -240,7 +365,9 @@
     align-items: center !important;
     text-align: center !important;
   }
-
+  .cain-equip-shop-content{
+    max-height: none !important;
+  }
   .dice-select-control label {
     text-align: center !important;
   }
@@ -519,6 +646,15 @@
 
 /* CELULARES PORTRAIT (Largura até 480px) */
 @media (max-width: 480px) {
+  .main-content {
+    padding: 4px !important;
+    gap: 4px !important;
+  }
+
+  .dice-box-canvas-container {
+    height: 140px !important;
+  }
+
   .portrait-wrapper {
     align-items: center !important;
     gap: 8x !important;
@@ -530,8 +666,8 @@
 
   .polaroid-frame {
     transform: none !important;
-    width: 140px !important;
-    height: 180px !important;
+    width: 200px !important;
+    height: 240px !important;
   }
 
   .w-300 {
@@ -561,7 +697,9 @@
   #tab-inventario .inventory-grid {
     grid-template-columns: 1fr !important;
   }
-
+  .cain-equip-shop-content{
+    max-height: none !important;
+  }
   .cabo-guerra-display {
     flex-direction: column !important;
     align-items: stretch !important;
@@ -600,5 +738,83 @@
   .traits-wizard-list,
   .mutations-sheet-list-single {
     max-height: 250px !important;
+  }
+
+  .modal-content {
+    padding: 12px !important;
+    margin: 8px auto !important;
+    width: 100% !important;
+    border-radius: var(--radius-sm) !important;
+  }
+
+  .modal-title {
+    font-size: var(--font-size-md) !important;
+  }
+
+  .modal-close {
+    top: 6px !important;
+    right: 6px !important;
+    font-size: var(--font-size-lg) !important;
+  }
+
+  .blasphemy-grid-card {
+    flex-direction: column !important;
+    text-align: center !important;
+    padding: 8px !important;
+  }
+
+  .blasphemy-card-img-wrapper {
+    width: 50px !important;
+  }
+
+  .blasphemy-card-name {
+    font-size: var(--font-size-md) !important;
+  }
+
+  .sinmarks-result-row {
+    flex-direction: column !important;
+    gap: 4px !important;
+  }
+
+  .trait-modal-row {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 8px !important;
+  }
+
+  .trait-modal-row .title-row {
+    justify-content: center !important;
+  }
+
+  .lib-mutation {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    text-align: center !important;
+  }
+
+  .lib-mut-action {
+    justify-content: center !important;
+  }
+
+  .lib-tab-bar {
+    flex-wrap: wrap !important;
+  }
+
+  .lib-tab {
+    flex: 1 1 auto !important;
+    font-size: 10px !important;
+    padding: 4px !important;
+  }
+
+  .sinmarks-category-header {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 4px !important;
+  }
+
+  .homebrew-form .form-group input,
+  .homebrew-form .form-group select,
+  .homebrew-form .form-group textarea {
+    font-size: 16px !important;
   }
 }

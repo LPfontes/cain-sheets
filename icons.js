@@ -64,5 +64,15 @@ export const ICONS = {
       <path d="M8 10h8"></path>
       <path d="M8 14h8"></path>
     </svg>
+  `,
+  dice: `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="3"></rect>
+      <circle cx="8" cy="8" r="1.5"></circle>
+      <circle cx="16" cy="16" r="1.5"></circle>
+      <circle cx="8" cy="16" r="1.5"></circle>
+      <circle cx="16" cy="8" r="1.5"></circle>
+      <circle cx="12" cy="12" r="1.5"></circle>
+    </svg>
   `
 };

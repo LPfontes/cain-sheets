@@ -14,7 +14,59 @@ export function openBlasphemiesModal() {
   let activeBlasphemyId = tempBlasphemies[0] || BLASPHEMIES[0].id;
 
   el.modalContainer.classList.remove("hidden");
-  el.modalBody.parentElement.classList.add("wide-modal");
+  const modalContent = el.modalBody.parentElement;
+  modalContent.classList.add("wide-modal");
+
+  // Make modal draggable on mobile via header
+  let dragState = null;
+  const onDragMove = (clientX, clientY) => {
+    if (!dragState) return;
+    modalContent.style.setProperty("position", "fixed", "important");
+    modalContent.style.left = (dragState.origLeft + clientX - dragState.startX) + "px";
+    modalContent.style.top = (dragState.origTop + clientY - dragState.startY) + "px";
+    modalContent.style.right = "auto";
+    modalContent.style.bottom = "auto";
+  };
+  const onDragEnd = () => {
+    if (!dragState) return;
+    dragState = null;
+    document.removeEventListener("mousemove", onDragMove);
+    document.removeEventListener("mouseup", onDragEnd);
+    document.removeEventListener("touchmove", onDragMove);
+    document.removeEventListener("touchend", onDragEnd);
+  };
+  const onDragStart = (clientX, clientY) => {
+    const rect = modalContent.getBoundingClientRect();
+    dragState = { startX: clientX, startY: clientY, origLeft: rect.left, origTop: rect.top };
+    document.addEventListener("mousemove", onDragMove);
+    document.addEventListener("mouseup", onDragEnd);
+    document.addEventListener("touchmove", onDragMove, { passive: false });
+    document.addEventListener("touchend", onDragEnd);
+  };
+  modalContent.addEventListener("mousedown", (e) => {
+    const title = e.target.closest(".modal-title");
+    if (!title || e.target.closest("button")) return;
+    e.preventDefault();
+    onDragStart(e.clientX, e.clientY);
+  });
+  modalContent.addEventListener("touchstart", (e) => {
+    const title = e.target.closest(".modal-title");
+    if (!title || e.target.closest("button")) return;
+    onDragStart(e.touches[0].clientX, e.touches[0].clientY);
+  }, { passive: true });
+  // Reset position when modal closes
+  const observer = new MutationObserver(() => {
+    if (el.modalContainer.classList.contains("hidden")) {
+      dragState = null;
+      modalContent.style.position = "";
+      modalContent.style.left = "";
+      modalContent.style.top = "";
+      modalContent.style.right = "";
+      modalContent.style.bottom = "";
+      observer.disconnect();
+    }
+  });
+  observer.observe(el.modalContainer, { attributes: true, attributeFilter: ["class"] });
 
   const renderModalContent = () => {
     const activeB = BLASPHEMIES.find(b => b.id === activeBlasphemyId) || BLASPHEMIES[0];
@@ -199,7 +251,7 @@ export function openBlasphemyPowersModal(blasphemy, currentPowers, onSave) {
     popup.setAttribute("data-power", power.name);
     popup.style.cssText = `
       max-width:500px;padding:20px;display:flex;flex-direction:column;gap:12px;
-      position:fixed;z-index:1310;top:25%;left:35%;
+      position:fixed;z-index:1310;top:25%;
       border:2px solid var(--border-color-dark);
       backdrop-filter:none;-webkit-backdrop-filter:none;
       border-radius:var(--radius-md);box-shadow:4px 4px 15px rgba(0,0,0,0.4)
@@ -230,27 +282,43 @@ export function openBlasphemyPowersModal(blasphemy, currentPowers, onSave) {
 
     const header = popup.querySelector(".modal-title");
     let isDragging = false, startX, startY, initialLeft, initialTop;
-    const onMouseMove = (e) => {
+    const onMove = (clientX, clientY) => {
       if (!isDragging) return;
-      popup.style.left = `${initialLeft + e.clientX - startX}px`;
-      popup.style.top = `${initialTop + e.clientY - startY}px`;
+      popup.style.left = `${initialLeft + clientX - startX}px`;
+      popup.style.top = `${initialTop + clientY - startY}px`;
     };
-    const onMouseUp = () => {
+    const onMouseMove = (e) => onMove(e.clientX, e.clientY);
+    const onTouchMove = (e) => {
+      if (!isDragging) return;
+      onMove(e.touches[0].clientX, e.touches[0].clientY);
+      e.preventDefault();
+    };
+    const onEnd = () => {
       isDragging = false;
       window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("mouseup", onMouseUp);
+      window.removeEventListener("mouseup", onEnd);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onEnd);
     };
-    header.addEventListener("mousedown", (e) => {
+    const onStart = (clientX, clientY) => {
       isDragging = true;
-      startX = e.clientX;
-      startY = e.clientY;
+      startX = clientX;
+      startY = clientY;
       const rect = popup.getBoundingClientRect();
       initialLeft = rect.left;
       initialTop = rect.top;
-      e.preventDefault();
       window.addEventListener("mousemove", onMouseMove);
-      window.addEventListener("mouseup", onMouseUp);
+      window.addEventListener("mouseup", onEnd);
+      window.addEventListener("touchmove", onTouchMove, { passive: false });
+      window.addEventListener("touchend", onEnd);
+    };
+    header.addEventListener("mousedown", (e) => {
+      e.preventDefault();
+      onStart(e.clientX, e.clientY);
     });
+    header.addEventListener("touchstart", (e) => {
+      onStart(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: true });
 
     document.body.appendChild(popup);
   };
@@ -327,30 +395,48 @@ export function openBlasphemyPowersModal(blasphemy, currentPowers, onSave) {
 
   // Make panel draggable via header
   let isDragging = false, startX, startY, initialLeft, initialTop;
-  panel.addEventListener("mousedown", (e) => {
-    const header = e.target.closest(".blasphemy-powers-panel-header");
-    if (!header || e.target.closest("button")) return;
+  const onMove = (clientX, clientY) => {
+    if (!isDragging) return;
+    panel.style.left = `${initialLeft + clientX - startX}px`;
+    panel.style.top = `${initialTop + clientY - startY}px`;
+    panel.style.right = "auto";
+  };
+  const onMouseMove = (e) => onMove(e.clientX, e.clientY);
+  const onTouchMove = (e) => {
+    if (!isDragging) return;
+    onMove(e.touches[0].clientX, e.touches[0].clientY);
+    e.preventDefault();
+  };
+  const onEnd = () => {
+    isDragging = false;
+    window.removeEventListener("mousemove", onMouseMove);
+    window.removeEventListener("mouseup", onEnd);
+    window.removeEventListener("touchmove", onTouchMove);
+    window.removeEventListener("touchend", onEnd);
+  };
+  const onStart = (clientX, clientY) => {
     isDragging = true;
-    startX = e.clientX;
-    startY = e.clientY;
+    startX = clientX;
+    startY = clientY;
     const rect = panel.getBoundingClientRect();
     initialLeft = rect.left;
     initialTop = rect.top;
-    e.preventDefault();
-    const onMouseMove = (e) => {
-      if (!isDragging) return;
-      panel.style.left = `${initialLeft + e.clientX - startX}px`;
-      panel.style.top = `${initialTop + e.clientY - startY}px`;
-      panel.style.right = "auto";
-    };
-    const onMouseUp = () => {
-      isDragging = false;
-      window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("mouseup", onMouseUp);
-    };
     window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onMouseUp);
+    window.addEventListener("mouseup", onEnd);
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onEnd);
+  };
+  panel.addEventListener("mousedown", (e) => {
+    const header = e.target.closest(".blasphemy-powers-panel-header");
+    if (!header || e.target.closest("button")) return;
+    e.preventDefault();
+    onStart(e.clientX, e.clientY);
   });
+  panel.addEventListener("touchstart", (e) => {
+    const header = e.target.closest(".blasphemy-powers-panel-header");
+    if (!header || e.target.closest("button")) return;
+    onStart(e.touches[0].clientX, e.touches[0].clientY);
+  }, { passive: true });
 
   renderContent();
   document.body.appendChild(panel);
@@ -400,28 +486,44 @@ function showPassivePopup(blasphemy) {
 
   const header = popup.querySelector(".modal-title");
   let isDragging = false, startX, startY, initialLeft, initialTop;
-  const onMouseMove = (e) => {
+  const onMove = (clientX, clientY) => {
     if (!isDragging) return;
-    popup.style.left = `${initialLeft + e.clientX - startX}px`;
-    popup.style.top = `${initialTop + e.clientY - startY}px`;
+    popup.style.left = `${initialLeft + clientX - startX}px`;
+    popup.style.top = `${initialTop + clientY - startY}px`;
     popup.style.transform = "none";
   };
-  const onMouseUp = () => {
+  const onMouseMove = (e) => onMove(e.clientX, e.clientY);
+  const onTouchMove = (e) => {
+    if (!isDragging) return;
+    onMove(e.touches[0].clientX, e.touches[0].clientY);
+    e.preventDefault();
+  };
+  const onEnd = () => {
     isDragging = false;
     window.removeEventListener("mousemove", onMouseMove);
-    window.removeEventListener("mouseup", onMouseUp);
+    window.removeEventListener("mouseup", onEnd);
+    window.removeEventListener("touchmove", onTouchMove);
+    window.removeEventListener("touchend", onEnd);
   };
-  header.addEventListener("mousedown", (e) => {
+  const onStart = (clientX, clientY) => {
     isDragging = true;
-    startX = e.clientX;
-    startY = e.clientY;
+    startX = clientX;
+    startY = clientY;
     const rect = popup.getBoundingClientRect();
     initialLeft = rect.left;
     initialTop = rect.top;
-    e.preventDefault();
     window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onMouseUp);
+    window.addEventListener("mouseup", onEnd);
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onEnd);
+  };
+  header.addEventListener("mousedown", (e) => {
+    e.preventDefault();
+    onStart(e.clientX, e.clientY);
   });
+  header.addEventListener("touchstart", (e) => {
+    onStart(e.touches[0].clientX, e.touches[0].clientY);
+  }, { passive: true });
 
   document.body.appendChild(popup);
 }

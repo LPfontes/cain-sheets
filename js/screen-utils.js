@@ -5,9 +5,7 @@ export function hideAllScreens() {
 }
 
 export function goToLanding() {
-  hideAllScreens();
-  document.getElementById("landing-screen")?.classList.remove("hidden");
-  import("./landing.js").then(m => m.renderCharactersList());
+  import("./landing.js").then(m => m.showLandingScreen());
 }
 
 export function esc(str) {

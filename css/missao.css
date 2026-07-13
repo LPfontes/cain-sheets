@@ -61,9 +61,9 @@
 
 .missao-form-group label {
   display: block;
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-md);
   font-weight: bold;
-  color: white;
+  color: black;
   margin-bottom: 6px;
   text-transform: uppercase;
   letter-spacing: 1px;

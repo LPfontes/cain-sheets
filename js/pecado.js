@@ -143,13 +143,149 @@ export function renderPecadoSheet() {
       </div>
 
       <div class="world-sheet-body">
-        <!-- Coluna da Esquerda: Polaroid -->
+        <!-- Coluna da Direita: Abas e Painéis -->
         <div class="ref-area-left">
-          <div id="pecado-image-frame">
-            ${portraitHtml}
-            <div class="local-image-overlay"><span>Alterar Imagem</span></div>
+          <div class="flex-col gap-16">
+            <!-- Tabs Menu -->
+            <div class="pecado-third-col-tabs">
+              <button type="button" class="pecado-third-tab-btn ${activeThirdColTab === 'perfil' ? 'active' : ''}" data-tab="perfil">Perfil</button>
+              <button type="button" class="pecado-third-tab-btn ${activeThirdColTab === 'palacio' ? 'active' : ''}" data-tab="palacio">Palácio</button>
+              <button type="button" class="pecado-third-tab-btn ${activeThirdColTab === 'dominios' ? 'active' : ''}" data-tab="dominios">Domínios</button>
+              <button type="button" class="pecado-third-tab-btn ${activeThirdColTab === 'lacaios' ? 'active' : ''}" data-tab="lacaios">Lacaios</button>
+              <button type="button" class="pecado-third-tab-btn ${activeThirdColTab === 'combate' ? 'active' : ''}" data-tab="combate">Combate</button>
+            </div>
+
+            <!-- Tab Content Panels -->
+            <div class="pecado-third-col-content">
+              <!-- Perfil Panel -->
+              <div class="pecado-tab-panel ${activeThirdColTab === 'perfil' ? '' : 'hidden'}" id="panel-perfil">
+                <div class="pecado-profile-img-container">
+                  <div id="pecado-image-frame">
+                    ${portraitHtml}
+                    <div class="local-image-overlay"><span>Alterar Imagem</span></div>
+                    <input type="file" id="pecado-image-input" accept="image/*" class="pecado-file-input">
+                  </div>
+                  
+                    <div class="pecado-profile-grid-1">
+                        <div>
+                          <label class="ws-label">Hospedeiro</label>
+                          <input type="text" id="pecado-host" class="conflito-form-input pecado-field-input" value="${esc(sin.hostName)}" placeholder="Nome do Hospedeiro">
+                        </div>
+                        <div>
+                          <label class="ws-label">Tipo de Pecado</label>
+                          <select id="pecado-type" class="conflito-form-input pecado-field-input">
+                            <option value="ogro" ${sin.type === 'ogro' ? 'selected' : ''}>Ogro</option>
+                            <option value="idolo" ${sin.type === 'idolo' ? 'selected' : ''}>Ídolo</option>
+                            <option value="cao" ${sin.type === 'cao' ? 'selected' : ''}>Cão</option>
+                            <option value="centopeia" ${sin.type === 'centopeia' ? 'selected' : ''}>Centopeia</option>
+                            <option value="sapo" ${sin.type === 'sapo' ? 'selected' : ''}>Sapo</option>
+                            <option value="lorde" ${sin.type === 'lorde' ? 'selected' : ''}>Lorde</option>
+                            <option value="outro" ${sin.type === 'outro' ? 'selected' : ''}>Customizado (Outro)</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label class="ws-label">Forma</label>
+                          <select id="pecado-form" class="conflito-form-input pecado-field-input">
+                            <option value="Separado" ${sin.form === 'Separado' ? 'selected' : ''}>Forma I / Separado</option>
+                            <option value="Fundido" ${sin.form === 'Fundido' ? 'selected' : ''}>Forma II / Fundido</option>
+                            <option value="Vinculado" ${sin.form === 'Vinculado' ? 'selected' : ''}>Forma III / Vinculado</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label class="ws-label">Categoria (CAT)</label>
+                          <input type="number" id="pecado-cat" class="conflito-form-input pecado-field-input" value="${sin.cat}" min="0" max="7">
+                        </div>
+                      </div>
+                    </div>
+                  
+                  <div class="card-glass pecado-card-padding">
+                    <h3 class="ws-section-title pecado-section-title-line">Perfil do Pecado</h3>
+                    <div class="pecado-profile-fields">
+                      <div>
+                        <label class="ws-label">Descrição Geral</label>
+                        <textarea id="pecado-desc" class="conflito-form-input pecado-field-input pecado-field-h80" placeholder="Descrição geral...">${esc(sin.description)}</textarea>
+                      </div>
+                      <div>
+                        <label class="ws-label">Aparência</label>
+                        <textarea id="pecado-appearance" class="conflito-form-input pecado-field-input pecado-field-h80" placeholder="Descreva a aparência física...">${esc(sin.appearance || '')}</textarea>
+                      </div>
+                      <div>
+                        <label class="ws-label">Comportamento</label>
+                        <textarea id="pecado-behavior" class="conflito-form-input pecado-field-input pecado-field-h80" placeholder="Estilo de ação, tiques, atitudes...">${esc(sin.behavior || '')}</textarea>
+                      </div>
+                  </div>
+                </div>
+                
+              </div>
+              <!-- Palácio Panel -->
+              <div class="pecado-tab-panel ${activeThirdColTab === 'palacio' ? '' : 'hidden'}" id="panel-palacio">
+                <div class="card-glass pecado-card-padding">
+                  <h3 class="ws-section-title pecado-section-title-line">O Palácio</h3>
+                  <div class="pecado-profile-fields">
+                    <div>
+                      <label class="ws-label">Temas Comuns</label>
+                      <input type="text" id="pecado-palace-themes" class="conflito-form-input pecado-field-input" value="${esc(sin.palace?.themes)}" placeholder="Ex: Escuro, Frio, Imundo">
+                    </div>
+                    <div>
+                      <label class="ws-label">Locais Típicos</label>
+                      <input type="text" id="pecado-palace-places" class="conflito-form-input pecado-field-input" value="${esc(sin.palace?.typical_places)}" placeholder="Ex: Esgotos, Galpões abandonados">
+                    </div>
+                    <div>
+                      <label class="ws-label">Descrição do Espaço</label>
+                      <textarea id="pecado-palace-desc" class="conflito-form-input pecado-field-input pecado-field-h80" placeholder="Descreva a arquitetura labiríntica e atmosfera do Palácio...">${esc(sin.palace?.desc)}</textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Domínios Panel -->
+              <div class="pecado-tab-panel ${activeThirdColTab === 'dominios' ? '' : 'hidden'}" id="panel-dominios">
+                <div class="card-glass pecado-card-padding">
+                  <h3 class="ws-section-title pecado-section-title-line">Domínios do Pecado</h3>
+                  <p class="domain-card-desc">
+                    Selecione os 3 domínios ativos.
+                  </p>
+                  <div id="domains-list-container" class="pecado-domains-scroll">
+                    ${domainsHtml}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Lacaios Panel -->
+              <div class="pecado-tab-panel ${activeThirdColTab === 'lacaios' ? '' : 'hidden'}" id="panel-lacaios">
+                <div class="card-glass pecado-card-padding">
+                  <div class="pecado-minions-header">
+                    <h3 class="ws-section-title pecado-minions-title">Lacaios & Vestígios</h3>
+                    <button id="btn-add-minion" class="btn btn-sm pecado-add-minion-btn">+ Lacaio</button>
+                  </div>
+                  <div class="minions-section-list" id="minions-list-container">
+                    ${minionsHtml}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Combate Panel -->
+              <div class="pecado-tab-panel ${activeThirdColTab === 'combate' ? '' : 'hidden'}" id="panel-combate">
+                <div class="card-glass pecado-card-padding">
+                  <h3 class="ws-section-title pecado-section-title-line">Ataques e Complicações</h3>
+                  <div class="pecado-profile-fields">
+                    <div>
+                      <label class="ws-label">Ataques Recomendados</label>
+                      <input type="text" id="pecado-attacks" class="conflito-form-input pecado-field-input" value="${esc(sin.attacks)}" placeholder="Armas, dentes, garras...">
+                    </div>
+                    <div>
+                      <label class="ws-label">Dado de Reação (Guia de Dano)</label>
+                      <div class="pecado-reaction-box">
+                        • <strong>1:</strong> 5 cortes no oponente<br>
+                        • <strong>2-3:</strong> 3 cortes no oponente<br>
+                        • <strong>4+:</strong> 2 cortes no oponente
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <input type="file" id="pecado-image-input" accept="image/*" class="pecado-file-input">
         </div>
 
         <!-- Coluna do Meio: Talismãs e Traumas -->
@@ -240,139 +376,7 @@ export function renderPecadoSheet() {
           </div>
         </div>
 
-        <!-- Coluna da Direita: Abas e Painéis -->
-        <div class="flex-col gap-16">
-          <!-- Tabs Menu -->
-          <div class="pecado-third-col-tabs">
-            <button type="button" class="pecado-third-tab-btn ${activeThirdColTab === 'perfil' ? 'active' : ''}" data-tab="perfil">Perfil</button>
-            <button type="button" class="pecado-third-tab-btn ${activeThirdColTab === 'palacio' ? 'active' : ''}" data-tab="palacio">Palácio</button>
-            <button type="button" class="pecado-third-tab-btn ${activeThirdColTab === 'dominios' ? 'active' : ''}" data-tab="dominios">Domínios</button>
-            <button type="button" class="pecado-third-tab-btn ${activeThirdColTab === 'lacaios' ? 'active' : ''}" data-tab="lacaios">Lacaios</button>
-            <button type="button" class="pecado-third-tab-btn ${activeThirdColTab === 'combate' ? 'active' : ''}" data-tab="combate">Combate</button>
-          </div>
-
-          <!-- Tab Content Panels -->
-          <div class="pecado-third-col-content">
-            <!-- Perfil Panel -->
-            <div class="pecado-tab-panel ${activeThirdColTab === 'perfil' ? '' : 'hidden'}" id="panel-perfil">
-              <div class="card-glass pecado-card-padding">
-                <h3 class="ws-section-title pecado-section-title-line">Perfil do Pecado</h3>
-                <div class="pecado-profile-fields">
-                  <div class="pecado-profile-grid-4">
-                    <div>
-                      <label class="ws-label">Hospedeiro</label>
-                      <input type="text" id="pecado-host" class="conflito-form-input pecado-field-input" value="${esc(sin.hostName)}" placeholder="Nome do Hospedeiro">
-                    </div>
-                    <div>
-                      <label class="ws-label">Tipo de Pecado</label>
-                      <select id="pecado-type" class="conflito-form-input pecado-field-input">
-                        <option value="ogro" ${sin.type === 'ogro' ? 'selected' : ''}>Ogro</option>
-                        <option value="idolo" ${sin.type === 'idolo' ? 'selected' : ''}>Ídolo</option>
-                        <option value="cao" ${sin.type === 'cao' ? 'selected' : ''}>Cão</option>
-                        <option value="centopeia" ${sin.type === 'centopeia' ? 'selected' : ''}>Centopeia</option>
-                        <option value="sapo" ${sin.type === 'sapo' ? 'selected' : ''}>Sapo</option>
-                        <option value="lorde" ${sin.type === 'lorde' ? 'selected' : ''}>Lorde</option>
-                        <option value="outro" ${sin.type === 'outro' ? 'selected' : ''}>Customizado (Outro)</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label class="ws-label">Forma</label>
-                      <select id="pecado-form" class="conflito-form-input pecado-field-input">
-                        <option value="Separado" ${sin.form === 'Separado' ? 'selected' : ''}>Forma I / Separado</option>
-                        <option value="Fundido" ${sin.form === 'Fundido' ? 'selected' : ''}>Forma II / Fundido</option>
-                        <option value="Vinculado" ${sin.form === 'Vinculado' ? 'selected' : ''}>Forma III / Vinculado</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label class="ws-label">Categoria (CAT)</label>
-                      <input type="number" id="pecado-cat" class="conflito-form-input pecado-field-input" value="${sin.cat}" min="0" max="7">
-                    </div>
-                  </div>
-                  <div>
-                    <label class="ws-label">Descrição Geral</label>
-                    <textarea id="pecado-desc" class="conflito-form-input pecado-field-input pecado-field-h80" placeholder="Descrição geral...">${esc(sin.description)}</textarea>
-                  </div>
-                  <div>
-                    <label class="ws-label">Aparência</label>
-                    <textarea id="pecado-appearance" class="conflito-form-input pecado-field-input pecado-field-h80" placeholder="Descreva a aparência física...">${esc(sin.appearance || '')}</textarea>
-                  </div>
-                  <div>
-                    <label class="ws-label">Comportamento</label>
-                    <textarea id="pecado-behavior" class="conflito-form-input pecado-field-input pecado-field-h80" placeholder="Estilo de ação, tiques, atitudes...">${esc(sin.behavior || '')}</textarea>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Palácio Panel -->
-            <div class="pecado-tab-panel ${activeThirdColTab === 'palacio' ? '' : 'hidden'}" id="panel-palacio">
-              <div class="card-glass pecado-card-padding">
-                <h3 class="ws-section-title pecado-section-title-line">O Palácio</h3>
-                <div class="pecado-profile-fields">
-                  <div>
-                    <label class="ws-label">Temas Comuns</label>
-                    <input type="text" id="pecado-palace-themes" class="conflito-form-input pecado-field-input" value="${esc(sin.palace?.themes)}" placeholder="Ex: Escuro, Frio, Imundo">
-                  </div>
-                  <div>
-                    <label class="ws-label">Locais Típicos</label>
-                    <input type="text" id="pecado-palace-places" class="conflito-form-input pecado-field-input" value="${esc(sin.palace?.typical_places)}" placeholder="Ex: Esgotos, Galpões abandonados">
-                  </div>
-                  <div>
-                    <label class="ws-label">Descrição do Espaço</label>
-                    <textarea id="pecado-palace-desc" class="conflito-form-input pecado-field-input pecado-field-h80" placeholder="Descreva a arquitetura labiríntica e atmosfera do Palácio...">${esc(sin.palace?.desc)}</textarea>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Domínios Panel -->
-            <div class="pecado-tab-panel ${activeThirdColTab === 'dominios' ? '' : 'hidden'}" id="panel-dominios">
-              <div class="card-glass pecado-card-padding">
-                <h3 class="ws-section-title pecado-section-title-line">Domínios do Pecado</h3>
-                <p class="domain-card-desc">
-                  Selecione os 3 domínios ativos.
-                </p>
-                <div id="domains-list-container" class="pecado-domains-scroll">
-                  ${domainsHtml}
-                </div>
-              </div>
-            </div>
-
-            <!-- Lacaios Panel -->
-            <div class="pecado-tab-panel ${activeThirdColTab === 'lacaios' ? '' : 'hidden'}" id="panel-lacaios">
-              <div class="card-glass pecado-card-padding">
-                <div class="pecado-minions-header">
-                  <h3 class="ws-section-title pecado-minions-title">Lacaios & Vestígios</h3>
-                  <button id="btn-add-minion" class="btn btn-sm pecado-add-minion-btn">+ Lacaio</button>
-                </div>
-                <div class="minions-section-list" id="minions-list-container">
-                  ${minionsHtml}
-                </div>
-              </div>
-            </div>
-
-            <!-- Combate Panel -->
-            <div class="pecado-tab-panel ${activeThirdColTab === 'combate' ? '' : 'hidden'}" id="panel-combate">
-              <div class="card-glass pecado-card-padding">
-                <h3 class="ws-section-title pecado-section-title-line">Ataques e Complicações</h3>
-                <div class="pecado-profile-fields">
-                  <div>
-                    <label class="ws-label">Ataques Recomendados</label>
-                    <input type="text" id="pecado-attacks" class="conflito-form-input pecado-field-input" value="${esc(sin.attacks)}" placeholder="Armas, dentes, garras...">
-                  </div>
-                  <div>
-                    <label class="ws-label">Dado de Reação (Guia de Dano)</label>
-                    <div class="pecado-reaction-box">
-                      • <strong>1:</strong> 5 cortes no oponente<br>
-                      • <strong>2-3:</strong> 3 cortes no oponente<br>
-                      • <strong>4+:</strong> 2 cortes no oponente
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        
       </div>
     </div>
   `;

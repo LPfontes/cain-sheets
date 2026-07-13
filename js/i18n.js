@@ -112,6 +112,7 @@ const TRANSLATIONS = {
     "sheet.sin.warning": "RISCO DE VERTER PECADO!",
 
     // Sheet tabs
+    "sheet.tab.perfil": "Perfil",
     "sheet.tab.agenda": "Agenda",
     "sheet.tab.blasphemies": "Blasfêmias",
     "sheet.tab.sinmarks": "Marcas do Pecado",
@@ -300,6 +301,7 @@ const TRANSLATIONS = {
     "sheet.sin.warning": "RISK OF SIN OVERFLOW!",
 
     // Sheet tabs
+    "sheet.tab.perfil": "Profile",
     "sheet.tab.agenda": "Agenda",
     "sheet.tab.blasphemies": "Blasphemies",
     "sheet.tab.sinmarks": "Sin Marks",

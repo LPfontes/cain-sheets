@@ -389,6 +389,12 @@
   margin-bottom: 6px;
 }
 
+.cain-equip-shop-content {
+  max-height: 250px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
 .cain-equip-shop-info {
   flex: 1;
   padding-right: 8px;

@@ -5,7 +5,7 @@
 
 #pecado-screen .world-sheet-body {
   display: grid;
-  grid-template-columns: 300px 1fr 1fr;
+  grid-template-columns: 0.8fr 1fr;
   gap: 16px;
   width: 100%;
 }
@@ -15,24 +15,28 @@
     grid-template-columns: 1fr;
   }
 }
-
+.pecado-tab-panel {
+  padding: 20px;
+}
 /* Polaroides de Pecado */
 #pecado-image-frame {
   background: #f7f5ee !important;
-  padding: 12px 12px 36px 12px !important;
   border-radius: 2px !important;
-  border: 1px solid rgba(0, 0, 0, 0.15) !important;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.35), inset 0 0 10px rgba(0,0,0,0.03) !important;
   cursor: pointer;
   position: relative;
-  width: 100%;
+  width: 400px;
   aspect-ratio: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
-
+.pecado-profile-img-container{
+  display: flex;
+  padding: 10px;
+  background: var(--bg-card);
+}
 #pecado-image-frame img {
   width: 100%;
   height: 100%;
@@ -694,6 +698,14 @@
   color: #fff;
   background: var(--color-rust);
   box-shadow: 0 2px 8px rgba(190, 49, 53, 0.3);
+}
+.pecado-profile-grid-1 {
+  background-color: var(--bg-card);
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 12px;
+  width: 100%;
+  padding: 10px;
 }
 
 .pecado-profile-grid-4 {
