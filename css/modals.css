@@ -794,6 +794,131 @@
   font-weight: bold;
 }
 
+/* ==========================================
+   CREATE BLASPHEMY MODAL
+   ========================================== */
+.create-blasphemy-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 4px 0;
+}
+
+.create-blasphemy-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.create-blasphemy-field label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+}
+
+.text-danger {
+  color: var(--stamp-red);
+}
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.create-blasphemy-textarea {
+  min-height: 80px;
+  resize: vertical;
+  font-family: var(--font-body);
+  line-height: 1.5;
+}
+
+.create-blasphemy-image-area {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.create-blasphemy-image-preview {
+  width: 150px;
+  height: 150px;
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: rgba(0,0,0,0.2);
+}
+
+.create-blasphemy-image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.create-blasphemy-powers-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.create-blasphemy-powers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.create-blasphemy-power-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+}
+
+.create-blasphemy-power-fields {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.btn-remove-power {
+  background: none;
+  border: none;
+  color: var(--stamp-red);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.btn-remove-power:hover {
+  background: rgba(248,113,113,0.1);
+  border-radius: var(--radius-sm);
+}
+
+.blasphemy-card-custom-badge {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-rust-glow);
+  background: rgba(232, 126, 4, 0.15);
+  padding: 1px 5px;
+  border-radius: 3px;
+  display: inline-block;
+  margin-top: 2px;
+}
+
+.custom-blasphemy {
+  border-color: var(--color-rust-glow) !important;
+}
+
 #modal-body,
 .conflito-modal-body {
   cursor: default;

@@ -1,7 +1,12 @@
-import { el, state, saveCurrentCharacter } from "../state.js";
+import { el, state, saveCurrentCharacter, getCustomBlasphemies } from "../state.js";
 import { logger } from "../logger.js";
 import { renderBlasphemiesSheet } from "../sheet.js";
 import { BLASPHEMIES } from "../cain-data.js";
+import { openCreateBlasphemyModal } from "./create-blasphemy-modal.js";
+
+function getAllBlasphemies() {
+  return [...BLASPHEMIES, ...getCustomBlasphemies()];
+}
 
 export function openBlasphemiesModal() {
   const char = state.currentCharacter;
@@ -9,9 +14,10 @@ export function openBlasphemiesModal() {
 
   logger.info("Modal: Abrindo modal de gerenciamento de Blasfêmias.");
 
+  let allBlasphemies = getAllBlasphemies();
   let tempBlasphemies = [...(char.blasphemies || [])];
   let tempPowers = [...(char.blasphemyPowers || [])];
-  let activeBlasphemyId = tempBlasphemies[0] || BLASPHEMIES[0].id;
+  let activeBlasphemyId = tempBlasphemies[0] || allBlasphemies[0].id;
 
   el.modalContainer.classList.remove("hidden");
   const modalContent = el.modalBody.parentElement;
@@ -69,7 +75,8 @@ export function openBlasphemiesModal() {
   observer.observe(el.modalContainer, { attributes: true, attributeFilter: ["class"] });
 
   const renderModalContent = () => {
-    const activeB = BLASPHEMIES.find(b => b.id === activeBlasphemyId) || BLASPHEMIES[0];
+    allBlasphemies = getAllBlasphemies();
+    const activeB = allBlasphemies.find(b => b.id === activeBlasphemyId) || allBlasphemies[0];
     const isOwned = tempBlasphemies.includes(activeB.id);
 
     el.modalBody.innerHTML = `
@@ -78,16 +85,17 @@ export function openBlasphemiesModal() {
         
         <!-- Coluna Esquerda: Grid das 12 Blasfêmias -->
         <div class="blasphemies-grid-col">
-          ${BLASPHEMIES.map(b => {
+          ${allBlasphemies.map(b => {
       const owned = tempBlasphemies.includes(b.id);
       const active = b.id === activeBlasphemyId;
       return `
-              <div class="blasphemy-grid-card ${active ? 'active' : ''} ${owned ? 'owned' : ''}" data-id="${b.id}">
+              <div class="blasphemy-grid-card ${active ? 'active' : ''} ${owned ? 'owned' : ''} ${b.id.startsWith('custom_') ? 'custom-blasphemy' : ''}" data-id="${b.id}">
                 <div class="blasphemy-card-img-wrapper">
                   ${b.img ? `<img src="${b.img}" alt="${b.name}">` : ''}
                 </div>
                 <div class="blasphemy-card-info">
                   <span class="blasphemy-card-name">${b.name}</span>
+                  ${b.id.startsWith('custom_') ? `<span class="blasphemy-card-custom-badge">CUSTOM</span>` : ''}
                 </div>
                 ${owned ? `<span class="blasphemy-card-check">✓</span>` : ''}
               </div>
@@ -141,6 +149,7 @@ export function openBlasphemiesModal() {
 
       <!-- Footer Buttons -->
       <div class="blasphemy-modal-footer">
+        <button id="btn-create-blasphemy" class="btn btn-md btn-secondary">+ Criar Blasfêmia</button>
         <button id="btn-blasphemies-modal-cancel" class="btn btn-md btn-secondary">Cancelar</button>
         <button id="btn-blasphemies-modal-save" class="btn btn-md btn-blasphemy-save">Salvar Alterações</button>
       </div>
@@ -172,7 +181,7 @@ export function openBlasphemiesModal() {
           }
         } else {
           tempBlasphemies = tempBlasphemies.filter(id => id !== activeBlasphemyId);
-          const activeBObj = BLASPHEMIES.find(b => b.id === activeBlasphemyId);
+          const activeBObj = allBlasphemies.find(b => b.id === activeBlasphemyId);
           if (activeBObj && activeBObj.powers) {
             const powerNames = activeBObj.powers.map(p => p.name);
             tempPowers = tempPowers.filter(p => !powerNames.includes(p));
@@ -200,6 +209,13 @@ export function openBlasphemiesModal() {
         });
       });
     }
+
+    // Event: Open Create Blasphemy Modal
+    document.getElementById("btn-create-blasphemy").onclick = () => {
+      openCreateBlasphemyModal(() => {
+        renderModalContent();
+      });
+    };
 
     // Save/Cancel buttons
     document.getElementById("btn-blasphemies-modal-cancel").onclick = () => {

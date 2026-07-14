@@ -451,6 +451,20 @@ export function getCustomMutations() {
 export function saveCustomMutations(mutations) {
   localStorage.setItem("cain_homebrew_mutations", JSON.stringify(mutations));
 }
+export function getCustomBlasphemies() {
+  try { return JSON.parse(localStorage.getItem("cain_homebrew_blasphemies") || "[]"); }
+  catch { return []; }
+}
+export function saveCustomBlasphemies(blasphemies) {
+  localStorage.setItem("cain_homebrew_blasphemies", JSON.stringify(blasphemies));
+}
+export function getCustomAgendas() {
+  try { return JSON.parse(localStorage.getItem("cain_homebrew_agendas") || "[]"); }
+  catch { return []; }
+}
+export function saveCustomAgendas(agendas) {
+  localStorage.setItem("cain_homebrew_agendas", JSON.stringify(agendas));
+}
 
 window.addEventListener("beforeunload", () => {
   saveCurrentCharacterImmediate();

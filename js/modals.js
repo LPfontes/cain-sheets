@@ -1,1 +1,1 @@
-export { openSettingsModal, openStressSettingsModal, openCloudSyncModal, openStorageManagerModal, getCloudStorageInfo, openExportModal, openAgendaModal, openBlasphemiesModal, openBlasphemyPowersModal } from "./modals/index.js";
+export { openSettingsModal, openStressSettingsModal, openCloudSyncModal, openStorageManagerModal, getCloudStorageInfo, openExportModal, openAgendaModal, openBlasphemiesModal, openBlasphemyPowersModal, openCreateBlasphemyModal, openCreateAgendaModal } from "./modals/index.js";

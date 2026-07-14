@@ -1,6 +1,6 @@
 import { el, state, saveCurrentCharacter, loadCharacter, updateCloudSyncBadge, updateCharSelector } from "../state.js";
 import { getFirebaseConfig } from "../config.js";
-import { getCustomTraits, getCustomMutations } from "../state.js";
+import { getCustomTraits, getCustomMutations, getCustomBlasphemies, getCustomAgendas } from "../state.js";
 import { logger } from "../logger.js";
 
 // ============================================================================
@@ -224,33 +224,35 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
     } else if (activeTab === "homebrew") {
       const customTraits = getCustomTraits();
       const customMutations = getCustomMutations();
+      const customBlasphemies = getCustomBlasphemies();
+      const customAgendas = getCustomAgendas();
 
       html = `
-        <h4 class="section-heading" style="color:var(--text-primary);">Características Customizadas (${customTraits.length})</h4>
+        <h4 class="section-heading" style="color:var(--text-primary);">Blasfêmias Customizadas (${customBlasphemies.length})</h4>
         <div class="scrollable-list" style="margin-bottom:16px; max-height:150px;">
-          ${customTraits.length === 0 ? `<p class="text-secondary-xs">Nenhuma característica criada.</p>` :
-          customTraits.map((t, idx) => `
+          ${customBlasphemies.length === 0 ? `<p class="text-secondary-xs">Nenhuma blasfêmia criada.</p>` :
+          customBlasphemies.map((b, idx) => `
               <div class="list-item-row">
                 <div>
-                  <span class="item-name" style="font-size:var(--font-size-xs);">${t.nome}</span>
-                  <small class="text-secondary-xs" style="font-size:10px; margin-left:6px;">(Custo: ${t.custo} XP)</small>
+                  <span class="item-name" style="font-size:var(--font-size-xs);">${b.name}</span>
+                  <small class="text-secondary-xs" style="font-size:10px; margin-left:6px;">(${b.powers?.length || 0} poderes)</small>
                 </div>
-                <button class="btn btn-xs btn-danger btn-delete-custom-trait btn-tiny" data-idx="${idx}">❌ Excluir</button>
+                <button class="btn btn-xs btn-danger btn-delete-custom-blasphemy btn-tiny" data-idx="${idx}">❌ Excluir</button>
               </div>
             `).join('')
         }
         </div>
 
-        <h4 class="section-heading" style="color:var(--text-primary);">Mutações Customizadas (${customMutations.length})</h4>
+        <h4 class="section-heading" style="color:var(--text-primary);">Agendas Customizadas (${customAgendas.length})</h4>
         <div class="scrollable-list" style="max-height:150px;">
-          ${customMutations.length === 0 ? `<p class="text-secondary-xs">Nenhuma mutação criada.</p>` :
-          customMutations.map((m, idx) => `
+          ${customAgendas.length === 0 ? `<p class="text-secondary-xs">Nenhuma agenda criada.</p>` :
+          customAgendas.map((a, idx) => `
               <div class="list-item-row">
                 <div>
-                  <span class="item-name" style="font-size:var(--font-size-xs);">${m.name}</span>
-                  <small class="text-secondary-xs" style="font-size:10px; margin-left:6px;">(${m.suit.toUpperCase()})</small>
+                  <span class="item-name" style="font-size:var(--font-size-xs);">${a.name}</span>
+                  <small class="text-secondary-xs" style="font-size:10px; margin-left:6px;">(${a.habilidades?.length || 0} habilidades)</small>
                 </div>
-                <button class="btn btn-xs btn-danger btn-delete-custom-mutation btn-tiny" data-idx="${idx}">❌ Excluir</button>
+                <button class="btn btn-xs btn-danger btn-delete-custom-agenda btn-tiny" data-idx="${idx}">❌ Excluir</button>
               </div>
             `).join('')
         }
@@ -509,6 +511,32 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
             mutations.splice(idx, 1);
             localStorage.setItem("cain_homebrew_mutations", JSON.stringify(mutations));
             import("../sheet.js").then(({ renderHomebrewSheet }) => renderHomebrewSheet());
+            renderContent();
+          }
+        });
+      });
+
+      el.modalBody.querySelectorAll(".btn-delete-custom-blasphemy").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const idx = parseInt(btn.getAttribute("data-idx"), 10);
+          const blasphemies = getCustomBlasphemies();
+          const name = blasphemies[idx]?.name;
+          if (confirm(`Tem certeza de que deseja excluir a blasfêmia customizada "${name}"?`)) {
+            blasphemies.splice(idx, 1);
+            localStorage.setItem("cain_homebrew_blasphemies", JSON.stringify(blasphemies));
+            renderContent();
+          }
+        });
+      });
+
+      el.modalBody.querySelectorAll(".btn-delete-custom-agenda").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const idx = parseInt(btn.getAttribute("data-idx"), 10);
+          const agendas = getCustomAgendas();
+          const name = agendas[idx]?.name;
+          if (confirm(`Tem certeza de que deseja excluir a agenda customizada "${name}"?`)) {
+            agendas.splice(idx, 1);
+            localStorage.setItem("cain_homebrew_agendas", JSON.stringify(agendas));
             renderContent();
           }
         });

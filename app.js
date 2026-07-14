@@ -99,10 +99,45 @@ function setupEventListeners() {
     });
   }
   if (el.btnManageItems) {
-    el.btnManageItems.addEventListener("click", () => {});
+    el.btnManageItems.addEventListener("click", () => {
+      import("./js/modals/create-agenda-modal.js").then(({ openCreateAgendaModal }) => {
+        import("./js/modals/create-blasphemy-modal.js").then(({ openCreateBlasphemyModal }) => {
+          el.modalContainer.classList.remove("hidden");
+          el.modalBody.innerHTML = `
+            <h3 class="modal-title">Gerenciar Itens</h3>
+            <div style="padding: 20px 0; display: flex; flex-direction: column; gap: 12px;">
+              <button id="btn-quick-create-agenda" class="btn btn-md btn-secondary" style="padding: 14px; font-size: var(--font-size-md);">
+                + Criar Agenda
+              </button>
+              <button id="btn-quick-create-blasphemy" class="btn btn-md btn-secondary" style="padding: 14px; font-size: var(--font-size-md);">
+                + Criar Blasfêmia
+              </button>
+            </div>
+            <div class="modal-footer" style="justify-content: flex-end;">
+              <button id="btn-items-modal-close" class="btn btn-md">Fechar</button>
+            </div>
+          `;
+          document.getElementById("btn-quick-create-agenda").onclick = () => {
+            el.modalContainer.classList.add("hidden");
+            openCreateAgendaModal();
+          };
+          document.getElementById("btn-quick-create-blasphemy").onclick = () => {
+            el.modalContainer.classList.add("hidden");
+            openCreateBlasphemyModal();
+          };
+          document.getElementById("btn-items-modal-close").onclick = () => {
+            el.modalContainer.classList.add("hidden");
+          };
+        });
+      });
+    });
   }
   if (el.btnCloudSync) {
-    el.btnCloudSync.addEventListener("click", () => {});
+    el.btnCloudSync.addEventListener("click", () => {
+      import("./js/modals/storage-manager.js").then(({ openCloudSyncModal }) => {
+        openCloudSyncModal();
+      });
+    });
   }
   
   // Logo home button - volta para landing screen (minimiza a mesa se estiver ativa)

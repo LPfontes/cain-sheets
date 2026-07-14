@@ -1,7 +1,17 @@
-import { el, state, saveCurrentCharacter } from "../state.js";
+import { el, state, saveCurrentCharacter, getCustomAgendas } from "../state.js";
 import { logger } from "../logger.js";
 import { renderAgendaSheet } from "../sheet.js";
 import { AGENDAS } from "../cain-data.js";
+import { openCreateAgendaModal } from "./create-agenda-modal.js";
+
+function getAllAgendas() {
+  const custom = getCustomAgendas();
+  const result = { ...AGENDAS };
+  custom.forEach(a => {
+    result[a.id] = a;
+  });
+  return result;
+}
 
 export function openAgendaModal() {
   const char = state.currentCharacter;
@@ -12,9 +22,11 @@ export function openAgendaModal() {
   el.modalContainer.classList.remove("hidden");
   el.modalBody.parentElement.classList.add("wide-modal");
 
+  let allAgendas = getAllAgendas();
+
   let currentAgendaId = null;
-  for (const key in AGENDAS) {
-    if (AGENDAS[key].normal.every(n => char.agendaNormal?.includes(n))) {
+  for (const key in allAgendas) {
+    if (allAgendas[key].normal.every(n => char.agendaNormal?.includes(n))) {
       currentAgendaId = key;
       break;
     }
@@ -29,7 +41,8 @@ export function openAgendaModal() {
   };
 
   const renderModalContent = () => {
-    const agenda = selectedAgendaId ? AGENDAS[selectedAgendaId] : null;
+    allAgendas = getAllAgendas();
+    const agenda = selectedAgendaId ? allAgendas[selectedAgendaId] : null;
 
     el.modalBody.innerHTML = `
       <h3 class="modal-title">Escolher Agenda</h3>
@@ -38,15 +51,16 @@ export function openAgendaModal() {
 
       <div class="blasphemies-modal-layout">
         <div class="blasphemies-grid-col" id="modal-agenda-list">
-          ${Object.entries(AGENDAS).map(([id, a]) => {
+          ${Object.entries(allAgendas).map(([id, a]) => {
             const active = id === selectedAgendaId;
             return `
-              <div class="blasphemy-grid-card ${active ? 'active' : ''}" data-id="${id}">
+              <div class="blasphemy-grid-card ${active ? 'active' : ''} ${id.startsWith('custom_') ? 'custom-blasphemy' : ''}" data-id="${id}">
                 <div class="blasphemy-card-img-wrapper">
                   <img src="${a.icon}" alt="${a.name}">
                 </div>
                 <div class="blasphemy-card-info">
                   <span class="blasphemy-card-name">${a.name}</span>
+                  ${id.startsWith('custom_') ? `<span class="blasphemy-card-custom-badge">CUSTOM</span>` : ''}
                 </div>
                 ${active ? '<span class="blasphemy-card-check">✓</span>' : ''}
               </div>
@@ -89,6 +103,7 @@ export function openAgendaModal() {
       </div>
 
       <div class="blasphemy-modal-footer">
+        <button id="btn-create-agenda" class="btn btn-md btn-secondary">+ Criar Agenda</button>
         <button id="btn-agenda-modal-cancel" class="btn btn-md btn-secondary">Cancelar</button>
         <button id="btn-agenda-modal-save" class="btn btn-md btn-blasphemy-save">Salvar</button>
       </div>
@@ -119,10 +134,16 @@ export function openAgendaModal() {
       });
     });
 
+    document.getElementById("btn-create-agenda").onclick = () => {
+      openCreateAgendaModal(() => {
+        renderModalContent();
+      });
+    };
+
     document.getElementById("btn-agenda-modal-cancel").onclick = closeModal;
     document.getElementById("btn-agenda-modal-save").onclick = () => {
       if (selectedAgendaId) {
-        const agendaObj = AGENDAS[selectedAgendaId];
+        const agendaObj = allAgendas[selectedAgendaId];
         if (currentAgendaId !== selectedAgendaId) {
           char.agendaNormal = [...agendaObj.normal];
           char.agendaBold = [...agendaObj.bold];
