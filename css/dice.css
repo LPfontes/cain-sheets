@@ -44,7 +44,7 @@
 
 .grid-2-col {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1.2fr;
   gap: 20px;
   flex: 1;
   min-height: 0;

@@ -245,6 +245,7 @@ textarea {
   font-family: var(--font-body);
   outline: none;
   transition: var(--transition-fast);
+  font-size: var(--font-size-md);
 }
 
 select:focus,

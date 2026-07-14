@@ -219,7 +219,6 @@
   width: 100%;
   height: 100%;
   overflow-y: auto;
-  padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -539,7 +538,7 @@
    ---------------------------------------------------------- */
 .ws-section-title {
   font-family: var(--font-heading);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
   color: rgb(0, 0, 0);
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -547,7 +546,7 @@
 
 .ws-label {
   font-family: var(--font-heading);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-md);
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -555,8 +554,7 @@
 
 .ws-label-inline {
   font-family: var(--font-heading);
-  font-size: var(--font-size-sm);
-  font-weight: 600;
+  font-size: var(--font-size-md);
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
