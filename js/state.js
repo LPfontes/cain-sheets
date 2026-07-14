@@ -55,6 +55,7 @@ export const el = {
   charOlhos:    document.getElementById("char-olhos"),
   charAltura:   document.getElementById("char-altura"),
   charPeso:     document.getElementById("char-peso"),
+  charIdade:    document.getElementById("char-idade"),
   charCid:      document.getElementById("char-cid"),
   sheetXpValue: document.getElementById("sheet-xp-value"),
   sheetXpBar: document.getElementById("sheet-xp-bar-fill"),
@@ -331,7 +332,7 @@ export function loadCharacter(charId) {
   updateXpBar();
   
   if (el.portraitImg) {
-    el.portraitImg.src = char.portrait || "";
+    el.portraitImg.src = char.portrait || "./assets/CAIN.png";
   }
   
   renderSkillsSheet();

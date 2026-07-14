@@ -45,8 +45,7 @@ export function startWizard() {
   document.getElementById("wiz-appearance").value = "";
   document.getElementById("wiz-cat").value = "1";
   document.getElementById("wiz-cid").value = "";
-  document.getElementById("wiz-agenda").value = "";
-  document.getElementById("wiz-blasfemia").value = "";
+
   document.getElementById("wiz-sexo").value = "";
   document.getElementById("wiz-cabelo").value = "";
   document.getElementById("wiz-olhos").value = "";
@@ -123,8 +122,7 @@ export function validateWizardStep(step) {
     state.wizardData.xid = document.getElementById("wiz-xid").value.trim();
     state.wizardData.cat = parseInt(document.getElementById("wiz-cat").value) || 1;
     state.wizardData.cid = document.getElementById("wiz-cid").value.trim();
-    state.wizardData.agendaText = document.getElementById("wiz-agenda").value.trim();
-    state.wizardData.blasfemiaText = document.getElementById("wiz-blasfemia").value.trim();
+
     state.wizardData.sexo = document.getElementById("wiz-sexo").value.trim();
     state.wizardData.cabelo = document.getElementById("wiz-cabelo").value.trim();
     state.wizardData.olhos = document.getElementById("wiz-olhos").value.trim();
@@ -317,6 +315,7 @@ function openWizardAgendaModal(agendaId) {
     document.getElementById("btn-wiz-modal-confirm").addEventListener("click", () => {
       state.wizardData.agendaType = agendaId;
       state.wizardData.agendaSkill = tempSelectedSkillName;
+      state.wizardData.agendaText = agenda.name;
       el.modalContainer.classList.add("hidden");
       renderWizardAgenda();
     });
@@ -556,6 +555,7 @@ function openPowerDetailsModal(power) {
     document.getElementById("btn-wiz-powers-remove").onclick = () => {
       state.wizardData.blasphemy = "";
       state.wizardData.blasphemyPowers = [];
+      state.wizardData.blasfemiaText = "";
       el.modalContainer.classList.add("hidden");
       renderWizardBlasphemies();
     };
@@ -564,6 +564,7 @@ function openPowerDetailsModal(power) {
   document.getElementById("btn-wiz-powers-save").onclick = () => {
     state.wizardData.blasphemy = blasphemyId;
     state.wizardData.blasphemyPowers = selectedPowers;
+    state.wizardData.blasfemiaText = blasphemy.name;
     el.modalContainer.classList.add("hidden");
     renderWizardBlasphemies();
   };
