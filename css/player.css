@@ -1,8 +1,5 @@
-/* Player flutuante - canto inferior direito */
+/* Player embutido no header */
 .mini-player {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
   width: 340px;
   z-index: 1000;
   background: rgba(10, 8, 6, 0.94);
@@ -22,7 +19,7 @@
 
 .player-progress-bar {
   height: 3px;
-  background: rgba(255, 255, 255, 0.08);
+  background: #7600b6;
   cursor: pointer;
   position: relative;
 }
@@ -45,8 +42,8 @@
   width: 40px;
   height: 40px;
   border-radius: var(--radius-sm);
-  background: rgba(18, 93, 110, 0.15);
-  border: 1px solid rgba(18, 93, 110, 0.3);
+  background: #7600b69d;
+  border: 1px solid rgba(255, 255, 255, 0.5);
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -57,7 +54,7 @@
   width: 22px;
   height: 22px;
   opacity: 0.8;
-  color: var(--border-color);
+  color: white;
 }
 
 .player-info-group {
@@ -70,6 +67,7 @@
 
 .player-track-info {
   cursor: pointer;
+  color: white;
 }
 
 .player-track-info:hover .player-track-name {
@@ -84,6 +82,13 @@
   overflow: hidden;
   text-overflow: ellipsis;
   transition: var(--transition-fast);
+  cursor: pointer;
+}
+
+.player-track-name:hover {
+  color: var(--border-color);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .player-track-sub {
@@ -123,7 +128,7 @@
 .player-btn {
   background: none;
   border: none;
-  color: var(--text-primary);
+  color: white;
   cursor: pointer;
   padding: 4px;
   display: flex;
@@ -145,7 +150,7 @@
 }
 
 .player-btn-play {
-  background: var(--border-color);
+  background: rgba(255, 255, 255, 0.7);
   border-radius: 50%;
   width: 30px;
   height: 30px;
@@ -154,7 +159,7 @@
 }
 
 .player-btn-play:hover {
-  background: var(--border-color);
+  background: white;
   opacity: 1;
 }
 
@@ -336,4 +341,240 @@
   .player-btn-expand {
     display: none;
   }
+}
+/* Override do modal-content quando contém o player */
+.modal-content:has(.player-modal-wrap) {
+  max-width: 480px;
+  width: 100%;
+}
+
+/* ── Modal de Playlist ─────────────────────────────── */
+.player-modal-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+}
+
+.player-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 4px 0 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  margin-bottom: 14px;
+}
+
+.player-modal-art {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+
+.player-modal-now {
+  flex: 1;
+  min-width: 0;
+}
+
+.player-modal-label {
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--border-color);
+  font-family: var(--font-body);
+  margin-bottom: 4px;
+  opacity: 0.8;
+}
+
+.player-modal-title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+.player-modal-artist {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.player-modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.player-tag {
+  font-size: 14px;
+  padding: 2px 7px;
+  border-radius: 20px;
+  color: rgba(0, 0, 0, 0.85);
+  font-family: var(--font-body);
+  letter-spacing: 0.3px;
+}
+
+.player-tag-sm {
+  font-size: 12px;
+  padding: 1px 5px;
+}
+
+/* Search */
+.player-modal-search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-sm);
+  padding: 7px 10px;
+  margin-bottom: 10px;
+}
+
+.player-modal-search {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  width: 100%;
+}
+
+.player-modal-search::placeholder {
+  color: rgba(255,255,255,0.25);
+}
+
+/* List */
+.player-modal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 50vh;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.player-modal-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.player-modal-list::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+}
+
+.player-modal-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.15s;
+  border: 1px solid transparent;
+}
+
+.player-modal-item:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.06);
+}
+
+.player-modal-item:hover .play-hover-icon {
+  opacity: 1;
+}
+
+.player-modal-item.active {
+  background: rgba(18, 93, 110, 0.18);
+  border-color: rgba(18, 93, 110, 0.3);
+}
+
+.player-modal-item-num {
+  width: 26px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.player-item-num-txt {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.player-modal-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.player-modal-item-title {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-modal-item-meta {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 3px;
+}
+
+.player-modal-item-artist {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.player-modal-item-action {
+  flex-shrink: 0;
+  opacity: 0.4;
+  display: flex;
+  align-items: center;
+}
+
+.player-modal-item.active .player-modal-item-action {
+  opacity: 1;
+  color: var(--border-color);
+}
+
+.play-hover-icon {
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+/* Animated playing bars */
+.player-playing-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+}
+
+.player-playing-bars span {
+  width: 3px;
+  background: var(--border-color);
+  border-radius: 1px;
+  animation: player-bar 0.8s ease-in-out infinite alternate;
+}
+
+.player-playing-bars span:nth-child(1) { animation-delay: 0s;    height: 6px; }
+.player-playing-bars span:nth-child(2) { animation-delay: 0.2s;  height: 12px; }
+.player-playing-bars span:nth-child(3) { animation-delay: 0.4s;  height: 8px; }
+
+@keyframes player-bar {
+  from { transform: scaleY(0.3); }
+  to   { transform: scaleY(1); }
 }

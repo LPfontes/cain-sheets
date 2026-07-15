@@ -275,7 +275,7 @@
     justify-content: center !important;
   }
 
-  .blasphemies-modal-layout {
+  .modal-split-layout {
     grid-template-columns: 0.6fr 1fr;
     min-height: auto !important;
     max-height: none !important;
@@ -287,12 +287,12 @@
 
   
 
-  .blasphemy-details-header {
+  .modal-detail-header {
     grid-template-columns: 1fr !important;
     text-align: center !important;
   }
 
-  .blasphemy-details-img-wrapper {
+  .modal-detail-img-wrapper {
     width: 120px !important;
     margin: 0 auto !important;
   }

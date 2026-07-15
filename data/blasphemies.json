@@ -33,16 +33,16 @@
     "id": "ardencia",
     "name": "Ardência",
     "img": "assets/blasf/ARD.jpg",
-    "desc": "Manipular energia potencial para criar clarões de calor ou frio extremos.<br>A mais potente e perigosa das blasfêmias — para os outros e para quem a pratica.",
+    "desc": "Manipule energia potencial para criar clarões de calor ou frio extremos.<br>A mais potente e perigosa das blasfêmias — para os outros e para quem a pratica.",
     "passive": "<strong>Fornalha Interna:</strong><br>Você pode adquirir um gancho ''Poder Instável'' ao usar qualquer poder de Ardência para aumentar o CAT do poder em até +2.<br>Quando o gancho se enche, você queima por dentro, sofrendo um ferimento e encerrando o gancho.<br>Se esse ferimento for fatal, você explode em uma área igual ao seu CAT, aniquilando a si mesmo e tudo dentro dela em uma explosão massiva.<br>Nada pode sobreviver a isso.",
     "powers": [
       {
         "name": "Fúria",
-        "desc": "<strong>[Instantânea, Longo | Requer 1 pulso]</strong><br>Você criar uma explosão feroz de energia destrutiva em um local dentro do alcance, com uma área de explosão de até CAT.<br>Ao usar este poder, role PSIQUE e responda às seguintes perguntas, ganhando +1D para cada resposta \"sim\", gastando um pulso psíquico apenas em caso de sucesso.<br>• Você está disposto a causar danos indiscriminados, sem se importar com o que destrói, queima ou incinera?<br>• Você está disposto a deixar que sua raiva controle o resultado?<br><br>Qualquer pergunta para a qual você responda \"sim\" afeta o resultado da ação, independentemente do resultado do dado.<br>Além disso, se você respondeu \"sim\" a pelo menos uma pergunta, a área afetada é SEMPRE igual ao CAT máximo, e os aliados na área ou próximos a você sofrem 2 pontos de estresse, que não podem ser ignorados."
+        "desc": "<strong>[Instantânea, Longo | Requer 1 pulso]</strong><br>Você cria uma explosão feroz de energia destrutiva em um local dentro do alcance, com uma área de explosão de até CAT.<br>Ao usar este poder, role PSIQUE e responda às seguintes perguntas, ganhando +1D para cada resposta \"sim\", gastando um pulso psíquico apenas em caso de sucesso.<br>• Você está disposto a causar danos indiscriminados, sem se importar com o que destrói, queima ou incinera?<br>• Você está disposto a deixar que sua raiva controle o resultado?<br><br>Qualquer pergunta para a qual você responda \"sim\" afeta o resultado da ação, independentemente do resultado do dado.<br>Além disso, se você respondeu \"sim\" a pelo menos uma pergunta, a área afetada é SEMPRE igual ao CAT máximo, e os aliados na área ou próximos a você sofrem 2 pontos de estresse, que não podem ser ignorados."
       },
       {
         "name": "Vazio",
-        "desc": "<strong>[Instantânea, Curto | Requer 1 pulso]</strong><br>Você cria um vácuo instantâneo queimando o ar.<br>O vácuo gera um estrondo ensurdecedor, afetando uma área de até CAT.<br>Afeta todos na área, exceto você.<br>Escolha um dos seguintes efeitos e, em seguida, você poderá ganhar ou conceder +1D quando você ou qualquer aliado em seguida realizar uma ação para se beneficiar deste poder:<br>• Fraco: Suga objetos soltos que não estejam presos, vestidos ou parafusados.<br>• Médio: Todos os humanos e exorcistas na área são derrubados e puxados para o centro, exceto você.<br>• Forte: Pecados e veículos de tamanho até CAT são desequilibrados ou puxados, dependendo do tamanho.<br>Vidros se quebram.<br>O estrondo é momentaneamente ensurdecedor.<br><br>Esse poder pode afetar os parâmetros dos dados, como dificuldade e risco."
+        "desc": "<strong>[Instantânea, Curto | Requer 1 pulso]</strong><br>Você cria um vácuo instantâneo queimando o ar.<br>O vácuo gera um estrondo ensurdecedor, afetando uma área de até CAT.<br>Afeta todos na área, exceto você.<br>Escolha um dos seguintes efeitos e, em seguida, você poderá ganhar ou conceder +1D quando você ou qualquer aliado realizar uma ação para se beneficiar deste poder:<br>• Fraco: Suga objetos soltos que não estejam presos, vestidos ou parafusados.<br>• Médio: Todos os humanos e exorcistas na área são derrubados e puxados para o centro, exceto você.<br>• Forte: Pecados e veículos de tamanho até CAT são desequilibrados ou puxados, dependendo do tamanho.<br>Vidros se quebram.<br>O estrondo é momentaneamente ensurdecedor.<br><br>Esse poder pode afetar os parâmetros dos dados, como dificuldade e risco."
       },
       {
         "name": "Inferno",
@@ -64,7 +64,7 @@
     "name": "Fluxo",
     "img": "assets/blasf/FLUXO.jpg",
     "desc": "Manipule a direção e o fluxo do próprio tempo.",
-    "passive": "<strong>Roubar Tempo:</strong><br>Uma vez por caçada, você pode rolar novamente todos os seus dados de descanso para si mesmo ou para um aliado, considerando o segundo resultado como definitivo.",
+    "passive": "<strong>Roubar Tempo:</strong><br>Uma vez por caçada, você pode rolar novamente todos os seus dados de descanso para todo o grupo, considerando o segundo resultado como definitivo.",
     "powers": [
       {
         "name": "Parar",
@@ -72,15 +72,15 @@
       },
       {
         "name": "Acelerar",
-        "desc": "<strong>[Instantânea, Adjacente | Requer 1 pulso]</strong><br>Você pode acelerar a cura natural do seu corpo ou do corpo de outras pessoas, proporcionando os seguintes benefícios:<br>• Cure imediatamente 1d3 de estresse em si mesmo ou em outro alvo.<br>Se o seu alvo estiver ferido, aumente isso em +1<br>• Você pode curar um grupo CAT de humanos morrendo ou feridos.<br>Humans morrendo são estabilizados e não correm mais perigo de morrer, mas ficam inconscientes.<br>Caso contrário, humanos gravemente feridos são curados a ponto de conseguirem se mover (lentamente) por conta própria.<br>Ferimentos leves são totalmente curados.<br><br>Em seguida, obtenha <span class=\"toolbox-link\" data-toolbox=\"temporal_instability\">instabilidade temporal</span>."
+        "desc": "<strong>[Instantânea, Adjacente | Requer 1 pulso]</strong><br>Você pode acelerar a cura natural do seu corpo ou do corpo de outras pessoas, proporcionando os seguintes benefícios:<br>• Cure imediatamente 1d3 de estresse em si mesmo ou em outro alvo.<br>Se o seu alvo estiver ferido, aumente isso em +1<br>• Você pode curar um grupo CAT de humanos morrendo ou feridos.<br>Humanos morrendo são estabilizados e não correm mais perigo de morrer, mas ficam inconscientes.<br>Caso contrário, humanos gravemente feridos são curados a ponto de conseguirem se mover (lentamente) por conta própria.<br>Ferimentos leves são totalmente curados.<br><br>Em seguida, obtenha <span class=\"toolbox-link\" data-toolbox=\"temporal_instability\">instabilidade temporal</span>."
       },
       {
         "name": "Reversão",
-        "desc": "<strong>[Instantâneo Adjacente]</strong><br>Ao tocar em um objeto de tamanho até CAT, você pode reverter sua passagem no tempo durante a última hora.<br>• Isso poderia mover fisicamente o objeto, reverter danos em um objeto, etc.<br>• Ainda pode afetar o world físico, então qualquer coisa no caminho de um objeto em uma reversão será atingida, e qualquer coisa colocada sobre ele se moverá junto.<br><br>Se causar dano ou impacto, role PSIQUE para isso.<br>• Não pode reverter a vida em matéria não viva, como cadáveres, mas pode movê-los temporariamente e reverter os danos como se estivessem vivos."
+        "desc": "<strong>[Instantâneo Adjacente]</strong><br>Ao tocar em um objeto de tamanho até CAT, você pode reverter sua passagem no tempo durante a última hora.<br>• Isso poderia mover fisicamente o objeto, reverter danos em um objeto, etc.<br>• Ainda pode afetar o mundo físico, então qualquer coisa no caminho de um objeto em uma reversão será atingida, e qualquer coisa colocada sobre ele se moverá junto.<br><br>Se causar dano ou impacto, role PSIQUE para isso.<br>• Não pode reverter a vida em matéria não viva, como cadáveres, mas pode movê-los temporariamente e reverter os danos como se estivessem vivos."
       },
       {
         "name": "Cisma",
-        "desc": "<strong>[Transmutação, Instantânea, 1 cena | Requer 1 pulso]</strong><br>Você pode criar uma bolha de tempo alterado igual à área CAT.<br>Dentro da bolha, você abre uma janela para um dia no passado ou no futuro a partir do momento em que a bolha foi criada.<br>Ganhe ou conceda +1D quando você ou qualquer aliado realizar a próxima ação para tirar proveito deste poder:<br>• O estado da área dentro da bolha se limita à própria bolha e includes objetos ou pessoas em seu interior.<br>• Você e seus aliados podem entrar ou sair da bolha à vontade.<br>• Seres sobrenaturais, incluindo exorcistas, na linha temporal presente, que estiverem presos na bolha no momento de sua criação, não serão afetados.<br>Humanos e o mundo da linha temporal presente que estiverem presos na bolha são \"pausados\", deixam de existir durante sua duração e não têm memória do incidente.<br>• Objetos removidos da bolha, seja do passado ou do futuro, incluindo seres vivos, simplesmente desaparecem até retornarem à bolha.<br><br>A bolha representa uma linha do tempo \"alternativa\", portanto, qualquer alteração feita dentro dela não aparecerá na linha do tempo presente ou futura (ou seja, deixar um objeto em uma linha do tempo passada não fará com que ele apareça no presente)."
+        "desc": "<strong>[Transmutação, Instantânea, 1 cena | Requer 1 pulso]</strong><br>Você pode criar uma bolha de tempo alterado igual à área CAT.<br>Dentro da bolha, você abre uma janela para um dia no passado ou no futuro a partir do momento em que a bolha foi criada.<br>Ganhe ou conceda +1D quando você ou qualquer aliado realizar a próxima ação para tirar proveito deste poder:<br>• O estado da área dentro da bolha se limita à própria bolha e incluindo objetos ou pessoas em seu interior.<br>• Você e seus aliados podem entrar ou sair da bolha à vontade.<br>• Seres sobrenaturais, incluindo exorcistas, na linha temporal presente, que estiverem presos na bolha no momento de sua criação, não serão afetados.<br>Humanos e o mundo da linha temporal presente que estiverem presos na bolha são \"pausados\", deixam de existir durante sua duração e não têm memória do incidente.<br>• Objetos removidos da bolha, seja do passado ou do futuro, incluindo seres vivos, simplesmente desaparecem até retornarem à bolha.<br><br>A bolha representa uma linha do tempo \"alternativa\", portanto, qualquer alteração feita dentro dela não aparecerá na linha do tempo presente ou futura (ou seja, deixar um objeto em uma linha do tempo passada não fará com que ele apareça no presente)."
       },
       {
         "name": "Travar",
@@ -93,7 +93,7 @@
     "id": "vetor",
     "name": "Vetor",
     "img": "assets/blasf/VETOR.jpg",
-    "desc": "Imbuir objetos ou seres vivos with uma explosão repentina e intensa de velocidade.",
+    "desc": "Imbuir objetos ou seres vivos com uma explosão repentina e intensa de velocidade.",
     "passive": "<strong>Freio:</strong><br>Remove automaticamente a velocidade de todos os projéteis que o atingiriam, causando -1 de estresse a eles.",
     "powers": [
       {
@@ -102,7 +102,7 @@
       },
       {
         "name": "Bala",
-        "desc": "<strong>[Instantânea, Alcance CAT+1 | Requer 1 pulso]</strong><br>Você pode infundir fortes rajadas de velocidade no ar na ponta dos dedos, criando balas de air pressurizado que acertam com extrema força.<br>Role PSIQUE para obter seus efeitos, gastando apenas um pulso psíquico em caso de sucesso.<br>• Ganhe +1D ao atirar de uma posição elevada.<br>• Ganhe +1D ao atirar para desarmar, distrair ou incapacitar em vez de causar dano."
+        "desc": "<strong>[Instantânea, Alcance CAT+1 | Requer 1 pulso]</strong><br>Você pode infundir fortes rajadas de velocidade no ar na ponta dos dedos, criando balas de ar pressurizado que acertam com extrema força.<br>Role PSIQUE para obter seus efeitos, gastando apenas um pulso psíquico em caso de sucesso.<br>• Ganhe +1D ao atirar de uma posição elevada.<br>• Ganhe +1D ao atirar para desarmar, distrair ou incapacitar em vez de causar dano."
       },
       {
         "name": "Arremesso",
@@ -136,15 +136,15 @@
       },
       {
         "name": "Rasgar",
-        "desc": "<strong>[Invocação, Até o descanso | Requer 1 pulso]</strong><br>Você cria um ponto dentro do alcance de CAT e outro ponto dentro do mesmo alcance, embora precise ser capaz de ver ambos os pontos ao usar esta habilidade.<br>Os dois pontos são conectados por uma fenda no tecido da realidade, um portal que pode ser atravessado e conecta os dois pontos como se estivessem lado a lado.<br>Objetos, seres e forças de até ½ CAT de tamanho podem se mover livremente através da fenda durante a duração, e o momento é preservado."
+        "desc": "<strong>[Invocação, Até o descanso | Requer 1 pulso]</strong><br>Você cria um ponto dentro do alcance de CAT e outro ponto dentro do mesmo alcance, embora precise ser capaz de ver ambos os pontos ao usar esta habilidade.<br>Os dois pontos são conectados por uma fenda no tecido da realidade, um portal que pode ser atravessado e conecta os dois pontos como se estivessem lado a lado.<br>Objetos, seres e forças de até ½ CAT de tamanho podem se mover livremente através da fenda durante a duração, e o momento é preservado.<br><br>Ganhe +1D quando você ou um aliado agir para tirar proveito deste poder."
       },
       {
         "name": "Comprimir",
-        "desc": "<strong>[Instantânea, Alcance Especial | Requer 1 pulso]</strong><br>Você pode escolher um único ser vivo ou objeto que você possa ver.<br>O tamanho combinado do objeto ou ser e a distância que você tenta movê-lo deve ser igual ou menor que CAT+2.<br>Role PSIQUE se o seu alvo estiver resistindo, gastando apenas um pulso psíquico em caso de sucesso.<br>Enquanto você puder ver seu alvo, com pelo menos um sucesso, você pode comprimir o espaço entre vocês dois para mover seu alvo para bem ao seu lado.<br>Da perspectiva do alvo, ele não parece se mover, mas o mundo se distorce ao seu redor.<br>Ele ignora todas as obstruções físicas entre ele e você - enquanto você puder ver seu alvo, he simplesmente aparece ao seu lado.<br>Você pode ganhar ou conceder +1D quando você ou qualquer aliado realizar uma ação para tirar proveito deste poder."
+        "desc": "<strong>[Instantânea, Alcance Especial | Requer 1 pulso]</strong><br>Você pode escolher um único ser vivo ou objeto que você possa ver.<br>O tamanho combinado do objeto ou ser e a distância que você tenta movê-lo deve ser igual ou menor que CAT+2.<br>Role PSIQUE se o seu alvo estiver resistindo, gastando apenas um pulso psíquico em caso de sucesso.<br>Enquanto você puder ver seu alvo, com pelo menos um sucesso, você pode comprimir o espaço entre vocês dois para mover seu alvo para bem ao seu lado.<br>Da perspectiva do alvo, ele não parece se mover, mas o mundo se distorce ao seu redor.<br>Ele ignora todas as obstruções físicas entre ele e você - enquanto você puder ver seu alvo, ele simplesmente aparece ao seu lado.<br>Você pode ganhar ou conceder +1D quando você ou qualquer aliado realizar uma ação para tirar proveito deste poder."
       },
       {
         "name": "Transmissão",
-        "desc": "<strong>[Instantânea, Alcance CAT+2 | Requer 1 pulso]</strong><br>Mova-se instantaneamente para qualquer área dentro do alcance CAT+2.<br>No entanto, o Administrador fará as seguintes perguntas e rolará 1d6 para cada resposta \"não\":<br>• Você conhece o seu destino?<br>• Você consegue ver para onde está indo?<br>• Você está calmo e concentrado?<br><br>Com pelo menos um '1', você acaba em um local diferente próximo ao seu destino, mas o Administrador escolhe onde.<br>Con dois '1', você acaba em outro lugar livremente antes de chegar ao seu destino final.<br>Além de estar um pouco distante de seu destino, você também sofre 2d3 de estresse."
+        "desc": "<strong>[Instantânea, Alcance CAT+2 | Requer 1 pulso]</strong><br>Mova-se instantaneamente para qualquer área dentro do alcance CAT+2.<br>No entanto, o Administrador fará as seguintes perguntas e rolará 1d6 para cada resposta \"não\":<br>• Você conhece o seu destino?<br>• Você consegue ver para onde está indo?<br>• Você está calmo e concentrado?<br><br>Com pelo menos um '1', você acaba em um local diferente próximo ao seu destino, mas o Administrador escolhe onde.<br>Com dois '1', você acaba em outro lugar livremente antes de chegar ao seu destino final.<br>Além de estar um pouco distante de seu destino, você também sofre 2d3 de estresse."
       }
     ],
     "fato": "O uso indevido pode levar a perdas extremas de pessoal.<br>Use com cautela."
@@ -170,7 +170,7 @@
       },
       {
         "name": "Idade das Trevas",
-        "desc": "<strong>[Encantamento, Si mesmo, Até o descanso | Requer 1 pulso]</strong><br>Você gera um campo poderoso a partir do seu corpo, impedindo até mesmo os avanços humanos mais simples de funcionarem na área CAT.<br>O efeito se move com você.<br>Você pode escolher até três dos seguintes efeitos para suprimir, cessando seu funcionamento, e então ganhar ou conceder +1D quando você ou qualquer aliado realizar la próxima ação para tirar proveito deste poder:<br>• Eletricidade<br>• Internet<br>• Motor de combustão<br>• Agua corrente<br>• Maçanetas, trincos de janelas, zíperes, fechos<br>• Lareiras abertas<br><br>Essas coisas param de funcionar mesmo que não faça sentido, ou seja, interromper o fluxo de água significaria que a pressão da água simplesmente pararia de funcionar.<br>Você pode encerrar este efeito voluntariamente, mas deve encerrar todos os efeitos de uma vez."
+        "desc": "<strong>[Encantamento, Si mesmo, Até o descanso | Requer 1 pulso]</strong><br>Você gera um campo poderoso a partir do seu corpo, impedindo até mesmo os avanços humanos mais simples de funcionarem na área CAT.<br>O efeito se move com você.<br>Você pode escolher até três dos seguintes efeitos para suprimir, cessando seu funcionamento, e então ganhar ou conceder +1D quando você ou qualquer aliado realizar a próxima ação para tirar proveito deste poder:<br>• Eletricidade<br>• Internet<br>• Motor de combustão<br>• Água corrente<br>• Maçanetas, trincos de janelas, zíperes, fechos<br>• Lareiras abertas<br><br>Essas coisas param de funcionar mesmo que não faça sentido, ou seja, interromper o fluxo de água significaria que a pressão da água simplesmente pararia de funcionar.<br>Você pode encerrar este efeito voluntariamente, mas deve encerrar todos os efeitos de uma vez."
       },
       {
         "name": "Cegar",
@@ -196,7 +196,7 @@
       },
       {
         "name": "Onipresença",
-        "desc": "<strong>[Instantânea, Alcance CAT+2 | Sem custo de pulso]</strong><br>Quando um aliado está em cena, você não está presente nessa cena e seu aliado está dentro do alcance de CAT+2, você pode usar este poder para entrar na cena, tendo já previsto que esse curso de eventos ocorreria.<br>Role PSIQUE e escolha uma das seguintes opções para cada sucesso:<br>• Ninguém está te seguindo<br>• Você está escondido<br>• Você consegue entrar no local que seu aliado está sem ser distração ou danos<br>• Você tem consigo uma ferramenta ou objeto útil para a situação atual (uma chave, uma arma, uma chave inglesa, etc.)<br><br>Após usar esse poder, você perderá sua capacidade de usá-lo até descansar."
+        "desc": "<strong>[Instantânea, Alcance CAT+2 | Sem custo de pulso]</strong><br>Quando um aliado está em cena, você não está presente nessa cena e seu aliado está dentro do alcance de CAT+2, você pode usar este poder para entrar na cena, tendo já previsto que esse curso de eventos ocorreria.<br>Role PSIQUE e escolha uma das seguintes opções para cada sucesso:<br>• Ninguém está te seguindo<br>• Você está escondido<br>• Você consegue entrar no local que seu aliado está sem distração ou danos<br>• Você tem consigo uma ferramenta ou objeto útil para a situação atual (uma chave, uma arma, uma chave inglesa, etc.)<br><br>Após usar esse poder, você perderá sua capacidade de usá-lo até descansar."
       },
       {
         "name": "Precognição",
@@ -248,7 +248,7 @@
     "powers": [
       {
         "name": "Espírito Proibido",
-        "desc": "<strong>[Si mesmo, Instantâneo | Requer 1 pulso]</strong><br>Você pode gastar um Pulso Psíquico para potencializar seu pecado em uma única ação.<br>Como parte dessa ação:<br>• Após esta cena, ele pode ignorar qualquer estresse sofrido.<br>Este efeito se acumula se este poder for usado novamente.<br>• Você remove as limitações do seu espírito.<br>A ação ganha +1D e faz com que ele sofra uma transformação monstruosa semelhante à sua forma original.<br>Ele se torna de tamanho igual a CAT+1 e pode facilmente mover, levantar, golpear ou arremessar objetos ou seres de tamanho igual.<br>Role PSIQUE para seus efeitos.<br>Após a ação, ele retorna ao seu tamanho normal."
+        "desc": "<strong>[Si mesmo, Instantâneo | Requer 1 pulso]</strong><br>Você pode gastar um Pulso Psíquico para potencializar seu pecado em uma única ação.<br>Como parte dessa ação:<br>• Após esta cena, ele pode reduzir qualquer estresse sofrido em 1 (mínimo 0).<br>Este efeito se acumula se este poder for usado novamente.<br>• Você remove as limitações do seu espírito.<br>A ação ganha +1D e faz com que ele sofra uma transformação monstruosa semelhante à sua forma original.<br>Ele se torna de tamanho igual a CAT+1 e pode facilmente mover, levantar, golpear ou arremessar objetos ou seres de tamanho igual.<br>Role PSIQUE para seus efeitos.<br>Após a ação, ele retorna ao seu tamanho normal."
       },
       {
         "name": "Render",
@@ -282,7 +282,7 @@
       },
       {
         "name": "Profanar",
-        "desc": "<strong>[Adjacente, Instantâneo | Sem custo de pulso]</strong><br>Você pode injetar uma semblante de vida nos cadáveres de até CAT humanos ou exorcistas tocando-os nos olhos.<br>Você pode fazer três perguntas ao(s) cadáver(es) no total (independentemente de quantos você animar), após o efeito terminar e eles voltam a morte.<br>O efeito também expira se passar uma hora.<br>• Você não pode usar esse poder no mesmo cadáver mais de uma vez.<br>• O poder não devolve a vida ao corpo, mas acessa suas memórias.<br>Se a cabeça ou o cérebro estiverem ausentes, ou se o corpo não tiver língua, etc., esse poder não funcionará.<br><br>Um cadáver é obrigado a responder com sinceridade, mas só pode falar sobre o conhecimento e as memórias que possuía antes de morrer.<br>Ele pode ter apenas conhecimento parcial de uma situação ou pode falar de acordo com seu próprio ponto de vista.<br><br>Em seguida, perca o uso desse poder até descansar."
+        "desc": "<strong>[Adjacente, Instantâneo | Sem custo de pulso]</strong><br>Você pode injetar uma semblança de vida nos cadáveres de até CAT humanos ou exorcistas tocando-os nos olhos.<br>Você pode fazer três perguntas ao(s) cadáver(es) no total (independentemente de quantos você animar), após o efeito terminar e eles voltam a morte.<br>O efeito também expira se passar uma hora.<br>• Você não pode usar esse poder no mesmo cadáver mais de uma vez.<br>• O poder não devolve a vida ao corpo, mas acessa suas memórias.<br>Se a cabeça ou o cérebro estiverem ausentes, ou se o corpo não tiver língua, etc., esse poder não funcionará.<br><br>Um cadáver é obrigado a responder com sinceridade, mas só pode falar sobre o conhecimento e as memórias que possuía antes de morrer.<br>Ele pode ter apenas conhecimento parcial de uma situação ou pode falar de acordo com seu próprio ponto de vista.<br><br>Em seguida, perca o uso desse poder até descansar."
       },
       {
         "name": "Passageiro",
@@ -294,7 +294,7 @@
       },
       {
         "name": "Possessão",
-        "desc": "<strong>[Maldição, Curto, 1 cena | Requer 1 pulso]</strong><br>Você pode projetar sua percepção para fora do seu corpo para possuir um humano, animal ou cadáver (em bom estado) que você possa ver dentro do alcance por uma cena.<br>Seres sobrenaturais são imunes a este efeito.<br>Humanos que tentarem resistir podem precisar de um teste de PSIQUE para serem possuídos com sucesso.<br>• Ao possuir outro ser, seu corpo real fica insensível e indefeso.<br>• Para humanos e animais, você não pode forçar um alvo a se ferir ou a tomar ações que indiretamente o façam sofrer danos.<br>• As ações que o alvo realiza utilizam suas perícias, mas o corpo ou equipamento do alvo pode alterar as circunstâncias.<br><br>Você é expulso do corpo se ele sofrer estresse."
+        "desc": "<strong>[Maldição, Curto, 1 cena | Requer 1 pulso]</strong><br>Você pode projetar sua percepção para fora do seu corpo para possuir um humano, animal ou cadáver (em bom estado) que você possa ver dentro do alcance por uma cena.<br>Seres sobrenaturais são imunes a este efeito.<br>Humanos que tentarem resistir podem precisar de um teste de PSIQUE para serem possuídos com sucesso.<br>• Ao possuir outro ser, seu corpo real fica insensível e indefeso.<br>• Para humanos e animais, você não pode forçar um alvo a se ferir ou a tomar ações que indiretamente o façam sofrer danos.<br>• As ações que o alvo realiza utilizam suas perícias, mas o corpo ou equipamento do alvo pode alterar as circunstâncias.<br><br>Você é expulso do corpo se ele sofrer estresse.<br><br>Ganhe +1D na sua próxima ação após usar este poder."
       }
     ],
     "fato": "Entre todos os exorcistas, os usuários da Assombração são os que têm maior probabilidade de \"se esvaziarem\" durante o sono, deixando um corpo vazio.<br>Esse evento é muito raro, sua causa é desconhecida e é 100% fatal."
@@ -312,7 +312,7 @@
       },
       {
         "name": "Salão",
-        "desc": "<strong>[1 cena, Área de investigação | Requer 1 pulso]</strong><br>Escolha uma pessoa ou um grupo de até um CAT na área de investigação e diga o(s) nome(s) (real(is)) dela(s) em voz alta.<br>Você pode trazer a si mesmo e a sombra psíquica dela(s) para dentro do seu palácio, não importa onde ela(s) esteja(m).<br>Se o(s) seu(s) alvo(s) estiver(em) disposto(s), você pode optar por trazer a consciência psíquica real dela(s) para dentro do seu palácio, fazendo com que ela(s) perceba(m) e se lembre(m) do que está acontecendo lá dentro, como se estivesse(m) em um sonho.<br>O corpo real dela(s) fica(m) inconsciente(s) e vulnerável(is).<br>Ela(s) pode(m) sair voluntariamente.<br>Você também pode trazer um duplo psíquico de uma pessoa, disposta ou não, para o seu palácio.<br>Ela(s) não é(são) afetada(s), mas o duplo é uma cópia da mente dela(s) no momento da invocação.<br>Quaisquer memórias formadas pelo duplo não serão transferidas.<br>O duplo não pode sair até que a cena termine ou até que ela(s) sofra(m) dano como de costume.<br>Uma pessoa ou duplicata invocada desta forma não é obrigada de forma alguma a se comportar de maneira diferente de sua versão original.<br><br>Conceda ou ganhe +1D na próxima rolagem, seja você mesmo ou um aliado que esteja se beneficiando deste poder."
+        "desc": "<strong>[1 cena, Área de investigação | Requer 1 pulso]</strong><br>Escolha uma pessoa ou um grupo de até um CAT na área de investigação e diga o(s) nome(s) (real(is)) dela(s) em voz alta.<br>Você pode trazer a si mesmo e a sombra psíquica dela(s) para dentro do seu palácio, não importa onde ela(s) esteja(m).<br>Se o(s) seu(s) alvo(s) estiver(em) disposto(s), você pode optar por trazer a consciência psíquica real dela(s) para dentro do seu palácio, fazendo com que ela(s) perceba(m) e se lembre(m) do que está acontecendo lá dentro, como se estivesse(m) em um sonho.<br>O corpo real dela(s) fica(m) inconsciente(s) e vulnerável(is).<br>Ela(s) pode(m) sair voluntariamente.<br>Você também pode trazer um duplo psíquico de uma pessoa, disposta ou não, para o seu palácio, mas para alvos relutantes você precisa rolar PSIQUE e gastar o pulso psíquico apenas em caso de sucesso.<br>Ela(s) não é(são) afetada(s), mas o duplo é uma cópia da mente dela(s) no momento da invocação.<br>Quaisquer memórias formadas pelo duplo não serão transferidas.<br>O duplo não pode sair até que a cena termine ou até que ela(s) sofra(m) dano como de costume.<br>Uma pessoa ou duplicata invocada desta forma não é obrigada de forma alguma a se comportar de maneira diferente de sua versão original.<br><br>Conceda ou ganhe +1D na próxima rolagem, seja você mesmo ou um aliado que esteja se beneficiando deste poder."
       },
       {
         "name": "Bar",
@@ -357,5 +357,103 @@
       }
     ],
     "fato": "A PSICOMETRIA É PROIBIDA NO CAMPUS - CASTLE REF 0094"
+  },
+  {
+    "id": "lei",
+    "name": "Lei",
+    "tier": "high",
+    "img": "assets/blasf/LEI.jpg",
+    "desc": "Uma força tão primitiva que reescreve a realidade.<br>Você não dobra as leis — você as edita.",
+    "passive": "",
+    "powers": [
+      {
+        "name": "Lei",
+        "desc": "<strong>[Transmutação, Adjacente, 1 Cena | Gaste todos os pulsos restantes — mín. 1. Pecado não pode compensar.]</strong><br>Você estabelece uma regra da realidade física que afeta tudo em uma área circular ao seu redor, chamada de <strong>Corte</strong>, com raio igual a CAT.<br>Quaisquer alterações ocorrem instantaneamente e persistem dentro da área, mas a área em si não se move.<br><br>Este poder pode sempre eliminar, destruir ou alterar completamente seres, objetos ou estruturas mundanas.<br>Seres de forte vontade ou sobrenaturais, como exorcistas ou pecados, podem resistir parcialmente aos seus efeitos — mas humanos são sempre afetados instantaneamente.<br>Se você sair da área ou a cena terminar, o efeito termina.<br><br>Para usar Lei, gaste todos os seus pulsos psíquicos restantes (mínimo 1) e complete a frase:<br><em>\"Na Corte, _____ é/são _____\"</em><br>Você só pode usar palavras da lista de Termos da Lei abaixo.<br>Efeitos adicionais ficam a critério do Administrador e podem ser improvisados conforme a ficção.<br><br>Em seguida, escolha um dos seguintes efeitos:<br>• Conceda até três dados de vantagem (no total) a você ou a um aliado enquanto a Corte estiver ativa. Podem ser distribuídos um por vez ou todos de uma vez.<br>• Mate instantaneamente todos os humanos na área ou que entrem nela enquanto a Corte estiver ativa.<br>• Corte um talismã rolando PSIQUE — +1 corte no sucesso. Pode ser realizado ao ativar Lei e mais uma vez enquanto ela estiver ativa.<br>• Torne algo específico menos difícil ou menos arriscado enquanto a Corte estiver ativa.<br><br>Este poder pode facilmente afetar os parâmetros das rolagens dentro da área e pode tornar rolagens desnecessárias para certas tarefas.<br><br><strong>TERMOS DA LEI:</strong><br>1. Rápido &nbsp; 2. Lento &nbsp; 3. Cola &nbsp; 4. Pedras &nbsp; 5. Papel &nbsp; 6. Tecido &nbsp; 7. Sangue &nbsp; 8. Pregos &nbsp; 9. Pele &nbsp; 10. Estilingues ou balas &nbsp; 11. Flechas &nbsp; 12. Lâminas &nbsp; 13. Sólido &nbsp; 14. Líquido &nbsp; 15. Metal &nbsp; 16. Macio &nbsp; 17. Afiado &nbsp; 18. Pesado &nbsp; 19. Leve &nbsp; 20. Terra &nbsp; 21. Fogo &nbsp; 22. Água &nbsp; 23. Ar &nbsp; 24. Proibido &nbsp; 25. Atraído &nbsp; 26. Repelido"
+      }
+    ],
+    "fato": "Alta Blasfêmia — obtida através de um vínculo com uma Virtude.<br>Não aumenta o limite de XP nem reduz o limite de transbordamento de pecado."
+  },
+  {
+    "id": "nulo",
+    "name": "Nulo",
+    "tier": "high",
+    "img": "assets/blasf/NULO.jpg",
+    "desc": "A negação absoluta de toda interferência psíquica.<br>Você não resiste ao poder — você simplesmente não existe para ele.",
+    "passive": "",
+    "powers": [
+      {
+        "name": "Nulo",
+        "desc": "<strong>[Instantâneo, Encantamento, 1 Cena | Gaste todos os pulsos restantes — mín. 1. Pecado não pode compensar.]</strong><br>Pelo restante da cena, você se torna completamente imune a fenômenos psíquicos.<br>Qualquer coisa que cause dano físico — como ataques físicos de Pecados — ainda pode afetá-lo normalmente.<br>Por exemplo, você pode ser atingido por um móvel arremessado ou uma bala, mas não por uma explosão de energia puramente psíquica ou por controle mental.<br><br>Você não pode ser afetado por aflições (embora elas permaneçam sobre você, suas habilidades ficam simplesmente suprimidas durante a cena).<br><br>Em troca, enquanto este poder estiver ativo, você não pode usar nem ser afetado por nenhuma blasfêmia além desta — incluindo as dos seus aliados — e quaisquer blasfêmias que estejam ativamente afetando você são encerradas.<br><br>Ao contrário de outros poderes, você <em>não pode</em> encerrar este efeito antecipadamente."
+      },
+      {
+        "name": "Desafio Imaculado do Céu",
+        "desc": "<strong>[Permanente]</strong><br>Este poder tem a mesma função que Nulo, exceto que é permanente. Ele possui os seguintes efeitos:<br><br>• Você não pode mais usar nem ser afetado por blasfêmias.<br>• Seu pecado é zerado. Você não acumula nem usa pecado e não pode entrar em transbordamento de pecado por qualquer motivo.<br>• Você pode gastar 1d3 de estresse em vez de um pulso psíquico para obter +1D em qualquer ação, utilizando suas poderosas habilidades físicas.<br>• Combater Pecados com habilidades mundanas deixa de ser difícil. Além disso, suas habilidades físicas mundanas equivalem a aproximadamente ½ CAT em capacidade.<br>• Você ganha +1 ferimento máximo.<br>• Sua expectativa de vida natural se estende em 10d10 anos."
+      }
+    ],
+    "fato": "Alta Blasfêmia — obtida através de um vínculo com uma Virtude.<br>Não aumenta o limite de XP nem reduz o limite de transbordamento de pecado."
+  },
+  {
+    "id": "entrelacar",
+    "name": "Entrelaçar",
+    "tier": "high",
+    "img": "assets/blasf/ENTRELACAR.jpg",
+    "desc": "Você entrelaça sua mente com a de outro em um abraço amoroso.<br>A distância não existe entre almas unidas.",
+    "passive": "",
+    "powers": [
+      {
+        "name": "Entrelaçar",
+        "desc": "<strong>[Instantâneo, 1 Missão | Sem custo de pulso]</strong><br>Escolha outro exorcista disposto. Você entrelaça sua mente com a dele em um abraço amoroso.<br>Pelo restante da missão, ambos ganham os seguintes efeitos:<br><br>• Quando um de vocês ganhar ou perder estresse, ou gastar/ganhar um pulso psíquico, você pode redirecionar isso para qualquer um dos dois — independentemente da distância.<br>Dano, estresse, etc., aparecem sobrenaturalmente no corpo um do outro.<br>Qualquer coisa transferida dessa forma <em>não pode ser reduzida de nenhuma maneira</em>.<br>• Vocês podem se comunicar telepaticamente a distâncias extremas.<br>Você também sente reflexivamente qualquer emoção forte que o outro sentir — mesmo involuntariamente.<br><br><strong>No entanto:</strong><br>• Quando um de vocês adquirir uma aflição ou um gancho, ambos adquirem essa aflição ou gancho.<br>• Quando um de vocês ganhar pecado, ambos ganham essa quantidade de pecado.<br>• Se qualquer um dos dois sofrer transbordamento de pecado ou morte instantânea, esta blasfêmia se rompe pelo restante da missão. Ela não pode ser encerrada de outra forma.<br><br><strong>Após a missão</strong> — mesmo que o poder tenha se rompido antes:<br>• A aparência física de ambos começa a mudar para refletir a do outro (cor dos olhos ou cabelo, idade, gênero, altura, formato do corpo ou rosto, etc.).<br>Cada um escolhe uma característica para compartilhar com o outro.<br>O processo leva cerca de três dias e é desagradável.<br><br><em>* O uso prolongado deste poder ao longo do tempo levará a uma fusão física e mental descrita por Caridade como a forma mais pura de felicidade. Isso não foi verificado pela TEMERITY.</em>"
+      }
+    ],
+    "fato": "Alta Blasfêmia — obtida através de um vínculo com uma Virtude.<br>Não aumenta o limite de XP nem reduz o limite de transbordamento de pecado."
+  },
+  {
+    "id": "forca",
+    "name": "Força",
+    "tier": "high",
+    "img": "assets/blasf/FORCA.jpg",
+    "desc": "Uma rara mutação da blasfêmia de Amplificar.<br>Sem treinamento adequado, usar esta blasfêmia fará com que os órgãos internos explodam violentamente para fora do corpo.",
+    "passive": "",
+    "powers": [
+      {
+        "name": "Força",
+        "desc": "<strong>[Encantamento, 1 Cena | Gaste todos os pulsos restantes — mín. 1. Pecado não pode compensar.]</strong><br>Suas habilidades físicas mundanas agora são iguais ao CAT e combater pecados com forças mundanas não é mais difícil.<br><br>• Você pode forçar qualquer ação física até CAT+2 ganhando 2d3 de estresse. Isso pode infligir um ferimento.<br>• Todas as armas que você usar quebram após o uso, a menos que tenham sido especialmente temperadas. Você pode temperar qualquer arma entre missões gastando 1 cédula por arma.<br>• No final da cena, você sofre um ferimento e entra em coma até que seu grupo descanse. Você se recupera no início do período de descanso e pode descansar normalmente."
+      }
+    ],
+    "fato": "Alta Blasfêmia — obtida através de um vínculo com uma Virtude.<br>Não aumenta o limite de XP nem reduz o limite de transbordamento de pecado."
+  },
+  {
+    "id": "veu",
+    "name": "Véu",
+    "tier": "high",
+    "img": "assets/blasf/VEU.jpg",
+    "desc": "Você apaga a memória de multidões inteiras em um instante.<br>Eles nunca saberão o que perderam.",
+    "passive": "",
+    "powers": [
+      {
+        "name": "Véu",
+        "desc": "<strong>[Instantâneo, Longo | Gaste todos os pulsos restantes — mín. 1. Pecado não pode compensar.]</strong><br>Apague instantaneamente a memória de uma massa de humanos em alcance determinado por CAT.<br>Você não pode escolher quem atingir — você deve atingir a área máxima e o maior número possível de pessoas.<br><br>Eles ficam completamente insensíveis por exatamente 11 segundos.<br>Em seguida, esquecem tudo que viram e ouviram nos últimos 77 segundos (incluindo o período de insensibilidade).<br>Seu cérebro processa o dano e, para eles, é como se esse tempo nunca tivesse passado — eles são efetivamente 'redefinidos' para 77 segundos atrás.<br>Podem ficar confusos com as circunstâncias: por exemplo, podem não estar onde se lembram de estar."
+      },
+      {
+        "name": "Ruptura de Memória em Massa",
+        "desc": "<strong>[Rank de Vínculo III]</strong><br>No rank III de vínculo, você pode forçar Véu por períodos mais longos. Se fizer isso, deve pagar o custo associado. Os custos são cumulativos.<br><br><strong>Até dez minutos:</strong> ganhe 1d3+1 de estresse.<br><strong>Até uma hora:</strong> … e também ganhe 1d3+1 de pecado.<br><strong>Até dez horas:</strong> … e também perca permanentemente uma memória importante — como o sabor de algo, o nome dos seus pais, uma memória preciosa da infância.<br><strong>Até um dia:</strong> … e também reduza o limite de transbordamento de pecado em 2.<br><strong>Até dez dias:</strong> … e você esquece seu próprio nome. Você não pode usar habilidades de agenda nem ganhar XP nesta missão. Você deve mudar de agenda antes do início da próxima missão.<br><strong>Redefinição total:</strong> A CAIN esquece que você existe. Você esquece que existe. Seus aliados esquecem que você existe. Você se torna uma casca vazia, um cadáver ambulante que ninguém recorda. Você não está morto, mas também não está verdadeiramente vivo.<br><em>Crie um novo personagem.</em>"
+      }
+    ],
+    "fato": "Alta Blasfêmia — obtida através de um vínculo com uma Virtude.<br>Não aumenta o limite de XP nem reduz o limite de transbordamento de pecado."
+  },
+  {
+    "id": "acordo",
+    "name": "Acordo",
+    "tier": "high",
+    "img": "assets/blasf/ACORDO.jpg",
+    "desc": "Você impõe um acordo a todos ao seu redor, e a realidade se dobra para garantir que as regras sejam seguidas.",
+    "passive": "",
+    "powers": [
+      {
+        "name": "Acordo",
+        "desc": "<strong>[Transmutação, Curto, 1 Cena | Gaste todos os pulsos restantes — mín. 1. Pecado não pode compensar.]</strong><br>Não está claro por que 'ACORDO' funciona com base em jogos infantis, mas rumores dizem que está relacionado a um desejo inerente dos humanos por jogos, a teoria do 'homo ludens'.<br>Você pode gastar todos os seus pulsos psíquicos restantes para instantaneamente impor um jogo da lista abaixo sobre si mesmo e todos os outros humanos, pecados ou exorcistas em alcance determinado pelo CAT. Quebrar as regras do jogo causa dor excruciante, hemorragia e eventualmente a morte. Enquanto a regra se aplicar:<br><br>• Para você e aliados, ações se tornam mais difíceis quando você deve evitar quebrar a regra com suas ações<br>• Se através de suas ações você ou um aliado quebrar a regra intencionalmente, você sofre 2d3 de estresse, que não pode ser reduzido de forma alguma e pode infligir ferimentos como normal.<br><br>Em retorno:<br>• Se o alvo, através de suas ações, quebrar uma regra intencionalmente, ele sofre 1d3 cortes em seu talismã de execução. Humanos são mortos instantaneamente. Eles estão cientes deste efeito.<br>• Você pode preparar um aliado de graça, três vezes, enquanto a regra estiver ativa, e sem rolar. Descreva como você está tirando vantagem da regra. Quaisquer efeitos normais de preparação se aplicam a essas ações especiais de preparação, e você pode realizá-las sem contar como uma ação em uma cena de conflito.<br><br>Você não pode encerrar este efeito antes do tempo, e ele dura pela cena.<br><br><strong>JOGOS:</strong><br>• O Chão é Lava (Não Toque no Chão).<br>• Rei do Morro (Deve permanecer dentro de uma área pequena).<br>• Pega-pega Reverso (Não toque em um pecado, humano ou exorcista).<br>• Sem Mãos (Não Use Suas Mãos).<br>• Proibido Falar (Não fale ou faça barulhos altos).<br>• Marco Polo (Não abra os olhos. Alvos devem dizer 'Polo' quando você disser 'Marco' e não podem se afastar do alcance curto de você).<br>• Luz Vermelha, Luz Verde (Os afetados pela regra veem uma luz vermelha e verde fantasma e são forçados a parar de se mover na luz vermelha)."
+      }
+    ],
+    "fato": "Alta Blasfêmia — obtida através de um vínculo com uma Virtude.<br>Não aumenta o limite de XP nem reduz o limite de transbordamento de pecado."
   }
 ]

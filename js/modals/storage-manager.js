@@ -202,14 +202,14 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
       html = `
         <h4 class="section-heading" style="color:var(--text-primary); margin-bottom:12px;">Personagens Salvos (${state.characters.length})</h4>
         ${state.characters.length === 0 ? `
-          <p class="text-secondary-xs">Nenhum personagem salvo.</p>
+          <p class="text-secondary-md">Nenhum personagem salvo.</p>
         ` : `
           <div class="scrollable-list" style="gap:8px; max-height:300px;">
             ${state.characters.map(char => `
               <div class="list-item-row -lg">
                 <div>
                   <div class="item-name">${char.name}</div>
-                  <div class="text-secondary-xs">${char.ocupacao || "Sem Ocupação"}</div>
+                  <div class="text-secondary-md">${char.ocupacao || "Sem Ocupação"}</div>
                 </div>
                 <div class="flex-row -gap-sm">
                   <button class="btn btn-sm btn-export-char" data-id="${char.id}" style="padding:4px 8px;">📥 Exportar</button>
@@ -230,12 +230,12 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
       html = `
         <h4 class="section-heading" style="color:var(--text-primary);">Blasfêmias Customizadas (${customBlasphemies.length})</h4>
         <div class="scrollable-list" style="margin-bottom:16px; max-height:150px;">
-          ${customBlasphemies.length === 0 ? `<p class="text-secondary-xs">Nenhuma blasfêmia criada.</p>` :
+          ${customBlasphemies.length === 0 ? `<p class="text-secondary-md">Nenhuma blasfêmia criada.</p>` :
           customBlasphemies.map((b, idx) => `
               <div class="list-item-row">
                 <div>
                   <span class="item-name" style="font-size:var(--font-size-xs);">${b.name}</span>
-                  <small class="text-secondary-xs" style="font-size:10px; margin-left:6px;">(${b.powers?.length || 0} poderes)</small>
+                  <small class="text-secondary-md" style="font-size:10px; margin-left:6px;">(${b.powers?.length || 0} poderes)</small>
                 </div>
                 <button class="btn btn-xs btn-danger btn-delete-custom-blasphemy btn-tiny" data-idx="${idx}">❌ Excluir</button>
               </div>
@@ -245,12 +245,12 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
 
         <h4 class="section-heading" style="color:var(--text-primary);">Agendas Customizadas (${customAgendas.length})</h4>
         <div class="scrollable-list" style="max-height:150px;">
-          ${customAgendas.length === 0 ? `<p class="text-secondary-xs">Nenhuma agenda criada.</p>` :
+          ${customAgendas.length === 0 ? `<p class="text-secondary-md">Nenhuma agenda criada.</p>` :
           customAgendas.map((a, idx) => `
               <div class="list-item-row">
                 <div>
                   <span class="item-name" style="font-size:var(--font-size-xs);">${a.name}</span>
-                  <small class="text-secondary-xs" style="font-size:10px; margin-left:6px;">(${a.habilidades?.length || 0} habilidades)</small>
+                  <small class="text-secondary-md" style="font-size:10px; margin-left:6px;">(${a.habilidades?.length || 0} habilidades)</small>
                 </div>
                 <button class="btn btn-xs btn-danger btn-delete-custom-agenda btn-tiny" data-idx="${idx}">❌ Excluir</button>
               </div>
@@ -265,7 +265,7 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
           <div style="text-align: center; padding: 20px 0;">
             <div style="font-size: 40px; margin-bottom: 16px; color: var(--border-color);">☁️</div>
             <p class="item-name" style="margin-bottom: 8px;">Salve suas fichas na nuvem de forma segura.</p>
-            <p class="text-secondary-xs" style="margin-bottom: 20px; max-width: 320px; margin-left: auto; margin-right: auto; line-height: 1.4;">
+            <p class="text-secondary-md" style="margin-bottom: 20px; max-width: 320px; margin-left: auto; margin-right: auto; line-height: 1.4;">
               Conecte-se com sua conta Google para enviar suas fichas locais e acessá-las em qualquer outro navegador ou dispositivo móvel.
             </p>
             
@@ -382,7 +382,7 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
     } else if (activeTab === "backup") {
       html = `
         <h4 class="section-heading" style="color:var(--text-primary); margin-bottom:12px;">Backup e Importação Completa</h4>
-        <p class="text-secondary-xs" style="margin-bottom:20px; line-height:1.4;">
+        <p class="text-secondary-md" style="margin-bottom:20px; line-height:1.4;">
           Exporte absolutamente tudo do seu jogo (todas as fichas de personagens, refúgios, regiões, conflitos, locais e customizações de homebrew) em um único arquivo de backup completo, ou restaure um backup existente.
         </p>
 
@@ -401,7 +401,7 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
         <div class="alert-box -danger" style="justify-content:space-between; padding:12px;">
           <div style="flex:1; padding-right:12px;">
             <div class="item-name" style="font-size:var(--font-size-xs); color:#fff; margin-bottom:2px;">Apagar Tudo do Navegador</div>
-            <div class="text-secondary-xs" style="font-size:10px;">Isso limpará absolutamente todas as fichas locais, dados do mundo, e homebrews permanentemente.</div>
+            <div class="text-secondary-md" style="font-size:10px;">Isso limpará absolutamente todas as fichas locais, dados do mundo, e homebrews permanentemente.</div>
           </div>
           <button id="btn-wipe-everything" class="btn btn-danger btn-sm" style="white-space:nowrap;">Limpar Tudo</button>
         </div>

@@ -49,8 +49,8 @@ export function openAgendaModal() {
       <p class="text-secondary-md" style="margin-bottom: 6px;">Escolha uma agenda e uma habilidade ativa dessa agenda.</p>
       <p class="text-secondary-md" style="margin-bottom: 6px;">Alterar a agenda redefinirá as marcações de progresso normais da agenda atual.</p>
 
-      <div class="blasphemies-modal-layout">
-        <div class="blasphemies-grid-col" id="modal-agenda-list">
+      <div class="modal-split-layout">
+        <div class="modal-grid-col" id="modal-agenda-list">
           ${Object.entries(allAgendas).map(([id, a]) => {
             const active = id === selectedAgendaId;
             return `
@@ -68,18 +68,18 @@ export function openAgendaModal() {
           }).join("")}
         </div>
 
-        <div class="blasphemy-details-col" id="modal-agenda-details">
+        <div class="modal-detail-panel" id="modal-agenda-details">
           ${agenda ? `
-            <div class="blasphemy-details-header">
-              <div class="blasphemy-details-img-wrapper">
+            <div class="modal-detail-header">
+              <div class="modal-detail-img-wrapper">
                 <img src="${agenda.icon}" alt="${agenda.name}" class="char-portrait-img">
               </div>
               <div>
-                <h4 class="blasphemy-details-title">${agenda.name}</h4>
-                ${agenda.desc ? `<p class="blasphemy-details-desc">${agenda.desc}</p>` : ''}
+                <h4 class="modal-detail-title" style="font-family: 'Odachi'">${agenda.name}</h4>
+                ${agenda.desc ? `<p class="modal-detail-desc">${agenda.desc}</p>` : ''}
                 <div class="agenda-triggers">
                   <div class="agenda-trigger"><strong>Normal:</strong> ${agenda.normal.join(", ")}</div>
-                  <div class="agenda-trigger"><strong>Bold:</strong> ${agenda.bold.join(", ")}</div>
+                  <div class="agenda-trigger agenda-trigger--bold"><strong>Bold:</strong> ${agenda.bold.join(", ")}</div>
                 </div>
               </div>
             </div>
@@ -102,21 +102,21 @@ export function openAgendaModal() {
         </div>
       </div>
 
-      <div class="blasphemy-modal-footer">
+      <div class="modal-action-footer">
         <button id="btn-create-agenda" class="btn btn-md btn-secondary">+ Criar Agenda</button>
         <button id="btn-agenda-modal-cancel" class="btn btn-md btn-secondary">Cancelar</button>
         <button id="btn-agenda-modal-save" class="btn btn-md btn-blasphemy-save">Salvar</button>
       </div>
     `;
 
-    const gridCol = el.modalBody.querySelector(".blasphemies-grid-col");
+    const gridCol = el.modalBody.querySelector(".modal-grid-col");
     if (gridCol && window._agendaGridScroll != null) {
       gridCol.scrollTop = window._agendaGridScroll;
     }
 
     el.modalBody.querySelectorAll(".blasphemy-grid-card").forEach(card => {
       card.addEventListener("click", () => {
-        const grid = el.modalBody.querySelector(".blasphemies-grid-col");
+        const grid = el.modalBody.querySelector(".modal-grid-col");
         window._agendaGridScroll = grid ? grid.scrollTop : 0;
         const id = card.getAttribute("data-id");
         if (selectedAgendaId !== id) {

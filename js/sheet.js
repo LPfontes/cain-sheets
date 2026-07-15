@@ -7,6 +7,7 @@ import { renderBlasphemiesSheet } from "./sheet-agenda-blasphemy.js";
 import { renderSinMarksSheet } from "./sheet-sinmarks.js";
 import { renderEquipmentSheet } from "./sheet-equipment.js";
 import { renderStaticHooks } from "./sheet-hooks-notes.js";
+import { renderVirtudesSheet } from "./sheet-virtudes.js";
 import { state } from "./state.js";
 
 // Re-exportar tudo para compatibilidade com o resto da aplicação
@@ -16,6 +17,7 @@ export { renderAgendaSheet, renderBlasphemiesSheet, showPowerDetailPopup, render
 export { renderSinMarksSheet } from "./sheet-sinmarks.js";
 export { renderEquipmentSheet, renderInventorySheet } from "./sheet-equipment.js";
 export { renderSavedMacrosSheet, renderHomebrewSheet, renderCaboGuerraSheet, renderCharacteristicsSheet, renderMissionsSurvived, renderStaticHooks, initStaticHooksListeners } from "./sheet-hooks-notes.js";
+export { renderVirtudesSheet } from "./sheet-virtudes.js";
 
 // Escuta por mudanças de idioma para re-renderizar todas as partes da ficha
 window.addEventListener("languageChanged", () => {
@@ -28,4 +30,5 @@ window.addEventListener("languageChanged", () => {
   renderSinMarksSheet();
   renderEquipmentSheet();
   renderStaticHooks();
+  renderVirtudesSheet();
 });

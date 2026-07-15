@@ -539,7 +539,7 @@
 .ws-section-title {
   font-family: var(--font-heading);
   font-size: var(--font-size-md);
-  color: rgb(0, 0, 0);
+  color: white;
   text-transform: uppercase;
   letter-spacing: 1px;
 }

@@ -22,7 +22,7 @@ export function initPlayer() {
 
 function cacheDom() {
   const ids = [
-    "mini-player", "player-track-name", "player-btn-play", "player-play-icon",
+    "mini-player", "player-track-name", "player-track-info", "player-btn-play", "player-play-icon",
     "player-btn-prev", "player-btn-next", "player-btn-shuffle", "player-shuffle-icon",
     "player-btn-repeat", "player-repeat-icon", "player-progress", "player-progress-fill",
     "player-time-current", "player-time-total", "player-btn-volume", "player-volume-icon",
@@ -34,7 +34,7 @@ function cacheDom() {
 
 async function loadPlaylist() {
   try {
-    const res = await fetch("music/manifest.json");
+    const res = await fetch("assets/music/manifest.json");
     if (!res.ok) throw new Error("HTTP " + res.status);
     playlist = await res.json();
     logger.info(`Player: ${playlist.length} faixas carregadas.`);
@@ -79,8 +79,8 @@ function setupControls() {
   });
 
   dom["player-btn-expand"]?.addEventListener("click", openExpandedPlayer);
-  const trackInfoClick = document.getElementById("player-track-info-click");
-  trackInfoClick?.addEventListener("click", openExpandedPlayer);
+  dom["player-track-name"]?.addEventListener("click", openExpandedPlayer);
+  dom["player-track-info"]?.addEventListener("click", openExpandedPlayer);
 }
 
 function setupKeyboardShortcut() {
@@ -145,7 +145,7 @@ export function playTrack(index) {
 function loadTrack(index) {
   const track = playlist[index];
   if (!track) return;
-  audio.src = `music/${encodeURIComponent(track.file)}`;
+  audio.src = track.file;
   audio.load();
   updateMiniPlayer();
 }
@@ -336,43 +336,97 @@ function openExpandedPlayer() {
 }
 
 function renderExpandedContent() {
-  let html = `<div class="player-expanded">
-    <div class="player-expanded-header">
-      <div class="player-expanded-art" id="player-expanded-art">
-        <svg viewBox="0 0 80 80" fill="none" stroke="var(--border-color)" stroke-width="2" width="80" height="80">
-          <circle cx="40" cy="40" r="36"/>
-          <path d="M55 40a15 15 0 01-30 0" stroke-width="3"/>
-          <circle cx="40" cy="40" r="6" fill="var(--border-color)"/>
+  const TAG_COLORS = {
+    "horror": "#8c2020", "tenso": "#8c4a20", "calmo": "#1a5c3a",
+    "ambiente": "#1a3a5c", "suspense": "#4a1a5c", "noite": "#1c1c4a",
+    "misterioso": "#3a1a5c", "sobrenatural": "#3d1a3d", "clássico": "#2d3a1a",
+    "piano": "#1a3d3d", "chuva": "#1a3a5c", "investigação": "#1a4a3a",
+    "sombrio": "#2a1a1a"
+  };
+
+  const currentTrack = playlist[currentIndex];
+
+  let html = `
+  <div class="player-modal-wrap">
+    <!-- Header -->
+    <div class="player-modal-header">
+      <div class="player-modal-art">
+        <svg viewBox="0 0 80 80" fill="none" width="64" height="64">
+          <circle cx="40" cy="40" r="36" stroke="var(--border-color)" stroke-width="1.5"/>
+          <circle cx="40" cy="40" r="14" stroke="var(--border-color)" stroke-width="1.5"/>
+          <circle cx="40" cy="40" r="4" fill="var(--border-color)"/>
+          <line x1="40" y1="4" x2="40" y2="14" stroke="var(--border-color)" stroke-width="1.5"/>
         </svg>
       </div>
-      <div class="player-expanded-info">
-        <div class="player-expanded-title" id="player-expanded-title">${playlist[currentIndex]?.title || "Nenhuma faixa"}</div>
-        <div class="player-expanded-sub">CAIN RPG - Trilha Sonora</div>
+      <div class="player-modal-now">
+        <div class="player-modal-label">REPRODUZINDO AGORA</div>
+        <div class="player-modal-title">${currentTrack?.title || "—"}</div>
+        <div class="player-modal-artist">${currentTrack?.artist || ""}</div>
+        ${currentTrack?.tags ? `<div class="player-modal-tags">${currentTrack.tags.map(t => `<span class="player-tag" style="background:${TAG_COLORS[t] || "#1a2a1a"}">${t}</span>`).join("")}</div>` : ""}
       </div>
     </div>
-    <div class="player-expanded-list">`;
+
+    <!-- Search -->
+    <div class="player-modal-search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="opacity:0.4;flex-shrink:0">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="text" id="player-search-input" class="player-modal-search" placeholder="Buscar faixa..." autocomplete="off">
+    </div>
+
+    <!-- Playlist -->
+    <div class="player-modal-list" id="player-modal-list">`;
+
   playlist.forEach((track, i) => {
-    const active = i === currentIndex ? " active" : "";
-    const playing = i === currentIndex && isPlaying ? " playing" : "";
-    html += `<div class="player-expanded-item${active}${playing}" data-index="${i}">
-      <span class="player-item-num">${String(i + 1).padStart(2, "0")}</span>
-      <span class="player-item-title">${track.title}</span>
-      <span class="player-item-indicator">${i === currentIndex ? (isPlaying ? "▶" : "⏸") : ""}</span>
+    const isActive = i === currentIndex;
+    const tags = (track.tags || []).map(t =>
+      `<span class="player-tag player-tag-sm" style="background:${TAG_COLORS[t] || "#1a2a1a"}">${t}</span>`
+    ).join("");
+    html += `
+    <div class="player-modal-item${isActive ? " active" : ""}" data-index="${i}" data-title="${track.title.toLowerCase()}" data-artist="${(track.artist||'').toLowerCase()}">
+      <div class="player-modal-item-num">
+        ${isActive
+          ? `<span class="player-playing-bars"><span></span><span></span><span></span></span>`
+          : `<span class="player-item-num-txt">${String(i + 1).padStart(2, "0")}</span>`}
+      </div>
+      <div class="player-modal-item-info">
+        <div class="player-modal-item-title">${track.title}</div>
+        <div class="player-modal-item-meta">
+          <span class="player-modal-item-artist">${track.artist || ""}</span>
+          ${tags}
+        </div>
+      </div>
+      <div class="player-modal-item-action">
+        ${isActive && isPlaying
+          ? `<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/></svg>`
+          : `<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" class="play-hover-icon"><path d="M8 5v14l11-7z"/></svg>`}
+      </div>
     </div>`;
   });
+
   html += `</div></div>`;
 
   // Defer event binding
   setTimeout(() => {
-    document.querySelectorAll(".player-expanded-item").forEach(el => {
+    // Search
+    const searchEl = document.getElementById("player-search-input");
+    const listEl = document.getElementById("player-modal-list");
+    searchEl?.addEventListener("input", () => {
+      const q = searchEl.value.toLowerCase();
+      listEl?.querySelectorAll(".player-modal-item").forEach(el => {
+        const match = el.dataset.title.includes(q) || el.dataset.artist.includes(q);
+        el.style.display = match ? "" : "none";
+      });
+    });
+
+    // Click to play
+    listEl?.querySelectorAll(".player-modal-item").forEach(el => {
       el.addEventListener("click", () => {
         const idx = parseInt(el.dataset.index, 10);
         if (idx === currentIndex) { togglePlay(); }
         else { playTrack(idx); }
-        document.querySelectorAll(".player-expanded-item").forEach(e => e.classList.remove("active", "playing"));
-        el.classList.add("active", "playing");
-        const titleEl = document.getElementById("player-expanded-title");
-        if (titleEl) titleEl.textContent = playlist[idx]?.title || "";
+        // Close modal
+        document.getElementById("modal-container")?.classList.add("hidden");
       });
     });
   }, 50);

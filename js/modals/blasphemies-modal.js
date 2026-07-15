@@ -81,10 +81,10 @@ export function openBlasphemiesModal() {
 
     el.modalBody.innerHTML = `
       <h3 class="modal-title blasphemy-modal-title">Gerenciar Blasfêmias</h3>
-      <div class="blasphemies-modal-layout">
+      <div class="modal-split-layout">
         
         <!-- Coluna Esquerda: Grid das 12 Blasfêmias -->
-        <div class="blasphemies-grid-col">
+        <div class="modal-grid-col">
           ${allBlasphemies.map(b => {
       const owned = tempBlasphemies.includes(b.id);
       const active = b.id === activeBlasphemyId;
@@ -104,19 +104,18 @@ export function openBlasphemiesModal() {
         </div>
 
         <!-- Coluna Direita: Detalhes da Blasfêmia Selecionada -->
-        <div class="blasphemy-details-col">
+        <div class="modal-detail-panel">
           
-          <div class="blasphemy-details-header">
-            <div class="blasphemy-details-img-wrapper">
+          <div class="modal-detail-header">
+            <div class="modal-detail-img-wrapper">
               ${activeB.img ? `<img src="${activeB.img}" alt="${activeB.name}">` : `<strong></b>`}
             </div>
-            <div>
-              <h4 class="blasphemy-details-title">${activeB.name}</h4>
-              <div class="blasphemy-details-desc">
+            <div class="blasphemy-details">
+              <h4 class="blasphemy-color-${activeB.id} modal-detail-title" style="font-family: 'Cuasigothic';">${activeB.name}</h4>
+              <div class="modal-detail-desc">
                 ${activeB.desc}
               </div>
-            </div>
-          </div>
+           
           ${activeB.fato ? `<div class="blasphemy-details-fato"><strong>Fato:</strong> ${activeB.fato}</div>` : ''}
           <!-- Passiva -->
           ${activeB.passive ? `
@@ -146,9 +145,10 @@ export function openBlasphemiesModal() {
         </div>
 
       </div>
-
+             </div>
+          </div>
       <!-- Footer Buttons -->
-      <div class="blasphemy-modal-footer">
+      <div class="modal-action-footer">
         <button id="btn-create-blasphemy" class="btn btn-md btn-secondary">+ Criar Blasfêmia</button>
         <button id="btn-blasphemies-modal-cancel" class="btn btn-md btn-secondary">Cancelar</button>
         <button id="btn-blasphemies-modal-save" class="btn btn-md btn-blasphemy-save">Salvar Alterações</button>
@@ -156,7 +156,7 @@ export function openBlasphemiesModal() {
     `;
 
     // Restore grid scroll position
-    const gridCol = el.modalBody.querySelector(".blasphemies-grid-col");
+    const gridCol = el.modalBody.querySelector(".modal-grid-col");
     if (gridCol && window._blasphemyGridScroll != null) {
       gridCol.scrollTop = window._blasphemyGridScroll;
     }
@@ -164,7 +164,7 @@ export function openBlasphemiesModal() {
     // Event: Click on Blasphemy card in grid
     el.modalBody.querySelectorAll(".blasphemy-grid-card").forEach(card => {
       card.addEventListener("click", () => {
-        const grid = el.modalBody.querySelector(".blasphemies-grid-col");
+        const grid = el.modalBody.querySelector(".modal-grid-col");
         window._blasphemyGridScroll = grid ? grid.scrollTop : 0;
         activeBlasphemyId = card.getAttribute("data-id");
         renderModalContent();

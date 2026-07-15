@@ -1,0 +1,209 @@
+{
+  "virtues": [
+    {
+      "id": "justice",
+      "name": "Justice",
+      "title": "The Executioner",
+      "desc": "Justice is generally regarded as the most powerful exorcist in CAIN's current arsenal, a loner of few words given extreme leeway in engagement and unusual permission to roam. This is because Justice's high blasphemy, Law, will not allow them to disobey orders from a superior in any form, making them the perfect attack dog. They have the most recorded executions in CAIN history and a near-flawless fight record, standing as an object of awe amongst the regular rank and file.\n\nFor the most part, they seem to regard their position as an accepted reality and have come to embody their role as the headsman of CAIN. They are exceedingly efficient and the overwhelming nature of their abilities allows them to trivialize even the most tenebrous of opponents.\n\nIt is commonly theorized that Temerity has a special subdivision entirely commited to the contingency that Justice manages to circumvent their own blasphemy.",
+      "likes": [
+        "Religious Debate",
+        "Classical Music",
+        "Cleanliness"
+      ],
+      "dislikes": [
+        "Charity",
+        "Tardiness",
+        "Dogs"
+      ],
+      "favorite_food": [
+        "Health Food",
+        "Dates"
+      ],
+      "bond": {
+        "strictures": [
+          "Ignore for one roll by taking 1d3 nonlethal stress",
+          "You cannot ignore orders from a superior.",
+          "Always roll 0d on any action that would break the law."
+        ],
+        "abilities": {
+          "0": "Gain an extra xp trigger: Did you uphold the dogma of CAIN?",
+          "I": "Gain the Law blasphemy. You can use it once a mission.",
+          "II": "Lower sin by 1 after halving it. If you executed a sin rather than sparing it, then lower sin by 1 again. If you spared a sin or failed to execute it, increase sin by 1d3 after halving it instead.",
+          "III": "You may choose two different effects for Law."
+        }
+      }
+    },
+    {
+      "id": "faith",
+      "name": "Faith",
+      "title": "The Timid",
+      "desc": "Faith is not only an anomaly within CAIN, they are also an anomaly for the world at large. They were born in a village in eastern Europe in 1672 and were at a young age forced to joined a monastic order due to the suspicion that they were cursed or consorting with the Devil. No matter how old Faith grew, they never seem to age about past their early 20s and remained a picture of peak physical health and fitness, manifesting supernatural strength and constitution. After they become a hermit around a hundred years after their birth, they were discovered by an early CAIN, where it was determined they were the only purely Graceless and Sinless individual in the entire world.\n\nMost humans manifest a tiny amount of grace or Sin due to latent psychic trauma, but Faith is a complete void. It is now theorized that this is because they have an 'anti-blasphemy', a blasphemy that absorbs all others. This has made them completely immune to psychic phenomena and also biologically immortal.\n\nFaith has the lowest confirmed kills of any virtue. It is rumored that CAIN uses them mostly for capture and control missions of rogue binders, something they seem to be terrifyingly effective at.",
+      "likes": [
+        "Dogs",
+        "Slow Afternoons",
+        "Taking Photos",
+        "Gachapon",
+        "Phone Games",
+        "Fighting Games"
+      ],
+      "dislikes": [
+        "Fortitude",
+        "Rude people",
+        "Work",
+        "Horror Movies"
+      ],
+      "favorite_food": [
+        "Fast Food",
+        "Sweets",
+        "Hot Chicken"
+      ],
+      "bond": {
+        "strictures": [
+          "Ignore for one roll by taking 1d3 nonlethal stress",
+          "You cannot harm anyone or anything.",
+          "Always roll 0d on actions that would be considered impolite."
+        ],
+        "abilities": {
+          "0": "Once a mission, if you are able to eat sweets, you can relieve 1 sin.",
+          "I": "You gain the Null blasphemy. You can use it once a mission.",
+          "II": "Sin overflow only reduces your sin overflow cap by 1 instead of 2.",
+          "III": "When you so choose, your Null Blasphemy becomes the Immaculate Defiance of Heaven. This choice is irreversible."
+        }
+      }
+    },
+    {
+      "id": "charity",
+      "name": "Charity",
+      "title": "The Twins",
+      "desc": "A widely feared Virtue, Charity immediately stands out among their peers due to their unique situation. Charity is functionally the same person that occupies two bodies - or alternately two separate people with the exact same personality and physical appearance down to each individual strand of hair. They may even share emotions and may pre-emptively react or talk from one or the other body as if by reflex. This is because Charity's high blasphemy, Entwine, while extremely powerful, forces a merger of its users so that over time, they become perfect twins - an amalgam of the two, blended together, physically and mentally. Since Charity's abilities work over any distance, they are often deployed separately to different engagements across the globe, although they prefer to work together.\n\nIt is common knowledge that there have been several generations of Charities over the years, since at least 1850, and neither of their bodies are the original. When one dies, CAIN mandates a replacement from a select pool.\n\nBy bonding with Charity, you have put yourself on this list. Congratulations.",
+      "likes": [
+        "Fashion",
+        "Arguing online",
+        "Travel",
+        "Rainy days"
+      ],
+      "dislikes": [
+        "Justice",
+        "Faith",
+        "Boring people",
+        "Long conversations"
+      ],
+      "favorite_food": [
+        "High tea",
+        "Pork dumplings"
+      ],
+      "bond": {
+        "strictures": [
+          "Ignore for one roll by taking 1d3 nonlethal stress",
+          "When possible, you must participate in teamwork or set up.",
+          "You roll 0d when trying to hide, stealth, or avoid notice."
+        ],
+        "abilities": {
+          "0": "You can engage in telepathy with any single exorcist you have skin to skin contact with.",
+          "I": "Gain the Entwine blasphemy.",
+          "II": "At the start of a mission, you can pick an agenda ability from any other party member. For the rest of the mission, you can use this agenda ability as your own.",
+          "III": "Powers that target 'self' can now target any exorcist you are Entwined with."
+        }
+      }
+    },
+    {
+      "id": "fortitude",
+      "name": "Fortitude",
+      "title": "The Disaster",
+      "desc": "Deemed 'reserve calamity level elimination weapon', and one of the only exorcists in history deemed close to exceeding category 7 in their abilities, Fortitude is kept on a strict freezing cycle. An extremely volatile and potent fighter, their ability to execute sins is only matched by their thirst for complete, unbridled destruction. Unleashing fortitude on a situation is often the equivalent of trying to crack a walnut with a factory grade hydraulic press.\n\nFortitude's high blasphemy, Strength, allows them unparalleled physical abilities, but without proper training, its users can literally tear themselves apart. Their marked disregard for human life and rampant misanthropy have made them relatively unpopular within the upper ranks of the organization and they have relatively few admirers even amongst the more pessimistic junior exorcists.\n\nThere is a special division of CASTLE's weapon division deemed 'Break Division' dedicated to 'tempering' weapons for Fortitude to use, as without proper materials they cannot withstand the physical forces involved. The specialized research team takes great joy in their work and their discoveries have greatly advanced CAIN's armaments.",
+      "likes": [
+        "Fighting",
+        "Strong Opponents"
+      ],
+      "dislikes": [
+        "Humans",
+        "Exorcists",
+        "All other virtues",
+        "Sins",
+        "CAIN leadership"
+      ],
+      "favorite_food": [
+        "Hot Dogs* *Per CASTLE addendum 3004, subject is only allowed nutrient paste"
+      ],
+      "bond": {
+        "strictures": [
+          "Ignore for one roll by taking 1d3 nonlethal stress",
+          "You cannot pass up the opportunity to get into a fight",
+          "Roll 0d on actions that would require talk instead of action"
+        ],
+        "abilities": {
+          "0": "You never roll 0d for inflicting harm or violence (always roll at least 1d)",
+          "I": "Any amount of harm you inflict is instantly fatal to humans.",
+          "II": "You gain the Strength blasphemy. You can use it safely once a mission. If you use it a second time, when the scene ends, you rip apart from the inside and suffer instant death.",
+          "III": "You can safely use Strength a second time."
+        }
+      }
+    },
+    {
+      "id": "hope",
+      "name": "Hope",
+      "title": "The Dreamer",
+      "desc": "Hope is among the most valuable assets that CAIN possesses. Typically blessed with strong precognitive and telepathic abilities, their ability to shoulder the Veil high blasphemy has been a lynchpin of the organization's activity for hundreds of years and has allowed CAIN to operate in secrecy even in the most dire of circumstances.\n\nUnlike most other blasphemies, the full power of Veil can be imbued and passed on to other wielders, picked from a pool of exorcists of extreme mental and cognitive strength. There have been a long line of Hopes (the current is the forty first) since the organization's inception, and they are typically retired* when the stress of Veil proves too much to bear.\n\nDue to their important role in the organization, Hope is never permitted to leave the orbital station SERAPH unless under extreme circumstances, or once a year at Christmas.\n\n*See CASTLE doctrine note C0447",
+      "likes": [
+        "Video Games",
+        "Luxurious Baths",
+        "Holidays"
+      ],
+      "dislikes": [
+        "Loud Noises",
+        "Nosy people",
+        "Justice",
+        "Fortitude"
+      ],
+      "favorite_food": [
+        "Pre-packed meal 402A"
+      ],
+      "bond": {
+        "strictures": [
+          "Ignore for one roll by taking 1d3 nonlethal stress",
+          "You cannot take actions that would be loud or attract attention.",
+          "You roll 0d for set up actions"
+        ],
+        "abilities": {
+          "0": "Once a mission, you can re-roll any action taken in stealth or to avoid notice, taking the second result as final.",
+          "I": "Gain the Veil blasphemy. You can use it once a mission.",
+          "II": "Mundane humans always forget you were there if you are out of sight for 77 seconds or more. You cannot turn this ability off.",
+          "III": "You can use Veil to erase memory for longer periods. See the table on the following page. When used at its full capacity, Veil can erase and rework the memory of thousands, if not hundreds of thousands of people, for days at a time. This use typically kills Hope."
+        }
+      }
+    },
+    {
+      "id": "prudence",
+      "name": "Prudence",
+      "title": "The Negotiator",
+      "desc": "The wielder of the powerful Shake blasphemy, Prudence is an amicable and charismatic Virtue with a very busy schedule. Aside from being a powerful combatant, Prudence serves a vital role in both CAIN's internal structure and its relationship with mundane governments due to their unique ability to enforce deals. They have multiple cover identities, speak multiple languages, and generally have a very light freezing schedule, as CAIN deploys them on long range and long duration missions. When appearing in public, they are always exceptionally well dressed and spoken.\n\nAs CAIN's front facing emissary to human governments, their identity has been an object of speculation amongst online conspiracy theorists, something the organization has tried vehemently to suppress.\n\nIt is unclear why 'SHAKE' works off playground games, but it is rumored to be related to a inherent desire in humans to play, the 'homo ludens' theory.",
+      "likes": [
+        "Neat Whiskey",
+        "Romance Novels",
+        "Trains",
+        "Long walks"
+      ],
+      "dislikes": [
+        "Charity",
+        "Justice",
+        "Explaining things to slow people"
+      ],
+      "favorite_food": [
+        "Nuts"
+      ],
+      "bond": {
+        "strictures": [
+          "Ignore for one roll by taking 1d3 nonlethal stress",
+          "You must honor all deals and promises.",
+          "Roll 0d when choosing violence over negotiation."
+        ],
+        "abilities": {
+          "0": "When you shake hands with a willing human on a deal or promise, if someone breaks it, they suffer instant death. This applies to you, and both you and your target are aware of the effects.",
+          "I": "Gain the Shake blasphemy. You can use it once a mission.",
+          "II": "Your rank 0 ability now applies to exorcists and sins.",
+          "III": "You can use Shake once again during a mission, but if you do, the GM picks the game."
+        }
+      }
+    }
+  ]
+}

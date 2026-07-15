@@ -68,7 +68,7 @@ export function openCreateAgendaModal(onCreated) {
 
       </div>
 
-      <div class="blasphemy-modal-footer">
+      <div class="modal-action-footer">
         <button id="btn-create-agenda-cancel" class="btn btn-md btn-secondary">Cancelar</button>
         <button id="btn-create-agenda-save" class="btn btn-md btn-blasphemy-save">Criar Agenda</button>
       </div>

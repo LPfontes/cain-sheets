@@ -1,0 +1,123 @@
+[
+  {
+    "id": "mozart-sonata-2-adagio",
+    "title": "Sonata Nº 2 — II. Adagio",
+    "artist": "Mozart",
+    "file": "assets/music/Mozart Sonata 2 - II. Adagio.mp3",
+    "tags": [
+      "clássico",
+      "piano",
+      "calmo"
+    ]
+  },
+  {
+    "id": "requiem-lacrymosa",
+    "title": "Requiem em Ré Menor — III. Lacrymosa (Piano)",
+    "artist": "Mozart / Liszt",
+    "file": "assets/music/Requiem in D minor, K. 626 - III. Sequence - Lacrymosa (For Piano - Liszt).mp3",
+    "tags": [
+      "clássico",
+      "piano",
+      "tenso"
+    ]
+  },
+  {
+    "id": "leberch-horror-creepy",
+    "title": "Horror Creepy",
+    "artist": "Nikita Kondrashev",
+    "file": "assets/music/leberch-horror-creepy-255685.mp3",
+    "tags": [
+      "horror",
+      "ambiente",
+      "tenso"
+    ]
+  },
+  {
+    "id": "leberch-horror-night",
+    "title": "Horror Night",
+    "artist": "Nikita Kondrashev",
+    "file": "assets/music/leberch-horror-night-248021.mp3",
+    "tags": [
+      "horror",
+      "noite",
+      "ambiente"
+    ]
+  },
+  {
+    "id": "leberch-investigation",
+    "title": "Investigation",
+    "artist": "Nikita Kondrashev",
+    "file": "assets/music/leberch-investigation-375272.mp3",
+    "tags": [
+      "investigação",
+      "ambiente",
+      "suspense"
+    ]
+  },
+  {
+    "id": "weirder-things-2",
+    "title": "Weirder Things 2",
+    "artist": "Tabletop Audio",
+    "file": "assets/music/105_Weirder_Things_2.mp3",
+    "tags": [
+      "ambiente",
+      "misterioso",
+      "sobrenatural"
+    ]
+  },
+  {
+    "id": "dark-angel",
+    "title": "Dark Angel",
+    "artist": "Tabletop Audio",
+    "file": "assets/music/162_Dark_Angel.mp3",
+    "tags": [
+      "ambiente",
+      "sombrio",
+      "tenso"
+    ]
+  },
+  {
+    "id": "mansion-night",
+    "title": "Mansion Night",
+    "artist": "Tabletop Audio",
+    "file": "assets/music/224_Mansion_Night.mp3",
+    "tags": [
+      "horror",
+      "noite",
+      "ambiente"
+    ]
+  },
+  {
+    "id": "yokai-forest",
+    "title": "Yokai Forest",
+    "artist": "Tabletop Audio",
+    "file": "assets/music/344_Yokai_Forest.mp3",
+    "tags": [
+      "ambiente",
+      "sobrenatural",
+      "misterioso"
+    ]
+  },
+  {
+    "id": "hall-of-angels",
+    "title": "Hall of Angels",
+    "artist": "Tabletop Audio",
+    "file": "assets/music/374_Hall_of_Angels.mp3",
+    "tags": [
+      "clássico",
+      "calmo",
+      "ambiente"
+    ]
+  },
+  {
+    "id": "the-long-rain",
+    "title": "The Long Rain",
+    "artist": "Tabletop Audio",
+    "file": "assets/music/40_The_Long_Rain.mp3",
+    "tags": [
+      "chuva",
+      "calmo",
+      "ambiente"
+    ]
+  }
+]

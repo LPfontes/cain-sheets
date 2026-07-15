@@ -46,6 +46,8 @@
 
 .missao-card-padding {
   padding: 12px;
+  overflow-y: auto;
+  max-height: 75vh;
 }
 
 .missao-section-title-line {
@@ -63,7 +65,7 @@
   display: block;
   font-size: var(--font-size-md);
   font-weight: bold;
-  color: black;
+  color: white;
   margin-bottom: 6px;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -134,7 +136,7 @@
 
 /* Coluna 2: Banco de Pistas / Nós */
 .nodes-category-container {
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .nodes-category-header {

@@ -1,10 +1,10 @@
 {
   "beast": {
     "name": "Besta",
-    "desc": "A violência é sua linguagem.",
+    "desc": "",
     "icon": "./assets/agendas/icons/Besta.webp",
     "normal": ["Participe de uma luta"],
-    "bold": ["Se contenha"],
+    "bold": ["Contenha-se"],
     "habilidades": [
       { "name": "Insetos!!!", "desc": "Você tem +1D ao infligir dano ou violência contra oponentes humanos." },
       { "name": "Vou te derrubar comigo", "desc": "Recupere 1 pulso psíquico ao sofrer um ferimento, preencher um gancho ou sofrer uma aflição." },
@@ -18,7 +18,7 @@
     "desc": "Você só pode escolher esta agenda se já tiver uma marca de pecado.<br> Se for sua primeira agenda, você pode começar com uma marca de pecado de sua escolha (escolha apenas a localização, ainda role 1d6 para a habilidade).",
     "icon": "./assets/agendas/icons/Condenado.webp",
     "normal": ["Demonstre sua humanidade"],
-    "bold": ["Demonstre sua distancia da humanidade"],
+    "bold": ["Demonstre sua distância da humanidade"],
     "habilidades": [
       { "name": "Carnexeno", "desc": "Ignore '1's rolados para ganhar Pecado." },
       { "name": "Último Suspiro da Humanidade", "desc": "Escolha uma marca de pecado que você possua. Evolua essa marca de pecado. Ela não modifica mais as rolagens de resistência." },
@@ -37,7 +37,7 @@
       { "name": "Muralha de Ferro", "desc": "Quando você defende alguém próximo em uma cena de conflito, você pode optar por transferir quaisquer consequências sofridas pelo seu alvo para você." },
       { "name": "A Agonia Excessiva de Seguir em Frente", "desc": "Elimine 1 ponto de estresse quando a pressão aumentar, se você tiver mais de 3." },
       { "name": "Castelo", "desc": "Quando qualquer aliado sofrer um ferimento, você elimina 1 ponto de estresse e ganha +1D em sua próxima ação." },
-      { "name": "Contrapeso", "desc": "Ao descansar, aliados que gastam dados de descanso podem definir os resultados dos dados deles nos seus invés." },
+      { "name": "Contrapeso", "desc": "Ao descansar, aliados que gastam dados de descanso podem definir os resultados dos dados deles em vez dos seus." },
       { "name": "Analgésico", "desc": "Seu primeiro ferimento sofrido não reduz o estresse máximo." }
     ]
   },
@@ -63,7 +63,7 @@
     "bold": ["Deixe a máscara escorregar"],
     "habilidades": [
       { "name": "Do Pó ao Pó", "desc": "O estresse não se transfere mais quando você sofre um ferimento (o excesso é perdido)." },
-      { "name": "Ataque Silencioso", "desc": "Ganha +1D em ações violentas contra alvos que não estão cientes da sua presença." },
+      { "name": "Ataque Silencioso", "desc": "Ganhe +1D em ações violentas contra alvos que não estão cientes da sua presença." },
       { "name": "Eu mesmo resolvo", "desc": "Uma vez por cena, quando alguém falha em uma rolagem, você pode intervir para ajudá-lo, desde que seja capaz. Você ganha 1d3+1 de estresse não letal, mas rola 1D e adiciona ao resultado total." },
       { "name": "Torre", "desc": "Quando você tiver sucesso em ajudar um aliado, você pode sofrer 2 de estresse não letal para ajudar outro aliado de sua escolha com a mesma ação." },
       { "name": "Não é Nada", "desc": "Você pode ignorar sofrer um ferimento dizendo \"Não é Nada\". Ganhe o gancho \"Não é Nada\". Quando o gancho se enche, você desaba e sofre morte instantânea." }
@@ -71,14 +71,14 @@
   },
   "rigorous": {
     "name": "Rigoroso",
-    "desc": "ERADICATE THE VERMIN",
+    "desc": "ERRADIQUE OS VERMES",
     "icon": "./assets/agendas/icons/Rigoroso.webp",
     "normal": ["Seguir ordens"],
     "bold": ["Desobedecer ordens"],
     "habilidades": [
-      { "name": "Terno Preto", "desc": "Ganha +1D em ações para liderar, intimidar ou dar ordens a humanos comuns." },
+      { "name": "Terno Preto", "desc": "Ganhe +1D em ações para liderar, intimidar ou dar ordens a humanos comuns." },
       { "name": "Mea Culpa", "desc": "Na primeira vez em uma caçada que você sofrer um ferimento ou uma aflição, alivie 1d3+1 de pecado." },
-      { "name": "Eliminar a Mancha", "desc": "Ganha +1D e inflija +1 corte em talismãs na primeira vez que você rolar contra pecados que tenham metade ou menos de seu talismã de execução restante." },
+      { "name": "Eliminar a Mancha", "desc": "Ganhe +1D e inflija +1 corte em talismãs na primeira vez que você rolar contra pecados que tenham metade ou menos de seu talismã de execução restante." },
       { "name": "Foco Total", "desc": "Você só pode ser afetado por uma aflição no máximo (você pode escolher qual descartar e manter)." },
       { "name": "Seguindo as Regras", "desc": "Uma vez por caçada, quando você testemunhar ou encontrar evidências do Domínio de um pecado, você pode forçar o Administrador a mostrar o texto exato das regras desse Domínio." }
     ]
@@ -119,23 +119,23 @@
     "bold": ["Deixe que outro assuma a liderança"],
     "habilidades": [
       { "name": "Lançador de vento da sorte", "desc": "Quando você rola 0d para qualquer ação, nunca é difícil." },
-      { "name": "Sangue quente", "desc": "Sua primeira ação em uma cena de conflito ganha +1D e inflija +1 corte em quaisquer talismãs." },
+      { "name": "Sangue quente", "desc": "Sua primeira ação em uma cena de conflito ganha +1D e inflige +1 corte em quaisquer talismãs." },
       { "name": "Fonte de Poder", "desc": "Depois de caçar, você pode ganhar 1d3 pulsos psíquicos, que podem acabar pondo você acima do seu máximo." },
       { "name": "Relembrar", "desc": "No final de uma sessão, você pode descrever algo que outro personagem fez que impressionou você e dar àquele personagem 1 xp." },
-      { "name": "Esforce-se", "desc": "Uma vez por caçada, você pode fazer uma re-rolagem completa de qualquer ação que você ou um aliado acabou de tirar, tomando o segundo resultado como final." }
+      { "name": "Esforce-se", "desc": "Uma vez por caçada, você pode fazer uma rerrolagem completa de qualquer ação que você ou um aliado acabou de rolar, tomando o segundo resultado como final." }
     ]
   },
   "sombra": {
     "name": "Sombra",
-    "desc": "Ao escolher esta agenda, choose outro personagem para ser seu rival.",
+    "desc": "Ao escolher esta agenda, escolha outro personagem para ser seu rival.",
     "icon": "./assets/agendas/icons/sombra.webp",
     "normal": ["Ofusque seu rival"],
     "bold": ["Deixe seu rival ofuscar você"],
     "habilidades": [
-      { "name": "Alcançar", "desc": "Se o seu rival tiver menos estresse do que você quando a pressão aumentar, apague 1 estresse. Se he tiver mais pulsos psíquicos, recupere 1 pulso psíquico." },
+      { "name": "Alcançar", "desc": "Se o seu rival tiver menos estresse do que você quando a pressão aumentar, apague 1 estresse. Se ele tiver mais pulsos psíquicos, recupere 1 pulso psíquico." },
       { "name": "Sincronizar", "desc": "Ao ajudar seu rival, você sofre 1 de estresse não letal e +1D na ação para ajudar." },
       { "name": "Você não pode morrer agora", "desc": "Uma vez por caçada, se seu rival sofrer um ferimento ou sofrer morte instantânea, você pode sofrer 2d3 de estresse para permitir que ele ignore isso." },
-      { "name": "Semente das sombras", "desc": "Escolha um poder de blasfêmia que seu rival tenha. Você pode usar esse poder nesta caçada, mas seu maximo é CAT 0." },
+      { "name": "Semente das sombras", "desc": "Escolha um poder de blasfêmia que seu rival tenha. Você pode usar esse poder nesta caçada, mas seu máximo é CAT 0." },
       { "name": "Técnica de Pinça", "desc": "Quando você participa de um trabalho em equipe com seu rival, você sofre 1 estresse não letal, mas também pode rolar novamente um dos dados uma vez." }
     ]
   },
@@ -149,7 +149,7 @@
       { "name": "Técnica Perfeita", "desc": "Escolha uma blasfêmia. Uma vez por caçada, você pode aumentar o CAT dessa blasfêmia em +1 temporariamente por uma cena inteira." },
       { "name": "Truque", "desc": "Escolha uma habilidade de blasfêmia. Você pode usá-la duas vezes por caçada sem gastar um pulso psíquico, mas todos os parâmetros terão no máximo CAT 0." },
       { "name": "Movimento Final", "desc": "Escolha um poder de blasfêmia. Você pode aumentar os dados e o CAT desse poder em +1 na próxima vez que usá-lo." },
-      { "name": "Técnica de mímica", "desc": "Escolha um poder de qualquer blasfêmia, sem ter tomado essa blasfêmia. Isso não altera seus limites de XP ou de pecado." },
+      { "name": "Técnica de mímica", "desc": "Escolha um poder de qualquer blasfêmia, sem ter adquirido essa blasfêmia. Isso não altera seus limites de XP ou de pecado." },
       { "name": "Tecer", "desc": "Quando você usa uma blasfêmia, você pode aumentar o CAT da próxima blasfêmia usada por um aliado contra o mesmo alvo em +1 e conceder +1D em qualquer jogada." }
     ]
   },
@@ -168,7 +168,7 @@
     ]
   },
   "demonio": {
-    "name": "Demónio",
+    "name": "Demônio",
     "desc": "Você pode usar scrip como pontos de kit.",
     "icon": "./assets/agendas/icons/demonio.webp",
     "normal": ["Enriqueça-se"],

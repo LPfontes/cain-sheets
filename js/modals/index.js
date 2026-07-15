@@ -6,4 +6,5 @@ export { openBlasphemiesModal, openBlasphemyPowersModal } from "./blasphemies-mo
 export { openCreateBlasphemyModal } from "./create-blasphemy-modal.js";
 export { openCreateAgendaModal } from "./create-agenda-modal.js";
 export { openSinMarksModal } from "./sinmarks-modal.js";
+export { openVirtudesModal } from "./virtues-modal.js";
 

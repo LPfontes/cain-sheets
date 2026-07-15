@@ -37,7 +37,7 @@ export function startWizard() {
     blasphemy: "",
     blasphemyPowers: [],
     equipment: [],
-    notes: ""
+    notes: { mission: "", contacts: "", secrets: "", journal: "" }
   };
 
   document.getElementById("wiz-name").value = "";
@@ -612,7 +612,7 @@ export function wizardFinish() {
     idade: d.idade || "",
     cid: d.cid || "",
     appearance: d.appearance || "",
-    notes: questionText
+    notes: { mission: questionText, contacts: "", secrets: "", journal: "" }
   };
 
   logger.info(`Wizard CAIN: Finalizando criação de "${newChar.name}".`);

@@ -7,7 +7,7 @@ export function openExportModal() {
 
   const chars = state.characters || [];
   const listHtml = chars.length === 0
-    ? `<div class="text-secondary-xs" style="padding:20px;text-align:center;color:var(--text-muted);">Nenhuma ficha salva.</div>`
+    ? `<div class="text-secondary-md" style="padding:20px;text-align:center;color:var(--text-muted);">Nenhuma ficha salva.</div>`
     : chars.map(char => `
       <div class="list-item-row" style="padding:10px 12px; margin-bottom:6px;">
         <span class="item-name" style="font-size:var(--font-size-md);">${esc(char.name)}</span>
@@ -18,7 +18,7 @@ export function openExportModal() {
   el.modalBody.innerHTML = `
     <div class="settings-modal-content">
       <h3 class="modal-title">Exportar Ficha</h3>
-      <div class="text-secondary-xs" style="font-size:var(--font-size-sm); margin-top:12px; margin-bottom:12px;">
+      <div class="text-secondary-md" style="margin-top:12px; margin-bottom:12px;">
         Selecione a ficha que deseja exportar como arquivo JSON.
       </div>
       <div class="scrollable-list" style="max-height:400px;">

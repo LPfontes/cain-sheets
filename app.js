@@ -220,13 +220,29 @@ function setupEventListeners() {
   el.btnWizFinish.addEventListener("click", wizardFinish);
   
   // Ficha Auto-save inputs
-  const autoSaveInputs = [el.charName, el.charNotes, document.getElementById("char-xid")].filter(Boolean);
+  const autoSaveInputs = [el.charName, document.getElementById("char-xid")].filter(Boolean);
   autoSaveInputs.forEach(input => {
     input.addEventListener("input", () => {
       if (state.currentCharacter) {
         state.currentCharacter.name = el.charName.value || "Sem Nome";
-        state.currentCharacter.notes = el.charNotes?.value || "";
         if (document.getElementById("char-xid")) state.currentCharacter.xid = document.getElementById("char-xid").value;
+        saveCurrentCharacter();
+      }
+    });
+  });
+
+  // Notes auto-save
+  const notesFields = [
+    { el: el.charNotesMission, key: "mission" },
+    { el: el.charNotesContacts, key: "contacts" },
+    { el: el.charNotesSecrets, key: "secrets" },
+    { el: el.charNotesJournal, key: "journal" }
+  ];
+  notesFields.forEach(({ el: input, key }) => {
+    if (!input) return;
+    input.addEventListener("input", () => {
+      if (state.currentCharacter) {
+        state.currentCharacter.notes[key] = input.value;
         saveCurrentCharacter();
       }
     });

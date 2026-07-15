@@ -6,6 +6,79 @@
    ============================================================ */
 @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Oswald:wght@400;500;600;700&family=IM+Fell+English:ital@0;1&display=swap');
 
+@font-face {
+  font-family: 'Cuasigothic';
+  src: url('../assets/fonts/cuasigothic (1)/Cuasigothic.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Fanzine';
+  src: url('../assets/fonts/fanzine/fanzine.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Odachi';
+  src: url('../assets/fonts/Odachi-Font/Odachi.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'Apex MK2';
+  src: url('../assets/fonts/apex-mk2/Apex Mk2/ApexMk2-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'Apex MK2';
+  src: url('../assets/fonts/apex-mk2/Apex Mk2/ApexMk2-BoldExtended.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+
+}
+@font-face {
+  font-family: 'Apex MK2';
+  src: url('../assets/fonts/apex-mk2/Apex Mk2/ApexMk2-LightCondensed.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'Acumin Pro';
+  src: url('../assets/fonts/acumin-pro-cufonfonts/Acumin-RPro.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Acumin Pro';
+  src: url('../assets/fonts/acumin-pro-cufonfonts/Acumin-ItPro.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Acumin Pro';
+  src: url('../assets/fonts/acumin-pro-cufonfonts/Acumin-BdPro.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Acumin Pro';
+  src: url('../assets/fonts/acumin-pro-cufonfonts/Acumin-BdItPro.otf') format('opentype');
+  font-weight: bold;
+  font-style: italic;
+}
+
 :root {
   /* ──────────────────────────────────────────────
      PALETA — PAPEL ENVELHECIDO
@@ -83,10 +156,10 @@
      TIPOGRAFIA
   ────────────────────────────────────────────── */
   --font-heading: 'Oswald', 'Arial Narrow', sans-serif;
-  --font-body: 'Roboto Mono', monospace;
+  --font-body: 'Acumin Pro', sans-serif;
   --font-accent: 'IM Fell English', Georgia, serif;
 
-  --font-size-xs: 10px;
+  --font-size-xs: 12px;
   --font-size-xm: 14px;
   --font-size-sm: 15px;
   --font-size-md: 16px;

@@ -68,7 +68,7 @@ export function openCreateBlasphemyModal(onCreated) {
 
       </div>
 
-      <div class="blasphemy-modal-footer">
+      <div class="modal-action-footer">
         <button id="btn-create-blasphemy-cancel" class="btn btn-md btn-secondary">Cancelar</button>
         <button id="btn-create-blasphemy-save" class="btn btn-md btn-blasphemy-save">Criar Blasfêmia</button>
       </div>

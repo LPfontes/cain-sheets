@@ -42,7 +42,7 @@
     "execution": {
       "attacks_with": "Dentes, garras, água fétida, vômito preto.",
       "stress": {
-        "1": 5,
+        "1": 6,
         "2-3": 3,
         "4+": 2
       },
@@ -64,6 +64,7 @@
         "Derrube a arquitetura",
         "Invoque lacaios",
         "Mate inocentes",
+        "Pulverize um exorcista — arranca um membro em um '1' e morte instantânea em dois '1's",
         "Infecte com veias pulsantes e escuras",
         "Cause uma inundação repentina ou congele a pessoa",
         "Cegue alguém com uma nuvem miasmática",
@@ -79,7 +80,7 @@
       },
       {
         "name": "Esmagador",
-        "desc": "Uma forma maciça e hostil. Ataca com carne mutante e força bruta.",
+        "desc": "Uma forma maciça e hostil. Ataca com carne mutante e força bruta. Seus golpes são devastadores e difíceis de evitar.",
         "talisman": "6 + CAT"
       }
     ],
@@ -169,7 +170,7 @@
     "execution": {
       "attacks_with": "Lâminas bem afiadas, armas de fogo comuns, garras finas e flexíveis, comandos de voz psíquicos.",
       "stress": {
-        "1": 5,
+        "1": 6,
         "2-3": 3,
         "4+": 2
       },
@@ -201,7 +202,7 @@
       {
         "name": "Apóstolo",
         "desc": "Monstro moldado por força sobrenatural e lâminas mutantes.",
-        "talisman": "2 + CAT"
+        "talisman": "4 + CAT"
       }
     ],
     "domains": [
@@ -217,8 +218,8 @@
       },
       {
         "id": 3,
-        "name": "Segurem Meus Queridos",
-        "desc": "Transfere o dano sofrido em seu talismã de execução para qualquer cultista presente na cena. Pode ver e falar através deles."
+        "name": "Matrimônio",
+        "desc": "Funde automaticamente dois exorcistas em uma única entidade. A cada '1' rolado, as consequências da fusão se intensificam — perda de controle, estresse compartilhado e transformação gradual."
       },
       {
         "id": 4,
@@ -233,12 +234,12 @@
       {
         "id": 6,
         "name": "Conquistando as Orelhas",
-        "desc": "Adiciona humanos comuns ao culto. Pode proferir uma palavra indizível que deixa os exorcistas surdos."
+        "desc": "Adiciona humanos comuns ao culto. Pode proferir uma palavra indizível que inflige 3d3 de estresse nos exorcistas."
       },
       {
         "id": 7,
         "name": "A Glória",
-        "desc": "Assume forma gloriosa que cega ou atordoa quem olhar. Exorcista vê quem ama e sofre estresse ao ferir o ídolo."
+        "desc": "Assume forma gloriosa que cega ou atordoa quem olhar. Exorcista vê quem ama e sofre estresse ao ferir o ídolo. O talismã do ídolo ganha +2 de comprimento."
       },
       {
         "id": 8,
@@ -291,7 +292,7 @@
     "execution": {
       "attacks_with": "Dentes em forma de agulha, garras afiadas como navalhas, esporões ósseos, lâminas em forma de foice.",
       "stress": {
-        "1": 5,
+        "1": 6,
         "2-3": 3,
         "4+": 2
       },
@@ -331,12 +332,12 @@
       {
         "id": 4,
         "name": "A Aniquilação do Perverso",
-        "desc": "Fundido com armas de fogo. Seus ataques ganham alcance CAT+2. Pode desarmar exorcistas e absorver suas armas para se curar."
+        "desc": "Fundido com armas de fogo. Seus ataques ganham alcance CAT+2. Pode desarmar exorcistas e absorver suas armas para se curar. Ganha +2 de comprimento de talismã."
       },
       {
         "id": 5,
         "name": "O Engordar da Raiva",
-        "desc": "Cura segmentos de execução ao matar civis. Se matar um de seus alvos de rancor, ganha +2 segmentos de execução e +1 de dano de estresse."
+        "desc": "Cura 2 segmentos de execução ao matar civis. Se matar um de seus alvos de rancor, ganha +2 segmentos de execução e +1 de dano de estresse."
       },
       {
         "id": 6,
@@ -351,7 +352,7 @@
       {
         "id": 8,
         "name": "Ensanguentando o Aço",
-        "desc": "A fúria é contagiante. Dá ao exorcista ferido a aflição Rancor Infeccioso, concedendo +1D em violência mas aumentando o estresse sofrido."
+        "desc": "A fúria é contagiante. Dá ao exorcista ferido a aflição Rancor Infeccioso, concedendo +1D em violência mas com penalidade de 2 de estresse."
       }
     ]
   },
@@ -397,7 +398,7 @@
     "execution": {
       "attacks_with": "Presas gotejantes, numerosas garras, corpo sinuoso, cuspe pressurizado.",
       "stress": {
-        "1": 5,
+        "1": 6,
         "2-3": 3,
         "4+": 2
       },
@@ -419,19 +420,19 @@
       {
         "name": "Atropelador",
         "desc": "Pecado imenso e blindado, imune a ataques convencionais.",
-        "talisman": "3"
+        "talisman": "4"
       },
       {
         "name": "Perseguidores",
         "desc": "Surgem em duplas. São ágeis e atacam das sombras com garras.",
-        "talisman": "3 (compartilhado)"
+        "talisman": "4 (compartilhado)"
       }
     ],
     "domains": [
       {
         "id": 1,
         "name": "Os Arautos do Veneno",
-        "desc": "O veneno ferve. Os lacaios cospem a curto alcance e a centopeia cospe a longa distância como um rifle."
+        "desc": "O veneno ferve e causa cicatrizes em qualquer rolagem. Os lacaios cospem a curto alcance e a centopeia cospe a longa distância como um rifle."
       },
       {
         "id": 2,
@@ -456,7 +457,7 @@
       {
         "id": 6,
         "name": "No âmago, minha podridão se desdobra",
-        "desc": "Ao esgotar o talismã, regenera 4 pontos e assume forma instável, mas mortal (+1 dano, -1 dano sofrido), morrendo ao final da rodada."
+        "desc": "Ao esgotar o talismã, regenera 6 pontos e assume forma instável, mas mortal (+1 dano, -1 dano sofrido), morrendo ao final da rodada."
       },
       {
         "id": 7,
@@ -512,7 +513,7 @@
     "execution": {
       "attacks_with": "Socos e chutes esmagadores, língua musculosa, jato de sangue pressurizado pelos olhos.",
       "stress": {
-        "1": 5,
+        "1": 6,
         "2-3": 3,
         "4+": 2
       },
@@ -530,17 +531,23 @@
         "Dar a aflição Ganancioso"
       ]
     },
-    "minions": [],
+    "minions": [
+      {
+        "name": "Sapinhos",
+        "desc": "Pequenas criaturas anfíbias que seguem ordens do sapo. Atacam em grupo com línguas e dentes afiados.",
+        "talisman": "3 (individual), 5 (grupo), 7 (grupo massivo)"
+      }
+    ],
     "domains": [
       {
         "id": 1,
         "name": "Hotel para Um",
-        "desc": "Usa a boca para sugar exorcistas para um espaço-prisão dimensional em sua garganta, isolando-os da luta."
+        "desc": "Usa a boca para sugar exorcistas para um espaço-prisão dimensional em sua garganta, isolando-os da luta. O talismã do espaço ganha +2 de comprimento."
       },
       {
         "id": 2,
         "name": "Mãos Leves",
-        "desc": "Furtivo ao roubar objetos. Ao infligir estresse, pode confiscar 1 PK ou itens estéticos do kit do exorcista."
+        "desc": "Furtivo ao roubar objetos. Sempre rouba poderes dos exorcistas. Cada '1' adicional aumenta o comprimento do talismã do poder roubado."
       },
       {
         "id": 3,
@@ -550,7 +557,7 @@
       {
         "id": 4,
         "name": "Devorar a Terra",
-        "desc": "Pode desarticular a mandíbula e tentar engolir o palácio ou elementos da cena, destruindo o ambiente."
+        "desc": "Pode desarticular a mandíbula e tentar engolir o palácio ou elementos da cena, destruindo o ambiente. Em caso de sucesso, inflige 3d3 de estresse nos exorcistas."
       },
       {
         "id": 5,
@@ -590,7 +597,7 @@
     "behavior": "Educados, refinados e ponderados. Justificam suas ações na linguagem da lei ou da religião. Consideram seu palácio um presente protetor para o hospedeiro.",
     "traumas": [
       "O que você perdeu?",
-      "Qual é a principal coisa que você mudaria no mundo?",
+      "Que injustiça você não pode tolerar?",
       "De quem você se arrependeu de ter ficado para trás quando ascendeu ao seu Reino?"
     ],
     "palacio": {
@@ -616,7 +623,7 @@
     "execution": {
       "attacks_with": "Lâminas bem afiadas, garras finas e flexíveis, comandos de voz psíquicos.",
       "stress": {
-        "1": 5,
+        "1": 6,
         "2-3": 3,
         "4+": 2
       },
@@ -635,9 +642,9 @@
     },
     "minions": [
       {
-        "name": "Decurion",
+        "name": "Guardião",
         "desc": "Servo de armadura que policia o palácio.",
-        "talisman": "4"
+        "talisman": "5"
       }
     ],
     "domains": [

@@ -29,5 +29,8 @@
     "2-3": "Resultado ruim (Sucesso com complicação ou falha simples)",
     "4-5": "Bom resultado (Sucesso limpo)",
     "6": "Melhor resultado (Sucesso excepcional ou crítico)"
-  }
+  },
+  "defy_fate": "Cura até 1 ferimento abaixo do máximo. Não pode curar o último ferimento.",
+  "psyche_burst_clarification": "O uso gratuito de +1D do pulso psíquico só pode ser usado uma vez por cena.",
+  "effectiveness_note": "Efetividade é baseada em vibes — use o bom senso e a narrativa para determinar a eficácia das ações."
 }

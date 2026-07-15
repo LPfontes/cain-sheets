@@ -36,6 +36,7 @@ const ASSETS = [
   './js/modals/index.js',
   './js/modals/create-blasphemy-modal.js',
   './js/modals/create-agenda-modal.js',
+  './js/modals/virtues-modal.js',
   './js/roller.js',
   './js/chat.js',
   './js/logger.js',

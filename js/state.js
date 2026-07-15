@@ -1,4 +1,4 @@
-import { renderSkillsSheet, renderStressHealthSheet, renderAgendaSheet, renderBlasphemiesSheet, renderSinMarksSheet, renderEquipmentSheet, renderSavedMacrosSheet, renderStaticHooks } from "./sheet.js";
+import { renderSkillsSheet, renderStressHealthSheet, renderAgendaSheet, renderBlasphemiesSheet, renderSinMarksSheet, renderEquipmentSheet, renderSavedMacrosSheet, renderStaticHooks, renderVirtudesSheet } from "./sheet.js";
 import { renderCainRollPanel, renderCainRollHistory } from "./cain-roller.js";
 import { logger } from "./logger.js";
 
@@ -46,7 +46,10 @@ export const el = {
   charCatImg: document.getElementById("char-cat-img"),
   charCatLabel: document.getElementById("char-cat-label"),
   catSelector: document.getElementById("cat-selector"),
-  charNotes: document.getElementById("char-notes"),
+  charNotesMission: document.getElementById("char-notes-mission"),
+  charNotesContacts: document.getElementById("char-notes-contacts"),
+  charNotesSecrets: document.getElementById("char-notes-secrets"),
+  charNotesJournal: document.getElementById("char-notes-journal"),
   // Novos campos do ID card
   charAgenda:   document.getElementById("char-agenda"),
   charBlasfemia: document.getElementById("char-blasfemia"),
@@ -163,7 +166,7 @@ export const state = {
     blasphemy: "",
     blasphemyPowers: [],
     equipment: [],
-    notes: ""
+    notes: { mission: "", contacts: "", secrets: "", journal: "" }
   }
 };
 
@@ -229,7 +232,7 @@ export function createTestCharacter() {
     hooks: [],
     xp: 0,
     xpBar: 0,
-    notes: "Exorcista de teste para demonstração do sistema CAIN."
+    notes: { mission: "Exorcista de teste para demonstração do sistema CAIN.", contacts: "", secrets: "", journal: "" }
   };
   state.characters = [testChar];
   try {
@@ -309,7 +312,8 @@ export function loadCharacter(charId) {
   }
   logger.info(`Carregando Exorcista: "${char.name}" (${charId})`);
   updateCharSelector();
-  
+  el.btnExportJson.disabled = false;
+
   document.getElementById("landing-screen")?.classList.add("hidden");
   el.wizardScreen.classList.add("hidden");
   el.sheetScreen.classList.remove("hidden");
@@ -317,7 +321,15 @@ export function loadCharacter(charId) {
   el.charName.value = char.name;
   if (el.charXid)      el.charXid.value      = char.xid       || "";
   setCharCat(char.cat || 1);
-  if (el.charNotes)    el.charNotes.value    = char.notes     || "";
+  if (typeof char.notes === "string") {
+    char.notes = { mission: char.notes || "", contacts: "", secrets: "", journal: "" };
+  } else if (!char.notes || typeof char.notes !== "object") {
+    char.notes = { mission: "", contacts: "", secrets: "", journal: "" };
+  }
+  if (el.charNotesMission) el.charNotesMission.value = char.notes.mission || "";
+  if (el.charNotesContacts) el.charNotesContacts.value = char.notes.contacts || "";
+  if (el.charNotesSecrets) el.charNotesSecrets.value = char.notes.secrets || "";
+  if (el.charNotesJournal) el.charNotesJournal.value = char.notes.journal || "";
   // Novos campos do ID card
   if (el.charAgenda)   el.charAgenda.value   = char.agendaText   || "";
   if (el.charBlasfemia) el.charBlasfemia.value = char.blasfemiaText || "";
@@ -343,6 +355,7 @@ export function loadCharacter(charId) {
   renderEquipmentSheet();
   renderSavedMacrosSheet();
   renderStaticHooks();
+  renderVirtudesSheet();
 
   renderCainRollPanel();
   renderCainRollHistory();
@@ -380,6 +393,7 @@ export function deleteActiveCharacter() {
         import("./chat.js").then(({ renderChatHistory }) => renderChatHistory());
       } else {
         state.currentCharacter = null;
+        el.btnExportJson.disabled = true;
         el.sheetScreen.classList.add("hidden");
         el.wizardScreen.classList.add("hidden");
         const landingScreen = document.getElementById("landing-screen");

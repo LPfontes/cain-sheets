@@ -1378,3 +1378,25 @@
     display: none !important;
   }
 }
+
+/* Cores das Virtudes */
+.virtue-color-prudence { color: #0b78f1; }
+.virtue-color-hope { color: #9d00fd; }
+.virtue-color-fortitude { color: #f10b0b; }
+.virtue-color-charity { color: #e30bf1; }
+.virtue-color-faith { color: #fdc739; }
+.virtue-color-justice { color: #90fdee; }
+
+/* Cores das Blasfêmias */
+.blasphemy-color-tensao { color: #f10b0b; background-color: #000000; }
+.blasphemy-color-ardencia { color: #fdfdfd; background-color: #000000;}
+.blasphemy-color-fluxo { color: #000000; background-color: #ffffff;}
+.blasphemy-color-vetor { color: #fd9a0c; background-color: #000000;}
+.blasphemy-color-portao { color: #fdfdfd; background-color: #000000;}
+.blasphemy-color-sufoco { color: #fd9a0c; background-color: #000000; }
+.blasphemy-color-sussurro { color: #0b78f1; background-color: #000000;}
+.blasphemy-color-editar { color: #000000; background-color: #ffffff; padding: 0 4px; border-radius: 2px; }
+.blasphemy-color-vinculo { color: #0b78f1; background-color: #000000;}
+.blasphemy-color-assombracao { color: #fdfdfd; background-color: #000000;}
+.blasphemy-color-palacio { color: #9d00fd; background-color: #000000;}
+.blasphemy-color-simpatia { color: #9d00fd; background-color: #000000;}

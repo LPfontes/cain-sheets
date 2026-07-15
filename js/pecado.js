@@ -193,7 +193,13 @@ export function renderPecadoSheet() {
                         </div>
                         <div>
                           <label class="ws-label">Categoria (CAT)</label>
-                          <input type="number" id="pecado-cat" class="conflito-form-input pecado-field-input" value="${sin.cat}" min="0" max="7">
+                          <div id="pecado-cat-selector" class="cat-selector" title="Clique para trocar a categoria">
+                            <img id="pecado-cat-img" src="./assets/cat${sin.cat}.png" alt="CAT ${sin.cat}" class="cat-image">
+                            <div class="cat-arrows">
+                              <button type="button" class="cat-arrow cat-prev">▲</button>
+                              <button type="button" class="cat-arrow cat-next">▼</button>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -700,9 +706,22 @@ function _attachPecadoListeners(sin, maxExecution) {
     saveCurrentSin();
   });
 
-  // CAT Input
-  screen.querySelector("#pecado-cat")?.addEventListener("input", e => {
-    sin.cat = Math.max(0, Math.min(7, parseInt(e.target.value) || 0));
+  // CAT Selector
+  screen.querySelector("#pecado-cat-selector")?.addEventListener("click", e => {
+    let newCat = sin.cat;
+    if (e.target.closest(".cat-prev")) {
+      newCat = Math.min(7, newCat + 1);
+    } else if (e.target.closest(".cat-next")) {
+      newCat = Math.max(1, newCat - 1);
+    } else {
+      return;
+    }
+    sin.cat = newCat;
+    const img = document.getElementById("pecado-cat-img");
+    if (img) {
+      img.src = `./assets/cat${newCat}.png`;
+      img.alt = `CAT ${newCat}`;
+    }
     saveCurrentSin();
     // Re-render execution value displaying maximum cuts
     const valSpan = document.getElementById("execution-value");

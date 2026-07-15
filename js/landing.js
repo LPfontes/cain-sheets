@@ -117,6 +117,7 @@ export function initLandingScreen() {
 }
 
 export function showLandingScreen(restore = true) {
+  el.btnExportJson.disabled = true;
   landingScreen.classList.remove("hidden");
   el.wizardScreen.classList.add("hidden");
   el.sheetScreen.classList.add("hidden");
