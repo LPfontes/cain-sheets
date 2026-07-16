@@ -128,7 +128,7 @@
   "sombra": {
     "name": "Sombra",
     "desc": "Ao escolher esta agenda, escolha outro personagem para ser seu rival.",
-    "icon": "./assets/agendas/icons/sombra.webp",
+    "icon": "./assets/agendas/icons/Sombra.webp",
     "normal": ["Ofusque seu rival"],
     "bold": ["Deixe seu rival ofuscar você"],
     "habilidades": [
@@ -170,7 +170,7 @@
   "demonio": {
     "name": "Demônio",
     "desc": "Você pode usar scrip como pontos de kit.",
-    "icon": "./assets/agendas/icons/demonio.webp",
+    "icon": "./assets/agendas/icons/Demonio.webp",
     "normal": ["Enriqueça-se"],
     "bold": ["Doe algo valioso"],
     "habilidades": [
