@@ -1,0 +1,846 @@
+            :root {
+                --crimson: #c1121f;
+                --ink: #0a0a0a;
+                --font-body:
+                    "Source Sans 3", "Acumin Pro", "Helvetica Neue", system-ui,
+                    sans-serif;
+                --font-detail: "Grenze Gotisch", "Cuasigothic", Georgia, serif;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                height: 100%;
+                margin: 0;
+            }
+            body {
+                background: #000;
+                color: #eee;
+                font-family: var(--font-body);
+                overflow: hidden;
+                user-select: none;
+                -webkit-user-select: none;
+            }
+
+            /* ---- background layers ---- */
+            #bg {
+                position: fixed;
+                inset: 0;
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                z-index: 0;
+                transition: opacity 0.4s ease;
+            }
+            #bgdim {
+                position: fixed;
+                inset: 0;
+                z-index: 1;
+                pointer-events: none;
+                background: radial-gradient(
+                    ellipse at center,
+                    rgba(0, 0, 0, 0.45) 0%,
+                    rgba(0, 0, 0, 0.78) 100%
+                );
+            }
+            /* faint blood vignette */
+            #vig {
+                position: fixed;
+                inset: 0;
+                z-index: 1;
+                pointer-events: none;
+                box-shadow: inset 0 0 220px 40px rgba(120, 0, 0, 0.3);
+            }
+
+            /* ---- stage where talismans live ---- */
+            #stage {
+                position: fixed;
+                inset: 0;
+                z-index: 5;
+            }
+
+            /* ---- bottom-right detail decoration ---- */
+            #detail {
+                position: fixed;
+                right: 0;
+                bottom: 0;
+                z-index: 2;
+                max-height: 34vh;
+                max-width: 32vw;
+                opacity: 0.82;
+                pointer-events: auto;
+                cursor: pointer;
+                filter: drop-shadow(0 0 18px rgba(0, 0, 0, 0.8));
+                transition: opacity 0.3s ease;
+            }
+            #detail:hover {
+                opacity: 1;
+            }
+
+            /* ---- toolbar ---- */
+            #bar {
+                position: fixed;
+                top: 14px;
+                left: 14px;
+                z-index: 50;
+                display: flex;
+                gap: 8px;
+                align-items: flex-start;
+                flex-wrap: wrap;
+                opacity: 0.72;
+                transition: opacity 0.4s ease;
+            }
+            /* dim the toolbar until it's hovered (or a menu/help panel is open) */
+            #bar:hover,
+            #bar.menuopen {
+                opacity: 1;
+            }
+            .btn {
+                background: rgba(15, 15, 15, 0.82);
+                color: #e8e8e8;
+                border: 1px solid #3a3a3a;
+                border-radius: 4px;
+                padding: 8px 12px;
+                font-family: inherit;
+                font-size: 13px;
+                letter-spacing: 0.04em;
+                cursor: pointer;
+                backdrop-filter: blur(3px);
+                transition:
+                    border-color 0.15s,
+                    background 0.15s,
+                    color 0.15s;
+            }
+            .btn:hover {
+                border-color: var(--crimson);
+                color: #fff;
+                background: rgba(40, 8, 10, 0.9);
+            }
+            .btn.accent {
+                border-color: #5a1418;
+            }
+
+            #bgwrap {
+                position: relative;
+            }
+            #bgmenu {
+                position: absolute;
+                top: 42px;
+                left: 0;
+                background: rgba(12, 12, 12, 0.94);
+                border: 1px solid #3a3a3a;
+                border-radius: 6px;
+                padding: 10px;
+                width: 300px;
+                display: none;
+                backdrop-filter: blur(5px);
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+            }
+            #bgmenu.open {
+                display: block;
+            }
+            #bgmenu .row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            #bgmenu .thumb {
+                width: 80px;
+                height: 54px;
+                object-fit: cover;
+                border: 1px solid #444;
+                border-radius: 4px;
+                cursor: pointer;
+                transition:
+                    border-color 0.15s,
+                    transform 0.12s;
+            }
+            #bgmenu .thumb:hover {
+                border-color: var(--crimson);
+                transform: scale(1.04);
+            }
+            #bgmenu .thumb.sel {
+                border-color: var(--crimson);
+                box-shadow: 0 0 0 2px rgba(193, 18, 31, 0.5);
+            }
+            #bgmenu .none {
+                width: 80px;
+                height: 54px;
+                border: 1px dashed #555;
+                border-radius: 4px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 11px;
+                color: #999;
+            }
+            #bgmenu .none:hover {
+                border-color: var(--crimson);
+                color: #fff;
+            }
+            #bgmenu label {
+                display: block;
+                font-size: 11px;
+                color: #aaa;
+                margin: 10px 0 4px;
+            }
+            #bgmenu input[type="range"] {
+                width: 100%;
+                accent-color: var(--crimson);
+            }
+            #bgmenu .fitrow {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+            #bgmenu .fitrow button {
+                flex: 1 1 28%;
+                padding: 6px 4px;
+                font-size: 11px;
+                font-family: inherit;
+                letter-spacing: 0.02em;
+                background: rgba(20, 20, 20, 0.85);
+                color: #cfcfcf;
+                border: 1px solid #3a3a3a;
+                border-radius: 4px;
+                cursor: pointer;
+                transition:
+                    border-color 0.15s,
+                    background 0.15s,
+                    color 0.15s;
+            }
+            #bgmenu .fitrow button:hover {
+                border-color: var(--crimson);
+                color: #fff;
+            }
+            #bgmenu .fitrow button.sel {
+                border-color: var(--crimson);
+                background: rgba(70, 10, 12, 0.92);
+                color: #fff;
+            }
+
+            /* ---- talisman card ---- */
+            /* No z-index on .card on purpose: cards must NOT form their own stacking
+     context, so every .strip (z-index:2) paints above every .label (z-index:1)
+     globally — a label can never cover an adjacent talisman's clickable area.
+     Front-to-back ordering among cards is handled by DOM order (see bringFront). */
+            .card {
+                position: absolute;
+                display: flex;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .strip {
+                position: relative;
+                cursor: grab;
+                flex: 0 0 auto;
+                z-index: 2;
+            }
+            .strip.grabbing {
+                cursor: grabbing;
+            }
+            .strip img.paper {
+                display: block;
+                height: var(--h, 520px);
+                width: auto;
+                -webkit-user-drag: none;
+                pointer-events: none;
+                filter: drop-shadow(3px 6px 10px rgba(0, 0, 0, 0.75));
+            }
+            .strip.cut {
+                animation: shake 0.26s cubic-bezier(0.25, 0.5, 0.3, 1);
+            }
+            /* the knife lands: a hard perpendicular jolt that rings down */
+            @keyframes shake {
+                0% {
+                    transform: translate(0, 0);
+                }
+                12% {
+                    transform: translate(-5px, 3px) rotate(-1.2deg);
+                }
+                32% {
+                    transform: translate(4px, -2px) rotate(0.9deg);
+                }
+                55% {
+                    transform: translate(-2px, 1px) rotate(-0.45deg);
+                }
+                78% {
+                    transform: translate(1px, -1px) rotate(0.2deg);
+                }
+                100% {
+                    transform: translate(0, 0);
+                }
+            }
+
+            /* slash counter near the top, just after the art — count / target (N) */
+            .num {
+                position: absolute;
+                top: 12%;
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                align-items: baseline;
+                justify-content: center;
+                font-family: var(--font-detail);
+                font-size: 24px;
+                font-weight: 600;
+                color: #7c0a11;
+                line-height: 1;
+                text-shadow:
+                    0 0 3px rgba(255, 255, 255, 0.95),
+                    0 0 2px rgba(255, 255, 255, 0.95);
+                z-index: 5;
+                white-space: nowrap;
+                padding: 1px 3px;
+                border-radius: 3px;
+            }
+            .num .count {
+                font-size: 30px;
+            }
+            .num .sep {
+                opacity: 0.65;
+                margin: 0 2px;
+                font-weight: 400;
+            }
+            .num .target {
+                outline: none;
+                cursor: text;
+                min-width: 0.7em;
+                text-align: left;
+                border-radius: 3px;
+                padding: 0 2px;
+            }
+            .num .target:hover {
+                background: rgba(255, 255, 255, 0.35);
+            }
+            .num .target:focus {
+                background: rgba(255, 255, 255, 0.6);
+                color: #a00;
+            }
+            .num .target:empty:not(:focus):before {
+                content: "—";
+                color: #7c0a11;
+                opacity: 0.45;
+            }
+
+            /* slash overlay layer */
+            .slashes {
+                position: absolute;
+                inset: 0;
+                pointer-events: none;
+                z-index: 4;
+                overflow: visible;
+            }
+            svg.slash {
+                position: absolute;
+                overflow: visible;
+                will-change: transform;
+            }
+            /* the instant a cut lands it burns hot-bright, then cools to plain red */
+            svg.slash.fresh {
+                animation: slashflash 0.45s cubic-bezier(0.2, 0.6, 0.3, 1);
+            }
+            @keyframes slashflash {
+                0% {
+                    filter: brightness(2.1) saturate(1.4)
+                        drop-shadow(0 0 8px rgba(255, 60, 30, 0.9));
+                }
+                100% {
+                    filter: brightness(1) saturate(1)
+                        drop-shadow(0 0 0 rgba(255, 60, 30, 0));
+                }
+            }
+
+            /* text label next to talisman — shrinks to its content so a word or two
+     stays tiny; sits BELOW strips (z-index:1) so it never blocks clicks. */
+            .label {
+                position: relative;
+                z-index: 1;
+                align-self: flex-start;
+                /* offset relative to the strip HEIGHT (--h), not a % — a % margin
+                   resolves against the card's WIDTH, so the label crept downward
+                   as the box widened while typing. */
+                margin-top: calc(var(--h, 520px) * 0.11);
+                width: max-content;
+                max-width: 190px;
+                max-height: 62vh;
+                overflow-y: auto;
+                color: #f2f2f2;
+                font-size: 15px;
+                line-height: 1.4;
+                white-space: pre-wrap;
+                overflow-wrap: anywhere;
+                outline: none;
+                cursor: text;
+                text-shadow:
+                    0 1px 4px #000,
+                    0 0 8px rgba(0, 0, 0, 0.85);
+                border-left: 2px solid rgba(193, 18, 31, 0);
+                padding-left: 0;
+                transition:
+                    border-color 0.2s,
+                    padding-left 0.2s;
+            }
+            .label:hover,
+            .label:focus {
+                border-left-color: rgba(193, 18, 31, 0.7);
+                padding-left: 8px;
+            }
+            /* when empty, collapse to a small unobtrusive mark instead of a wide hint */
+            .label:empty {
+                width: 1.1em;
+                opacity: 0.85;
+            }
+            .label:empty:before {
+                content: "✎";
+                color: #5a5a5a;
+                font-size: 13px;
+            }
+            .label:empty:hover,
+            .label:empty:focus {
+                width: max-content;
+            }
+            .label:empty:hover:before,
+            .label:empty:focus:before {
+                content: attr(data-placeholder);
+                color: #8a8a8a;
+            }
+
+            /* per-card hover controls */
+            /* controls float just ABOVE the top of the talisman (clear of the seal art
+     and the label). The whole box stays pointer-active even while invisible, so
+     simply mousing into the airspace where the buttons live reveals them — no
+     need to touch the talisman first. Generous padding fattens that hover
+     target and bridges the gap down to the strip so they never flicker away. */
+            .ctrls {
+                position: absolute;
+                bottom: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                gap: 5px;
+                padding: 12px 18px 8px;
+                opacity: 0;
+                transition: opacity 0.15s;
+                z-index: 7;
+                pointer-events: auto;
+            }
+            .card:hover .ctrls {
+                opacity: 1;
+            }
+            /* invisible buttons must not be clickable — they arm only once shown */
+            .ctrls button {
+                pointer-events: none;
+                width: 22px;
+                height: 22px;
+                border-radius: 50%;
+                border: 1px solid #444;
+                background: rgba(15, 15, 15, 0.9);
+                color: #ddd;
+                cursor: pointer;
+                font-size: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0;
+                line-height: 1;
+            }
+            .card:hover .ctrls button {
+                pointer-events: auto;
+            }
+            .ctrls button:hover {
+                border-color: var(--crimson);
+                color: #fff;
+                background: #2a0809;
+            }
+
+            /* ---- resolved (filled) state: the ✕ becomes ✓, counter pulses amber ---- */
+            .ctrls button.resolved {
+                border-color: #b8860b;
+                color: #ffd56b;
+                background: rgba(40, 28, 4, 0.92);
+            }
+            .ctrls button.resolved:hover {
+                border-color: #ffcc4d;
+                color: #fff;
+                background: #3a2a06;
+            }
+
+            /* ---- bottom-right resize grip: generous invisible hotspot with a
+     faint corner bracket that appears while hovering the card ---- */
+            .rsz {
+                position: absolute;
+                right: -7px;
+                bottom: -7px;
+                width: 20px;
+                height: 20px;
+                cursor: nwse-resize;
+                z-index: 5;
+            }
+            .rsz:after {
+                content: "";
+                position: absolute;
+                right: 7px;
+                bottom: 7px;
+                width: 13px;
+                height: 13px;
+                /* dark dog-ear triangle so it reads on the white paper */
+                background: linear-gradient(
+                    to top left,
+                    rgba(25, 22, 20, 0.6) 50%,
+                    transparent 50%
+                );
+                opacity: 0;
+                transition: opacity 0.15s;
+            }
+            .card:hover .rsz:after {
+                opacity: 0.5;
+            }
+            .rsz:hover:after {
+                opacity: 1;
+            }
+            .card.filled .num {
+                animation: fullpulse 1.8s ease-in-out infinite;
+            }
+            @keyframes fullpulse {
+                0%,
+                100% {
+                    text-shadow:
+                        0 0 3px rgba(255, 255, 255, 0.95),
+                        0 0 2px rgba(255, 255, 255, 0.95);
+                }
+                50% {
+                    text-shadow:
+                        0 0 7px rgba(255, 205, 90, 0.95),
+                        0 0 14px rgba(255, 165, 40, 0.7),
+                        0 0 2px rgba(255, 255, 255, 0.95);
+                }
+            }
+
+            /* ---- dramatic deletion: rip (unfilled) / burn (filled) ---- */
+            .card.leaving .label {
+                transition: opacity 0.35s ease;
+                opacity: 0;
+                pointer-events: none;
+            }
+            .rip,
+            .burnwrap {
+                position: absolute;
+                left: 0;
+                top: 0;
+                pointer-events: none;
+                z-index: 8;
+            }
+
+            /* ====== rip: violent tear into ribbons + flying paper scraps ====== */
+            /* the ribbon falls (ripfall) and lends perspective to its slice; the
+     slice inside carries the jagged clip AND the spin, so the torn shape
+     itself turns in the air */
+            .ribbon {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                transform-origin: 50% 0%;
+                perspective: 520px;
+                will-change: transform, opacity;
+                animation: ripfall var(--dur, 1s)
+                    cubic-bezier(0.36, 0.06, 0.32, 1) forwards;
+            }
+            .rslice {
+                position: absolute;
+                inset: 0;
+                will-change: transform;
+                animation: ribbonspin var(--fsp, 0.7s) linear
+                    var(--fdl, 0.15s) infinite;
+            }
+            .rslice > .strip {
+                cursor: default;
+            }
+            /* each falling strip spins steadily about its own long axis — flat to
+     the camera, then edge-on, then flat — like a dropped paper streamer.
+     The start delay (--fdl) keeps the strip reading as whole at the crack. */
+            @keyframes ribbonspin {
+                from {
+                    transform: rotateY(0turn);
+                }
+                to {
+                    transform: rotateY(var(--fdir, 1turn));
+                }
+            }
+            /* crack apart (16%), hang together a beat, then tumble down and fade */
+            @keyframes ripfall {
+                0% {
+                    transform: translate(0, 0) rotate(0deg);
+                    opacity: 1;
+                }
+                16% {
+                    transform: translate(var(--spread, 0), -12px)
+                        rotate(calc(var(--rot) * 0.12));
+                    opacity: 1;
+                }
+                66% {
+                    opacity: 1;
+                }
+                100% {
+                    transform: translate(var(--dx), var(--dy)) rotate(var(--rot));
+                    opacity: 0;
+                }
+            }
+            /* small paper scraps that burst from the tear (match the strip's white) */
+            .shard {
+                position: absolute;
+                z-index: 9;
+                will-change: transform, opacity;
+                background: linear-gradient(
+                    135deg,
+                    #f6f5f1 0%,
+                    #dbd8d0 55%,
+                    #b8b4a8 100%
+                );
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+                animation: shardfly var(--sd, 0.85s)
+                    cubic-bezier(0.16, 0.7, 0.3, 1) forwards;
+            }
+            @keyframes shardfly {
+                0% {
+                    opacity: 1;
+                    transform: translate(0, 0) rotate(0deg) scale(1);
+                }
+                100% {
+                    opacity: 0;
+                    transform: translate(var(--sx), var(--sy)) rotate(var(--sr))
+                        scale(0.35);
+                }
+            }
+            .tearflash {
+                position: absolute;
+                inset: -12%;
+                z-index: 10;
+                pointer-events: none;
+                mix-blend-mode: screen;
+                background: radial-gradient(
+                    circle at 50% 45%,
+                    rgba(255, 240, 210, 0.9) 0%,
+                    rgba(255, 255, 255, 0) 65%
+                );
+                animation: tearflash 0.28s ease-out forwards;
+            }
+            @keyframes tearflash {
+                0% {
+                    opacity: 0;
+                    transform: scale(0.5);
+                }
+                22% {
+                    opacity: 1;
+                }
+                100% {
+                    opacity: 0;
+                    transform: scale(1.5);
+                }
+            }
+
+            /* ====== burn: bottom-up dissolve, driven frame-by-frame from JS ====== */
+            /* the mask reads an inline --burn that the rAF loop updates every frame;
+               filter (live heat warp) and transform (violent flutter) are set inline */
+            .burnwrap > .strip {
+                --burn: -16%;
+                transform-origin: 50% 12%;
+                will-change: transform, filter;
+                -webkit-mask-image: linear-gradient(
+                    to top,
+                    transparent var(--burn),
+                    #000 calc(var(--burn) + 8%)
+                );
+                mask-image: linear-gradient(
+                    to top,
+                    transparent var(--burn),
+                    #000 calc(var(--burn) + 8%)
+                );
+            }
+            /* charred scorch riding just above the burn line — lives INSIDE the
+               masked paper clone so it inherits the mask and every transform */
+            .char {
+                position: absolute;
+                left: -4%;
+                width: 108%;
+                height: 26px;
+                background: linear-gradient(
+                    to top,
+                    rgba(15, 8, 5, 0.98) 0%,
+                    rgba(52, 26, 13, 0.75) 40%,
+                    rgba(90, 50, 25, 0.3) 70%,
+                    transparent 100%
+                );
+                mix-blend-mode: multiply;
+                filter: blur(1px);
+                z-index: 6;
+                pointer-events: none;
+            }
+            /* the burning front: a thick, flickering band of fire */
+            .flame {
+                position: absolute;
+                left: -6%;
+                width: 112%;
+                height: 30px;
+                transform: translateY(-50%);
+                background: radial-gradient(
+                    ellipse 60% 135% at 50% 45%,
+                    #fff7cc 0%,
+                    #ffd24a 20%,
+                    #ff8a1e 44%,
+                    #ff3a0a 62%,
+                    rgba(150, 20, 0, 0) 82%
+                );
+                box-shadow: 0 -5px 12px 2px rgba(20, 5, 0, 0.9);
+                filter: blur(2px) brightness(1.4);
+                mix-blend-mode: screen;
+                z-index: 3;
+                opacity: 0;
+                pointer-events: none;
+            }
+            /* white-hot fast sparks */
+            .spark {
+                position: absolute;
+                border-radius: 50%;
+                background: radial-gradient(
+                    circle,
+                    #fffbe8 0%,
+                    #ffd27a 45%,
+                    rgba(255, 140, 30, 0) 75%
+                );
+                box-shadow: 0 0 6px 1px rgba(255, 200, 90, 0.9);
+                mix-blend-mode: screen;
+                opacity: 0;
+                z-index: 5;
+                will-change: transform, opacity;
+                animation: sparkfly var(--ad, 0.6s) ease-out var(--adl, 0s) forwards;
+            }
+            @keyframes sparkfly {
+                0% {
+                    opacity: 0;
+                    transform: translate(0, 0) scale(1);
+                }
+                12% {
+                    opacity: 1;
+                }
+                100% {
+                    opacity: 0;
+                    transform: translate(var(--ax, 0), var(--ay, -160px)) scale(0.2);
+                }
+            }
+            /* slower orange embers that flutter up */
+            .ember {
+                position: absolute;
+                border-radius: 50%;
+                background: radial-gradient(
+                    circle,
+                    #ffe6a0 0%,
+                    #ff8a2a 50%,
+                    rgba(255, 80, 0, 0) 78%
+                );
+                box-shadow: 0 0 5px 1px rgba(255, 140, 40, 0.7);
+                mix-blend-mode: screen;
+                opacity: 0;
+                z-index: 4;
+                will-change: transform, opacity;
+                animation: emberfly var(--ad, 1s) ease-out var(--adl, 0s) forwards;
+            }
+            @keyframes emberfly {
+                0% {
+                    opacity: 0;
+                    transform: translate(0, 0) scale(1) rotate(0deg);
+                }
+                15% {
+                    opacity: 0.95;
+                }
+                100% {
+                    opacity: 0;
+                    transform: translate(var(--ax, 0), var(--ay, -120px)) scale(0.3)
+                        rotate(140deg);
+                }
+            }
+            /* drifting smoke */
+            .smoke {
+                position: absolute;
+                border-radius: 50%;
+                background: radial-gradient(
+                    circle,
+                    rgba(120, 110, 100, 0.5) 0%,
+                    rgba(60, 55, 50, 0) 70%
+                );
+                opacity: 0;
+                z-index: 2;
+                will-change: transform, opacity;
+                animation: smokerise var(--ad, 1.2s) ease-out var(--adl, 0s) forwards;
+            }
+            @keyframes smokerise {
+                0% {
+                    opacity: 0;
+                    transform: translate(0, 0) scale(0.5);
+                }
+                25% {
+                    opacity: 0.5;
+                }
+                100% {
+                    opacity: 0;
+                    transform: translate(var(--ax, 0), var(--ay, -100px)) scale(2.2);
+                }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .card.filled .num {
+                    animation: none;
+                }
+                .strip.cut,
+                svg.slash.fresh {
+                    animation: none;
+                }
+            }
+
+            #help {
+                position: relative;
+            }
+            #helpBtn {
+                cursor: help;
+                font-weight: 700;
+            }
+            #helpPanel {
+                position: absolute;
+                top: calc(100% + 6px);
+                right: 0;
+                width: 440px;
+                background: rgba(12, 12, 12, 0.94);
+                border: 1px solid #3a3a3a;
+                border-radius: 6px;
+                padding: 12px 14px;
+                font-size: 12px;
+                color: #bbb;
+                line-height: 1.75;
+                opacity: 0;
+                pointer-events: none;
+                transform: translateY(-6px);
+                transition:
+                    opacity 0.18s ease,
+                    transform 0.18s ease;
+                backdrop-filter: blur(5px);
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+            }
+            #help:hover #helpPanel {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            #helpPanel b {
+                color: #c98;
+                font-weight: 400;
+            }
+            #helpPanel .credit {
+                margin-top: 8px;
+                padding-top: 8px;
+                border-top: 1px solid #333;
+                color: #888;
+                font-size: 11px;
+                line-height: 1.5;
+            }

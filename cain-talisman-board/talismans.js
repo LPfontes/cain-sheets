@@ -1,0 +1,1384 @@
+            const ROOT = "reference/";
+            // These curated lists are the fallback used when the page is opened
+            // as a plain file:// document (browsers block folder listing there).
+            // Served through the launcher's local web server, loadFolders() below
+            // replaces them with a live read of the folders, so images you drop
+            // into reference/{talismans,details,backgrounds} show up on refresh.
+            let TALISMANS = [
+                "CAIN_1.4-0471-p079.png",
+                "CAIN_1.4-0505-p081.png",
+                "CAIN_1.4-0506-p081.png",
+                "CAIN_1.4-0507-p081.png",
+                "CAIN_1.4-0508-p081.png",
+                "CAIN_1.4-0509-p081.png",
+                "CAIN_1.4-0510-p081.png",
+                "CAIN_1.4-0512-p081.png",
+                "CAIN_1.4-0513-p081.png",
+                "CAIN_1.4-0531-p081.png",
+                "empty.png",
+            ].map((f) => ROOT + "talismans/" + f);
+
+            let DETAILS = [
+                "CAIN_1.4-0007-p006.png",
+                "CAIN_1.4-0009-p006.png",
+                "CAIN_1.4-0010-p006.png",
+                "CAIN_1.4-0023-p009.png",
+                "CAIN_1.4-0086-p020.png",
+                "CAIN_1.4-0147-p027.png",
+                "CAIN_1.4-0152-p028.png",
+                "CAIN_1.4-0188-p031.png",
+                "CAIN_1.4-0197-p031.png",
+                "CAIN_1.4-0216-p034.png",
+                "CAIN_1.4-0218-p034.png",
+                "CAIN_1.4-0242-p036.png",
+                "CAIN_1.4-0243-p036.png",
+                "CAIN_1.4-0256-p037.png",
+                "CAIN_1.4-0273-p038.png",
+                "CAIN_1.4-0320-p046.png",
+                "CAIN_1.4-0428-p071.png",
+                "CAIN_1.4-0429-p071.png",
+                "CAIN_1.4-0430-p071.png",
+                "CAIN_1.4-0431-p071.png",
+                "CAIN_1.4-0457-p078.png",
+                "gamesforfreaks_issue2.3-0138-p016.png",
+            ].map((f) => ROOT + "details/" + f);
+
+            let BACKGROUNDS = [
+                "CAIN_1.4-0436-p073.webp",
+                "gamesforfreaks_issue1.3-0063-p010.webp",
+                "gamesforfreaks_issue3.1-0118-p017.webp",
+                "gamesforfreaks_issue3.1-0218-p023.webp",
+            ].map((f) => ROOT + "backgrounds/" + f);
+
+            /* ---------- live folder loading (served over http) ----------
+               When the page is opened through the local server, the browser
+               can fetch a directory and get an auto-generated index listing.
+               We parse the <a href> links, keep the images, and use them in
+               place of the curated arrays. On file:// the fetch throws and we
+               silently keep the fallback lists, so double-clicking still works. */
+            const IMG_RE = /\.(png|jpe?g|gif|webp|svg|avif|bmp)$/i;
+            // files living in a folder that should NOT be offered as choices
+            const FOLDER_EXCLUDE = {
+                talismans: new Set(["slashes.png"]), // the reference image, not a strip
+            };
+            async function listDir(sub) {
+                try {
+                    const res = await fetch(ROOT + sub + "/", {
+                        cache: "no-store",
+                    });
+                    if (!res.ok) return null;
+                    if (!/html/i.test(res.headers.get("content-type") || ""))
+                        return null;
+                    const doc = new DOMParser().parseFromString(
+                        await res.text(),
+                        "text/html",
+                    );
+                    const ex = FOLDER_EXCLUDE[sub] || new Set();
+                    const names = Array.from(doc.querySelectorAll("a[href]"))
+                        .map((a) => a.getAttribute("href") || "")
+                        .filter(
+                            (h) =>
+                                h &&
+                                !h.startsWith("?") &&
+                                !h.startsWith("/") &&
+                                !h.includes("../"),
+                        )
+                        // Caddy prefixes listing entries with "./"; strip it so
+                        // hrefs are bare filenames like python -m http.server's.
+                        .map((h) => h.replace(/\/+$/, "").replace(/^\.\//, ""))
+                        .filter((h) => IMG_RE.test(h))
+                        .filter(
+                            (h) =>
+                                !ex.has(decodeURIComponent(h).split("/").pop()),
+                        );
+                    const uniq = Array.from(new Set(names)).sort((a, b) =>
+                        a.toLowerCase().localeCompare(b.toLowerCase()),
+                    );
+                    return uniq.length
+                        ? uniq.map((h) => ROOT + sub + "/" + h)
+                        : null;
+                } catch (e) {
+                    return null; // file:// or no listing available -> use fallback
+                }
+            }
+            async function loadFolders() {
+                const [tal, det, bg] = await Promise.all([
+                    listDir("talismans"),
+                    listDir("details"),
+                    listDir("backgrounds"),
+                ]);
+                if (tal) TALISMANS = tal;
+                if (det) DETAILS = det;
+                if (bg) BACKGROUNDS = bg;
+            }
+
+            const stage = document.getElementById("stage");
+            const rnd = (a, b) => a + Math.random() * (b - a);
+            const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+            const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
+
+            let state = {
+                cards: [],
+                bg: null,
+                bgDim: 55,
+                bgFit: "cover",
+                detail: null,
+            };
+            let zTop = 10;
+            let nextId = 1;
+            let addOffset = 0;
+
+            /* ---------------- persistence ---------------- */
+            /* one-time migration of saves from the old misspelled keys */
+            try {
+                for (const k of ["cain_talismans", "cain_talismans_userbgs"]) {
+                    const v = localStorage.getItem(
+                        k.replace("talismans", "talismains"),
+                    );
+                    if (v !== null && localStorage.getItem(k) === null)
+                        localStorage.setItem(k, v);
+                }
+            } catch (e) {}
+            function save() {
+                try {
+                    localStorage.setItem(
+                        "cain_talismans",
+                        JSON.stringify(state),
+                    );
+                } catch (e) {}
+            }
+            function load() {
+                try {
+                    const s = JSON.parse(
+                        localStorage.getItem("cain_talismans"),
+                    );
+                    if (s && s.cards) return s;
+                } catch (e) {}
+                return null;
+            }
+
+            /* user-uploaded backgrounds live under their own key so their big
+    data URLs aren't rewritten with every board save; state.bg refers to
+    them as "user:<id>". They exist only in this browser's localStorage. */
+            const USERBG_KEY = "cain_talismans_userbgs";
+            let userBgs = (() => {
+                try {
+                    const a = JSON.parse(localStorage.getItem(USERBG_KEY));
+                    if (Array.isArray(a)) return a;
+                } catch (e) {}
+                return [];
+            })();
+            function saveUserBgs() {
+                try {
+                    localStorage.setItem(USERBG_KEY, JSON.stringify(userBgs));
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            }
+            function userBgSrc(id) {
+                const b = userBgs.find((x) => x.id === id);
+                return b ? b.data : null;
+            }
+            // Downscale + re-encode as JPEG so a phone photo doesn't blow the
+            // ~5MB localStorage quota; backgrounds sit behind a dim layer, so
+            // the quality loss is invisible in practice.
+            async function addUserBg(file) {
+                const obj = URL.createObjectURL(file);
+                try {
+                    const img = await new Promise((res, rej) => {
+                        const i = new Image();
+                        i.onload = () => res(i);
+                        i.onerror = () => rej(new Error("bad image"));
+                        i.src = obj;
+                    });
+                    const MAX = 1920;
+                    const k = Math.min(
+                        1,
+                        MAX / Math.max(img.width, img.height),
+                    );
+                    const cv = document.createElement("canvas");
+                    cv.width = Math.max(1, Math.round(img.width * k));
+                    cv.height = Math.max(1, Math.round(img.height * k));
+                    cv.getContext("2d").drawImage(
+                        img,
+                        0,
+                        0,
+                        cv.width,
+                        cv.height,
+                    );
+                    const id =
+                        Date.now().toString(36) +
+                        Math.random().toString(36).slice(2, 6);
+                    userBgs.push({
+                        id,
+                        data: cv.toDataURL("image/jpeg", 0.82),
+                    });
+                    if (!saveUserBgs()) {
+                        userBgs.pop();
+                        alert(
+                            "No room left in this browser's storage — right-click an uploaded background to remove it, then try again.",
+                        );
+                        return;
+                    }
+                    buildBgMenu();
+                    setBackground("user:" + id);
+                } finally {
+                    URL.revokeObjectURL(obj);
+                }
+            }
+
+            /* ---------------- slash generation ----------------
+       Modeled on the book's slashes (reference/talismans/slashes.png — drawn
+       for a HORIZONTAL talisman, so rotate it 90° to see the intended look on
+       our vertical strips): each slash is a shallow "\" cut, right end dipping
+       ~12–28°, crossing the full strip width — a solid, ragged brush-stroke
+       body (mostly opaque, blunt marker-like ends) with ONE long hairline on
+       the same axis that thins out and breaks into flecks past the tips. All
+       cuts lean the same way and stack down the strip like tally marks.
+       Stored slash geometry carries a version — older saves regenerate on load. */
+            const SLASH_V = 3;
+            const FILTER_VARIANTS = 6;
+
+            // Shared, reusable filters (one set of variants for all slashes — far cheaper
+            // than a turbulence filter per slash). "sltex" = dry-brush texture (streaky
+            // transparency + rough edges) for the thick strokes; "slsharp" = a light
+            // roughen only, keeping the hairlines crisp and continuous.
+            (function injectFilters() {
+                const NS = "http://www.w3.org/2000/svg";
+                const svg = document.createElementNS(NS, "svg");
+                svg.setAttribute("width", "0");
+                svg.setAttribute("height", "0");
+                svg.setAttribute("aria-hidden", "true");
+                svg.style.cssText =
+                    "position:absolute;width:0;height:0;overflow:hidden;";
+                let defs = "";
+                for (let i = 0; i < FILTER_VARIANTS; i++) {
+                    defs += `
+    <filter id="sltex${i}" x="-15%" y="-180%" width="130%" height="460%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="${(0.018 + 0.004 * i).toFixed(3)} ${(0.42 + 0.04 * i).toFixed(3)}" numOctaves="2" seed="${i * 7 + 3}" result="n"/>
+      <feColorMatrix in="n" type="matrix"
+        values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  5 0 0 0 -0.45" result="m"/>
+      <feComposite in="SourceGraphic" in2="m" operator="in" result="tx"/>
+      <feDisplacementMap in="tx" in2="n" scale="3.2" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="slsharp${i}" x="-15%" y="-180%" width="130%" height="460%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="${(0.05 + 0.006 * i).toFixed(3)} 0.18" numOctaves="2" seed="${i * 5 + 1}" result="n"/>
+      <feColorMatrix in="n" type="matrix"
+        values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1.35 0 0 0 -0.18" result="m"/>
+      <feComposite in="SourceGraphic" in2="m" operator="in" result="tx"/>
+      <feDisplacementMap in="tx" in2="n" scale="2" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>`;
+                }
+                svg.innerHTML = `<defs>${defs}</defs>`;
+                document.body.appendChild(svg);
+            })();
+
+            // one tapered "spindle" stroke (filled outline that narrows to sharp tips).
+            // plateauK > 1 turns the smooth taper into a marker-like plateau: the
+            // stroke ramps to full width quickly, stays fat, and ends bluntly.
+            function spindlePath(
+                len,
+                x0,
+                cy,
+                amp,
+                phase,
+                drift,
+                maxHalf,
+                taperPow,
+                plateauK = 1,
+            ) {
+                const segs = 16,
+                    pts = [];
+                for (let i = 0; i <= segs; i++) {
+                    const t = i / segs;
+                    const x = x0 + t * len;
+                    const y =
+                        cy +
+                        Math.sin(t * Math.PI * 1.15 + phase) * amp +
+                        drift * (t - 0.5) * 2;
+                    pts.push([x, y, t]);
+                }
+                const c01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
+                const half = (t) =>
+                    maxHalf *
+                    Math.pow(
+                        Math.min(1, Math.sin(Math.PI * c01(t)) * plateauK),
+                        taperPow,
+                    );
+                const top = [],
+                    bot = [];
+                for (let i = 0; i < pts.length; i++) {
+                    const [x, y, t] = pts[i];
+                    const p = pts[Math.max(0, i - 1)],
+                        q = pts[Math.min(pts.length - 1, i + 1)];
+                    let tx = q[0] - p[0],
+                        ty = q[1] - p[1];
+                    const m = Math.hypot(tx, ty) || 1;
+                    tx /= m;
+                    ty /= m;
+                    const nx = -ty,
+                        ny = tx,
+                        hw = half(t);
+                    top.push([x + nx * hw, y + ny * hw]);
+                    bot.push([x - nx * hw, y - ny * hw]);
+                }
+                const ring = top.concat(bot.reverse());
+                let d = `M ${ring[0][0].toFixed(1)} ${ring[0][1].toFixed(1)}`;
+                for (let i = 1; i < ring.length; i++)
+                    d += ` L ${ring[i][0].toFixed(1)} ${ring[i][1].toFixed(1)}`;
+                return d + " Z";
+            }
+
+            const REDS = [
+                "#e60a02",
+                "#ff2a16",
+                "#d40600",
+                "#f5160a",
+                "#c50400",
+            ];
+            // build the bundle: a solid ragged BODY (one or two strokes stacked nearly
+            // on top of each other, mostly opaque, blunt ends) + exactly ONE long thin
+            // hairline through the same axis whose tips thin out and fleck apart.
+            // `len` is the body length; the hairline overshoots it on both ends.
+            function makeSlash(len) {
+                const H = 46,
+                    cy = H / 2;
+                const hairLen = len * rnd(1.3, 1.55);
+                const w = Math.ceil(hairLen) + 24,
+                    cx = w / 2;
+                // near-straight: a whisper of bow, tiny phase jitter (big random
+                // phases made banana/S-curves; the book's cuts are almost straight)
+                const phase = rnd(-0.5, 0.5),
+                    drift = rnd(-1.6, 1.6),
+                    amp = rnd(0.9, 2.0);
+                const baseOff = rnd(-1.2, 1.2); // the whole bundle's centre line
+                const thick = [],
+                    hair = [];
+                // sometimes the brush doubles back: a second body stroke almost on top
+                const nThick = 1 + (Math.random() < 0.35 ? 1 : 0);
+                for (let k = 0; k < nThick; k++) {
+                    const L = len * rnd(0.8, 0.97);
+                    thick.push({
+                        d: spindlePath(
+                            L,
+                            cx - L / 2 + rnd(-len * 0.07, len * 0.07),
+                            cy + baseOff + rnd(-1.0, 1.0),
+                            amp * rnd(0.85, 1.1),
+                            phase + rnd(-0.2, 0.2),
+                            drift,
+                            len * rnd(0.026, 0.034), // fat: width scales with length
+                            0.8,
+                            2.4, // plateau: full width fast, blunt ragged ends
+                        ),
+                        fill: REDS[[0, 2][k % 2]],
+                        opacity: k === 0 ? rnd(0.96, 1) : rnd(0.85, 0.92),
+                    });
+                }
+                // the single hairline: runs the whole cut and well past both ends
+                hair.push({
+                    d: spindlePath(
+                        hairLen,
+                        cx - hairLen / 2,
+                        cy + baseOff + rnd(-1.1, 1.1),
+                        amp * rnd(0.95, 1.1),
+                        phase + rnd(-0.15, 0.15),
+                        drift * rnd(1.0, 1.3),
+                        rnd(0.55, 0.9),
+                        0.55,
+                    ),
+                    fill: REDS[1],
+                    opacity: rnd(0.9, 0.98),
+                });
+                return { thick, hair, w, h: H };
+            }
+            // shallow book-style angle: all cuts lean the same way ("\"), jittered
+            const slashRot = () => rnd(11, 28);
+            // body length crosses the strip with a modest overhang each side
+            const slashLen = (stripW) =>
+                Math.max(80, Math.min(240, stripW * rnd(1.15, 1.5)));
+
+            // build an svg slash element from stored data, positioned at the click point.
+            function buildSlash(data, anim) {
+                const { thick, hair, w, h, left, top, rot, seed } = data;
+                const NS = "http://www.w3.org/2000/svg";
+                const svg = document.createElementNS(NS, "svg");
+                svg.setAttribute("class", "slash");
+                svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
+                svg.style.width = w + "px";
+                svg.style.height = h + "px";
+                svg.style.left = left + "px";
+                svg.style.top = top + "px";
+                svg.style.transform = `translate(-50%,-50%) rotate(${rot}deg)`;
+
+                const v = (seed || 0) % FILTER_VARIANTS;
+                const tp = (thick || [])
+                    .map(
+                        (s) =>
+                            `<path d="${s.d}" fill="${s.fill}" fill-opacity="${s.opacity}"/>`,
+                    )
+                    .join("");
+                const hp = (hair || [])
+                    .map(
+                        (s) =>
+                            `<path d="${s.d}" fill="${s.fill}" fill-opacity="${s.opacity}"/>`,
+                    )
+                    .join("");
+                svg.innerHTML = `<g filter="url(#sltex${v})">${tp}</g><g filter="url(#slsharp${v})">${hp}</g>`;
+
+                if (anim) {
+                    // the "cut": a fast strike revealed left-to-right — with the
+                    // "\" tilt that sweeps down across the strip like a drawn
+                    // knife — burning hot-bright for an instant (.fresh)
+                    svg.style.clipPath = "inset(-90% 102% -90% -8%)";
+                    svg.classList.add("fresh");
+                    svg.getBoundingClientRect();
+                    requestAnimationFrame(() => {
+                        svg.style.transition =
+                            "clip-path .13s cubic-bezier(.3,.1,.2,1)";
+                        svg.style.clipPath = "inset(-90% -8% -90% -8%)";
+                    });
+                }
+                return svg;
+            }
+
+            /* ---------------- card rendering ---------------- */
+            function renderCard(c) {
+                const card = document.createElement("div");
+                card.className = "card";
+                card.style.left = c.x + "px";
+                card.style.top = c.y + "px";
+                card.style.setProperty("--h", (c.h || 520) + "px");
+
+                const strip = document.createElement("div");
+                strip.className = "strip";
+
+                const img = document.createElement("img");
+                img.className = "paper";
+                img.src = c.img;
+                img.alt = "";
+
+                // counter: live slash count "/" editable target N (only N is editable)
+                const num = document.createElement("div");
+                num.className = "num";
+                const countEl = document.createElement("span");
+                countEl.className = "count";
+                countEl.textContent = c.slashes ? c.slashes.length : 0;
+                const sep = document.createElement("span");
+                sep.className = "sep";
+                sep.textContent = "/";
+                const targetEl = document.createElement("span");
+                targetEl.className = "target";
+                targetEl.contentEditable = "plaintext-only";
+                if (c.target == null)
+                    c.target =
+                        c.number != null && c.number !== ""
+                            ? parseInt(c.number, 10) || ""
+                            : "";
+                targetEl.textContent = c.target === 0 ? "0" : c.target || "";
+                targetEl.addEventListener("input", () => {
+                    const v = targetEl.textContent
+                        .replace(/[^0-9]/g, "")
+                        .slice(0, 3);
+                    c.target = v === "" ? "" : parseInt(v, 10);
+                    updateResolveState(card);
+                    save();
+                });
+                // a single click anywhere on the counter starts editing N (the target)
+                num.addEventListener("mousedown", (e) => {
+                    e.stopPropagation();
+                    if (e.target !== targetEl) {
+                        e.preventDefault();
+                        targetEl.focus();
+                        const sel = getSelection(),
+                            rng = document.createRange();
+                        rng.selectNodeContents(targetEl);
+                        rng.collapse(false);
+                        sel.removeAllRanges();
+                        sel.addRange(rng);
+                    }
+                });
+                num.append(countEl, sep, targetEl);
+                card._countEl = countEl;
+
+                const slLayer = document.createElement("div");
+                slLayer.className = "slashes";
+
+                strip.append(img, num, slLayer);
+
+                const label = document.createElement("div");
+                label.className = "label";
+                label.contentEditable = "plaintext-only";
+                label.textContent = c.text || "nome / notas…";
+                label.addEventListener("input", () => {
+                    c.text = label.textContent;
+                    save();
+                });
+                label.addEventListener("mousedown", (e) => e.stopPropagation());
+
+                const ctrls = document.createElement("div");
+                ctrls.className = "ctrls";
+                const swapB = document.createElement("button");
+                swapB.textContent = "↻";
+                swapB.title = "swap art";
+                const delB = document.createElement("button");
+                delB.textContent = "✕";
+                delB.title = "delete";
+                card._delB = delB;
+                ctrls.append(swapB, delB);
+                // the ctrls box is always pointer-active (hover affordance), so a
+                // click in its padding must not fall through and carve a slash
+                ctrls.addEventListener("mousedown", (e) => e.stopPropagation());
+                swapB.addEventListener("mousedown", (e) => e.stopPropagation());
+                delB.addEventListener("mousedown", (e) => e.stopPropagation());
+                swapB.addEventListener("click", () => {
+                    let n;
+                    do {
+                        n = pick(TALISMANS);
+                    } while (n === c.img && TALISMANS.length > 1);
+                    c.img = n;
+                    img.src = n;
+                    save();
+                });
+                delB.addEventListener("click", () => {
+                    dissolveCard(card, c, strip);
+                });
+
+                // controls live inside the strip so they stay centred over the talisman
+                // (not the card+label), keeping them clear of the label's ✎ on thin strips
+                strip.appendChild(ctrls);
+                const rsz = document.createElement("div");
+                rsz.className = "rsz";
+                rsz.title = "drag to resize";
+                strip.appendChild(rsz);
+                card._rsz = rsz;
+                card.append(strip, label);
+                card._data = c;
+                card._strip = strip;
+                card._slLayer = slLayer;
+
+                // restore existing slashes; regenerate anything from an older
+                // geometry version (keeps position, re-rolls the shape/angle)
+                (c.slashes || []).forEach((sd, idx) => {
+                    if (sd && sd.v !== SLASH_V) {
+                        // strip may not be laid out yet; fall back to the
+                        // talisman art's ~0.22 width:height aspect
+                        const g = makeSlash(
+                            slashLen(
+                                strip.clientWidth || (c.h || 520) * 0.22,
+                            ),
+                        );
+                        sd = Object.assign({}, sd, {
+                            v: SLASH_V,
+                            thick: g.thick,
+                            hair: g.hair,
+                            w: g.w,
+                            h: g.h,
+                            rot: slashRot(),
+                        });
+                        delete sd.d;
+                        delete sd.cd;
+                        if (sd.left == null)
+                            sd.left = (strip.clientWidth || 78) / 2;
+                        if (sd.top == null) sd.top = (c.h || 520) * 0.5;
+                        if (sd.seed == null)
+                            sd.seed = Math.floor(rnd(1, 999999));
+                        c.slashes[idx] = sd;
+                    }
+                    slLayer.appendChild(buildSlash(sd, false));
+                });
+
+                updateResolveState(card);
+                wireInteractions(card, c, strip, slLayer);
+                stage.appendChild(card); // DOM order = stacking order (cards carry no z-index)
+                return card;
+            }
+
+            // Bring a card to the front by moving it to the end of the stage's DOM.
+            // Cards have no z-index, so later-in-DOM = painted on top. c.z is kept only
+            // so the stack order can be restored on reload.
+            function bringFront(card) {
+                const c = card._data;
+                c.z = ++zTop;
+                if (stage.lastElementChild !== card) stage.appendChild(card);
+                save();
+            }
+
+            /* ---------------- interactions: drag / slash / resize ---------------- */
+            function wireInteractions(card, c, strip, slLayer) {
+                let down = null,
+                    dragging = false;
+
+                strip.addEventListener("mousedown", (e) => {
+                    if (e.button !== 0) return;
+                    down = { x: e.clientX, y: e.clientY, ox: c.x, oy: c.y };
+                    dragging = false;
+                    bringFront(card);
+                    strip.classList.add("grabbing");
+                    e.preventDefault();
+                });
+
+                window.addEventListener("mousemove", (e) => {
+                    if (!down) return;
+                    const dx = e.clientX - down.x,
+                        dy = e.clientY - down.y;
+                    if (!dragging && Math.hypot(dx, dy) > 4) dragging = true;
+                    if (dragging) {
+                        c.x = down.ox + dx;
+                        c.y = down.oy + dy;
+                        card.style.left = c.x + "px";
+                        card.style.top = c.y + "px";
+                    }
+                });
+
+                window.addEventListener("mouseup", (e) => {
+                    if (!down) return;
+                    strip.classList.remove("grabbing");
+                    const wasDrag = dragging;
+                    down = null;
+                    if (wasDrag) {
+                        save();
+                        return;
+                    }
+                    // it was a click -> carve a slash at the cursor position
+                    if (e.button === 0) addSlash(c, card, e);
+                });
+
+                // right-click removes the most recent slash
+                strip.addEventListener("contextmenu", (e) => {
+                    e.preventDefault();
+                    removeSlash(c, card);
+                });
+
+                // ctrl/cmd + wheel resizes
+                card.addEventListener(
+                    "wheel",
+                    (e) => {
+                        if (!(e.ctrlKey || e.metaKey)) return;
+                        e.preventDefault();
+                        c.h = Math.max(
+                            160,
+                            Math.min(760, (c.h || 520) - e.deltaY * 0.4),
+                        );
+                        card.style.setProperty("--h", c.h + "px");
+                        save();
+                    },
+                    { passive: false },
+                );
+
+                // dragging the corner grip resizes too. Width follows the art's
+                // aspect, so the vertical cursor travel drives the height 1:1.
+                let rs = null;
+                card._rsz.addEventListener("mousedown", (e) => {
+                    if (e.button !== 0) return;
+                    e.stopPropagation();
+                    e.preventDefault();
+                    rs = { y: e.clientY, oh: c.h || 520 };
+                    bringFront(card);
+                    document.body.style.cursor = "nwse-resize";
+                });
+                window.addEventListener("mousemove", (e) => {
+                    if (!rs) return;
+                    c.h = Math.max(
+                        160,
+                        Math.min(760, rs.oh + (e.clientY - rs.y)),
+                    );
+                    card.style.setProperty("--h", c.h + "px");
+                });
+                window.addEventListener("mouseup", () => {
+                    if (!rs) return;
+                    rs = null;
+                    document.body.style.cursor = "";
+                    save();
+                });
+            }
+
+            function addSlash(c, card, e) {
+                const strip = card._strip,
+                    slLayer = card._slLayer;
+                const r = strip.getBoundingClientRect();
+                // cut sized to the strip width; soft-clamp the click point so the
+                // solid body always crosses the paper instead of hanging in space
+                const len = slashLen(r.width);
+                const g = makeSlash(len);
+                const rot = slashRot();
+                // vertical half-extent of the tilted body at this angle
+                const vext =
+                    (len * 0.95 * Math.sin((rot * Math.PI) / 180)) / 2;
+                const data = {
+                    v: SLASH_V,
+                    thick: g.thick,
+                    hair: g.hair,
+                    w: g.w,
+                    h: g.h,
+                    left: clamp(
+                        e.clientX - r.left,
+                        r.width * 0.32,
+                        r.width * 0.68,
+                    ),
+                    top: clamp(
+                        e.clientY - r.top,
+                        vext + 6,
+                        r.height - vext - 6,
+                    ),
+                    rot,
+                    seed: Math.floor(rnd(1, 999999)),
+                };
+                c.slashes = c.slashes || [];
+                c.slashes.push(data);
+                slLayer.appendChild(buildSlash(data, true));
+                if (card._countEl) card._countEl.textContent = c.slashes.length;
+                updateResolveState(card);
+                strip.classList.remove("cut");
+                void strip.offsetWidth;
+                strip.classList.add("cut");
+                save();
+            }
+
+            function removeSlash(c, card) {
+                const slLayer = card._slLayer;
+                // ignore slashes already animating out, so every one can be removed
+                const live = Array.from(slLayer.children).filter(
+                    (s) => !s.classList.contains("dying"),
+                );
+                if (!live.length) return;
+                c.slashes.pop();
+                const last = live[live.length - 1];
+                last.classList.add("dying");
+                // un-cut: the wipe retreats back up the stroke the way it came
+                last.style.clipPath = "inset(-90% -8% -90% -8%)";
+                last.getBoundingClientRect();
+                last.style.transition =
+                    "clip-path .18s cubic-bezier(.55,0,.8,.4), opacity .18s ease";
+                last.style.clipPath = "inset(-90% 102% -90% -8%)";
+                last.style.opacity = "0.3";
+                setTimeout(() => last.remove(), 200);
+                if (card._countEl) card._countEl.textContent = c.slashes.length;
+                updateResolveState(card);
+                save();
+            }
+
+            /* ---------- resolve state + dramatic deletion ----------
+               A talisman is "full" once its slash count reaches its target N.
+               Full talismans show a ✓ (resolved) instead of ✕, and delete with a
+               burn-away; unfilled ones tear into ribbons. */
+            function isFilled(c) {
+                const t = parseInt(c.target, 10);
+                const n = c.slashes ? c.slashes.length : 0;
+                return Number.isFinite(t) && t > 0 && n >= t;
+            }
+            function updateResolveState(card) {
+                const c = card._data,
+                    delB = card._delB;
+                if (!delB) return;
+                const filled = isFilled(c);
+                delB.textContent = filled ? "✓" : "✕";
+                delB.title = filled ? "resolve (full)" : "delete";
+                delB.classList.toggle("resolved", filled);
+                card.classList.toggle("filled", filled);
+            }
+
+            const prefersReduced = () =>
+                window.matchMedia &&
+                matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+            // a clone of the strip's visuals (art + counter + slashes), minus controls.
+            // The clone must be visible even if the source strip was already hidden —
+            // cloneNode copies inline style, and an inherited visibility:hidden here
+            // is what made every rip ribbon render as nothing.
+            function cloneStripVisual(strip) {
+                const clone = strip.cloneNode(true);
+                clone.classList.remove("cut", "grabbing");
+                clone.style.visibility = "";
+                const cc = clone.querySelector(".ctrls");
+                if (cc) cc.remove();
+                return clone;
+            }
+
+            function dissolveCard(card, c, strip) {
+                if (card._leaving) return;
+                card._leaving = true;
+                // detach from state now so a reload mid-animation won't resurrect it;
+                // the DOM node lingers only until its animation ends
+                state.cards = state.cards.filter((x) => x !== c);
+                save();
+                card.classList.add("leaving");
+                card.style.pointerEvents = "none";
+                const W = strip.offsetWidth || 60,
+                    H = strip.offsetHeight || 360;
+                const finish = () => card.remove();
+                if (prefersReduced()) {
+                    card.style.transition = "opacity .25s ease";
+                    card.style.opacity = "0";
+                    setTimeout(finish, 280);
+                    return;
+                }
+                if (isFilled(c)) burnAway(card, strip, W, H, finish);
+                else ripApart(card, strip, W, H, finish);
+            }
+
+            // violently tear the strip into ragged ribbons + a burst of paper scraps
+            function ripApart(card, strip, W, H, done) {
+                const N = 6,
+                    ROWS = 9;
+                // shared ragged seam x-positions (%), so neighbouring ribbons interlock
+                const seams = [];
+                for (let j = 0; j <= N; j++) {
+                    const base = (j / N) * 100,
+                        col = [];
+                    for (let r = 0; r < ROWS; r++)
+                        col.push(j === 0 || j === N ? base : base + rnd(-6, 6));
+                    seams.push(col);
+                }
+                const wrap = document.createElement("div");
+                wrap.className = "rip";
+                wrap.style.width = W + "px";
+                wrap.style.height = H + "px";
+
+                // bright flash at the moment of the tear
+                const flash = document.createElement("div");
+                flash.className = "tearflash";
+                wrap.appendChild(flash);
+
+                for (let i = 0; i < N; i++) {
+                    const rib = document.createElement("div");
+                    rib.className = "ribbon";
+                    // slice layer: jagged clip + long-axis spin (see CSS). It
+                    // spins about its OWN centerline, not the strip's middle.
+                    const slice = document.createElement("div");
+                    slice.className = "rslice";
+                    slice.appendChild(cloneStripVisual(strip));
+                    const pts = [];
+                    const yAt = (r) => ((r / (ROWS - 1)) * 100).toFixed(2);
+                    for (let r = 0; r < ROWS; r++)
+                        pts.push(`${seams[i][r].toFixed(2)}% ${yAt(r)}%`);
+                    for (let r = ROWS - 1; r >= 0; r--)
+                        pts.push(`${seams[i + 1][r].toFixed(2)}% ${yAt(r)}%`);
+                    slice.style.clipPath = `polygon(${pts.join(",")})`;
+                    slice.style.transformOrigin =
+                        (((i + 0.5) / N) * 100).toFixed(1) + "% 50%";
+                    slice.style.setProperty(
+                        "--fsp",
+                        rnd(0.55, 0.95).toFixed(2) + "s",
+                    );
+                    slice.style.setProperty(
+                        "--fdl",
+                        rnd(0.08, 0.24).toFixed(2) + "s",
+                    );
+                    slice.style.setProperty(
+                        "--fdir",
+                        Math.random() < 0.5 ? "1turn" : "-1turn",
+                    );
+                    rib.appendChild(slice);
+                    const centre = (i + 0.5) / N - 0.5; // -0.5 .. 0.5
+                    // fan the strips apart first (so you SEE it tear), then they fall
+                    rib.style.setProperty(
+                        "--spread",
+                        (centre * rnd(55, 85)).toFixed(0) + "px",
+                    );
+                    rib.style.setProperty(
+                        "--dx",
+                        (centre * 190 + rnd(-30, 30)).toFixed(0) + "px",
+                    );
+                    rib.style.setProperty("--dy", rnd(300, 520).toFixed(0) + "px");
+                    rib.style.setProperty(
+                        "--rot",
+                        (centre * 90 + rnd(-30, 30)).toFixed(0) + "deg",
+                    );
+                    rib.style.setProperty("--dur", rnd(0.88, 1.15).toFixed(2) + "s");
+                    rib.style.animationDelay = (i * 0.015).toFixed(3) + "s";
+                    wrap.appendChild(rib);
+                }
+
+                // exploding paper scraps — light-coloured so the tear reads on black
+                for (let i = 0; i < 30; i++) {
+                    const sh = document.createElement("div");
+                    sh.className = "shard";
+                    sh.style.width = rnd(6, 20).toFixed(0) + "px";
+                    sh.style.height = rnd(6, 22).toFixed(0) + "px";
+                    sh.style.left = rnd(-6, 94).toFixed(0) + "%";
+                    sh.style.top = rnd(0, 94).toFixed(0) + "%";
+                    sh.style.clipPath = `polygon(${rnd(0, 30).toFixed(0)}% 0%, 100% ${rnd(0, 40).toFixed(0)}%, ${rnd(55, 100).toFixed(0)}% 100%, 0% ${rnd(50, 100).toFixed(0)}%)`;
+                    sh.style.setProperty("--sx", rnd(-230, 230).toFixed(0) + "px");
+                    sh.style.setProperty("--sy", rnd(-150, 300).toFixed(0) + "px");
+                    sh.style.setProperty("--sr", rnd(-640, 640).toFixed(0) + "deg");
+                    sh.style.setProperty("--sd", rnd(0.62, 1.0).toFixed(2) + "s");
+                    sh.style.animationDelay = rnd(0, 0.077).toFixed(3) + "s";
+                    wrap.appendChild(sh);
+                }
+                // hide the source strip only AFTER cloning it into the ribbons —
+                // cloning first is what makes the ribbons visible at all
+                strip.style.visibility = "hidden";
+                card.appendChild(wrap);
+                setTimeout(done, 1270);
+            }
+
+            // burn the strip away bottom-up — driven frame-by-frame so the whole
+            // talisman writhes, the heat-warp crawls and grows, and it sheds sparks,
+            // embers and smoke. Fast and violent.
+            let burnSeq = 0;
+            function burnAway(card, strip, W, H, done) {
+                const NS = "http://www.w3.org/2000/svg";
+                const fid = "burn" + ++burnSeq;
+                // a per-burn filter we can drive live (the shared one was static)
+                const fsvg = document.createElementNS(NS, "svg");
+                fsvg.setAttribute("width", "0");
+                fsvg.setAttribute("height", "0");
+                fsvg.style.cssText = "position:absolute;width:0;height:0;";
+                fsvg.innerHTML = `<defs><filter id="${fid}" x="-60%" y="-60%" width="220%" height="220%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.027 0.072" numOctaves="2" seed="${Math.floor(rnd(1, 9999))}" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G"/>
+    </filter></defs>`;
+                document.body.appendChild(fsvg);
+                const disp = fsvg.querySelector("feDisplacementMap");
+
+                const wrap = document.createElement("div");
+                wrap.className = "burnwrap";
+                wrap.style.width = W + "px";
+                wrap.style.height = H + "px";
+                const paper = cloneStripVisual(strip);
+                paper.style.filter = `url(#${fid})`;
+                // scorched edge inside the clone: masked and transformed with it
+                const char = document.createElement("div");
+                char.className = "char";
+                paper.appendChild(char);
+                wrap.appendChild(paper);
+
+                const flame = document.createElement("div");
+                flame.className = "flame";
+                wrap.appendChild(flame);
+
+                const DUR = 555; // ms — fast and violent
+                // particle factory: each emits from near the rising burn front
+                const spawn = (cls, n, opt) => {
+                    for (let i = 0; i < n; i++) {
+                        const el = document.createElement("div");
+                        el.className = cls;
+                        const delay = rnd(0, opt.maxDelay);
+                        const sz = rnd(opt.min, opt.max);
+                        el.style.width = el.style.height = sz.toFixed(1) + "px";
+                        el.style.left = rnd(0, 100).toFixed(1) + "%";
+                        el.style.bottom =
+                            ((delay / (DUR / 1000)) * 100 + rnd(-4, 8)).toFixed(1) +
+                            "%";
+                        el.style.setProperty(
+                            "--ax",
+                            rnd(-opt.spread, opt.spread).toFixed(0) + "px",
+                        );
+                        el.style.setProperty(
+                            "--ay",
+                            rnd(opt.riseMin, opt.riseMax).toFixed(0) + "px",
+                        );
+                        el.style.setProperty(
+                            "--ad",
+                            rnd(opt.durMin, opt.durMax).toFixed(2) + "s",
+                        );
+                        el.style.setProperty("--adl", delay.toFixed(2) + "s");
+                        wrap.appendChild(el);
+                    }
+                };
+                spawn("spark", 30, {
+                    min: 2,
+                    max: 4,
+                    maxDelay: 0.42,
+                    spread: 80,
+                    riseMin: -210,
+                    riseMax: -110,
+                    durMin: 0.35,
+                    durMax: 0.62,
+                });
+                spawn("ember", 24, {
+                    min: 3,
+                    max: 7,
+                    maxDelay: 0.46,
+                    spread: 45,
+                    riseMin: -160,
+                    riseMax: -80,
+                    durMin: 0.54,
+                    durMax: 0.92,
+                });
+                spawn("smoke", 9, {
+                    min: 20,
+                    max: 42,
+                    maxDelay: 0.46,
+                    spread: 34,
+                    riseMin: -130,
+                    riseMax: -70,
+                    durMin: 0.69,
+                    durMax: 1.08,
+                });
+
+                strip.style.visibility = "hidden";
+                card.appendChild(wrap);
+
+                let start = null;
+                const ph1 = rnd(0, 6.28),
+                    ph2 = rnd(0, 6.28);
+                function frame(now) {
+                    if (start == null) start = now;
+                    const p = Math.min(1, (now - start) / DUR);
+                    const t = (now - start) / 1000;
+                    // bottom-up consumption
+                    paper.style.setProperty("--burn", (-16 + p * 140).toFixed(1) + "%");
+                    // heat-warp that crawls and intensifies as it burns; only
+                    // the (cheap) displacement scale animates — the noise field
+                    // itself must stay static
+                    disp.setAttribute(
+                        "scale",
+                        (
+                            5 +
+                            p * p * 38 +
+                            Math.sin(t * 27 + ph1) * 4 * p
+                        ).toFixed(1),
+                    );
+                    // violent flutter/curl of the shrinking remnant
+                    const flx = Math.sin(t * 33 + ph1) * 8 * p + Math.sin(t * 12) * 5;
+                    const rot = Math.sin(t * 25 + ph2) * 10 * p + p * 9;
+                    const skew = Math.sin(t * 29 + 1) * 10 * p;
+                    const lift = -p * 56;
+                    const sc = 1 - p * 0.16;
+                    paper.style.transform = `translate(${flx.toFixed(1)}px, ${lift.toFixed(1)}px) rotate(${rot.toFixed(1)}deg) skewX(${skew.toFixed(1)}deg) scale(${sc.toFixed(3)})`;
+                    paper.style.opacity =
+                        p > 0.82 ? (1 - (p - 0.82) / 0.18).toFixed(2) : "1";
+                    // the dissolving edge in LOCAL paper space: the mask band spans
+                    // (--burn..+8%) from the bottom, so its centre sits at
+                    // ~(112 - 140p)% from the top; the fire rides ~3% ahead of it
+                    const edgeLocal = H * (1.09 - 1.4 * p);
+                    // the char band hugs the edge from above, inside the clone
+                    // (capped so it never dangles below the paper before ignition)
+                    char.style.top =
+                        (Math.min(edgeLocal, H) - 22).toFixed(1) + "px";
+                    // the flame lives OUTSIDE the transformed clone, so project the
+                    // edge into wrap space: scale is centred on the transform origin
+                    // (50% 12%), then the whole remnant lifts. (Rotation/skew only
+                    // wobble the edge a few px — the flicker covers that.)
+                    const originY = H * 0.12;
+                    const edgeWrap = originY + (edgeLocal - originY) * sc + lift;
+                    flame.style.top = edgeWrap.toFixed(1) + "px";
+                    flame.style.opacity = (
+                        p < 0.06 ? p / 0.06 : p > 0.92 ? (1 - p) / 0.08 : 1
+                    ).toFixed(2);
+                    flame.style.transform = `translateY(-50%) scaleY(${(1 + Math.sin(t * 42) * 0.3).toFixed(2)})`;
+                    if (p < 1) requestAnimationFrame(frame);
+                    else fsvg.remove();
+                }
+                requestAnimationFrame(frame);
+                setTimeout(done, 850);
+            }
+
+            /* ---------------- toolbar actions ---------------- */
+            function addTalisman(img, x, y, target, text) {
+                const c = {
+                    id: nextId++,
+                    img: img || pick(TALISMANS),
+                    x: x != null ? x : 90 + (addOffset % 6) * 46,
+                    y: y != null ? y : 90 + (addOffset % 6) * 30,
+                    target: target != null ? target : "",
+                    text: text || "",
+                    slashes: [],
+                    h: 520,
+                    z: ++zTop,
+                };
+                addOffset++;
+                state.cards.push(c);
+                renderCard(c);
+                save();
+            }
+
+            function setBackground(src) {
+                state.bg = src;
+                const bg = document.getElementById("bg");
+                const url =
+                    src && src.startsWith("user:")
+                        ? userBgSrc(src.slice(5))
+                        : src;
+                bg.style.backgroundImage = url ? `url("${url}")` : "none";
+                document.querySelectorAll("#bgRow .thumb").forEach((t) => {
+                    t.classList.toggle("sel", t.dataset.src === src);
+                });
+                setBgFit(state.bgFit || "cover");
+                save();
+            }
+
+            // how the chosen background is sized/anchored. Pin modes fill the pinned
+            // side's dimension and anchor the image flush to that edge (the rest is black).
+            const BG_FITS = {
+                cover: { size: "cover", pos: "center center" },
+                contain: { size: "contain", pos: "center center" },
+                top: { size: "100% auto", pos: "center top" },
+                bottom: { size: "100% auto", pos: "center bottom" },
+                left: { size: "auto 100%", pos: "left center" },
+                right: { size: "auto 100%", pos: "right center" },
+            };
+            function setBgFit(mode) {
+                if (!BG_FITS[mode]) mode = "cover";
+                state.bgFit = mode;
+                const bg = document.getElementById("bg");
+                bg.style.backgroundSize = BG_FITS[mode].size;
+                bg.style.backgroundPosition = BG_FITS[mode].pos;
+                document.querySelectorAll("#bgFitRow button").forEach((b) => {
+                    b.classList.toggle("sel", b.dataset.fit === mode);
+                });
+                save();
+            }
+            function setBgDim(v) {
+                state.bgDim = v;
+                document.getElementById("bgdim").style.background =
+                    `radial-gradient(ellipse at center, rgba(0,0,0,${((v / 100) * 0.7).toFixed(2)}) 0%, rgba(0,0,0,${(0.45 + (v / 100) * 0.5).toFixed(2)}) 100%)`;
+                save();
+            }
+            function shuffleDetail() {
+                state.detail = pick(DETAILS);
+                document.getElementById("detail").src = state.detail;
+                save();
+            }
+
+            /* ---------------- build bg menu ---------------- */
+            function buildBgMenu() {
+                const row = document.getElementById("bgRow");
+                row.innerHTML = "";
+                const none = document.createElement("div");
+                none.className = "none";
+                none.textContent = "none";
+                none.addEventListener("click", () => setBackground(null));
+                row.appendChild(none);
+                BACKGROUNDS.forEach((src) => {
+                    const t = document.createElement("img");
+                    t.className = "thumb";
+                    t.src = src;
+                    t.dataset.src = src;
+                    t.alt = "";
+                    t.addEventListener("click", () => setBackground(src));
+                    row.appendChild(t);
+                });
+                userBgs.forEach((b) => {
+                    const t = document.createElement("img");
+                    t.className = "thumb";
+                    t.src = b.data;
+                    t.dataset.src = "user:" + b.id;
+                    t.alt = "";
+                    t.title = "your upload — right-click to remove";
+                    t.addEventListener("click", () =>
+                        setBackground("user:" + b.id),
+                    );
+                    t.addEventListener("contextmenu", (e) => {
+                        e.preventDefault();
+                        if (!confirm("Remove this uploaded background?"))
+                            return;
+                        userBgs = userBgs.filter((x) => x.id !== b.id);
+                        saveUserBgs();
+                        if (state.bg === "user:" + b.id) setBackground(null);
+                        buildBgMenu();
+                    });
+                    row.appendChild(t);
+                });
+                const up = document.createElement("div");
+                up.className = "none";
+                up.textContent = "+ upload";
+                up.title = "add your own background (kept only in this browser)";
+                up.addEventListener("click", () =>
+                    document.getElementById("bgUpload").click(),
+                );
+                row.appendChild(up);
+                row.querySelectorAll(".thumb").forEach((t) =>
+                    t.classList.toggle("sel", t.dataset.src === state.bg),
+                );
+            }
+
+            document
+                .getElementById("addBtn")
+                .addEventListener("click", () => addTalisman());
+            document
+                .getElementById("shuffleBtn")
+                .addEventListener("click", shuffleDetail);
+            document
+                .getElementById("detail")
+                .addEventListener("click", shuffleDetail);
+            document
+                .getElementById("clearBtn")
+                .addEventListener("click", () => {
+                    if (!confirm("Remove all talismans?")) return;
+                    state.cards = [];
+                    stage.innerHTML = "";
+                    save();
+                });
+            const bar = document.getElementById("bar");
+            const bgBtn = document.getElementById("bgBtn"),
+                bgMenu = document.getElementById("bgmenu");
+            // keep the (faded) toolbar fully visible whenever the menu is left open
+            function syncMenuOpen() {
+                bar.classList.toggle(
+                    "menuopen",
+                    bgMenu.classList.contains("open"),
+                );
+            }
+            bgBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                bgMenu.classList.toggle("open");
+                syncMenuOpen();
+            });
+            document.addEventListener("click", (e) => {
+                if (!bgMenu.contains(e.target) && e.target !== bgBtn) {
+                    bgMenu.classList.remove("open");
+                    syncMenuOpen();
+                }
+            });
+            document
+                .getElementById("bgDim")
+                .addEventListener("input", (e) => setBgDim(+e.target.value));
+            document
+                .getElementById("bgFitRow")
+                .addEventListener("click", (e) => {
+                    const b = e.target.closest("button");
+                    if (!b) return;
+                    setBgFit(b.dataset.fit);
+                });
+            document
+                .getElementById("bgUpload")
+                .addEventListener("change", async (e) => {
+                    const f = e.target.files && e.target.files[0];
+                    e.target.value = "";
+                    if (!f) return;
+                    try {
+                        await addUserBg(f);
+                    } catch (err) {
+                        alert("Couldn't read that image file.");
+                    }
+                });
+
+            /* ---------------- boot ---------------- */
+            function init() {
+                const saved = load();
+                if (saved) {
+                    state = Object.assign(
+                        {
+                            cards: [],
+                            bg: null,
+                            bgDim: 55,
+                            bgFit: "cover",
+                            detail: null,
+                        },
+                        saved,
+                    );
+                    state.cards.forEach((c) => {
+                        c.id = c.id || nextId++;
+                        if (c.id >= nextId) nextId = c.id + 1;
+                        if (c.z && c.z > zTop) zTop = c.z;
+                    });
+                    // render in saved stack order so DOM order == front-to-back order
+                    state.cards
+                        .slice()
+                        .sort((a, b) => (a.z || 0) - (b.z || 0))
+                        .forEach(renderCard);
+                    setBgFit(state.bgFit || "cover");
+                    if (state.bg) setBackground(state.bg);
+                    document.getElementById("bgDim").value = state.bgDim;
+                    setBgDim(state.bgDim);
+                    document.getElementById("detail").src =
+                        state.detail || (state.detail = pick(DETAILS));
+                } else {
+                    // first visit: TENSION + PRESSURE counters over a default
+                    // background pinned to the bottom of the screen
+                    setBgDim(55);
+                    setBgFit("bottom");
+                    setBackground(
+                        ROOT + "backgrounds/CAIN_1.4-0436-p073.webp",
+                    );
+                    shuffleDetail();
+                    addTalisman(
+                        ROOT + "talismans/CAIN_1.4-0512-p081.png",
+                        140,
+                        110,
+                        3,
+                        "TENSION",
+                    );
+                    addTalisman(
+                        ROOT + "talismans/CAIN_1.4-0513-p081.png",
+                        400,
+                        110,
+                        6,
+                        "PRESSURE",
+                    );
+                }
+            }
+
+            // ============================================================
+            // I18N — shared with parent app via localStorage
+            // ============================================================
+            const TALISMAN_TRANSLATIONS = {
+                pt: {
+                    "talisman.add": "✛ Add Talismã",
+                    "talisman.bg": "Fundos ▾",
+                    "talisman.placement": "Posição",
+                    "talisman.fill": "⤢ Preencher",
+                    "talisman.fit": "▣ Ajustar",
+                    "talisman.top": "⌃ Topo",
+                    "talisman.bottom": "⌄ Base",
+                    "talisman.left": "‹ Esquerda",
+                    "talisman.right": "› Direita",
+                    "talisman.bgdim": "Escurecer fundo",
+                    "talisman.cornerart": "⟳ Arte do canto",
+                    "talisman.clear": "✕ Limpar tudo",
+                    "talisman.help": "instruções",
+                    "talisman.helptext":
+                        '<b>Arraste</b> um talismã para movê-lo · <b>Clique</b> para talhar um corte · <b>Clique direito</b> remove um corte · o contador mostra <b>cortes / N</b>; <b>clique no N</b> para definir o alvo · <b>Clique ao lado</b> para adicionar texto · <b>Ctrl/⌘ + scroll</b> ou <b>arraste o canto ◢</b> para redimensionar · Passe o mouse sobre a tira para <b>trocar arte / excluir</b>.<div class="credit">CAIN é de Tom Bloom. A arte neste quadro vem dos livros de CAIN — trabalho original juntamente com colagens, fundos e texturas construídas a partir de fotos de uso público obtidas do Wikimedia Commons. Este é um auxiliar de jogo não oficial, feito por fãs — não afiliado ou endossado por ele.</div>',
+                },
+                en: {
+                    "talisman.add": "✛ Add Talisman",
+                    "talisman.bg": "Backgrounds ▾",
+                    "talisman.placement": "Placement",
+                    "talisman.fill": "⤢ Fill",
+                    "talisman.fit": "▣ Fit",
+                    "talisman.top": "⌃ Top",
+                    "talisman.bottom": "⌄ Bottom",
+                    "talisman.left": "‹ Left",
+                    "talisman.right": "› Right",
+                    "talisman.bgdim": "Background dim",
+                    "talisman.cornerart": "⟳ Corner Art",
+                    "talisman.clear": "✕ Clear All",
+                    "talisman.help": "instructions",
+                    "talisman.helptext":
+                        '<b>Drag</b> a talisman to move it · <b>Click</b> it to carve a slash · <b>Right-click</b> removes a slash · the counter tracks <b>slashes / N</b>; <b>click the N</b> to set the target · <b>Click beside it</b> to add text · <b>Ctrl/⌘ + scroll</b> or <b>drag the ◢ corner</b> to resize · Hover a strip for <b>swap art / delete</b>.<div class="credit">CAIN is by Tom Bloom. The art on this board comes from the CAIN books — original work alongside collage, background, and texture pieces built from public-use photos sourced from Wikimedia Commons. This is an unofficial, fan-made play aid — not affiliated with or endorsed by him.</div>',
+                },
+            };
+
+            function getTalismanLang() {
+                try {
+                    return localStorage.getItem("cain_lang") || "pt";
+                } catch (_) {
+                    return "pt";
+                }
+            }
+
+            function applyTalismanI18n() {
+                const lang = getTalismanLang();
+                const dict = TALISMAN_TRANSLATIONS[lang] || TALISMAN_TRANSLATIONS.pt;
+                document.querySelectorAll("[data-i18n]").forEach(function (el) {
+                    var key = el.getAttribute("data-i18n");
+                    if (dict[key]) {
+                        el.innerHTML = dict[key];
+                    }
+                });
+                document.querySelectorAll("[data-i18n-title]").forEach(function (el) {
+                    var key = el.getAttribute("data-i18n-title");
+                    if (dict[key]) {
+                        el.setAttribute("aria-label", dict[key]);
+                        el.title = dict[key];
+                    }
+                });
+            }
+
+            /* Read the folders first (no-op on file:// or inside an iframe), then build + boot. */
+            (async function boot() {
+                if (window.self === window.top) {
+                    await loadFolders();
+                }
+                applyTalismanI18n();
+                window.addEventListener("storage", function (e) {
+                    if (e.key === "cain_lang") {
+                        applyTalismanI18n();
+                    }
+                });
+                buildBgMenu();
+                init();
+            })();

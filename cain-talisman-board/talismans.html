@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>CAIN — Talismans</title>
+        <!-- Fonts: Source Sans 3 ≈ Acumin Pro (body), Grenze Gotisch ≈ Cuasigothic (details/numbers) -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Grenze+Gotisch:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="talismans.css" />
+    </head>
+    <body>
+        <div id="bg"></div>
+        <div id="bgdim"></div>
+        <div id="vig"></div>
+
+        <div id="stage"></div>
+        <img id="detail" alt="" title="click to shuffle corner art" />
+
+        <div id="bar">
+            <button class="btn accent" id="addBtn" data-i18n="talisman.add">✛ Add Talismã</button>
+            <div id="bgwrap">
+                <button class="btn" id="bgBtn" data-i18n="talisman.bg">Fundos ▾</button>
+                <div id="bgmenu">
+                    <div class="row" id="bgRow"></div>
+                    <input type="file" id="bgUpload" accept="image/*" hidden />
+                    <label data-i18n="talisman.placement">Posição</label>
+                    <div class="fitrow" id="bgFitRow">
+                        <button data-fit="cover" data-i18n="talisman.fill">⤢ Preencher</button>
+                        <button data-fit="contain" data-i18n="talisman.fit">▣ Ajustar</button>
+                        <button data-fit="top" data-i18n="talisman.top">⌃ Topo</button>
+                        <button data-fit="bottom" data-i18n="talisman.bottom">⌄ Base</button>
+                        <button data-fit="left" data-i18n="talisman.left">‹ Esquerda</button>
+                        <button data-fit="right" data-i18n="talisman.right">› Direita</button>
+                    </div>
+                    <label data-i18n="talisman.bgdim">Escurecer fundo</label>
+                    <input
+                        type="range"
+                        id="bgDim"
+                        min="0"
+                        max="90"
+                        value="55"
+                    />
+                </div>
+            </div>
+            <button class="btn" id="shuffleBtn" data-i18n="talisman.cornerart">⟳ Arte do canto</button>
+            <button class="btn" id="clearBtn" data-i18n="talisman.clear">✕ Limpar tudo</button>
+            <div id="help">
+                <button class="btn" id="helpBtn" aria-label="instruções" data-i18n-title="talisman.help">
+                    ?
+                </button>
+                <a class="btn" href="https://cora.earth/games/cain/talismans/" target="_blank" rel="noopener" title="Site original">🌐</a>
+                <div id="helpPanel" data-i18n="talisman.helptext">
+                    <b>Arraste</b> um talismã para movê-lo · <b>Clique</b> para
+                    talhar um corte · <b>Clique direito</b> remove um corte · o
+                    contador mostra <b>cortes / N</b>; <b>clique no N</b> para
+                    definir o alvo · <b>Clique ao lado</b> para adicionar texto ·
+                    <b>Ctrl/⌘ + scroll</b> ou <b>arraste o canto ◢</b> para
+                    redimensionar · Passe o mouse sobre a tira para
+                    <b>trocar arte / excluir</b>.
+                    <div class="credit">
+                        CAIN é de Tom Bloom. A arte neste quadro vem dos
+                        livros de CAIN — trabalho original juntamente com
+                        colagens, fundos e texturas construídas a partir de
+                        fotos de uso público obtidas do Wikimedia Commons.
+                        Este é um auxiliar de jogo não oficial, feito por
+                        fãs — não afiliado ou endossado por ele.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="talismans.js"></script>
+    </body>
+</html>
