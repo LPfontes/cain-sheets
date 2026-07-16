@@ -7,48 +7,59 @@ export function openCreateBlasphemyModal(onCreated) {
 
   el.modalContainer.classList.remove("hidden");
   const modalContent = el.modalBody.parentElement;
-  modalContent.classList.add("wide-modal");
 
   let imageDataUrl = "";
   let powers = [{ name: "", desc: "" }];
 
   const renderModal = () => {
     el.modalBody.innerHTML = `
-      <h3 class="modal-title blasphemy-modal-title">Criar Nova Blasfêmia</h3>
-      <div class="create-blasphemy-layout">
+      <h3 class="modal-title blasphemy-modal-title" style="padding: 20px 20px 0;">Criar Nova Blasfêmia</h3>
+      <div class="create-blasphemy-layout" style="padding: 16px 20px 0; overflow-y: auto; max-height: 72vh;">
 
-        <div class="create-blasphemy-field">
-          <label>Imagem</label>
-          <div class="create-blasphemy-image-area">
-            <div class="create-blasphemy-image-preview" id="create-blasphemy-img-preview">
-              ${imageDataUrl ? `<img src="${imageDataUrl}" alt="Preview">` : '<span class="text-secondary">Nenhuma imagem selecionada</span>'}
+        <div class="create-blasphemy-top-row">
+
+          <!-- Imagem -->
+          <div class="create-blasphemy-field">
+            <label>Imagem</label>
+            <div class="create-blasphemy-image-area">
+              <div class="create-blasphemy-image-preview" id="create-blasphemy-img-preview">
+                ${imageDataUrl
+                  ? `<img src="${imageDataUrl}" alt="Preview">`
+                  : '<span class="text-secondary" style="font-size:11px;text-align:center;">Nenhuma imagem</span>'}
+              </div>
+              <input type="file" id="create-blasphemy-img-input" accept="image/*" style="display:none">
+              <button id="btn-create-blasphemy-upload-img" class="btn btn-sm btn-secondary">Selecionar Imagem</button>
             </div>
-            <input type="file" id="create-blasphemy-img-input" accept="image/*" style="display:none">
-            <button id="btn-create-blasphemy-upload-img" class="btn btn-sm btn-secondary">Selecionar Imagem</button>
           </div>
+
+          <!-- Campos principais -->
+          <div class="create-blasphemy-main-fields">
+            <div class="create-blasphemy-field">
+              <label>Nome <span class="text-danger">*</span></label>
+              <input type="text" id="create-blasphemy-name" class="input-styled" placeholder="Ex: Tensão, Ardência..." required>
+            </div>
+
+            <div class="create-blasphemy-field">
+              <label>Descrição</label>
+              <textarea id="create-blasphemy-desc" class="input-styled create-blasphemy-textarea" placeholder="Descrição da blasfêmia..."></textarea>
+            </div>
+
+            <div class="create-blasphemy-two-col">
+              <div class="create-blasphemy-field">
+                <label>Fato</label>
+                <textarea id="create-blasphemy-fato" class="input-styled create-blasphemy-textarea" placeholder="Fato interessante..."></textarea>
+              </div>
+              <div class="create-blasphemy-field">
+                <label>Passiva</label>
+                <textarea id="create-blasphemy-passive" class="input-styled create-blasphemy-textarea" placeholder="Habilidade passiva... (pode usar HTML)"></textarea>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <div class="create-blasphemy-field">
-          <label>Nome <span class="text-danger">*</span></label>
-          <input type="text" id="create-blasphemy-name" class="input-styled" placeholder="Ex: Tensão, Ardência..." required>
-        </div>
-
-        <div class="create-blasphemy-field">
-          <label>Descrição</label>
-          <textarea id="create-blasphemy-desc" class="input-styled create-blasphemy-textarea" placeholder="Descrição da blasfêmia..."></textarea>
-        </div>
-
-        <div class="create-blasphemy-field">
-          <label>Fato</label>
-          <textarea id="create-blasphemy-fato" class="input-styled create-blasphemy-textarea" placeholder="Fato interessante sobre esta blasfêmia..."></textarea>
-        </div>
-
-        <div class="create-blasphemy-field">
-          <label>Passiva</label>
-          <textarea id="create-blasphemy-passive" class="input-styled create-blasphemy-textarea" placeholder="Descrição da habilidade passiva... (pode usar HTML)"></textarea>
-        </div>
-
-        <div class="create-blasphemy-field">
+        <!-- Poderes -->
+        <div class="create-blasphemy-field" style="margin-top: 4px;">
           <div class="create-blasphemy-powers-header">
             <label>Poderes <span class="text-danger">*</span></label>
             <button id="btn-add-power" class="btn btn-sm btn-secondary">+ Adicionar Poder</button>
@@ -169,7 +180,6 @@ export function openCreateBlasphemyModal(onCreated) {
 
   const closeModal = () => {
     el.modalContainer.classList.add("hidden");
-    modalContent.classList.remove("wide-modal");
   };
 
   renderModal();

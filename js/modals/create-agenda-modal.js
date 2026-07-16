@@ -7,7 +7,6 @@ export function openCreateAgendaModal(onCreated) {
 
   el.modalContainer.classList.remove("hidden");
   const modalContent = el.modalBody.parentElement;
-  modalContent.classList.add("wide-modal");
 
   let imageDataUrl = "";
   let habilidades = [{ name: "", desc: "" }];
@@ -17,35 +16,39 @@ export function openCreateAgendaModal(onCreated) {
       <h3 class="modal-title">Criar Nova Agenda</h3>
       <div class="create-blasphemy-layout">
 
-        <div class="create-blasphemy-field">
-          <label>Ícone</label>
-          <div class="create-blasphemy-image-area">
-            <div class="create-blasphemy-image-preview" id="create-agenda-img-preview">
-              ${imageDataUrl ? `<img src="${imageDataUrl}" alt="Preview">` : '<span class="text-secondary">Nenhuma imagem selecionada</span>'}
+        <div class="create-agenda-top-row">
+          <div class="create-blasphemy-field">
+            <label>Ícone</label>
+            <div class="create-blasphemy-image-area">
+              <div class="create-blasphemy-image-preview" id="create-agenda-img-preview">
+                ${imageDataUrl ? `<img src="${imageDataUrl}" alt="Preview">` : '<span class="text-secondary" style="font-size:11px;">Nenhuma imagem</span>'}
+              </div>
+              <input type="file" id="create-agenda-img-input" accept="image/*" style="display:none">
+              <button id="btn-create-agenda-upload-img" class="btn btn-sm btn-secondary">Selecionar Imagem</button>
             </div>
-            <input type="file" id="create-agenda-img-input" accept="image/*" style="display:none">
-            <button id="btn-create-agenda-upload-img" class="btn btn-sm btn-secondary">Selecionar Imagem</button>
+          </div>
+
+          <div class="create-agenda-name-desc">
+            <div class="create-blasphemy-field">
+              <label>Nome <span class="text-danger">*</span></label>
+              <input type="text" id="create-agenda-name" class="input-styled" placeholder="Ex: Besta, Guardião..." required>
+            </div>
+            <div class="create-blasphemy-field">
+              <label>Descrição</label>
+              <textarea id="create-agenda-desc" class="input-styled create-blasphemy-textarea" placeholder="Descrição da agenda..."></textarea>
+            </div>
           </div>
         </div>
 
-        <div class="create-blasphemy-field">
-          <label>Nome <span class="text-danger">*</span></label>
-          <input type="text" id="create-agenda-name" class="input-styled" placeholder="Ex: Besta, Guardião..." required>
-        </div>
-
-        <div class="create-blasphemy-field">
-          <label>Descrição</label>
-          <textarea id="create-agenda-desc" class="input-styled create-blasphemy-textarea" placeholder="Descrição da agenda..."></textarea>
-        </div>
-
-        <div class="create-blasphemy-field">
-          <label>Gatilhos Normal (um por linha)</label>
-          <textarea id="create-agenda-normal" class="input-styled create-blasphemy-textarea" placeholder="Ex: Participe de uma luta"></textarea>
-        </div>
-
-        <div class="create-blasphemy-field">
-          <label>Gatilhos Bold (um por linha)</label>
-          <textarea id="create-agenda-bold" class="input-styled create-blasphemy-textarea" placeholder="Ex: Se contenha"></textarea>
+        <div class="create-agenda-triggers-row">
+          <div class="create-blasphemy-field">
+            <label>Gatilhos Normal <span style="font-size:11px;color:var(--text-muted);">(um por linha)</span></label>
+            <textarea id="create-agenda-normal" class="input-styled create-blasphemy-textarea" placeholder="Ex: Participe de uma luta"></textarea>
+          </div>
+          <div class="create-blasphemy-field">
+            <label>Gatilhos Bold <span style="font-size:11px;color:var(--text-muted);">(um por linha)</span></label>
+            <textarea id="create-agenda-bold" class="input-styled create-blasphemy-textarea" placeholder="Ex: Se contenha"></textarea>
+          </div>
         </div>
 
         <div class="create-blasphemy-field">
@@ -169,7 +172,6 @@ export function openCreateAgendaModal(onCreated) {
 
   const closeModal = () => {
     el.modalContainer.classList.add("hidden");
-    modalContent.classList.remove("wide-modal");
   };
 
   renderModal();

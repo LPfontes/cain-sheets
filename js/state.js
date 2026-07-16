@@ -50,6 +50,11 @@ export const el = {
   charNotesContacts: document.getElementById("char-notes-contacts"),
   charNotesSecrets: document.getElementById("char-notes-secrets"),
   charNotesJournal: document.getElementById("char-notes-journal"),
+  charNotesPersonalQ1: document.getElementById("char-notes-personal-q1"),
+  charNotesPersonalQ2: document.getElementById("char-notes-personal-q2"),
+  charNotesPersonalQ3: document.getElementById("char-notes-personal-q3"),
+  charNotesPersonalQ4: document.getElementById("char-notes-personal-q4"),
+  charNotesPersonalQ5: document.getElementById("char-notes-personal-q5"),
   // Novos campos do ID card
   charAgenda:   document.getElementById("char-agenda"),
   charBlasfemia: document.getElementById("char-blasfemia"),
@@ -322,14 +327,19 @@ export function loadCharacter(charId) {
   if (el.charXid)      el.charXid.value      = char.xid       || "";
   setCharCat(char.cat || 1);
   if (typeof char.notes === "string") {
-    char.notes = { mission: char.notes || "", contacts: "", secrets: "", journal: "" };
+    char.notes = { mission: char.notes || "", contacts: "", secrets: "", journal: "", personalQ1: "", personalQ2: "", personalQ3: "", personalQ4: "", personalQ5: "" };
   } else if (!char.notes || typeof char.notes !== "object") {
-    char.notes = { mission: "", contacts: "", secrets: "", journal: "" };
+    char.notes = { mission: "", contacts: "", secrets: "", journal: "", personalQ1: "", personalQ2: "", personalQ3: "", personalQ4: "", personalQ5: "" };
   }
   if (el.charNotesMission) el.charNotesMission.value = char.notes.mission || "";
   if (el.charNotesContacts) el.charNotesContacts.value = char.notes.contacts || "";
   if (el.charNotesSecrets) el.charNotesSecrets.value = char.notes.secrets || "";
   if (el.charNotesJournal) el.charNotesJournal.value = char.notes.journal || "";
+  if (el.charNotesPersonalQ1) el.charNotesPersonalQ1.value = char.notes.personalQ1 || "";
+  if (el.charNotesPersonalQ2) el.charNotesPersonalQ2.value = char.notes.personalQ2 || "";
+  if (el.charNotesPersonalQ3) el.charNotesPersonalQ3.value = char.notes.personalQ3 || "";
+  if (el.charNotesPersonalQ4) el.charNotesPersonalQ4.value = char.notes.personalQ4 || "";
+  if (el.charNotesPersonalQ5) el.charNotesPersonalQ5.value = char.notes.personalQ5 || "";
   // Novos campos do ID card
   if (el.charAgenda)   el.charAgenda.value   = char.agendaText   || "";
   if (el.charBlasfemia) el.charBlasfemia.value = char.blasfemiaText || "";

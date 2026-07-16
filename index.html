@@ -690,25 +690,69 @@
                   <div class="sheet-tab-panel" id="tab-cain-notes">
                     <h3 class="section-title" data-i18n="sheet.notes">ANOTAÇÕES</h3>
                     <div class="notes-container">
-                      <div class="notes-block">
-                        <h4 class="notes-title" data-i18n="sheet.notes.mission">MISSÃO</h4>
-                        <p class="notes-desc" data-i18n="sheet.notes.mission.desc">Objetivos, pistas e informações da missão atual.</p>
-                        <textarea id="char-notes-mission" class="notes-textarea" placeholder="Detalhes da missão..."></textarea>
-                      </div>
-                      <div class="notes-block">
-                        <h4 class="notes-title" data-i18n="sheet.notes.contacts">CONTATOS</h4>
-                        <p class="notes-desc" data-i18n="sheet.notes.contacts.desc">Aliados, informantes e pessoas de confiança.</p>
-                        <textarea id="char-notes-contacts" class="notes-textarea" placeholder="Contatos e aliados..."></textarea>
-                      </div>
-                      <div class="notes-block">
-                        <h4 class="notes-title" data-i18n="sheet.notes.secrets">SEGREDOS</h4>
-                        <p class="notes-desc" data-i18n="sheet.notes.secrets.desc">Informações confidenciais e descobertas importantes.</p>
-                        <textarea id="char-notes-secrets" class="notes-textarea" placeholder="Segredos e descobertas..."></textarea>
-                      </div>
-                      <div class="notes-block">
-                        <h4 class="notes-title" data-i18n="sheet.notes.journal">DIÁRIO</h4>
-                        <p class="notes-desc" data-i18n="sheet.notes.journal.desc">Relatos pessoais, reflexões e observações.</p>
-                        <textarea id="char-notes-journal" class="notes-textarea" placeholder="Relatos pessoais..."></textarea>
+                      <nav class="notes-tabs-nav">
+                        <button class="notes-tab-btn active" data-notes-tab="notes-mission" data-i18n="sheet.notes.mission">MISSÃO</button>
+                        <button class="notes-tab-btn" data-notes-tab="notes-contacts" data-i18n="sheet.notes.contacts">CONTATOS</button>
+                        <button class="notes-tab-btn" data-notes-tab="notes-secrets" data-i18n="sheet.notes.secrets">SEGREDOS</button>
+                        <button class="notes-tab-btn" data-notes-tab="notes-journal" data-i18n="sheet.notes.journal">DIÁRIO</button>
+                        <button class="notes-tab-btn" data-notes-tab="notes-personal" data-i18n="sheet.notes.personal">PESSOAL</button>
+                      </nav>
+                      <div class="notes-tab-panels">
+                        <div class="notes-tab-panel active" id="notes-mission">
+                          <div class="notes-block">
+                            <h4 class="notes-title" data-i18n="sheet.notes.mission">MISSÃO</h4>
+                            <p class="notes-desc" data-i18n="sheet.notes.mission.desc">Objetivos, pistas e informações da missão atual.</p>
+                            <textarea id="char-notes-mission" class="notes-textarea" placeholder="Detalhes da missão..."></textarea>
+                          </div>
+                        </div>
+                        <div class="notes-tab-panel" id="notes-contacts">
+                          <div class="notes-block">
+                            <h4 class="notes-title" data-i18n="sheet.notes.contacts">CONTATOS</h4>
+                            <p class="notes-desc" data-i18n="sheet.notes.contacts.desc">Aliados, informantes e pessoas de confiança.</p>
+                            <textarea id="char-notes-contacts" class="notes-textarea" placeholder="Contatos e aliados..."></textarea>
+                          </div>
+                        </div>
+                        <div class="notes-tab-panel" id="notes-secrets">
+                          <div class="notes-block">
+                            <h4 class="notes-title" data-i18n="sheet.notes.secrets">SEGREDOS</h4>
+                            <p class="notes-desc" data-i18n="sheet.notes.secrets.desc">Informações confidenciais e descobertas importantes.</p>
+                            <textarea id="char-notes-secrets" class="notes-textarea" placeholder="Segredos e descobertas..."></textarea>
+                          </div>
+                        </div>
+                        <div class="notes-tab-panel" id="notes-journal">
+                          <div class="notes-block">
+                            <h4 class="notes-title" data-i18n="sheet.notes.journal">DIÁRIO</h4>
+                            <p class="notes-desc" data-i18n="sheet.notes.journal.desc">Relatos pessoais, reflexões e observações.</p>
+                            <textarea id="char-notes-journal" class="notes-textarea" placeholder="Relatos pessoais..."></textarea>
+                          </div>
+                        </div>
+                        <div class="notes-tab-panel" id="notes-personal">
+                          <div class="notes-block">
+                            <h4 class="notes-title" data-i18n="sheet.notes.personal">PESSOAL</h4>
+                            <div class="notes-personal-questions">
+                              <div class="notes-personal-q">
+                                <p class="notes-desc" data-i18n="sheet.notes.personal.q1">Como você manifestou seus poderes pela primeira vez?</p>
+                                <textarea id="char-notes-personal-q1" class="notes-textarea notes-textarea--personal" placeholder="..."></textarea>
+                              </div>
+                              <div class="notes-personal-q">
+                                <p class="notes-desc" data-i18n="sheet.notes.personal.q2">Sua semente profana está no seu cérebro ou no seu coração?</p>
+                                <textarea id="char-notes-personal-q2" class="notes-textarea notes-textarea--personal" placeholder="..."></textarea>
+                              </div>
+                              <div class="notes-personal-q">
+                                <p class="notes-desc" data-i18n="sheet.notes.personal.q3">O que você esconde nas partes mais profundas de si?</p>
+                                <textarea id="char-notes-personal-q3" class="notes-textarea notes-textarea--personal" placeholder="..."></textarea>
+                              </div>
+                              <div class="notes-personal-q">
+                                <p class="notes-desc" data-i18n="sheet.notes.personal.q4">Sua mão é realmente sua mão?</p>
+                                <textarea id="char-notes-personal-q4" class="notes-textarea notes-textarea--personal" placeholder="..."></textarea>
+                              </div>
+                              <div class="notes-personal-q">
+                                <p class="notes-desc" data-i18n="sheet.notes.personal.q5">Você se lembra do rosto da sua mãe?</p>
+                                <textarea id="char-notes-personal-q5" class="notes-textarea notes-textarea--personal" placeholder="..."></textarea>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

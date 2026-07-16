@@ -362,7 +362,7 @@
     "id": "lei",
     "name": "Lei",
     "tier": "high",
-    "img": "assets/blasf/LEI.jpg",
+    "img": "assets/blasf/LEI.webp",
     "desc": "Uma força tão primitiva que reescreve a realidade.<br>Você não dobra as leis — você as edita.",
     "passive": "",
     "powers": [
@@ -377,7 +377,7 @@
     "id": "nulo",
     "name": "Nulo",
     "tier": "high",
-    "img": "assets/blasf/NULO.jpg",
+    "img": "assets/blasf/NULL.webp",
     "desc": "A negação absoluta de toda interferência psíquica.<br>Você não resiste ao poder — você simplesmente não existe para ele.",
     "passive": "",
     "powers": [
@@ -396,7 +396,7 @@
     "id": "entrelacar",
     "name": "Entrelaçar",
     "tier": "high",
-    "img": "assets/blasf/ENTRELACAR.jpg",
+    "img": "assets/blasf/ENTWINE.webp",
     "desc": "Você entrelaça sua mente com a de outro em um abraço amoroso.<br>A distância não existe entre almas unidas.",
     "passive": "",
     "powers": [
@@ -411,7 +411,7 @@
     "id": "forca",
     "name": "Força",
     "tier": "high",
-    "img": "assets/blasf/FORCA.jpg",
+    "img": "assets/blasf/STRENGTH.webp",
     "desc": "Uma rara mutação da blasfêmia de Amplificar.<br>Sem treinamento adequado, usar esta blasfêmia fará com que os órgãos internos explodam violentamente para fora do corpo.",
     "passive": "",
     "powers": [
@@ -426,7 +426,7 @@
     "id": "veu",
     "name": "Véu",
     "tier": "high",
-    "img": "assets/blasf/VEU.jpg",
+    "img": "assets/blasf/veil.webp",
     "desc": "Você apaga a memória de multidões inteiras em um instante.<br>Eles nunca saberão o que perderam.",
     "passive": "",
     "powers": [
@@ -445,7 +445,7 @@
     "id": "acordo",
     "name": "Acordo",
     "tier": "high",
-    "img": "assets/blasf/ACORDO.jpg",
+    "img": "assets/blasf/shake.webp",
     "desc": "Você impõe um acordo a todos ao seu redor, e a realidade se dobra para garantir que as regras sejam seguidas.",
     "passive": "",
     "powers": [

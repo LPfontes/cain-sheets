@@ -45,9 +45,10 @@ export function openAgendaModal() {
     const agenda = selectedAgendaId ? allAgendas[selectedAgendaId] : null;
 
     el.modalBody.innerHTML = `
-      <h3 class="modal-title">Escolher Agenda</h3>
-      <p class="text-secondary-md" style="margin-bottom: 6px;">Escolha uma agenda e uma habilidade ativa dessa agenda.</p>
-      <p class="text-secondary-md" style="margin-bottom: 6px;">Alterar a agenda redefinirá as marcações de progresso normais da agenda atual.</p>
+      <div class="wide-modal-header">
+        <h3 class="modal-title">Escolher Agenda</h3>
+        <p class="text-secondary-md" style="margin-top: 6px;">Escolha uma agenda e uma habilidade ativa dessa agenda. Alterar a agenda redefinirá as marcações de progresso normais da agenda atual.</p>
+      </div>
 
       <div class="modal-split-layout">
         <div class="modal-grid-col" id="modal-agenda-list">
@@ -62,7 +63,6 @@ export function openAgendaModal() {
                   <span class="blasphemy-card-name">${a.name}</span>
                   ${id.startsWith('custom_') ? `<span class="blasphemy-card-custom-badge">CUSTOM</span>` : ''}
                 </div>
-                ${active ? '<span class="blasphemy-card-check">✓</span>' : ''}
               </div>
             `;
           }).join("")}
@@ -71,11 +71,11 @@ export function openAgendaModal() {
         <div class="modal-detail-panel" id="modal-agenda-details">
           ${agenda ? `
             <div class="modal-detail-header">
-              <div class="modal-detail-img-wrapper">
+              <div class="modal-detail-img-wrapper" style="height: 180px;">
                 <img src="${agenda.icon}" alt="${agenda.name}" class="char-portrait-img">
               </div>
-              <div>
-                <h4 class="modal-detail-title" style="font-family: 'Odachi'">${agenda.name}</h4>
+              <div class="modal-detail-header-text">
+                <h4 class="modal-detail-title" style="font-family: 'Odachi'; justify-content: flex-start;">${agenda.name}</h4>
                 ${agenda.desc ? `<p class="modal-detail-desc">${agenda.desc}</p>` : ''}
                 <div class="agenda-triggers">
                   <div class="agenda-trigger"><strong>Normal:</strong> ${agenda.normal.join(", ")}</div>
@@ -98,7 +98,7 @@ export function openAgendaModal() {
                 `;
               }).join("")}
             </div>
-          ` : `<p style="color: var(--text-muted); padding: 20px; text-align: center;">Selecione uma agenda para ver seus detalhes.</p>`}
+          ` : `<div style="display:flex; align-items:center; justify-content:center; height:100%;"><p style="color: var(--text-muted); text-align: center;">← Selecione uma agenda para ver seus detalhes.</p></div>`}
         </div>
       </div>
 

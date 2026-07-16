@@ -150,6 +150,69 @@
   font-family: inherit;
 }
 
+.notes-textarea--personal {
+  min-height: 80px;
+}
+
+.notes-tabs-nav {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 12px;
+  padding-bottom: 4px;
+  flex-shrink: 0;
+}
+
+.notes-tab-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: var(--font-size-xs);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 6px 12px;
+  border-radius: 4px 4px 0 0;
+  transition: background 0.2s, color 0.2s;
+}
+
+.notes-tab-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.notes-tab-btn.active {
+  color: var(--accent);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.notes-tab-panels {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.notes-tab-panel {
+  display: none;
+  animation: tabFadeIn 0.2s ease-out;
+}
+
+.notes-tab-panel.active {
+  display: block;
+}
+
+.notes-personal-questions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.notes-personal-q {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .missions-survived-tracker {
   display: flex;
   align-items: center;

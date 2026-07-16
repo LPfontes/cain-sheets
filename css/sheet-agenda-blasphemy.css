@@ -398,6 +398,12 @@
   overflow: hidden;
 }
 
+.cain-blasphemy-card-thumb {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+
 .cain-blasphemy-card-trigger {
   width: 100%;
   background: rgb(130 130 130 / 40%);
@@ -468,6 +474,7 @@
   justify-content: space-between;
   align-items: center;
   padding-right: 10px;
+  margin-bottom: 10px;
 }
 
 .virtudes-grid {
@@ -524,6 +531,7 @@
   font-size: var(--font-size-md);
   margin-bottom: 8px;
   line-height: 1.4;
+  padding-right: 10px;
 }
 
 .virtude-detail-section strong {

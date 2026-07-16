@@ -80,7 +80,9 @@ export function openBlasphemiesModal() {
     const isOwned = tempBlasphemies.includes(activeB.id);
 
     el.modalBody.innerHTML = `
+      <div class="wide-modal-header">
       <h3 class="modal-title blasphemy-modal-title">Gerenciar Blasfêmias</h3>
+      </div>
       <div class="modal-split-layout">
         
         <!-- Coluna Esquerda: Grid das 12 Blasfêmias -->
@@ -97,7 +99,7 @@ export function openBlasphemiesModal() {
                   <span class="blasphemy-card-name">${b.name}</span>
                   ${b.id.startsWith('custom_') ? `<span class="blasphemy-card-custom-badge">CUSTOM</span>` : ''}
                 </div>
-                ${owned ? `<span class="blasphemy-card-check">✓</span>` : ''}
+
               </div>
             `;
     }).join("")}
@@ -107,7 +109,7 @@ export function openBlasphemiesModal() {
         <div class="modal-detail-panel">
           
           <div class="modal-detail-header">
-            <div class="modal-detail-img-wrapper">
+            <div class="modal-detail-img-wrapper" style="height: 430px; width: 200px;">
               ${activeB.img ? `<img src="${activeB.img}" alt="${activeB.name}">` : `<strong></b>`}
             </div>
             <div class="blasphemy-details">
@@ -246,7 +248,7 @@ export function openBlasphemyPowersModal(blasphemy, currentPowers, onSave) {
   panel.setAttribute("data-blasphemy", blasphemy.id);
   panel.style.cssText = `
     position: fixed; z-index: 1100;
-    top: 80px; right: 20px;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
     width: 420px; max-height: 85vh;
     display: flex; flex-direction: column;
     border: 2px solid var(--border-color-dark);
@@ -267,7 +269,7 @@ export function openBlasphemyPowersModal(blasphemy, currentPowers, onSave) {
     popup.setAttribute("data-power", power.name);
     popup.style.cssText = `
       max-width:500px;padding:20px;display:flex;flex-direction:column;gap:12px;
-      position:fixed;z-index:1310;top:25%;
+      position:fixed;z-index:1310;top:50%;left:50%;transform:translate(-50%,-50%);
       border:2px solid var(--border-color-dark);
       backdrop-filter:none;-webkit-backdrop-filter:none;
       border-radius:var(--radius-md);box-shadow:4px 4px 15px rgba(0,0,0,0.4)
@@ -323,6 +325,10 @@ export function openBlasphemyPowersModal(blasphemy, currentPowers, onSave) {
       const rect = popup.getBoundingClientRect();
       initialLeft = rect.left;
       initialTop = rect.top;
+      // Clear centering transform before dragging
+      popup.style.transform = "none";
+      popup.style.left = `${initialLeft}px`;
+      popup.style.top = `${initialTop}px`;
       window.addEventListener("mousemove", onMouseMove);
       window.addEventListener("mouseup", onEnd);
       window.addEventListener("touchmove", onTouchMove, { passive: false });
@@ -353,8 +359,8 @@ export function openBlasphemyPowersModal(blasphemy, currentPowers, onSave) {
             <p>Escolha 2 poderes:</p>
             <div class="traits-wizard-list" id="wiz-modal-powers-list">
               ${(blasphemy.powers || []).map(p => {
-                const hasPower = selectedPowers.includes(p.name);
-                return `
+      const hasPower = selectedPowers.includes(p.name);
+      return `
                   <div class="trait-wiz-item ${hasPower ? 'active' : ''}">
                     <input type="checkbox" class="trait-wiz-check submodal-power-check" data-name="${p.name}" ${hasPower ? 'checked' : ''}>
                     <div class="trait-wiz-content" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
@@ -363,7 +369,7 @@ export function openBlasphemyPowersModal(blasphemy, currentPowers, onSave) {
                     </div>
                   </div>
                 `;
-              }).join("")}
+    }).join("")}
             </div>
           </div>
         </div>
@@ -437,6 +443,10 @@ export function openBlasphemyPowersModal(blasphemy, currentPowers, onSave) {
     const rect = panel.getBoundingClientRect();
     initialLeft = rect.left;
     initialTop = rect.top;
+    // Clear centering transform before dragging
+    panel.style.transform = "none";
+    panel.style.left = `${initialLeft}px`;
+    panel.style.top = `${initialTop}px`;
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseup", onEnd);
     window.addEventListener("touchmove", onTouchMove, { passive: false });

@@ -236,7 +236,12 @@ function setupEventListeners() {
     { el: el.charNotesMission, key: "mission" },
     { el: el.charNotesContacts, key: "contacts" },
     { el: el.charNotesSecrets, key: "secrets" },
-    { el: el.charNotesJournal, key: "journal" }
+    { el: el.charNotesJournal, key: "journal" },
+    { el: el.charNotesPersonalQ1, key: "personalQ1" },
+    { el: el.charNotesPersonalQ2, key: "personalQ2" },
+    { el: el.charNotesPersonalQ3, key: "personalQ3" },
+    { el: el.charNotesPersonalQ4, key: "personalQ4" },
+    { el: el.charNotesPersonalQ5, key: "personalQ5" }
   ];
   notesFields.forEach(({ el: input, key }) => {
     if (!input) return;
@@ -410,6 +415,24 @@ function setupEventListeners() {
           panel.classList.add("active");
         } else {
           panel.classList.remove("active");
+        }
+      });
+    });
+  });
+
+  // Navegação de Abas das Anotações
+  const notesTabBtns = document.querySelectorAll(".notes-tab-btn");
+  const notesTabPanels = document.querySelectorAll(".notes-tab-panel");
+  notesTabBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const target = btn.getAttribute("data-notes-tab");
+      notesTabBtns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      notesTabPanels.forEach(p => {
+        if (p.id === target) {
+          p.classList.add("active");
+        } else {
+          p.classList.remove("active");
         }
       });
     });

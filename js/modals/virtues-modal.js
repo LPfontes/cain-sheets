@@ -134,27 +134,29 @@ export async function openVirtudesModal() {
                   <span class="blasphemy-card-name virtue-color-${v.id}">${v.name}</span>
                   ${v.title ? `<span class="blasphemy-card-subname">${v.title}</span>` : ""}
                 </div>
-                ${vbond > 0 ? `<span class="blasphemy-card-check">✦${vbond}</span>` : ""}
+
               </div>
             `;
           }).join("")}
         </div>
 
-        <div class="modal-detail-panel">
+        <div class="modal-detail-panel virtudes-detail-panel">
           ${activeV ? `
             <div class="modal-detail-header">
               <div class="modal-detail-img-wrapper">
                 <img src="assets/viculos/${activeV.id.toUpperCase()}.webp" alt="${activeV.name}">
               </div>
               <div class="modal-detail-info">
+
                 <div class="modal-detail-header-content">
                   <h4 class="modal-detail-title virtue-color-${activeV.id}">${activeV.name}</h4>
                   ${activeV.title ? `<div class="modal-detail-subtitle virtue-color-${activeV.id}">${activeV.title}</div>` : ""}
                 </div>
+                <div class="virtude-detail-section">
                 <div class="modal-detail-desc" style="margin-bottom: 12px;">
-                  ${activeV.desc ? activeV.desc.split("\n\n").map(p => `<p style="margin-bottom: 8px;">${p}</p>`).join("") : ""}
-                </div>
-
+                      ${activeV.desc ? activeV.desc.split("\n\n").map(p => `<p style="margin-bottom: 8px;">${p}</p>`).join("") : ""}
+                    </div>
+                
             ${activeV.likes ? `
             <div class="virtude-detail-section">
               <strong>${lang === "pt" ? "Gosta:" : "Likes:"}</strong>
@@ -183,12 +185,11 @@ export async function openVirtudesModal() {
 
             <div class="virtude-bond-track" style="margin-top: 12px;">
               <label><strong>${lang === "pt" ? "Vínculo:" : "Bond:"}</strong></label>
-              <div class="bond-stars" data-virtude-id="${activeV.id}">
-                ${[0, 1, 2, 3].map(lvl => `
-                  <span class="bond-star ${lvl <= bond ? 'filled' : ''}" data-bond-level="${lvl}">★</span>
+              <div class="bond-levels" data-virtude-id="${activeV.id}" style="--virtue-active-color: ${{prudence:'#0b78f1',hope:'#9d00fd',fortitude:'#f10b0b',charity:'#e30bf1',faith:'#fdc739',justice:'#90fdee'}[activeV.id] || 'var(--color-rust-glow)'}">
+                ${[[0,"0"],[1,"I"],[2,"II"],[3,"III"]].map(([lvl, label]) => `
+                  <button class="bond-level-btn ${bond === lvl ? 'active' : ''}" data-bond-level="${lvl}">${label}</button>
                 `).join("")}
               </div>
-              <span class="bond-value">${bond}/3</span>
             </div>
 
             <div class="virtude-benefits" style="margin-top: 12px;">
@@ -205,7 +206,7 @@ export async function openVirtudesModal() {
         </div>
       </div>
      </div>
-
+</div>
 </div>
       <div class="modal-action-footer">
         <button id="btn-virtudes-modal-cancel" class="btn btn-md btn-secondary">${lang === "pt" ? "Cancelar" : "Cancel"}</button>
@@ -216,6 +217,11 @@ export async function openVirtudesModal() {
     const gridCol = el.modalBody.querySelector(".modal-grid-col");
     if (gridCol && window._virtueGridScroll != null) {
       gridCol.scrollTop = window._virtueGridScroll;
+    }
+    const detailPanel = el.modalBody.querySelector(".modal-detail-panel");
+    if (detailPanel && window._virtueDetailScroll != null) {
+      detailPanel.scrollTop = window._virtueDetailScroll;
+      window._virtueDetailScroll = null;
     }
 
     el.modalBody.querySelectorAll(".blasphemy-grid-card").forEach(card => {
@@ -229,18 +235,16 @@ export async function openVirtudesModal() {
       });
     });
 
-    el.modalBody.querySelectorAll(".bond-star").forEach(star => {
-      star.addEventListener("click", () => {
-        const virtudeId = star.closest("[data-virtude-id]").getAttribute("data-virtude-id");
-        const level = parseInt(star.getAttribute("data-bond-level"));
+    el.modalBody.querySelectorAll(".bond-level-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const virtudeId = btn.closest("[data-virtude-id]").getAttribute("data-virtude-id");
+        const level = parseInt(btn.getAttribute("data-bond-level"));
         if (!tempVirtudes[virtudeId]) {
           tempVirtudes[virtudeId] = { bond: 0 };
         }
-        if (tempVirtudes[virtudeId].bond === level) {
-          tempVirtudes[virtudeId].bond = level > 0 ? level - 1 : 0;
-        } else {
-          tempVirtudes[virtudeId].bond = level;
-        }
+        tempVirtudes[virtudeId].bond = tempVirtudes[virtudeId].bond === level && level > 0 ? level - 1 : level;
+        const detail = el.modalBody.querySelector(".modal-detail-panel");
+        window._virtueDetailScroll = detail ? detail.scrollTop : 0;
         renderModalContent();
       });
     });
