@@ -135,6 +135,9 @@
       <button id="btn-manage-items" class="btn" data-i18n-title="header.items.title" title="Gerenciar Itens">
         <span class="btn-icon" data-icon="backpack"></span>
       </button>
+      <button id="btn-talisman-board" class="btn" data-i18n-title="header.talisman.title" title="Painel de Talismãs">
+        <span class="btn-icon" data-icon="talisman"></span> <span class="btn-text" data-i18n="header.talisman">Talismãs</span>
+      </button>
       <button id="btn-settings" class="btn" data-i18n-title="header.settings.title" title="Configurações">
         <span class="btn-icon" data-icon="settings"></span>
       </button>
@@ -908,6 +911,14 @@
         </div> <!-- Fim .sheet-pages-column -->
       </div> <!-- Fim .sheet-layout-grid -->
     </section>
+
+    <!-- MODAL: PAINEL DE TALISMÃS -->
+    <div id="talisman-modal" class="modal-overlay hidden">
+      <div class="modal-content talisman-modal-content">
+        <button id="btn-close-talisman" class="modal-close">&times;</button>
+        <iframe src="cain-talisman-board/talismans.html" id="talisman-iframe" title="Painel de Talismãs"></iframe>
+      </div>
+    </div>
 
     <!-- MODAL: PAINEL DE ROLAGEM (DICE DRAWER) -->
     <div id="dice-drawer" class="modal-overlay hidden">

@@ -36,6 +36,8 @@ const TRANSLATIONS = {
     "header.sync.title": "Sincronizar Nuvem",
     "header.items.title": "Gerenciar Itens",
     "header.settings.title": "Configurações",
+    "header.talisman": "Talismãs",
+    "header.talisman.title": "Painel de Talismãs",
 
     // Wizard
     "wizard.title": "Criação de Exorcista (CAIN)",
@@ -240,6 +242,8 @@ const TRANSLATIONS = {
     "header.sync.title": "Cloud Sync",
     "header.items.title": "Manage Items",
     "header.settings.title": "Settings",
+    "header.talisman": "Talismans",
+    "header.talisman.title": "Talisman Board",
 
     // Wizard
     "wizard.title": "Exorcist Creation (CAIN)",

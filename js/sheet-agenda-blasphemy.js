@@ -90,7 +90,7 @@ export function showPowerDetailPopup(power) {
   popup.setAttribute("data-power", power.name);
   popup.style.cssText = `
     max-width:650px;padding:20px;display:flex;flex-direction:column;gap:12px;
-    position:fixed;z-index:1310;top:30%;
+    position:fixed;z-index:1310;
     border:2px solid var(--border-color-dark);
     backdrop-filter:none;-webkit-backdrop-filter:none;
     border-radius:var(--radius-md);box-shadow:4px 4px 15px rgba(0,0,0,0.4)

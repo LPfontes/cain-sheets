@@ -420,13 +420,7 @@ function openPowerDetailsModal(power) {
     popup.className = "power-detail-popup card-glass";
     popup.setAttribute("data-power", power.name);
     
-    // Offset based on open detail windows
-    const count = document.querySelectorAll(".power-detail-popup").length;
-    const offset = count * 25;
-    
     popup.style.position = "fixed";
-    popup.style.top = `calc(25% + ${offset}px)`;
-    popup.style.left = `calc(40% + ${offset}px)`;
     popup.style.width = "600px";
     popup.style.maxHeight = "50vh";
     popup.style.overflowY = "auto";

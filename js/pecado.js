@@ -49,7 +49,7 @@ export function renderPecadoSheet() {
   // Render Traumas HTML
   let traumasHtml = "";
   for (let i = 0; i < 3; i++) {
-    const t = sin.traumas[i] || { question: `Pergunta de Trauma ${i+1}`, answer: "", revealed: false };
+    const t = sin.traumas[i] || { question: `Pergunta de Trauma ${i + 1}`, answer: "", revealed: false };
     traumasHtml += `
       <div class="trauma-card-row" data-trauma-idx="${i}">
         <div class="trauma-header-row">
@@ -167,37 +167,43 @@ export function renderPecadoSheet() {
                   </div>
                   
                     <div class="pecado-profile-grid-1">
-                        <div>
-                          <label class="ws-label">Hospedeiro</label>
-                          <input type="text" id="pecado-host" class="conflito-form-input pecado-field-input" value="${esc(sin.hostName)}" placeholder="Nome do Hospedeiro">
+                        
+                        <div class="pecado-profile-fields-row">
+                          <div>
+                            <label class="ws-label">Hospedeiro</label>
+                            <input type="text" id="pecado-host" class="conflito-form-input pecado-field-input" value="${esc(sin.hostName)}" placeholder="Nome do Hospedeiro">
+                          </div>  
+                          <div class="pecado-profile-fields-half">
+                              <label class="ws-label">Tipo de Pecado</label>
+                              <select id="pecado-type" class="conflito-form-input pecado-field-input">
+                                <option value="ogro" ${sin.type === 'ogro' ? 'selected' : ''}>Ogro</option>
+                                <option value="idolo" ${sin.type === 'idolo' ? 'selected' : ''}>Ídolo</option>
+                                <option value="cao" ${sin.type === 'cao' ? 'selected' : ''}>Cão</option>
+                                <option value="centopeia" ${sin.type === 'centopeia' ? 'selected' : ''}>Centopeia</option>
+                                <option value="sapo" ${sin.type === 'sapo' ? 'selected' : ''}>Sapo</option>
+                                <option value="lorde" ${sin.type === 'lorde' ? 'selected' : ''}>Lorde</option>
+                                <option value="outro" ${sin.type === 'outro' ? 'selected' : ''}>Customizado (Outro)</option>
+                              </select>
+                            </div>
                         </div>
-                        <div>
-                          <label class="ws-label">Tipo de Pecado</label>
-                          <select id="pecado-type" class="conflito-form-input pecado-field-input">
-                            <option value="ogro" ${sin.type === 'ogro' ? 'selected' : ''}>Ogro</option>
-                            <option value="idolo" ${sin.type === 'idolo' ? 'selected' : ''}>Ídolo</option>
-                            <option value="cao" ${sin.type === 'cao' ? 'selected' : ''}>Cão</option>
-                            <option value="centopeia" ${sin.type === 'centopeia' ? 'selected' : ''}>Centopeia</option>
-                            <option value="sapo" ${sin.type === 'sapo' ? 'selected' : ''}>Sapo</option>
-                            <option value="lorde" ${sin.type === 'lorde' ? 'selected' : ''}>Lorde</option>
-                            <option value="outro" ${sin.type === 'outro' ? 'selected' : ''}>Customizado (Outro)</option>
-                          </select>
-                        </div>
-                        <div>
-                          <label class="ws-label">Forma</label>
-                          <select id="pecado-form" class="conflito-form-input pecado-field-input">
-                            <option value="Separado" ${sin.form === 'Separado' ? 'selected' : ''}>Forma I / Separado</option>
-                            <option value="Fundido" ${sin.form === 'Fundido' ? 'selected' : ''}>Forma II / Fundido</option>
-                            <option value="Vinculado" ${sin.form === 'Vinculado' ? 'selected' : ''}>Forma III / Vinculado</option>
-                          </select>
-                        </div>
-                        <div>
-                          <label class="ws-label">Categoria (CAT)</label>
-                          <div id="pecado-cat-selector" class="cat-selector" title="Clique para trocar a categoria">
-                            <img id="pecado-cat-img" src="./assets/cat${sin.cat}.png" alt="CAT ${sin.cat}" class="cat-image">
-                            <div class="cat-arrows">
-                              <button type="button" class="cat-arrow cat-prev">▲</button>
-                              <button type="button" class="cat-arrow cat-next">▼</button>
+                        <div class="pecado-profile-fields-row">
+                          <div class="pecado-profile-fields-half">
+                            <label class="ws-label">Forma</label>
+                            <select id="pecado-form" class="conflito-form-input pecado-field-input">
+                              <option value="Separado" ${sin.form === 'Separado' ? 'selected' : ''}>Forma I / Separado</option>
+                              <option value="Fundido" ${sin.form === 'Fundido' ? 'selected' : ''}>Forma II / Fundido</option>
+                              <option value="Vinculado" ${sin.form === 'Vinculado' ? 'selected' : ''}>Forma III / Vinculado</option>
+                            </select>
+                          </div>
+                        
+                          <div class="pecado-profile-fields-row">
+                            <label class="ws-label">Categoria (CAT)</label>
+                            <div id="pecado-cat-selector" class="cat-selector" title="Clique para trocar a categoria">
+                              <img id="pecado-cat-img" src="./assets/cat${sin.cat}.png" alt="CAT ${sin.cat}" class="cat-image">
+                              <div class="cat-arrows">
+                                <button type="button" class="cat-arrow cat-prev">▲</button>
+                                <button type="button" class="cat-arrow cat-next">▼</button>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -421,7 +427,7 @@ function _renderExecutionCuts(sin, maxExecution) {
     line.className = "execution-cut-line" + (i <= cuts ? " filled" : "");
     line.style.left = `${5 + ((i - 1) / Math.max(maxExecution - 1, 1)) * 85}%`;
     line.style.setProperty('--rotate', `${rotations[(i - 1) % rotations.length]}deg`);
-    
+
     line.addEventListener("click", () => {
       if (i <= cuts) {
         sin.executionCuts = i - 1;
@@ -473,7 +479,7 @@ function _renderPressureTrack(sin) {
     const leftPercent = maxPressure > 1 ? 10 + ((i - 1) / (maxPressure - 1)) * 70 : 50;
     line.style.left = `${leftPercent}%`;
     line.style.setProperty('--rotate', `${rotations[(i - 1) % rotations.length]}deg`);
-    
+
     line.addEventListener("click", () => {
       if (i <= pressure) {
         sin.pressure = i - 1;
@@ -502,7 +508,7 @@ function _renderTensionTrack(sin) {
 
   const tension = sin.tension || 0;
   const maxTension = sin.tensionMax !== undefined ? sin.tensionMax : 3;
-  const rotations = [8, -5, 3 , 6, -9, 2, -3, -6, 7, 5, -8, 11];
+  const rotations = [8, -5, 3, 6, -9, 2, -3, -6, 7, 5, -8, 11];
 
   for (let i = 1; i <= maxTension; i++) {
     const line = document.createElement("div");
@@ -510,7 +516,7 @@ function _renderTensionTrack(sin) {
     const leftPercent = maxTension > 1 ? 20 + ((i - 1) / (maxTension - 1)) * 55 : 50;
     line.style.left = `${leftPercent}%`;
     line.style.setProperty('--rotate', `${rotations[(i - 1) % rotations.length]}deg`);
-    
+
     line.addEventListener("click", () => {
       if (i <= tension) {
         sin.tension = i - 1;
@@ -559,7 +565,7 @@ function _attachPecadoListeners(sin, maxExecution) {
       const idx = state.sins.findIndex(s => s.id === sin.id);
       if (idx !== -1) {
         state.sins.splice(idx, 1);
-        try { localStorage.setItem("cain_sins", JSON.stringify(state.sins)); } catch(e) {}
+        try { localStorage.setItem("cain_sins", JSON.stringify(state.sins)); } catch (e) { }
         state.currentSin = null;
         screen.classList.add("hidden");
         goToLanding();
@@ -894,12 +900,12 @@ function _attachPecadoListeners(sin, maxExecution) {
     btn.addEventListener("click", () => {
       const tab = btn.dataset.tab;
       activeThirdColTab = tab;
-      
+
       // Update tab buttons active classes
       screen.querySelectorAll(".pecado-third-tab-btn").forEach(b => {
         b.classList.toggle("active", b.dataset.tab === tab);
       });
-      
+
       // Update tab panels hidden classes
       screen.querySelectorAll(".pecado-tab-panel").forEach(panel => {
         panel.classList.toggle("hidden", panel.id !== `panel-${tab}`);
@@ -958,7 +964,7 @@ export function startNewPecado(name = "Novo Pecado", hostName = "", type = "ogro
   }
 
   state.sins.push(newSin);
-  try { localStorage.setItem("cain_sins", JSON.stringify(state.sins)); } catch (e) {}
+  try { localStorage.setItem("cain_sins", JSON.stringify(state.sins)); } catch (e) { }
 
   loadPecadoSheet(newSin);
 }

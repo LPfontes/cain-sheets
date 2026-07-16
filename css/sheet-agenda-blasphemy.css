@@ -308,8 +308,8 @@
   margin-top: 8px;
   font-weight: 600;
   padding: 6px;
-  border-left: 2px solid var(--stamp-red);
-  background: rgba(141, 36, 40, 0.05);
+  border-left: 2px solid var(--purple);
+  background: rgba(190, 116, 255, 0.4);
   border-radius: 4px;
   line-height: 1.4;
   font-size: var(--font-size-sm);
@@ -323,7 +323,7 @@
 
 .cain-blasphemy-powers-title {
   font-size: 0.9em;
-  color: var(--stamp-red);
+  color: var(--purple);
   font-weight: bold;
 }
 
@@ -432,13 +432,14 @@
 }
 
 .cain-blasphemy-card-content {
+
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.25s ease-out;
 }
 
 .cain-blasphemy-accordion-card.open .cain-blasphemy-card-content {
-  padding: 0 12px 12px 12px;
+  padding: 12px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -507,6 +508,7 @@
 }
 
 .virtude-name {
+  padding: 6px;
   margin: 0;
   font-family: var(--font-header);
   font-size: var(--font-size-lg);
@@ -514,10 +516,9 @@
 }
 
 .virtude-title {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
   color: var(--ink-muted);
   font-style: italic;
-  margin-left: auto;
 }
 
 .blasphemy-card-subname {

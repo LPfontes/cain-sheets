@@ -132,14 +132,14 @@
 
 .notes-desc {
   margin: 0 0 4px 0;
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-sm);
   color: var(--text-muted);
   font-style: italic;
 }
 
 .notes-textarea {
   width: 100%;
-  min-height: 120px;
+  height: 550px;
   resize: vertical;
   background-color: rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(0, 0, 0, 0.05);

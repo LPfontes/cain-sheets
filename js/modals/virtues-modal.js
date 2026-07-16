@@ -131,7 +131,7 @@ export async function openVirtudesModal() {
                   <img src="assets/viculos/${v.id.toUpperCase()}.webp" alt="${v.name}">
                 </div>
                 <div class="blasphemy-card-info">
-                  <span class="blasphemy-card-name virtue-color-${v.id}">${v.name}</span>
+                  <span class="blasphemy-card-name">${v.name}</span>
                   ${v.title ? `<span class="blasphemy-card-subname">${v.title}</span>` : ""}
                 </div>
 

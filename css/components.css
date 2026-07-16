@@ -848,18 +848,6 @@
   display: block;
 }
 
-/* Anotações Textarea */
-.notes-textarea {
-  width: 100%;
-
-  resize: none;
-  background-color: rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  padding: 12px;
-  font-size: var(--font-size-sm);
-  line-height: 1.6;
-}
-
 /* GAVETA DO ROLADOR DE DADOS - AGORA PAINEL LATERAL FIXO */
 .dice-drawer {
   width: 100%;
@@ -908,6 +896,10 @@
   line-height: 1.6;
   resize: vertical;
   transition: var(--transition-fast);
+}
+
+.notes-textarea--personal {
+  height: auto;
 }
 
 .notes-textarea:focus {
@@ -1385,7 +1377,7 @@
 .virtue-color-fortitude { color: #f10b0b; }
 .virtue-color-charity { color: #e30bf1; }
 .virtue-color-faith { color: #fdc739; }
-.virtue-color-justice { color: #90fdee; }
+.virtue-color-justice { color: #90fdee; background-color: #000000;}
 
 /* Cores das Blasfêmias */
 .blasphemy-color-tensao { color: #f10b0b; background-color: #000000; }

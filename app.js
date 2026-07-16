@@ -398,7 +398,27 @@ function setupEventListeners() {
     });
   }
 
-
+  // Talisman Board Modal
+  const talismanModal = document.getElementById("talisman-modal");
+  const btnTalisman = document.getElementById("btn-talisman-board");
+  const btnCloseTalisman = document.getElementById("btn-close-talisman");
+  if (btnTalisman && talismanModal) {
+    btnTalisman.addEventListener("click", () => {
+      talismanModal.classList.remove("hidden");
+    });
+  }
+  if (btnCloseTalisman && talismanModal) {
+    btnCloseTalisman.addEventListener("click", () => {
+      talismanModal.classList.add("hidden");
+    });
+  }
+  if (talismanModal) {
+    talismanModal.addEventListener("click", (e) => {
+      if (e.target === talismanModal) {
+        talismanModal.classList.add("hidden");
+      }
+    });
+  }
 
   // Navegação de Abas da Ficha
   const tabButtons = document.querySelectorAll(".sheet-tab-btn");
