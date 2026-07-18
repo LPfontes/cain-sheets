@@ -369,14 +369,14 @@ function openWizardBlasphemyPowersModal(blasphemyId) {
               <div class="desc">
                 <h3 class="modal-title">${blasphemy.name}</h3>
                 ${blasphemy.desc}
+                ${blasphemy.passive ? `
+                  <div class="passive" style="margin-top: 10px;">
+                    <strong style="color: var(--stamp-red);">Passiva:</strong> ${blasphemy.passive}
+                  </div>
+                ` : ''}
               </div>
 
         </div>
-          ${blasphemy.passive ? `
-            <div class="passive">
-              <strong style="color: var(--stamp-red);">Passiva:</strong> ${blasphemy.passive}
-            </div>
-          ` : ''}
         
           <div class="blasphemy-powers-section">
             <h4>Poderes da Blasfêmia</h4>
@@ -606,7 +606,17 @@ export function wizardFinish() {
     idade: d.idade || "",
     cid: d.cid || "",
     appearance: d.appearance || "",
-    notes: { mission: questionText, contacts: "", secrets: "", journal: "" }
+    notes: { 
+      mission: questionText, 
+      contacts: "", 
+      secrets: "", 
+      journal: "",
+      personalQ1: d.questions[0] || "",
+      personalQ2: d.questions[1] || "",
+      personalQ3: d.questions[2] || "",
+      personalQ4: d.questions[3] || "",
+      personalQ5: d.questions[4] || ""
+    }
   };
 
   logger.info(`Wizard CAIN: Finalizando criação de "${newChar.name}".`);

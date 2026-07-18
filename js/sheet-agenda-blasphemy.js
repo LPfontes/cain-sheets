@@ -186,8 +186,10 @@ export function renderBlasphemiesSheet() {
 
       return `<div class="cain-blasphemy-card card-glass cain-blasphemy-accordion-card">
               <button class="cain-blasphemy-card-trigger">
-                ${b.img ? `<img class="cain-blasphemy-card-thumb" src="${b.img}" alt="${b.name}">` : ''}
-                <span class="cain-blasphemy-name">${b.name}</span>
+                <div class="cain-blasphemy-card-title-group">
+                  ${b.img ? `<img class="cain-blasphemy-card-thumb" src="${b.img}" alt="${b.name}">` : ''}
+                  <span class="cain-blasphemy-name blasphemy-color-${b.id}">${b.name}</span>
+                </div>
                 <span class="card-arrow">▼</span>
               </button>
               <div class="cain-blasphemy-card-content">

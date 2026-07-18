@@ -399,36 +399,63 @@
 }
 
 .cain-blasphemy-card-thumb {
-  width: 80px;
-  height: 80px;
+  width: 100px;
   object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #000;
+}
+
+.cain-blasphemy-card-title-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
 .cain-blasphemy-card-trigger {
   width: 100%;
-  background: rgb(130 130 130 / 40%);
-  border: 1px solid black;
-  padding: 12px;
+  background: rgba(18, 15, 14, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 10px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: var(--text-primary);
   cursor: pointer;
   text-align: left;
+  transition: background var(--transition-fast) ease, border-color var(--transition-fast) ease;
+}
+
+.cain-blasphemy-card-trigger:hover {
+  background: rgba(28, 24, 22, 0.95);
+  border-color: rgba(190, 49, 53, 0.5);
 }
 
 .cain-blasphemy-card-trigger:hover .cain-blasphemy-name {
-  color: var(--purple);
+  filter: brightness(1.2);
 }
 
 .cain-blasphemy-card-trigger .cain-blasphemy-name {
   margin-bottom: 0 !important;
+  font-family: 'Cuasigothic', var(--font-heading);
+  font-size: var(--font-size-huge);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: inherit;
+  background-color: transparent !important;
+  transition: color var(--transition-fast) ease, filter var(--transition-fast) ease;
 }
 
 .card-arrow {
-  font-size: 12px;
-  transition: transform 0.2s ease;
-  opacity: 0.7;
+  font-size: 11px;
+  transition: transform var(--transition-normal) ease, opacity var(--transition-fast) ease;
+  opacity: 0.6;
+}
+
+.cain-blasphemy-accordion-card.open .card-arrow {
+  transform: rotate(180deg);
+  opacity: 1;
+  color: var(--color-rust-glow);
 }
 
 .cain-blasphemy-card-content {

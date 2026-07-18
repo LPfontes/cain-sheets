@@ -886,7 +886,7 @@
 
 /* Otimização das Anotações na Aba */
 .notes-textarea {
-  background-color: rgba(0, 0, 0, 0.35);
+  background-color: rgb(0, 0, 0);
   border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: var(--radius-md);
   padding: 16px;
@@ -905,7 +905,7 @@
 .notes-textarea:focus {
   border-color: var(--border-color);
   box-shadow: 0 0 10px rgba(0, 255, 102, 0.15);
-  background-color: rgba(0, 0, 0, 0.45);
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 /* Covered by landing.css */
@@ -1341,7 +1341,7 @@
     align-items: stretch;
   }
 
-  .char-actions {
+  .char-actions { 
     opacity: 1;
   }
 
@@ -1372,29 +1372,29 @@
 }
 
 /* Cores das Virtudes */
-.virtue-color-prudence { color: #0b78f1; }
-.virtue-color-hope { color: #9d00fd; }
-.virtue-color-fortitude { color: #f10b0b; }
-.virtue-color-charity { color: #e30bf1; }
-.virtue-color-faith { color: #fdc739; }
-.virtue-color-justice { color: #90fdee; background-color: #000000;}
+.virtue-color-prudence { color: #0b78f1!important; }
+.virtue-color-hope { color: #9d00fd!important; }
+.virtue-color-fortitude { color: #f10b0b!important; }
+.virtue-color-charity { color: #e30bf1!important; }
+.virtue-color-faith { color: #fdc739!important; }
+.virtue-color-justice { color: #90fdee!important; background-color: #000000!important;}
 
 /* Cores das Blasfêmias */
-.blasphemy-color-tensao { color: #f10b0b; background-color: #000000; }
-.blasphemy-color-ardencia { color: #fdfdfd; background-color: #000000;}
-.blasphemy-color-fluxo { color: #000000; background-color: #ffffff;}
-.blasphemy-color-vetor { color: #fd9a0c; background-color: #000000;}
-.blasphemy-color-portao { color: #fdfdfd; background-color: #000000;}
-.blasphemy-color-sufoco { color: #fd9a0c; background-color: #000000; }
-.blasphemy-color-sussurro { color: #0b78f1; background-color: #000000;}
-.blasphemy-color-editar { color: #000000; background-color: #ffffff; padding: 0 4px; border-radius: 2px; }
-.blasphemy-color-vinculo { color: #0b78f1; background-color: #000000;}
-.blasphemy-color-assombracao { color: #fdfdfd; background-color: #000000;}
-.blasphemy-color-palacio { color: #9d00fd; background-color: #000000;}
-.blasphemy-color-simpatia { color: #9d00fd; background-color: #000000;}
-.blasphemy-color-lei { color: #90fdee; background-color: #000000; }
-.blasphemy-color-nulo { color: #000000; background-color: #fcc639; }
-.blasphemy-color-entrelacar { color: #fdfdfd; background-color: #e30bf1; }
-.blasphemy-color-forca { color: #000000; background-color: #f10b0b; }
-.blasphemy-color-veu { color: #fdfdfd; background-color: #9c00fc; }
-.blasphemy-color-acordo { color: #fdfdfd; background-color: #0b78f1; }
+.blasphemy-color-tensao { color: #f10b0b !important; background-color: #000000!important; }
+.blasphemy-color-ardencia { color: #fdfdfd!important; background-color: #000000!important;}
+.blasphemy-color-fluxo { color: #000000!important; background-color: #ffffff!important;}
+.blasphemy-color-vetor { color: #fd9a0c!important; background-color: #000000!important;}
+.blasphemy-color-portao { color: #fdfdfd!important; background-color: #000000!important;}
+.blasphemy-color-sufoco { color: #fd9a0c!important; background-color: #000000!important; }
+.blasphemy-color-sussurro { color: #0b78f1!important; background-color: #000000!important;}
+.blasphemy-color-editar { color: #000000!important; background-color: #ffffff!important; padding: 0 4px; border-radius: 2px; }
+.blasphemy-color-vinculo { color: #0b78f1!important; background-color: #000000!important;}
+.blasphemy-color-assombracao { color: #fdfdfd!important; background-color: #000000!important;}
+.blasphemy-color-palacio { color: #9d00fd!important; background-color: #000000!important;}
+.blasphemy-color-simpatia { color: #9d00fd!important; background-color: #000000!important;}
+.blasphemy-color-lei { color: #90fdee!important; background-color: #000000!important; }
+.blasphemy-color-nulo { color: #000000!important; background-color: #fcc639!important; }
+.blasphemy-color-entrelacar { color: #fdfdfd!important; background-color: #e30bf1!important; }
+.blasphemy-color-forca { color: #000000!important; background-color: #f10b0b!important; }
+.blasphemy-color-veu { color: #fdfdfd!important; background-color: #9c00fc!important; }
+.blasphemy-color-acordo { color: #fdfdfd!important; background-color: #0b78f1!important; }

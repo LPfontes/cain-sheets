@@ -257,7 +257,7 @@ function setupEventListeners() {
   el.modalContainer.addEventListener("click", (e) => {
     if (e.target === el.modalContainer || e.target.classList.contains("modal-close")) {
       el.modalContainer.classList.add("hidden");
-      el.modalBody.parentElement.classList.remove("wide-modal");
+      el.modalBody.parentElement.classList.remove("wide-modal", "store-modal");
     }
   });
 
@@ -737,17 +737,7 @@ function setupEventListeners() {
     });
   });
 
-  // Add Hook
-  document.getElementById("btn-add-hook")?.addEventListener("click", () => {
-    const name = prompt("Nome do Hook:");
-    if (!name) return;
-    const char = state.currentCharacter;
-    if (!char) return;
-    if (!char.hooks) char.hooks = [];
-    char.hooks.push({ name, current: 0, max: 3 });
-    saveCurrentCharacter();
-    import("./js/sheet.js").then(({ renderEquipmentSheet }) => renderEquipmentSheet());
-  });
+
 
 }
 // Add Affliction

@@ -2,6 +2,7 @@
 
 import { el, state, saveCurrentMission } from "./state.js";
 import { hideAllScreens, goToLanding, esc } from "./screen-utils.js";
+import { initCanvasView, renderCanvas, fitToScreen } from "./missao-canvas.js";
 
 let activeNodeId = null;
 
@@ -54,6 +55,22 @@ export function loadMissionSheet(mission) {
   hideAllScreens();
   document.getElementById("landing-screen")?.classList.add("hidden");
   document.getElementById("missao-screen")?.classList.remove("hidden");
+
+  // Garantir que volta para o Modo Ficha ao carregar
+  const btnModeSheet = document.getElementById("btn-missao-mode-sheet");
+  const btnModeCanvas = document.getElementById("btn-missao-mode-canvas");
+  const gridLayout = document.querySelector(".missao-grid-3");
+  const canvasLayout = document.getElementById("missao-canvas-area");
+  if (btnModeSheet && btnModeCanvas && gridLayout && canvasLayout) {
+    btnModeSheet.classList.add("active");
+    btnModeSheet.style.color = "white";
+    btnModeCanvas.classList.remove("active");
+    btnModeCanvas.style.color = "var(--text-muted)";
+    gridLayout.classList.remove("hidden");
+    canvasLayout.classList.add("hidden");
+  }
+
+  initCanvasView();
   renderMissionSheet();
 }
 
@@ -240,17 +257,20 @@ function _renderNodeDetails(mission) {
     // Re-render list column to update name
     const listEl = document.querySelector(`[data-node-id="${node.id}"] .node-item-name`);
     if (listEl) listEl.textContent = e.target.value;
+    renderCanvas();
   });
 
   typeSelect?.addEventListener("change", (e) => {
     node.type = e.target.value;
     saveCurrentMission();
     renderMissionSheet();
+    renderCanvas();
   });
 
   descText?.addEventListener("input", (e) => {
     node.desc = e.target.value;
     saveCurrentMission();
+    renderCanvas();
   });
 
   document.getElementById("btn-delete-node")?.addEventListener("click", () => {
@@ -263,6 +283,7 @@ function _renderNodeDetails(mission) {
       activeNodeId = null;
       saveCurrentMission();
       renderMissionSheet();
+      renderCanvas();
     }
   });
 
@@ -282,6 +303,7 @@ function _renderNodeDetails(mission) {
 
     saveCurrentMission();
     renderMissionSheet();
+    renderCanvas();
   });
 
   container.querySelectorAll("[data-goto-node-id]").forEach(el => {
@@ -304,6 +326,7 @@ function _renderNodeDetails(mission) {
 
       saveCurrentMission();
       renderMissionSheet();
+      renderCanvas();
     });
   });
 }
@@ -316,6 +339,33 @@ function _attachListeners() {
   screen.querySelector("#btn-missao-back")?.addEventListener("click", () => {
     document.getElementById("missao-screen")?.classList.add("hidden");
     goToLanding();
+  });
+
+  // Alternador de Modos (Ficha vs Quadro Canvas)
+  const btnModeSheet = screen.querySelector("#btn-missao-mode-sheet");
+  const btnModeCanvas = screen.querySelector("#btn-missao-mode-canvas");
+  const gridLayout = screen.querySelector(".missao-grid-3");
+  const canvasLayout = screen.querySelector("#missao-canvas-area");
+
+  btnModeSheet?.addEventListener("click", () => {
+    btnModeSheet.classList.add("active");
+    btnModeSheet.style.color = "white";
+    btnModeCanvas.classList.remove("active");
+    btnModeCanvas.style.color = "var(--text-muted)";
+    gridLayout.classList.remove("hidden");
+    canvasLayout.classList.add("hidden");
+    renderMissionSheet(); // recarrega a lista
+  });
+
+  btnModeCanvas?.addEventListener("click", () => {
+    btnModeCanvas.classList.add("active");
+    btnModeCanvas.style.color = "white";
+    btnModeSheet.classList.remove("active");
+    btnModeSheet.style.color = "var(--text-muted)";
+    gridLayout.classList.add("hidden");
+    canvasLayout.classList.remove("hidden");
+    renderCanvas(); // renderiza o quadro
+    setTimeout(fitToScreen, 50); // centraliza os cards
   });
 
   // Name header
@@ -355,10 +405,28 @@ function _attachListeners() {
 
   screen.querySelector("#missao-sin-id")?.addEventListener("change", (e) => {
     const mission = state.currentMission;
-    if (mission) {
-      mission.sinId = e.target.value;
-      saveCurrentMission();
+    if (!mission) return;
+    mission.sinId = e.target.value;
+
+    const sin = state.sins.find(s => s.id === e.target.value);
+    if (sin) {
+      mission.hostName = sin.hostName || "";
+      mission.hostStatus = "";
+      mission.trauma1 = sin.traumas?.[0]?.answer || sin.traumas?.[0]?.question || "";
+      mission.trauma2 = sin.traumas?.[1]?.answer || sin.traumas?.[1]?.question || "";
+      mission.trauma3 = sin.traumas?.[2]?.answer || sin.traumas?.[2]?.question || "";
+      mission.palaceLoc = sin.palace?.desc || "";
+    } else {
+      mission.hostName = "";
+      mission.hostStatus = "";
+      mission.trauma1 = "";
+      mission.trauma2 = "";
+      mission.trauma3 = "";
+      mission.palaceLoc = "";
     }
+
+    saveCurrentMission();
+    renderMissionSheet();
   });
 
   screen.querySelector("#missao-host-name")?.addEventListener("input", (e) => {
@@ -436,5 +504,6 @@ function _attachListeners() {
 
     saveCurrentMission();
     renderMissionSheet();
+    renderCanvas();
   });
 }

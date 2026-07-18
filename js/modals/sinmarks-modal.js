@@ -47,7 +47,7 @@ export function openSinMarksModal() {
 
       <!-- Tab Navigation -->
       <div class="sinmarks-tab-bar">
-        <button id="btn-tab-roll" class="btn sinmarks-tab-btn ${rollingState.mode === 'roll' ? 'btn-primary' : 'btn-secondary'}">Rolar Marca</button>
+        <button id="btn-tab-roll" class="btn sinmarks-tab-btn ${rollingState.mode === 'roll' ? 'btn-primary' : 'btn-secondary'}">Marca</button>
         <button id="btn-tab-choose" class="btn sinmarks-tab-btn ${rollingState.mode === 'choose' ? 'btn-primary' : 'btn-secondary'}">Escolha Manual</button>
       </div>
 

@@ -1,5 +1,6 @@
 import { state, saveCurrentCharacter } from "./state.js";
 import { openVirtudesModal } from "./modals.js";
+import { t } from "./i18n.js";
 
 let VIRTUES_DATA = [];
 
@@ -64,8 +65,8 @@ export function renderVirtudesSheet() {
   const selectedVirtue = selectedVirtueId ? VIRTUES_DATA.find(v => v.id === selectedVirtueId) : null;
 
   let html = `<div class="virtude-header-bar">
-    <h3 class="section-title" style="margin:0;">${lang === "pt" ? "VIRTUDES" : "VIRTUES"}</h3>
-    <button id="btn-manage-virtudes" class="btn btn-sm btn-secondary">${lang === "pt" ? "Gerenciar" : "Manage"}</button>
+    <h3 class="section-title" style="margin:0;">${t("sheet.virtues.title")}</h3>
+    <button id="btn-manage-virtudes" class="btn btn-sm btn-secondary"style="color:black" >${t("sheet.virtues.manage")}</button>
   </div>`;
 
   if (selectedVirtue) {
@@ -77,14 +78,13 @@ export function renderVirtudesSheet() {
           <h4 class="virtude-name virtue-color-${selectedVirtue.id}">${selectedVirtue.name}</h4>
           ${selectedVirtue.title ? `<span class="virtude-title">${selectedVirtue.title}</span>` : ""}
         </div>
-        <div class="virtude-bond-track">
-          <label>${lang === "pt" ? "Vínculo:" : "Bond:"}</label>
-          <div class="bond-stars" data-virtude-id="${selectedVirtue.id}">
-            ${[0, 1, 2, 3].map(lvl => `
-              <span class="bond-star ${lvl <= bond ? 'filled' : ''}" data-bond-level="${lvl}">★</span>
+        <div class="virtude-bond-track" style="margin-top: 12px;">
+          <label><strong>${t("sheet.virtues.bond")}:</strong></label>
+          <div class="bond-levels" data-virtude-id="${selectedVirtue.id}" style="--virtue-active-color: ${{prudence:'#0b78f1',hope:'#9d00fd',fortitude:'#f10b0b',charity:'#e30bf1',faith:'#fdc739',justice:'#90fdee'}[selectedVirtue.id] || 'var(--color-rust-glow)'}">
+            ${[[0,"0"],[1,"I"],[2,"II"],[3,"III"]].map(([lvl, label]) => `
+              <button class="bond-level-btn ${bond === lvl ? 'active' : ''}" data-bond-level="${lvl}">${label}</button>
             `).join("")}
           </div>
-          <span class="bond-value">${bond}/3</span>
         </div>
         <div class="virtude-benefits">
           <div class="benefit ${bond >= 0 ? 'unlocked' : ''}">
@@ -103,7 +103,7 @@ export function renderVirtudesSheet() {
       </div>`;
   } else if (VIRTUES_DATA.length > 0) {
     html += `<div class="text-secondary-md" style="padding: 20px; text-align: center; color: var(--ink-faded);">
-      ${lang === "pt" ? "Nenhuma virtude selecionada. Clique em Gerenciar para escolher uma." : "No virtue selected. Click Manage to choose one."}
+      ${t("sheet.virtues.empty")}
     </div>`;
   }
 
@@ -114,18 +114,14 @@ export function renderVirtudesSheet() {
     btnManage.onclick = () => openVirtudesModal();
   }
 
-  container.querySelectorAll(".bond-star").forEach(star => {
-    star.addEventListener("click", () => {
-      const virtudeId = star.closest("[data-virtude-id]").getAttribute("data-virtude-id");
-      const level = parseInt(star.getAttribute("data-bond-level"));
+  container.querySelectorAll(".bond-level-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const virtudeId = btn.closest("[data-virtude-id]").getAttribute("data-virtude-id");
+      const level = parseInt(btn.getAttribute("data-bond-level"));
       if (!char.virtudes[virtudeId]) {
         char.virtudes[virtudeId] = { bond: 0 };
       }
-      if (char.virtudes[virtudeId].bond === level) {
-        char.virtudes[virtudeId].bond = level > 0 ? level - 1 : 0;
-      } else {
-        char.virtudes[virtudeId].bond = level;
-      }
+      char.virtudes[virtudeId].bond = level;
       saveCurrentCharacter();
       renderVirtudesSheet();
     });

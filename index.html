@@ -588,67 +588,12 @@
                       <div class="hooks-layout">
                         <!-- Coluna Esquerda: Instruções -->
                         <div class="hooks-instructions">
-                          <h3 class="hooks-title" data-toolbox="hooks">GANCHOS</h3>
+                          <h3 class="hooks-title" style="display:flex; justify-content:space-between; align-items:center;">
+                            <span data-toolbox="hooks" style="cursor:pointer;">GANCHOS</span>
+                            <button id="btn-add-hook" class="btn btn-sm btn-secondary" style="font-size: 11px; padding: 2px 8px; cursor: pointer; color: #000000;">+ Adicionar</button>
+                          </h3>
                           <div class="hooks-columns">
-                            <!-- Gancho 1 -->
-                            <div class="hook-track-col">
-                              <div class="hook-track-header">
-                                <input type="text" id="hook-name-1" class="hook-name-input" placeholder="Gancho 1">
-                              </div>
-                              <div class="hook-boxes">
-                                <label class="hook-box"><input type="checkbox" id="hook-check-1-1"><span></span></label>
-                                <label class="hook-box"><input type="checkbox" id="hook-check-1-2"><span></span></label>
-                                <label class="hook-box"><input type="checkbox" id="hook-check-1-3"><span></span></label>
-                              </div>
-                              <div class="hook-visual-strip">
-                                <div class="diagonal-line line-1"></div>
-                                <div class="diagonal-line line-2"></div>
-                                <div class="diagonal-line line-3"></div>
-                              </div>
-                              <button type="button" class="hook-remove-button" title="Apagar Gancho">
-                                <i class="material-icons">Limpar</i>
-                              </button>
-                            </div>
-
-                            <!-- Gancho 2 -->
-                            <div class="hook-track-col">
-                              <div class="hook-track-header">
-                                <input type="text" id="hook-name-2" class="hook-name-input" placeholder="Gancho 2">
-                              </div>
-                              <div class="hook-boxes">
-                                <label class="hook-box"><input type="checkbox" id="hook-check-2-1"><span></span></label>
-                                <label class="hook-box"><input type="checkbox" id="hook-check-2-2"><span></span></label>
-                                <label class="hook-box"><input type="checkbox" id="hook-check-2-3"><span></span></label>
-                              </div>
-                              <div class="hook-visual-strip">
-                                <div class="diagonal-line line-1"></div>
-                                <div class="diagonal-line line-2"></div>
-                                <div class="diagonal-line line-3"></div>
-                              </div>
-                              <button type="button" class="hook-remove-button" title="Apagar Gancho">
-                                <i class="material-icons">Limpar</i>
-                              </button>
-                            </div>
-
-                            <!-- Gancho 3 -->
-                            <div class="hook-track-col">
-                              <div class="hook-track-header">
-                                <input type="text" id="hook-name-3" class="hook-name-input" placeholder="Gancho 3">
-                              </div>
-                              <div class="hook-boxes">
-                                <label class="hook-box"><input type="checkbox" id="hook-check-3-1"><span></span></label>
-                                <label class="hook-box"><input type="checkbox" id="hook-check-3-2"><span></span></label>
-                                <label class="hook-box"><input type="checkbox" id="hook-check-3-3"><span></span></label>
-                              </div>
-                              <div class="hook-visual-strip">
-                                <div class="diagonal-line line-1"></div>
-                                <div class="diagonal-line line-2"></div>
-                                <div class="diagonal-line line-3"></div>
-                              </div>
-                              <button type="button" class="hook-remove-button" title="Apagar Gancho">
-                                <i class="material-icons">Limpar</i>
-                              </button>
-                            </div>
+                            <!-- Renderizado dinamicamente via JS -->
                           </div>
                         </div>
                       </div>
@@ -772,7 +717,7 @@
             <div class="sheet-cain-center">
               <div class="grid-2-col">
                 <div class="cain-skills-card card-glass">
-                  <h3 class="status-header">PERÍCIAS</h3>
+                  <h3 class="status-header" data-i18n="sheet.skills">PERÍCIAS</h3>
                   <div id="skills-list-sheet" class="cain-skills-container">
                     <!-- JS renderiza as perícias aqui -->
                   </div>
@@ -794,12 +739,12 @@
                       <!-- JS renderiza linhas de estresse -->
                     </div>
                     <div>
-                      <h3 class="status-header"
+                       <h3 class="status-header"
                         style="display: flex; align-items: center; justify-content: space-between;">
-                        <span>ESTRESSE</span>
+                        <span data-i18n="sheet.stress">ESTRESSE</span>
                         <button id="btn-stress-settings" class="btn btn-sm"
                           style="padding: 2px 6px; font-size: 18px; border: none; background: none; box-shadow: none; cursor: pointer; color: var(--ink-faded);"
-                          title="Definir tamanho dos botões">⚙</button>
+                          data-i18n-title="sheet.stress.settings" title="Definir tamanho dos botões">⚙</button>
                       </h3>
                       <!-- Coluna esquerda: Feridas -->
                       <div class="stress-left-controls">
@@ -946,14 +891,19 @@
         <!-- HEADER -->
         <div class="missao-header-row">
           <div style="display:flex; align-items:center; gap:12px;">
-            <button id="btn-missao-back" class="btn btn-sm btn-secondary flex-shrink-0" style="display:flex; align-items:center; gap:6px;">
+            <button id="btn-missao-back" class="btn btn-sm btn-secondary flex-shrink-0" style="display:flex; align-items:center; gap:6px; color: white;">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="15 18 9 12 15 6"></polyline>
               </svg> Voltar
             </button>
             <input type="text" id="missao-name-header" class="missao-name-input" value="Nova Investigação" placeholder="Nome do Caso" style="color: white;" >
           </div>
-          <div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <!-- Alternador de Modos -->
+            <div class="missao-mode-tabs" style="display:flex; background:rgba(0,0,0,0.3); padding:2px; border-radius:var(--radius-md); border: 1px solid rgba(255,255,255,0.08);">
+              <button id="btn-missao-mode-sheet" class="btn btn-sm active" style="margin:0; border:none; background:transparent; color:white;">Modo Ficha</button>
+              <button id="btn-missao-mode-canvas" class="btn btn-sm" style="margin:0; border:none; background:transparent; color:var(--text-muted);">Modo Quadro</button>
+            </div>
             <button id="btn-missao-delete" class="btn btn-sm btn-danger" style="color: white;">
               Excluir Caso
             </button>
@@ -1080,6 +1030,52 @@
             </div>
           </div>
 
+        </div>
+
+        <!-- VISUAL CANVAS AREA -->
+        <div id="missao-canvas-area" class="hidden">
+          <div class="canvas-toolbar">
+            <div class="canvas-toolbar-group">
+              <select id="canvas-add-node-type" class="missao-form-input" style="width:auto; padding:5px 8px; font-size:var(--font-size-xs); background:rgba(0,0,0,0.4); border-color:rgba(255,255,255,0.1); display:inline-block; height:30px; margin-right:5px; color:white;">
+                <option value="pessoa">Pessoa / NPC</option>
+                <option value="local">Local</option>
+                <option value="evidencia">Evidência</option>
+                <option value="objeto">Objeto</option>
+                <option value="obstaculo">Obstáculo / Inimigo</option>
+              </select>
+              <button id="btn-canvas-add-clue" class="btn btn-sm btn-primary" title="Adicionar Pista">+ Pista</button>
+              <button id="btn-canvas-add-note" class="btn btn-sm btn-secondary" title="Adicionar Nota Adesiva">+ Nota</button>
+              <button id="btn-canvas-add-image" class="btn btn-sm btn-secondary" title="Adicionar Imagem">+ Imagem</button>
+              <input type="file" id="canvas-image-input" accept="image/*" style="display:none;">
+            </div>
+            <div class="canvas-toolbar-instruction" style="color:var(--text-muted); font-size:var(--font-size-xs); flex:1; text-align:center;">
+              Arrastar: Botão do Meio/Espaço + Mouse ou fundo vazio | Zoom: Roda do Mouse
+            </div>
+            <div class="canvas-toolbar-group">
+              <button id="btn-canvas-fit" class="btn btn-sm btn-secondary" title="Ajustar Visualização">Ajustar</button>
+              <button id="btn-canvas-reset" class="btn btn-sm btn-secondary" title="Resetar Zoom">100%</button>
+              <button id="btn-canvas-clear" class="btn btn-sm btn-danger" style="margin-left:10px;" title="Limpar Canvas">Limpar Quadro</button>
+            </div>
+          </div>
+          
+          <div id="canvas-container">
+            <!-- Grid de fundo infinito -->
+            <div id="canvas-viewport">
+              <svg id="canvas-connections-svg">
+                <!-- Defs para marcadores de seta, glow, etc. -->
+                <defs>
+                  <marker id="arrow" viewBox="0 0 10 10" refX="25" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#be3135" />
+                  </marker>
+                  <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="2" result="blur" />
+                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                  </filter>
+                </defs>
+              </svg>
+              <div id="canvas-cards-layer"></div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

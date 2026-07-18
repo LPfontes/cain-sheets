@@ -46,24 +46,24 @@
 }
 
 .hooks-columns {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: flex-start;
   height: fit-content;
 }
 
 .hook-track-col {
+  flex: 0 0 160px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 100%;
   gap: 6px;
 }
 
 .hook-boxes {
-  display: flex;
-  flex-direction: column;
+  display: none !important;
 }
 
 .hook-boxes input[type="checkbox"] {
@@ -80,30 +80,98 @@
   text-align: center;
 }
 
-.hook-remove-button {
-  background: none;
-  border: none;
-  color: var(--text-muted);
+.btn-remove-hook-col:hover {
+  color: #f87171 !important;
+}
+
+/* Estilo do Talismã (Ganchos) */
+.hook-visual-strip {
+  position: relative;
+  width: 100px;
+  height: 350px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.6);
+  margin: 10px 0;
+  border-radius: 3px;
+  overflow: hidden;
+  transition: filter 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
-  padding: 4px;
-  font-size: 11px;
-  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.hook-visual-strip:hover {
+  filter: brightness(1.1) contrast(1.05);
+  box-shadow: 0 0 12px rgba(193, 18, 31, 0.4);
+}
+
+/* Talismãs específicos para cada um dos 3 ganchos */
+.hook-track-col:nth-child(1) .hook-visual-strip {
+  background-image: url('../cain-talisman-board/reference/talismans/CAIN_1.4-0505-p081.png');
+}
+
+.hook-track-col:nth-child(2) .hook-visual-strip {
+  background-image: url('../cain-talisman-board/reference/talismans/CAIN_1.4-0506-p081.png');
+}
+
+.hook-track-col:nth-child(3) .hook-visual-strip {
+  background-image: url('../cain-talisman-board/reference/talismans/CAIN_1.4-0507-p081.png');
+}
+
+/* Slashes (cortes de tinta vermelha) */
+.hook-visual-strip .diagonal-line {
+  position: absolute;
+  height: 5px;
+  width: 140%;
+  background: #c1121f;
+  box-shadow: 0 0 5px rgba(193, 18, 31, 0.8), inset 0 0 2px rgba(0, 0, 0, 0.5);
+  left: -20%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: rotate(-35deg);
+}
+
+.hook-visual-strip .diagonal-line.slashed {
+  opacity: 1 !important;
+}
+
+/* Efeito sepia e queima ao completar todos os cortes */
+.hook-visual-strip.fully-slashed {
+  filter: sepia(0.3) brightness(0.65) contrast(1.1) !important;
+  opacity: 0.85 !important;
+}
+
+/* Botões do Seletor de Limite de Cortes */
+.hook-max-buttons {
   display: flex;
-  align-items: center;
+  gap: 3px;
+  margin-top: 5px;
   justify-content: center;
-  margin-top: 2px;
 }
 
-.hook-remove-button:hover {
-  color: #f87171;
-  transform: scale(1.1);
+.btn-hook-max {
+  background: rgba(0, 0, 0, 0.5);
+  color: var(--text-muted);
+  border: 1.5px solid rgba(255, 255, 255, 0.08) !important;
+  font-size: 10px !important;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.15s ease;
 }
 
-.hook-remove-button i {
-  font-style: normal;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.btn-hook-max:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.btn-hook-max.active {
+  background: #c1121f !important;
+  color: white !important;
+  border-color: #c1121f !important;
+  box-shadow: 0 0 8px rgba(193, 18, 31, 0.6);
 }
 
 .notes-container {

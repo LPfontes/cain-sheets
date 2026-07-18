@@ -441,7 +441,7 @@ optgroup {
 
 .btn-secondary {
   background-color: transparent;
-  color: var(--ink-dark);
+  color: white;
   border-color: var(--border-color-dark);
   box-shadow: 2px 2px 0 var(--border-color-dark);
 }

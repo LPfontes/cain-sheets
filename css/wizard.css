@@ -482,8 +482,7 @@
   grid-template-columns: auto 1fr;
   align-items: flex-start;
   gap: 16px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  padding-bottom: 12px;
+  padding-bottom: 6px;
 }
 
 .blasphemy-details-header img {
@@ -526,7 +525,7 @@
 
 /* Blasphemy Powers Section */
 .blasphemy-powers-section {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 10px;
 }
 
 .blasphemy-powers-section h4 {

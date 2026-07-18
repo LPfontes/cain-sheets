@@ -113,7 +113,7 @@ export function openBlasphemiesModal() {
               ${activeB.img ? `<img src="${activeB.img}" alt="${activeB.name}">` : `<strong></b>`}
             </div>
             <div class="blasphemy-details">
-              <h4 class="blasphemy-color-${activeB.id} modal-detail-title" style="font-family: 'Cuasigothic';">${activeB.name}</h4>
+              <h4 class="blasphemy-color-${activeB.id} modal-detail-title" style="font-family: 'Cuasigothic'; text-transform: uppercase;">${activeB.name}</h4>
               <div class="modal-detail-desc">
                 ${activeB.desc}
               </div>
@@ -356,7 +356,7 @@ export function openBlasphemyPowersModal(blasphemy, currentPowers, onSave) {
 
           <div class="blasphemy-powers-section">
             <h4>Poderes da Blasfêmia</h4>
-            <p>Escolha 2 poderes:</p>
+            <p>Selecione os poderes ativos:</p>
             <div class="traits-wizard-list" id="wiz-modal-powers-list">
               ${(blasphemy.powers || []).map(p => {
       const hasPower = selectedPowers.includes(p.name);
@@ -364,7 +364,7 @@ export function openBlasphemyPowersModal(blasphemy, currentPowers, onSave) {
                   <div class="trait-wiz-item ${hasPower ? 'active' : ''}">
                     <input type="checkbox" class="trait-wiz-check submodal-power-check" data-name="${p.name}" ${hasPower ? 'checked' : ''}>
                     <div class="trait-wiz-content" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                      <div class="trait-name" style="font-family: var(--font-heading); text-transform: uppercase; font-size: var(--font-size-md);">${p.name}</div>
+                       <div class="trait-name" style="font-family: var(--font-heading); text-transform: uppercase; font-size: var(--font-size-md);">${p.name}</div>
                       <button type="button" class="btn btn-sm btn-detail-power btn-tiny" data-name="${p.name}">Detalhes</button>
                     </div>
                   </div>
@@ -376,7 +376,7 @@ export function openBlasphemyPowersModal(blasphemy, currentPowers, onSave) {
 
         <div class="modal-actions" style="margin-top: 16px;">
           <button class="btn" id="btn-submodal-cancel">Cancelar</button>
-          <button class="btn btn-primary" id="btn-submodal-save" ${selectedPowers.length !== 2 ? 'disabled' : ''}>Selecionar</button>
+          <button class="btn btn-primary" id="btn-submodal-save">Selecionar</button>
         </div>
       </div>
     `;
