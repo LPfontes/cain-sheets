@@ -114,15 +114,6 @@
   color: var(--text-muted);
 }
 
-.custom-item-row {
-  display: flex;
-  margin-top: 8px;
-  gap: 6px;
-  align-items: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  padding-top: 10px;
-}
-
 .custom-item-name-input {
   flex: 1;
   font-size: 11px;
@@ -187,13 +178,6 @@
   gap: 6px;
 }
 
-.weapon-upgrade-info {
-  font-size: 11px;
-  color: var(--text-muted);
-  margin-bottom: 10px;
-  line-height: 1.4;
-}
-
 .weapon-upgrade-form {
   display: flex;
   flex-direction: column;
@@ -221,24 +205,6 @@
   border: 1px solid var(--border-color);
   color: var(--ink-dark);
   border-radius: 4px;
-}
-
-.weapon-upgrade-action-row {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  border-top: 1px solid rgba(251, 191, 36, 0.08);
-  padding: 6px;
-}
-
-.weapon-upgrade-status {
-  font-size: var(--font-size-md);
-  color: var(--text-secondary);
-}
-
-.weapon-upgrade-status strong {
-  color: var(--purple);
-  font-size: 12px;
 }
 
 #btn-upgrade-weapon {
@@ -578,7 +544,6 @@
   color: #9ca3af !important;
   cursor: not-allowed;
 }
-
 
 .custom-item-field-row {
   display: flex;

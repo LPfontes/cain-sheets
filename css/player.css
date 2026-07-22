@@ -221,83 +221,6 @@
 }
 
 /* Expanded player - modal content */
-.player-expanded {
-  padding: 8px 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.player-expanded-header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 8px 16px 16px;
-  border-bottom: 1px solid var(--border-color);
-  margin-bottom: 12px;
-}
-
-.player-expanded-art {
-  width: 80px;
-  height: 80px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  background: rgba(0, 0, 0, 0.3);
-}
-
-.player-expanded-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.player-expanded-title {
-  font-family: var(--font-heading);
-  font-size: var(--font-size-xl);
-  font-weight: 700;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.player-expanded-sub {
-  font-size: var(--font-size-sm);
-  color: var(--text-muted);
-  margin-top: 4px;
-}
-
-.player-expanded-list {
-  flex: 1;
-  overflow-y: auto;
-  padding: 0 8px;
-  max-height: 50vh;
-}
-
-.player-expanded-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: var(--transition-fast);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-}
-
-.player-expanded-item:hover {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.player-expanded-item.active {
-  background: rgba(18, 93, 110, 0.2);
-  border: 1px solid rgba(18, 93, 110, 0.3);
-}
-
-.player-expanded-item.playing .player-item-title {
-  color: var(--border-color);
-}
 
 .player-item-num {
   font-size: var(--font-size-xs);
@@ -305,23 +228,6 @@
   width: 24px;
   text-align: right;
   font-variant-numeric: tabular-nums;
-  flex-shrink: 0;
-}
-
-.player-item-title {
-  flex: 1;
-  font-size: var(--font-size-sm);
-  font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.player-item-indicator {
-  font-size: var(--font-size-xs);
-  color: var(--border-color);
-  width: 20px;
-  text-align: center;
   flex-shrink: 0;
 }
 

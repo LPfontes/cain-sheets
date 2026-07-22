@@ -1,20 +1,5 @@
 /* css/sheet-stress-health.css - Estresse, Saúde, Surtos e Alienação */
 
-.saude-card {
-  border: 1.5px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  padding: 12px;
-  background: var(--bg-card);
-  box-shadow: var(--shadow-card);
-}
-
-.health-formula-info {
-  font-size: var(--font-size-sm);
-  font-weight: normal;
-  color: var(--text-secondary);
-  margin-left: 6px;
-}
-
 .cain-stress-card {
   padding: 10px;
 }
@@ -34,13 +19,6 @@
   padding-top: 10px;
 }
 
-.stress-right-controls {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding-top: 8px;
-}
-
 .stress-cell-content {
   display: flex;
   flex-direction: column;
@@ -49,14 +27,6 @@
   text-align: center;
   width: 100%;
   gap: 2px;
-}
-
-.stress-line-item {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
 }
 
 .stress-ctrl-btn {
@@ -70,21 +40,6 @@
   align-items: center;
 }
 
-.small-btn {
-  width: 25px;
-  height: 25px;
-  font-size: 12px;
-}
-
-.extra-small-btn {
-  width: 20px;
-  height: 20px;
-  font-size: 10px;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-}
-
 .stress-label-group {
   display: flex;
   align-items: center;
@@ -94,13 +49,6 @@
 .stress-label-group .stat-label {
   min-width: auto;
   text-align: center;
-}
-
-#btn-add-injury {
-  width: 24px;
-  height: 24px;
-  font-size: 14px;
-  margin-top: 2px;
 }
 
 .stress-label-group .stat-value {
@@ -181,12 +129,6 @@
   font-weight: 600;
 }
 
-.stat-controls {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
 .stat-value {
   font-size: var(--font-size-lg);
   font-weight: bold;
@@ -209,10 +151,6 @@
   font-size: 11px;
   padding: 2px 8px;
   border-radius: 10px;
-}
-
-.psyche-section {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .psyche-row-container {
@@ -252,10 +190,6 @@
 .psyche-checkbox.checked .psyche-burst-icon {
   opacity: 1;
   filter: grayscale(0%) drop-shadow(0 0 5px rgba(168, 85, 247, 0.8));
-}
-
-.sin-section {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .sin-row-container {
@@ -345,10 +279,6 @@
   }
 }
 
-.piedade-section {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
 .piedade-row {
   display: flex;
   align-items: center;
@@ -419,12 +349,6 @@
   color: var(--color-rust-glow);
 }
 
-.piedade-max {
-  color: var(--text-secondary);
-  font-size: var(--font-size-xs);
-  margin-left: 4px;
-}
-
 .btn-divine-agony {
   width: 100%;
   background: rgb(0, 0, 0);
@@ -455,10 +379,6 @@
   letter-spacing: 1px;
 }
 
-.cain-xp-card {
-  padding: 12px 16px;
-}
-
 .xp-bar {
   height: 8px;
   background: rgba(255, 255, 255, 0.08);
@@ -474,10 +394,3 @@
   transition: width 0.3s ease;
 }
 
-.xp-bar-label {
-  position: absolute;
-  right: 4px;
-  top: -14px;
-  font-size: 10px;
-  color: var(--text-muted);
-}

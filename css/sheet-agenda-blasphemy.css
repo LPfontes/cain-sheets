@@ -1,12 +1,5 @@
 /* css/sheet-agenda-blasphemy.css - Abas, Aptidões, Agendas e Blasphemias */
 
-.aptitudes-columns-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 12px;
-  flex-shrink: 0;
-}
-
 .aptitude-column-card {
   border: 1.5px solid var(--border-color);
   border-radius: var(--radius-sm);
@@ -16,87 +9,6 @@
   gap: 10px;
   background: var(--bg-card);
   box-shadow: var(--shadow-card);
-}
-
-.aptitude-column-header {
-  font-family: var(--font-heading);
-  font-size: var(--font-size-sm);
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-align: center;
-  text-transform: uppercase;
-  color: var(--ink-dark);
-  border-bottom: 1.5px solid var(--border-color);
-  padding-bottom: 6px;
-  margin-bottom: 2px;
-}
-
-.instintos-header {
-  color: var(--color-instintos);
-  border-color: var(--color-instintos);
-}
-
-.conhecimentos-header {
-  color: var(--color-conhecimentos);
-  border-color: var(--color-conhecimentos);
-}
-
-.praticas-header {
-  color: var(--color-praticas);
-  border-color: var(--color-praticas);
-}
-
-.instintos-list {
-  color: var(--color-instintos);
-  border-color: var(--color-instintos);
-}
-
-.conhecimentos-list {
-  color: var(--color-conhecimentos);
-  border-color: var(--color-conhecimentos);
-}
-
-.praticas-list {
-  color: var(--color-praticas);
-  border-color: var(--color-praticas);
-}
-
-.aptitude-list {
-  flex: 1;
-  overflow-y: auto;
-  padding-right: 4px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.aptitude-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 5px 7px;
-  border-radius: var(--radius-sm);
-  background-color: rgba(255, 255, 255, 0.3);
-  border: 1px solid var(--border-color-light);
-  transition: var(--transition-fast);
-  cursor: pointer;
-}
-
-.aptitude-item:hover {
-  background-color: rgba(255, 255, 255, 0.5);
-  border-color: var(--border-color);
-}
-
-.aptitude-item.selected-for-roll {
-  border-color: var(--ink-dark);
-  background-color: rgba(255, 255, 255, 0.6);
-  box-shadow: inset 0 0 0 1px var(--ink-dark);
-}
-
-.aptitude-item .name {
-  font-family: var(--font-heading);
-  font-size: var(--font-size-sm);
-  font-weight: 600;
 }
 
 .sheet-redesign-tabs-container {
@@ -184,22 +96,6 @@
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.sheet-inner-section {
-  margin-bottom: 20px;
-}
-
-.sheet-inner-section:last-child {
-  margin-bottom: 0;
-}
-
-.sheet-section {
-  background-color: rgba(255, 255, 255, 0.2) !important;
-  border: 1px solid var(--border-color-light) !important;
-  border-radius: var(--radius-sm);
-  padding: 12px !important;
-  margin-bottom: 14px !important;
 }
 
 .section-title {
@@ -294,16 +190,6 @@
   line-height: 1.4;
 }
 
-.cain-blasphemy-cat {
-  position: absolute;
-  top: 8px;
-  right: 10px;
-  font-size: 10px;
-  background: rgba(250, 204, 21, 0.15);
-  padding: 2px 8px;
-  border-radius: 8px;
-}
-
 .cain-blasphemy-passive {
   margin-top: 8px;
   font-weight: 600;
@@ -332,65 +218,6 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-}
-
-.cain-blasphemy-accordion-item {
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.02);
-  overflow: hidden;
-  transition: background-color 0.2s ease;
-}
-
-.cain-blasphemy-accordion-item.open {
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.cain-blasphemy-accordion-trigger {
-  width: 100%;
-  background: none;
-  border: none;
-  padding: 8px 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: var(--text-primary);
-  font-weight: bold;
-  font-family: var(--font-heading);
-  text-transform: uppercase;
-  font-size: var(--font-size-md);
-  cursor: pointer;
-  text-align: left;
-  transition: color 0.2s ease;
-}
-
-.cain-blasphemy-accordion-trigger:hover {
-  color: var(--stamp-red);
-}
-
-.accordion-arrow {
-  font-size: 10px;
-  transition: transform 0.2s ease;
-  opacity: 0.7;
-}
-
-.cain-blasphemy-accordion-content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.2s ease-out;
-  border-top: 1px solid transparent;
-}
-
-.cain-blasphemy-accordion-item.open .cain-blasphemy-accordion-content {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.cain-blasphemy-accordion-content p {
-  padding: 10px 12px;
-  margin: 0;
-  font-size: var(--font-size-sm);
-  color: var(--text-secondary);
-  line-height: 1.4;
 }
 
 .cain-blasphemy-accordion-card {
@@ -505,12 +332,6 @@
   margin-bottom: 10px;
 }
 
-.virtudes-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
 .virtude-card {
   padding: 14px;
   border: 1px solid var(--border-color);
@@ -566,44 +387,6 @@
   color: var(--ink-dark);
 }
 
-.blasphemy-details-subtitle {
-  font-size: var(--font-size-sm);
-  color: var(--ink-muted);
-  font-style: italic;
-  margin-bottom: 8px;
-}
-
-.virtude-cat-badge {
-  font-size: var(--font-size-xs);
-  background: var(--bg-card-alt);
-  padding: 2px 6px;
-  border-radius: 3px;
-  color: var(--ink-faded);
-  border: 1px solid var(--border-color);
-}
-
-.virtude-desc {
-  font-size: var(--font-size-sm);
-  color: var(--ink-faded);
-  margin: 0 0 10px 0;
-  line-height: 1.4;
-}
-
-.virtude-stricture {
-  font-size: var(--font-size-xs);
-  color: var(--ink-faded);
-  background: rgba(180, 40, 40, 0.1);
-  border-left: 3px solid var(--accent-red);
-  padding: 6px 10px;
-  margin-bottom: 10px;
-  border-radius: 0 4px 4px 0;
-  line-height: 1.3;
-}
-
-.virtude-stricture strong {
-  color: var(--accent-red);
-}
-
 .virtude-bond-track {
   display: flex;
   align-items: center;
@@ -611,35 +394,6 @@
   margin-bottom: 10px;
   font-size: var(--font-size-sm);
   color: var(--ink-faded);
-}
-
-.bond-stars {
-  display: flex;
-  gap: 2px;
-  cursor: pointer;
-}
-
-.bond-star {
-  font-size: 1.4em;
-  color: var(--ink-faded);
-  transition: color 0.2s, transform 0.15s;
-  user-select: none;
-}
-
-.bond-star:hover {
-  transform: scale(1.3);
-  color: var(--accent-gold);
-}
-
-.bond-star.filled {
-  color: var(--accent-gold);
-  text-shadow: 0 0 6px rgba(255, 215, 0, 0.4);
-}
-
-.bond-value {
-  font-size: var(--font-size-xs);
-  color: var(--ink-faded);
-  font-family: var(--font-mono);
 }
 
 .virtude-benefits {
@@ -662,16 +416,6 @@
   border-left: 2px solid var(--accent-green);
 }
 
-.benefit.high-blasphemy {
-  border-left-color: var(--accent-purple);
-  background: rgba(120, 60, 180, 0.08);
-}
-
-.benefit.high-blasphemy.unlocked {
-  background: rgba(120, 60, 180, 0.15);
-  border-left: 2px solid var(--accent-purple);
-}
-
 .benefit-level {
   font-weight: bold;
   font-family: var(--font-mono);
@@ -679,6 +423,3 @@
   margin-right: 6px;
 }
 
-.high-blasphemy .benefit-level {
-  color: var(--accent-purple);
-}

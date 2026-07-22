@@ -1,30 +1,4 @@
-.drawer-trigger {
-  display: none !important;
-  position: absolute;
-  top: 50%;
-  left: -40px;
-  transform: translateY(-50%) rotate(-90deg);
-  transform-origin: right center;
-  background-color: var(--bg-header);
-  border: 2px solid var(--border-color);
-  border-bottom: none;
-  color: var(--border-color);
-  padding: 8px 16px;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: var(--font-size-sm);
-  letter-spacing: 1.5px;
-  cursor: pointer;
-  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: -4px 0 12px rgba(0, 255, 102, 0.15);
-}
 
-.dice-drawer.closed .trigger-arrow {
-  transform: rotate(180deg);
-}
 
 .drawer-content {
   flex: 1;
@@ -34,36 +8,12 @@
   overflow-y: auto;
 }
 
-.grid-2-col-d {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  flex: 1;
-  min-height: 0;
-  gap: 20px;
-}
-
 .grid-2-col {
   display: grid;
   grid-template-columns: 1fr 1.2fr;
   gap: 20px;
   flex: 1;
   min-height: 0;
-}
-
-.drawer-col-1,
-.drawer-col-2 {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.drawer-col-1 {
-  /* chat e selection - pode ocupar toda altura e ter scroll no chat */
-  overflow: hidden;
-}
-
-.drawer-col-2 {
-  overflow-y: auto;
 }
 
 .drawer-content h3 {
@@ -80,123 +30,13 @@
 }
 
 /* Canvas Container */
-.dice-box-canvas-container {
-  width: 100%;
-  height: 240px;
-  background-color: #0c0f12;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: var(--radius-md);
-  position: relative;
-  overflow: hidden;
-}
 
 #dice-box-3d {
   width: 100%;
   height: 100%;
 }
 
-.canvas-instructions {
-  position: absolute;
-  bottom: 8px;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  font-size: var(--font-size-xs);
-  color: var(--text-muted);
-  pointer-events: none;
-}
-
 /* Dice Selector Controls */
-.dice-selector-row {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.dice-select-control {
-  background-color: rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(0, 0, 0, 0.04);
-  padding: 8px 16px;
-  border-radius: var(--radius-md);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.dice-tag {
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: var(--font-size-sm);
-  padding: 2px 8px;
-  border-radius: 4px;
-  color: #000;
-}
-
-img.dice-tag {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-  background: transparent !important;
-  padding: 0;
-  border-radius: 0;
-  box-shadow: none;
-  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.15));
-  cursor: pointer;
-  transition: transform 0.15s ease, filter 0.15s ease;
-}
-
-img.dice-tag:hover {
-  transform: scale(1.15);
-  filter: drop-shadow(0 0 8px var(--border-color));
-}
-
-.tag-d6 {
-  background-color: var(--color-rust-glow);
-}
-
-.tag-d10 {
-  background-color: var(--color-bronze);
-}
-
-.tag-d12 {
-  background-color: var(--border-color);
-}
-
-.dice-select-control label {
-  flex: 1;
-  font-size: var(--font-size-sm);
-  font-weight: 500;
-  color: var(--text-secondary);
-  text-align: left;
-}
-
-.selected-aptitudes-label {
-  font-size: var(--font-size-sm);
-  color: var(--color-rust-glow);
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 6px;
-  border-radius: var(--radius-sm);
-  border: 1px solid rgba(212, 128, 55, 0.1);
-}
-
-.modifiers-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.modifier-checkbox {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: var(--font-size-sm);
-  cursor: pointer;
-}
 
 /* Painel de Resultados (Keep and Roll) */
 .results-dice-grid {
@@ -205,13 +45,6 @@ img.dice-tag:hover {
   gap: 8px;
   justify-content: center;
   margin: 12px 0;
-}
-
-.instinto-panel-content-flex {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-
 }
 
 .result-die-card {
@@ -234,7 +67,6 @@ img.dice-tag:hover {
   transform: scale(2);
   transition: var(--transition-fast);
 }
-
 
 .result-die-card.kept {
   border-color: var(--border-color);
@@ -281,95 +113,6 @@ img.dice-tag:hover {
   height: 100%;
   object-fit: contain;
 }
-
-.die-symbol-svg .icon-a {
-  color: var(--border-color);
-}
-
-.die-symbol-svg .icon-b {
-  color: var(--color-bronze);
-}
-
-.die-symbol-svg .icon-c {
-  color: #ef4444;
-}
-
-.summary-results-card {
-  background-color: rgba(0, 0, 0, 0.35);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  border-radius: var(--radius-md);
-  padding: 16px;
-}
-
-.summary-results-card .summary-title {
-  font-size: var(--font-size-sm);
-  color: var(--text-secondary);
-  margin-bottom: 12px;
-}
-
-.symbols-summary {
-  display: flex;
-  justify-content: space-around;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.symbol-summary-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
-.sym-box {
-  width: 28px;
-  height: 28px;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.sym-box svg {
-  width: 16px;
-  height: 16px;
-}
-
-.sym-box.sym-a {
-  background-color: rgba(0, 255, 102, 0.1);
-  color: var(--border-color);
-}
-
-.sym-box.sym-b {
-  background-color: rgba(212, 175, 55, 0.1);
-  color: var(--color-bronze);
-}
-
-.sym-box.sym-c {
-  background-color: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
-}
-
-.symbol-summary-item .sym-count {
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: var(--font-size-xl);
-}
-
-.symbol-summary-item .sym-name {
-  font-size: var(--font-size-xs);
-  color: var(--text-secondary);
-}
-
-.roll-narration-box {
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: var(--radius-sm);
-  padding: 8px 12px;
-  font-size: var(--font-size-sm);
-  color: var(--text-secondary);
-  border-left: 3px solid var(--border-color);
-}
-
 
 /* ==========================================
    MESA DE ROLAGEM SOBREPOSTA (CANTO SUPERIOR DIREITO)
@@ -644,166 +387,8 @@ img.dice-tag:hover {
 /* ==========================================
    BOTÃO AGIR POR INSTINTO
    ========================================== */
-.btn-instinto-trigger {
-  background: linear-gradient(135deg, rgba(80, 0, 120, 0.6), rgba(40, 0, 80, 0.8));
-  border: 1px solid rgba(160, 60, 255, 0.5);
-  color: #d4a0ff;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  font-size: var(--font-size-sm);
-  margin-bottom: 8px;
-  transition: all 0.2s ease;
-}
-
-.btn-instinto-trigger:hover {
-  background: linear-gradient(135deg, rgba(120, 0, 200, 0.7), rgba(60, 0, 120, 0.9));
-  border-color: rgba(200, 100, 255, 0.8);
-  color: #f0d0ff;
-  box-shadow: 0 0 16px rgba(160, 60, 255, 0.4);
-  transform: translateY(-1px);
-}
 
 /* ==========================================
    MODAL: AGIR POR INSTINTO
    ========================================== */
-.instinto-modal-title {
-  color: #c080ff !important;
-  text-shadow: 0 0 10px rgba(160, 60, 255, 0.5);
-}
 
-.instinto-modal-desc {
-  font-size: var(--font-size-sm);
-  color: var(--text-secondary);
-  text-align: center;
-  margin-bottom: 14px;
-}
-
-.custo-badge {
-  text-align: center;
-  font-size: var(--font-size-sm);
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: var(--radius-sm);
-  margin-bottom: 16px;
-}
-
-.custo-ass {
-  background: rgba(160, 60, 255, 0.1);
-  border: 1px solid rgba(160, 60, 255, 0.3);
-  color: #c080ff;
-}
-
-.custo-det {
-  background: rgba(212, 128, 55, 0.1);
-  border: 1px solid rgba(212, 128, 55, 0.3);
-  color: var(--color-rust-glow);
-}
-
-.custo-sem {
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  color: #ef4444;
-}
-
-.instinto-selectors {
-  display: flex;
-  align-items: center;
-}
-
-.instinto-selector-group {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.instinto-selector-group label {
-  font-size: var(--font-size-xs);
-  color: var(--text-secondary);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.instinto-selector-group label em {
-  font-size: var(--font-size-xs);
-  font-weight: 400;
-  text-transform: none;
-  color: var(--text-muted);
-}
-
-.instinto-select {
-  width: 100%;
-  padding: 7px 10px;
-  font-size: var(--font-size-sm);
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(160, 60, 255, 0.3);
-  color: var(--text-primary);
-  border-radius: var(--radius-sm);
-}
-
-.instinto-dice-count {
-  font-size: var(--font-size-xs);
-  font-family: var(--font-heading);
-  font-weight: 700;
-  color: #c080ff;
-  text-align: center;
-}
-
-.instinto-divider {
-  font-size: var(--font-size-xxl);
-  font-weight: 800;
-  color: var(--border-color)
-}
-
-.instinto-pool-preview {
-  border-radius: var(--radius-sm);
-  font-size: var(--font-size-sm);
-  color: var(--text-secondary);
-  text-align: center;
-}
-
-.instinto-pool-preview strong {
-  color: var(--border-color)
-}
-
-.instinto-restricao {
-  font-size: var(--font-size-xs);
-  color: var(--text-muted);
-  background: rgba(239, 68, 68, 0.05);
-  border-left: 2px solid rgba(239, 68, 68, 0.4);
-  padding: 6px 10px;
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  margin-bottom: 14px;
-  line-height: 1.4;
-}
-
-.btn-instinto {
-  background: linear-gradient(135deg, rgba(100, 0, 160, 0.7), rgba(60, 0, 100, 0.9));
-  border: 1px solid rgba(160, 60, 255, 0.5);
-  color: #e0b0ff;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  font-size: var(--font-size-sm);
-  margin-bottom: 14px;
-  transition: all 0.2s ease;
-}
-
-.btn-instinto:hover:not(:disabled) {
-  background: linear-gradient(135deg, rgba(140, 0, 220, 0.8), rgba(80, 0, 140, 1));
-  border-color: rgba(200, 100, 255, 0.8);
-  box-shadow: 0 0 20px rgba(160, 60, 255, 0.5);
-}
-
-.btn-instinto:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-.instinto-results {
-  border-top: 1px solid rgba(160, 60, 255, 0.2);
-  padding-top: 12px;
-  margin-top: 4px;
-}

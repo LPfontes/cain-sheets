@@ -243,26 +243,10 @@
   flex: 1;
 }
 
-.trait-wiz-item .name-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 4px;
-}
-
 .trait-wiz-item .name {
   font-family: var(--font-heading);
   font-weight: 700;
   font-size: var(--font-size-md);
-}
-
-.trait-wiz-item .tag-cost {
-  background-color: var(--stamp-red);
-  color: #000;
-  font-size: var(--font-size-xs);
-  font-weight: bold;
-  padding: 2px 6px;
-  border-radius: 10px;
 }
 
 .trait-wiz-item .desc {
@@ -323,18 +307,6 @@
 }
 
 /* XP Tabs */
-.xp-tabs-container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.xp-tab-buttons {
-  display: flex;
-  gap: 8px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  padding-bottom: 8px;
-}
 
 .xp-tab-btn {
   background: none;

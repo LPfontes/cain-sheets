@@ -1,9 +1,4 @@
 /* Círculos / Losangos de Valor */
-.value-bubbles {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 4px;
-}
 
 .desc {
   font-size: var(--font-size-sm);
@@ -16,51 +11,9 @@
   transition: var(--transition-fast);
 }
 
-.bubble-instinct {
-  border: 1px solid var(--color-instintos);
-
-}
-
-.bubble-conhecimento {
-  border: 1px solid var(--color-conhecimentos);
-}
-
-.bubble-pratica {
-  border: 1px solid var(--color-praticas);
-}
-
-/* Instintos usam quadrados (bolas/quadrados) */
-#instincts-list-sheet .bubble {
-  border-radius: 2px;
-}
-
-/* Conhecimentos e Práticas usam losangos */
-#conhecimentos-list-sheet .bubble,
-#praticas-list-sheet .bubble {
-  transform: rotate(45deg);
-  width: 11px;
-  height: 11px;
-  margin: 2px;
-}
-
 .bubble.filled {
   background-color: var(--ink-dark);
   border-color: var(--ink-dark);
-}
-
-#instincts-list-sheet .bubble.filled {
-  background-color: var(--color-instintos);
-  border-color: var(--color-instintos);
-}
-
-#praticas-list-sheet .bubble.filled {
-  background-color: var(--color-praticas);
-  border-color: var(--color-praticas);
-}
-
-#conhecimentos-list-sheet .bubble.filled {
-  background-color: var(--color-conhecimentos);
-  border-color: var(--color-conhecimentos);
 }
 
 /* Saúde na Ficha */
@@ -84,156 +37,9 @@
   height: 18px;
 }
 
-.health-levels-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.health-level-row {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.health-total-label {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 4px;
-  font-size: var(--font-size-sm);
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.health-total-label strong:last-child {
-  color: var(--border-color);
-}
-
-.health-level-label {
-  display: flex;
-  justify-content: space-between;
-  font-family: var(--font-heading);
-  font-size: var(--font-size-sm);
-  font-weight: 600;
-}
-
-.health-level-label .name {
-  letter-spacing: 0.5px;
-}
-
-.health-level-label .desc {
-  font-size: var(--font-size-xs);
-  color: var(--text-secondary);
-  font-weight: normal;
-}
-
-.health-drops {
-  display: flex;
-  gap: 3px;
-}
-
-.health-drop {
-  width: 24px;
-  height: 30px;
-  color: rgb(161 161 161 / 60%);
-  cursor: pointer;
-  transition: var(--transition-fast);
-}
-
-.health-drop svg {
-  width: 100%;
-  height: 100%;
-}
-
-.health-drop:hover {
-  color: rgba(0, 255, 102, 0.3);
-}
-
 /* Preenchimento das gotas com cores do nível de gravidade */
-.health-level-row[data-level="6"] .health-drop.filled {
-  color: var(--health-6);
-}
-
-.health-level-row[data-level="5"] .health-drop.filled {
-  color: var(--health-5);
-}
-
-.health-level-row[data-level="4"] .health-drop.filled {
-  color: var(--health-4);
-}
-
-.health-level-row[data-level="3"] .health-drop.filled {
-  color: var(--health-3);
-}
-
-.health-level-row[data-level="2"] .health-drop.filled {
-  color: var(--health-2);
-}
-
-.health-level-row[data-level="1"] .health-drop.filled {
-  color: var(--health-1);
-}
-
-.health-drop.disabled {
-  opacity: 0.15;
-  cursor: not-allowed;
-  pointer-events: none;
-}
 
 /* Linha de nível de saúde ativa */
-.health-level-row {
-  transition: all 0.2s ease;
-  border-left: 3px solid transparent;
-  padding-left: 0;
-}
-
-.health-level-row.active {
-  background-color: rgba(0, 0, 0, 0.05);
-  border-left-width: 3px;
-  padding: 6px 8px;
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-}
-
-.health-level-row.active[data-level="6"] {
-  border-left-color: var(--health-6);
-}
-
-.health-level-row.active[data-level="5"] {
-  border-left-color: var(--health-5);
-}
-
-.health-level-row.active[data-level="4"] {
-  border-left-color: var(--health-4);
-}
-
-.health-level-row.active[data-level="3"] {
-  border-left-color: var(--health-3);
-}
-
-.health-level-row.active[data-level="2"] {
-  border-left-color: var(--health-2);
-}
-
-.health-level-row.active[data-level="1"] {
-  border-left-color: var(--health-1);
-}
-
-.health-adjust-input {
-  width: 40px;
-  height: 40px;
-  text-align: center;
-  font-size: var(--font-size-xs);
-  padding: 3px 6px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-color);
-  background: rgba(0, 0, 0, 0.25);
-  color: #fff;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-}
 
 .btn-close-roller-panel {
   background-color: var(--color-rust-glow);
@@ -241,69 +47,9 @@
   box-shadow: var(--glow-shadow);
 }
 
-.health-adjust-input:focus {
-  outline: none;
-  border-color: var(--border-color);
-  box-shadow: var(--glow-shadow);
-}
-
 /* Botões de ajuste de nível de saúde */
-.btn-health-lvl-adjust {
-  background: rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  color: var(--text-secondary);
-  border-radius: var(--radius-sm);
-  width: 20px;
-  height: 20px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--font-size-xs);
-  cursor: pointer;
-  transition: var(--transition-fast);
-  line-height: 1;
-}
-
-.btn-health-lvl-adjust:hover:not(:disabled) {
-  background-color: rgba(0, 0, 0, 0.15);
-  color: var(--text-primary);
-  border-color: rgba(0, 0, 0, 0.3);
-}
-
-.btn-health-lvl-adjust:disabled {
-  opacity: 0.2;
-  cursor: not-allowed;
-}
 
 /* Botões de ajuste de caixas de saúde (vida) */
-.btn-health-pts-adjust {
-  background: rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  color: var(--text-secondary);
-  border-radius: var(--radius-sm);
-  width: 20px;
-  height: 20px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--font-size-xs);
-  font-weight: bold;
-  cursor: pointer;
-  transition: var(--transition-fast);
-  line-height: 1;
-}
-
-.btn-health-pts-adjust:hover:not(:disabled) {
-  background-color: rgba(0, 0, 0, 0.15);
-  color: var(--text-primary);
-  border-color: rgba(0, 0, 0, 0.3);
-}
-
-.btn-health-pts-adjust:disabled {
-  opacity: 0.2;
-  cursor: not-allowed;
-}
-
 
 /* Tag de penalidade e alertas */
 .penalty-tag {
@@ -339,205 +85,9 @@
   border-color: rgba(255, 103, 103, 0.6);
 }
 
-.drawer-health-alert {
-  padding: 8px 12px;
-  border-radius: var(--radius-sm);
-  font-size: var(--font-size-xs);
-  margin-bottom: 12px;
-  line-height: 1.4;
-  border: 1px solid transparent;
-}
-
-.drawer-health-alert.level-4,
-.drawer-health-alert.level-3 {
-  background-color: rgba(249, 115, 22, 0.15);
-  border-color: rgba(249, 115, 22, 0.4);
-  color: #7c2d12;
-}
-
-.drawer-health-alert.level-2 {
-  background-color: rgba(239, 68, 68, 0.15);
-  border-color: rgba(239, 68, 68, 0.4);
-  color: #7f1d1d;
-}
-
-.drawer-health-alert.level-1 {
-  background-color: rgba(153, 27, 27, 0.2);
-  border-color: rgba(153, 27, 27, 0.5);
-  color: #450a0a;
-}
-
-
 /* Cabo de Guerra na Ficha */
-.cabo-guerra-display {
-  display: flex;
-  justify-content: space-around;
-  background-color: transparent;
-  padding: 0;
-  gap: 8px;
-  margin-bottom: 6px;
-}
-
-.cabo-side {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-}
-
-.cabo-side .cabo-label {
-  font-family: var(--font-heading);
-  font-size: var(--font-size-md);
-  font-weight: 700;
-  letter-spacing: 1.5px;
-}
-
-.det-side .cabo-label {
-  color: var(--color-instintos);
-  /* Bright Red */
-}
-
-.ass-side .cabo-label {
-  color: var(--border-color);
-  /* Bright Cyan/Blue */
-}
-
-.cabo-level-container {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  position: relative;
-}
-
-.cabo-side .cabo-level {
-  font-family: var(--font-heading);
-  font-size: var(--font-size-xxl);
-  font-weight: 800;
-  line-height: 1;
-}
-
-.det-side .cabo-level {
-  color: var(--color-instintos);
-  /* Bright Red */
-}
-
-.ass-side .cabo-level {
-  color: var(--border-color);
-  /* Bright Cyan/Blue */
-}
-
-.btn-cabo-adjust {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: var(--text-primary);
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--font-size-sm);
-  font-weight: bold;
-  opacity: 0;
-  transition: opacity 0.2s ease, background 0.2s ease;
-}
-
-.btn-cabo-adjust:hover {
-  background: rgba(255, 255, 255, 0.25);
-}
-
-.cabo-level-container:hover .btn-cabo-adjust {
-  opacity: 1;
-}
-
-.cabo-points-tracker {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
-  justify-items: center;
-}
-
-.status-cards-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.cabo-point {
-  width: 32px;
-  height: 32px;
-  cursor: pointer;
-  transition: transform 0.2s ease, color 0.2s ease;
-}
-
-.cabo-point svg {
-  width: 100%;
-  height: 100%;
-  transform: rotate(90deg);
-}
-
-.cabo-point:hover {
-  transform: scale(1.1);
-}
 
 /* Outlines for unfilled/spent hourglasses */
-.det-side .cabo-point {
-  color: rgba(255, 51, 51, 0.15);
-}
-
-.det-side .cabo-point.filled {
-  color: var(--color-instintos);
-
-}
-
-.det-side .cabo-point:hover:not(.filled) {
-  color: rgba(255, 51, 51, 0.5);
-}
-
-.ass-side .cabo-point {
-  color: rgba(0, 162, 255, 0.15);
-}
-
-.ass-side .cabo-point.filled {
-  color: var(--border-color);
-  ;
-
-}
-
-.ass-side .cabo-point:hover:not(.filled) {
-  color: rgba(0, 162, 255, 0.5);
-}
-
-.cabo-point.locked {
-  opacity: 0.1;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-.cabo-indicator-bar {
-  display: none;
-}
-
-.cabo-ratio-fill {
-  display: none;
-}
-
-.suscetivel-alert {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  background-color: rgba(239, 68, 68, 0.15);
-  border: 1px solid #ef4444;
-  padding: 12px;
-  border-radius: var(--radius-sm);
-  color: #fca5a5;
-  font-size: var(--font-size-sm);
-  text-align: center;
-  animation: pulse-red 2s infinite;
-}
 
 @keyframes pulse-red {
   0% {
@@ -554,299 +104,18 @@
 }
 
 /* Página 2: Características */
-.traits-sheet-grid {
-  display: grid;
-  gap: 8px;
-  overflow-y: auto;
-  padding-right: 4px;
-}
-
-.trait-sheet-card {
-  background-color: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  padding: 10px 14px;
-  border-radius: var(--radius-sm);
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.trait-sheet-card .name {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: var(--font-size-md);
-  color: var(--border-color);
-}
-
-.trait-sheet-card .desc {
-  font-size: var(--font-size-md);
-  color: var(--text-secondary);
-}
-
-.trait-sheet-card .btn-delete-trait {
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  cursor: pointer;
-  padding: 2px;
-  transition: var(--transition-fast);
-}
-
-.trait-sheet-card .btn-delete-trait:hover {
-  color: #ef4444;
-}
-
-.trait-sheet-card .btn-delete-trait svg {
-  width: 14px;
-  height: 14px;
-}
-
-.traits-sheet-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 12px;
-}
-
-.xp-counter {
-  font-size: var(--font-size-sm);
-  font-family: var(--font-heading);
-}
-
-.xp-counter strong {
-  color: var(--border-color);
-}
 
 /* Ficha: Assimilações */
-.assimilation-suits-container {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.assimilation-suit-block {
-  background-color: rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(0, 0, 0, 0.04);
-  border-radius: var(--radius-md);
-  padding: 12px;
-  min-height: 180px;
-  display: flex;
-  flex-direction: column;
-}
-
-.suit-header {
-  font-family: var(--font-heading);
-  font-size: var(--font-size-sm);
-  font-weight: 700;
-  letter-spacing: 1px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  padding-bottom: 6px;
-  margin-bottom: 8px;
-}
-
-.suit-header svg {
-  width: 16px;
-  height: 16px;
-}
-
-.suit-copas {
-  color: #f43f5e;
-}
-
-.suit-ouros {
-  color: #3b82f6;
-}
 
 /* Azul nos adaptativos? Ou amarelo ouros? Vamos usar amarelo no ouros */
-.suit-ouros {
-  color: #eab308;
-}
-
-.suit-espadas {
-  color: #a855f7;
-}
 
 /* Roxo em inoportunos */
-.suit-paus {
-  color: #10b981;
-}
 
 /* Verde em singulares */
 
-.mutations-sheet-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
-}
-
-.mutation-sheet-item {
-  background-color: rgba(0, 0, 0, 0.2);
-  border-left: 3px solid currentColor;
-  padding: 6px 10px;
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  font-size: var(--font-size-sm);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.mutation-sheet-item .title {
-  font-weight: bold;
-}
-
-.mutation-sheet-item .desc {
-  font-size: var(--font-size-xs);
-  color: var(--text-secondary);
-}
-
-.btn-remove-mutation {
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: var(--transition-fast);
-}
-
-.btn-remove-mutation:hover {
-  color: #ef4444;
-}
-
-.btn-remove-mutation svg {
-  width: 12px;
-  height: 12px;
-}
-
-.assimilation-actions {
-  margin-top: 12px;
-  display: flex;
-  justify-content: flex-end;
-}
-
 /* Ficha: Inventário */
-.inventory-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  max-height: 250px;
-  overflow-y: auto;
-}
-
-.inventory-slot {
-  background-color: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  border-radius: var(--radius-sm);
-  padding: 6px 10px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.inventory-slot .slot-num {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: var(--font-size-sm);
-  color: var(--text-muted);
-  width: 16px;
-}
-
-.inventory-slot input.item-name {
-  flex: 1;
-  background: none;
-  border: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  padding: 2px 0;
-  color: var(--text-primary);
-  font-size: var(--font-size-sm);
-  outline: none;
-}
-
-.inventory-slot input.item-name:focus {
-  border-bottom-color: var(--border-color);
-}
-
-.item-props {
-  display: flex;
-  gap: 4px;
-}
-
-.prop-checkbox {
-  position: relative;
-  cursor: pointer;
-  width: 16px;
-  height: 16px;
-}
-
-.prop-checkbox input {
-  opacity: 0;
-  position: absolute;
-  cursor: pointer;
-  width: 100%;
-  height: 100%;
-}
-
-.prop-checkbox .checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 16px;
-  height: 16px;
-  background-color: rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 2px;
-}
-
-.prop-checkbox:hover input~.checkmark {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-.prop-checkbox.prop-q input:checked~.checkmark {
-  background-color: var(--border-color);
-  border-color: var(--border-color);
-}
-
-.prop-checkbox.prop-e input:checked~.checkmark {
-  background-color: #ef4444;
-  border-color: #ef4444;
-}
-
-.prop-checkbox .checkmark::after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-
-.prop-checkbox input:checked~.checkmark::after {
-  display: block;
-}
 
 /* Texto de legenda rápida (Q = Qualidade, E = Escassez) */
-.prop-checkbox::after {
-  content: attr(data-label);
-  position: absolute;
-  top: -18px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #000;
-  color: #fff;
-  font-size: var(--font-size-xs);
-  padding: 1px 4px;
-  border-radius: 2px;
-  display: none;
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-.prop-checkbox:hover::after {
-  display: block;
-}
 
 /* GAVETA DO ROLADOR DE DADOS - AGORA PAINEL LATERAL FIXO */
 .dice-drawer {
@@ -865,24 +134,6 @@
 /* .dice-drawer.closed — sem overrides (mantido aberto intencionalmente) */
 
 /* Otimização do Inventário na Aba */
-#tab-inventario .inventory-grid {
-  grid-template-columns: 1fr;
-  gap: 8px;
-  max-height: none;
-  overflow-y: visible;
-}
-
-#tab-inventario .inventory-slot {
-  background-color: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 10px 14px;
-  border-radius: var(--radius-md);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-}
 
 /* Otimização das Anotações na Aba */
 .notes-textarea {
@@ -910,33 +161,9 @@
 
 /* Covered by landing.css */
 
-.landing-container {
-  width: 100%;
-  max-width: 1200px;
-  padding: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-}
-
 #landing-screen .landing-header,
 #landing-screen .section-header-row {
   display: none !important;
-}
-
-.landing-body {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.characters-section {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .characters-grid {
@@ -1033,12 +260,6 @@
   z-index: 10;
 }
 
-.modal-content-manage-categories {
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-}
-
 .settings-modal-content {
   width: 100%;
   display: flex;
@@ -1056,36 +277,10 @@
   top: 36px;
 }
 
-.char-portrait-wrapper {
-  flex-shrink: 0;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 2px solid var(--border-color);
-  background: rgba(0, 0, 0, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .char-portrait-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.char-portrait-placeholder {
-  font-size: 24px;
-  color: var(--text-muted);
-}
-
-.char-info {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
 }
 
 .char-name {
@@ -1096,23 +291,6 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.char-generation {
-  font-family: var(--font-body);
-  font-size: var(--font-size-xs);
-  color: var(--text-muted);
-  background: rgba(0, 0, 0, 0.3);
-  padding: 2px 8px;
-  border-radius: 10px;
-  display: inline-block;
-  width: fit-content;
-}
-
-.char-updated {
-  font-family: var(--font-body);
-  font-size: var(--font-size-xs);
-  color: var(--text-muted);
 }
 
 .char-actions {
@@ -1146,12 +324,6 @@
   background: rgba(0, 0, 0, 0.6);
   color: var(--text-primary);
   border-color: var(--border-color);
-}
-
-.btn-char-action.btn-danger-char:hover {
-  background: rgba(141, 36, 40, 0.3);
-  border-color: var(--color-rust);
-  color: var(--color-rust-glow);
 }
 
 .btn-char-action svg,
@@ -1227,40 +399,6 @@
   text-align: center;
 }
 
-.empty-state-illustration {
-  max-width: 300px;
-  width: 100%;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  border: 1px solid var(--border-color);
-  opacity: 0.6;
-  transition: var(--transition-fast);
-}
-
-.empty-state-illustration:hover {
-  opacity: 0.8;
-}
-
-.empty-img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.empty-state-text {
-  font-family: var(--font-heading);
-  font-size: var(--font-size-lg);
-  color: var(--text-secondary);
-}
-
-.empty-state-hint {
-  font-family: var(--font-body);
-  font-size: var(--font-size-sm);
-  color: var(--text-muted);
-  max-width: 400px;
-  line-height: 1.5;
-}
-
 /* Landing Actions Menu Modal */
 .landing-actions-menu {
   display: flex;
@@ -1297,24 +435,6 @@
 .landing-actions-menu button:hover {
   background: rgba(0, 0, 0, 0.4);
   border-color: var(--border-color);
-}
-
-.landing-actions-menu button .action-icon {
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--font-size-md);
-}
-
-.landing-actions-menu button.btn-danger-action {
-  border-color: var(--color-rust);
-  color: var(--color-rust-glow);
-}
-
-.landing-actions-menu button.btn-danger-action:hover {
-  background: rgba(141, 36, 40, 0.2);
 }
 
 /* Mobile Landing */

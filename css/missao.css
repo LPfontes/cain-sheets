@@ -190,11 +190,6 @@
   color: white !important;
 }
 
-.node-item-actions {
-  display: flex;
-  gap: 6px;
-}
-
 /* Categoria badges no banco */
 .node-cat-badge {
   font-size: 9px;

@@ -161,7 +161,6 @@
 
   /* Override internal items styles inside drawer */
 
-
   .header-controls .btn {
     width: 100% !important;
     justify-content: center !important;
@@ -170,8 +169,6 @@
   .header-controls .btn-text {
     display: inline !important;
   }
-
-
 
   /* Botão flutuante (FAB) do rolador de dados no mobile */
   #btn-open-roller {

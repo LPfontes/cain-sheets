@@ -1,36 +1,5 @@
 /* css/sheet-hooks-notes.css - Ganchos e Anotações */
 
-.cain-hooks-list {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.cain-hook-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6px 10px;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
-  font-size: var(--font-size-sm);
-}
-
-.cain-hook-tracker {
-  display: flex;
-  gap: 2px;
-}
-
-.cain-hook-slash {
-  font-size: 18px;
-  font-weight: bold;
-  color: rgba(255, 255, 255, 0.1);
-}
-
-.cain-hook-slash.filled {
-  color: var(--color-orange, #f97316);
-}
-
 .cain-empty {
   font-size: var(--font-size-sm);
   color: var(--text-muted);
@@ -60,16 +29,6 @@
   justify-content: center;
   flex-direction: column;
   gap: 6px;
-}
-
-.hook-boxes {
-  display: none !important;
-}
-
-.hook-boxes input[type="checkbox"] {
-  width: 30px;
-  height: 30px;
-  accent-color: var(--ink-dark);
 }
 
 .hook-name-input {
@@ -281,68 +240,3 @@
   gap: 4px;
 }
 
-.missions-survived-tracker {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  padding: 8px 6px;
-  border-radius: 4px;
-  width: 250px;
-}
-
-.missions-label {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-  font-family: var(--font-heading);
-  font-size: 10px;
-  font-weight: bold;
-  color: var(--border-color);
-  text-transform: uppercase;
-}
-
-.missions-checkboxes-container {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  flex: 1;
-}
-
-.missions-numbers {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  font-size: 10px;
-  color: var(--border-color);
-  font-weight: bold;
-  text-align: center;
-}
-
-.missions-boxes {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  align-items: center;
-  justify-items: center;
-}
-
-.mission-checkbox {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.mission-checkbox input[type="checkbox"] {
-  width: 14px;
-  height: 14px;
-  cursor: pointer;
-  accent-color: black;
-}
-
-.mission-divider {
-  color: var(--border-color);
-  font-size: 11px;
-  font-weight: bold;
-}

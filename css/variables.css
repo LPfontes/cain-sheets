@@ -140,8 +140,6 @@
   --stamp-cyan-dark: #0d3340;
   --purple: #9a11d7;
 
-
-
   /* Mantendo aliases legados para não quebrar lógica JS */
   --color-rust: var(--stamp-red);
   --color-rust-glow: #be3135;
@@ -150,7 +148,6 @@
   --color-official-cyan-dark: var(--stamp-cyan-dark);
   --color-official-glow: var(--stamp-cyan);
   --bg-official-card: var(--bg-card);
-
 
   /* ──────────────────────────────────────────────
      TIPOGRAFIA
@@ -282,10 +279,6 @@ body>* {
   letter-spacing: 3px;
   color: var(--ink-on-dark);
   text-transform: uppercase;
-}
-
-.header-logo .logo-accent {
-  color: var(--stamp-red);
 }
 
 .header-logo .subtitle {
@@ -468,12 +461,6 @@ optgroup {
   display: flex;
   width: 100%;
   justify-content: center;
-}
-
-.btn-large {
-  padding: 12px 22px;
-  font-size: var(--font-size-md);
-  letter-spacing: 1px;
 }
 
 .btn-icon svg {
