@@ -69,7 +69,7 @@ export function renderStaticHooks() {
           <button class="btn-hook-max ${max === 5 ? 'active' : ''}" data-max="5">5</button>
         </div>
       </div>
-      <div class="hook-visual-strip" style="background-image: url('../cain-talisman-board/reference/talismans/${talismanImgName}');">
+      <div class="hook-visual-strip" style="background-image: url('./cain-talisman-board/reference/talismans/${talismanImgName}');">
         ${Array.from({ length: max }).map((_, j) => {
           const topPercent = Math.round(((j + 1) / (max + 1)) * 100);
           const isSlashed = (j + 1) <= currentChecks;

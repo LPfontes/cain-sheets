@@ -2,7 +2,7 @@ import { el, state, loadCharacter, loadCharactersFromStorage, updateCharSelector
 import { startWizard } from "./wizard.js";
 import { ICONS } from "../icons.js";
 import { logger } from "./logger.js";
-import { t } from "./i18n.js";
+import { t, applyTranslations } from "./i18n.js";
 import { esc } from "./screen-utils.js";
 
 const landingScreen = document.getElementById("landing-screen");
@@ -182,7 +182,7 @@ export function renderCharactersList() {
         <div class="char-card-avatar">${avatarContent}</div>
         <div class="char-card-name">${esc(name)}</div>
         <div class="char-card-sub-info">
-          <span class="sheet-type-badge badge-infectado">${t("modal.sheet.type.exorcista")}</span>
+          <span class="sheet-type-badge badge-infectado" data-i18n="modal.sheet.type.exorcista">${t("modal.sheet.type.exorcista")}</span>
           ${subInfo ? `<div class="char-card-sub-info">${esc(subInfo)}</div>` : ""}
         </div>
         ${actionsHtml}
@@ -198,13 +198,14 @@ export function renderCharactersList() {
           <line x1="5" y1="12" x2="19" y2="12"></line>
         </svg>
       </div>
-      <div class="char-card-name">Nova Ficha</div>
+      <div class="char-card-name" data-i18n="landing.newSheet">Nova Ficha</div>
     </article>
   `;
 
   if (emptyState) emptyState.classList.toggle("hidden", allItems.length > 0);
   charactersList.innerHTML = cardsHtml;
   attachCardListeners();
+  applyTranslations();
 }
 
 function _extractTimestamp(id) {
@@ -303,14 +304,14 @@ export function renderSinsList() {
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
         </button>
         <div class="char-actions-dropdown" data-sin-dropdown="${esc(item.id)}">
-          <button data-action="sin-export" data-id="${esc(item.id)}">${ICONS.export} Exportar</button>
+          <button data-action="sin-export" data-id="${esc(item.id)}">${ICONS.export} ${t("landing.card.export")}</button>
           <div class="dropdown-divider"></div>
           <button data-action="sin-duplicate" data-id="${esc(item.id)}">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            Duplicar
+            ${t("landing.card.duplicate")}
           </button>
           <div class="dropdown-divider"></div>
-          <button data-action="sin-delete" data-id="${esc(item.id)}" class="btn-danger-dropdown">${ICONS.trash} Excluir</button>
+          <button data-action="sin-delete" data-id="${esc(item.id)}" class="btn-danger-dropdown">${ICONS.trash} ${t("landing.card.delete")}</button>
         </div>
       </div>
     `;
@@ -320,7 +321,7 @@ export function renderSinsList() {
         <div class="char-card-avatar">${avatarContent}</div>
         <div class="char-card-name">${esc(name)}</div>
         <div class="char-card-sub-info">
-          <span class="sheet-type-badge badge-conflito">Pecado</span>
+          <span class="sheet-type-badge badge-conflito" data-i18n="modal.sheet.type.pecado">${t("modal.sheet.type.pecado")}</span>
           ${subInfo ? `<div class="char-card-sub-info" style="font-size:11px; margin-top:2px; opacity:0.8;">${esc(subInfo)}</div>` : ""}
         </div>
         ${actionsHtml}
@@ -336,7 +337,7 @@ export function renderSinsList() {
           <line x1="5" y1="12" x2="19" y2="12"></line>
         </svg>
       </div>
-      <div class="char-card-name">Novo Pecado</div>
+      <div class="char-card-name" data-i18n="sins.new">Novo Pecado</div>
     </article>
   `;
 
@@ -347,6 +348,7 @@ export function renderSinsList() {
   }
 
   attachSinCardListeners();
+  applyTranslations();
 }
 
 function attachSinCardListeners() {
@@ -393,35 +395,36 @@ function showCreateSinModal() {
   const modalBody = el.modalBody;
   modalBody.innerHTML = `
     <div class="landing-actions-menu">
-      <h3 class="menu-title">Novo Registro de Pecado</h3>
+      <h3 class="menu-title" data-i18n="sins.create.title">Novo Registro de Pecado</h3>
       <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:16px; text-align:left;">
         <div>
-          <label class="ws-label" style="font-weight:bold; color:var(--text-secondary);">Nome do Pecado</label>
-          <input type="text" id="create-sin-name" class="conflito-form-input" style="width:100%; box-sizing:border-box;" placeholder="Ex: Ogro do Pântano" value="Novo Pecado">
-        </div>
-        <div>
-          <label class="ws-label" style="font-weight:bold; color:var(--text-secondary);">Hospedeiro</label>
-          <input type="text" id="create-sin-host" class="conflito-form-input" style="width:100%; box-sizing:border-box;" placeholder="Nome do Hospedeiro (opcional)">
-        </div>
-        <div>
-          <label class="ws-label" style="font-weight:bold; color:var(--text-secondary);">Tipo de Pecado</label>
+          <label class="ws-label" style="font-weight:bold; color:var(--text-secondary);" data-i18n="sins.create.typeLabel">Tipo de Pecado</label>
           <select id="create-sin-type" class="conflito-form-input" style="width:100%; box-sizing:border-box;">
-            <option value="ogro">Ogro (Desespero)</option>
-            <option value="idolo">Ídolo (Desejo)</option>
-            <option value="cao">Cão (Vingança)</option>
-            <option value="centopeia">Centopeia (Ódio)</option>
-            <option value="sapo">Sapo (Indulgência)</option>
-            <option value="lorde">Lorde (Medo)</option>
-            <option value="outro">Customizado (Outro)</option>
+            <option value="ogro" data-i18n="sins.type.ogro">Ogro (Desespero)</option>
+            <option value="idolo" data-i18n="sins.type.idolo">Ídolo (Desejo)</option>
+            <option value="cao" data-i18n="sins.type.cao">Cão (Vingança)</option>
+            <option value="centopeia" data-i18n="sins.type.centopeia">Centopeia (Ódio)</option>
+            <option value="sapo" data-i18n="sins.type.sapo">Sapo (Indulgência)</option>
+            <option value="lorde" data-i18n="sins.type.lorde">Lorde (Medo)</option>
+            <option value="outro" data-i18n="sins.type.outro">Customizado (Outro)</option>
           </select>
+        </div>
+        <div>
+          <label class="ws-label" style="font-weight:bold; color:var(--text-secondary);" data-i18n="sins.create.nameLabel">Nome do Pecado</label>
+          <input type="text" id="create-sin-name" class="conflito-form-input" style="width:100%; box-sizing:border-box;" placeholder="Ex: Ogro do Pântano" data-i18n-placeholder="sins.create.namePlaceholder" value="${t('sins.new')}">
+        </div>
+        <div>
+          <label class="ws-label" style="font-weight:bold; color:var(--text-secondary);" data-i18n="sins.create.hostLabel">Hospedeiro</label>
+          <input type="text" id="create-sin-host" class="conflito-form-input" style="width:100%; box-sizing:border-box;" placeholder="Nome do Hospedeiro (opcional)" data-i18n-placeholder="sins.create.hostPlaceholder">
         </div>
       </div>
       <div style="display:flex; gap:8px; justify-content:flex-end;">
-        <button id="btn-cancel-create-sin" class="btn" style="padding:10px 20px;">Cancelar</button>
-        <button id="btn-confirm-create-sin" class="btn btn-landing-primary" style="padding:10px 20px;">Criar Pecado</button>
+        <button id="btn-cancel-create-sin" class="btn" style="padding:10px 20px;" data-i18n="common.cancel">Cancelar</button>
+        <button id="btn-confirm-create-sin" class="btn btn-landing-primary" style="padding:10px 20px;" data-i18n="sins.create.confirm">Criar Pecado</button>
       </div>
     </div>
   `;
+  applyTranslations();
   modalContainer.classList.remove("hidden");
 
   const cleanup = () => {
@@ -430,9 +433,9 @@ function showCreateSinModal() {
 
   document.getElementById("btn-cancel-create-sin").addEventListener("click", cleanup, { once: true });
   document.getElementById("btn-confirm-create-sin").addEventListener("click", () => {
-    const name = document.getElementById("create-sin-name").value || "Novo Pecado";
-    const host = document.getElementById("create-sin-host").value || "";
     const type = document.getElementById("create-sin-type").value || "ogro";
+    const name = document.getElementById("create-sin-name").value || t("sins.new");
+    const host = document.getElementById("create-sin-host").value || "";
     
     cleanup();
     import("./pecado.js").then(({ startNewPecado }) => {
@@ -659,14 +662,14 @@ export function renderMissionsList() {
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
         </button>
         <div class="char-actions-dropdown" data-mission-dropdown="${esc(item.id)}">
-          <button data-action="mission-export" data-id="${esc(item.id)}">${ICONS.export} Exportar</button>
+          <button data-action="mission-export" data-id="${esc(item.id)}">${ICONS.export} ${t("landing.card.export")}</button>
           <div class="dropdown-divider"></div>
           <button data-action="mission-duplicate" data-id="${esc(item.id)}">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            Duplicar
+            ${t("landing.card.duplicate")}
           </button>
           <div class="dropdown-divider"></div>
-          <button data-action="mission-delete" data-id="${esc(item.id)}" class="btn-danger-dropdown">${ICONS.trash} Excluir</button>
+          <button data-action="mission-delete" data-id="${esc(item.id)}" class="btn-danger-dropdown">${ICONS.trash} ${t("landing.card.delete")}</button>
         </div>
       </div>
     `;
@@ -678,7 +681,7 @@ export function renderMissionsList() {
         </div>
         <div class="char-card-name">${esc(name)}</div>
         <div class="char-card-sub-info">
-          <span class="sheet-type-badge badge-missao">Caso</span>
+          <span class="sheet-type-badge badge-missao" data-i18n="modal.sheet.type.caso">${t("modal.sheet.type.caso")}</span>
           ${subInfo ? `<div class="char-card-sub-info" style="font-size:11px; margin-top:2px; opacity:0.8;">${esc(subInfo)}</div>` : ""}
         </div>
         ${actionsHtml}
@@ -694,7 +697,7 @@ export function renderMissionsList() {
           <line x1="5" y1="12" x2="19" y2="12"></line>
         </svg>
       </div>
-      <div class="char-card-name">Nova Investigação</div>
+      <div class="char-card-name" data-i18n="missions.new">Nova Investigação</div>
     </article>
   `;
 
@@ -705,6 +708,7 @@ export function renderMissionsList() {
   }
 
   attachMissionCardListeners();
+  applyTranslations();
 }
 
 function attachMissionCardListeners() {
@@ -756,30 +760,31 @@ function showCreateMissionModal() {
 
   modalBody.innerHTML = `
     <div class="landing-actions-menu">
-      <h3 class="menu-title">Novo Registro de Investigação</h3>
+      <h3 class="menu-title" data-i18n="missions.create.title">Novo Registro de Investigação</h3>
       <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:16px; text-align:left;">
         <div>
-          <label class="ws-label" style="font-weight:bold; color:var(--text-secondary);">Nome da Investigação</label>
-          <input type="text" id="create-mission-name" class="conflito-form-input" style="width:100%; box-sizing:border-box;" placeholder="Ex: O Mistério do Beco de Sangue" value="Nova Investigação">
+          <label class="ws-label" style="font-weight:bold; color:var(--text-secondary);" data-i18n="missions.create.nameLabel">Nome da Investigação</label>
+          <input type="text" id="create-mission-name" class="conflito-form-input" style="width:100%; box-sizing:border-box;" placeholder="Ex: O Mistério do Beco de Sangue" data-i18n-placeholder="missions.create.namePlaceholder" value="${t('missions.new')}">
         </div>
         <div>
-          <label class="ws-label" style="font-weight:bold; color:var(--text-secondary);">Pecado Associado</label>
+          <label class="ws-label" style="font-weight:bold; color:var(--text-secondary);" data-i18n="missions.create.sinLabel">Pecado Associado</label>
           <select id="create-mission-sin" class="conflito-form-input" style="width:100%; box-sizing:border-box;">
-            <option value="">Nenhum (Criar em branco)</option>
+            <option value="" data-i18n="missions.create.noSinOption">Nenhum (Criar em branco)</option>
             ${sinsOptions}
           </select>
         </div>
         <div>
-          <label class="ws-label" style="font-weight:bold; color:var(--text-secondary);">Gancho Inicial / Incidente Incitante</label>
-          <textarea id="create-mission-hook" class="conflito-form-input" style="width:100%; box-sizing:border-box; height: 80px;" placeholder="O que chamou a atenção de Caim? Ex: Um corpo foi encontrado suspenso em teias psíquicas..."></textarea>
+          <label class="ws-label" style="font-weight:bold; color:var(--text-secondary);" data-i18n="missions.create.hookLabel">Gancho Inicial / Incidente Incitante</label>
+          <textarea id="create-mission-hook" class="conflito-form-input" style="width:100%; box-sizing:border-box; height: 80px;" placeholder="O que chamou a atenção de Caim? Ex: Um corpo foi encontrado suspenso em teias psíquicas..." data-i18n-placeholder="missions.create.hookPlaceholder"></textarea>
         </div>
       </div>
       <div style="display:flex; gap:8px; justify-content:flex-end;">
-        <button id="btn-cancel-create-mission" class="btn" style="padding:10px 20px;">Cancelar</button>
-        <button id="btn-confirm-create-mission" class="btn btn-landing-primary" style="padding:10px 20px;">Criar Investigação</button>
+        <button id="btn-cancel-create-mission" class="btn" style="padding:10px 20px;" data-i18n="common.cancel">Cancelar</button>
+        <button id="btn-confirm-create-mission" class="btn btn-landing-primary" style="padding:10px 20px;" data-i18n="missions.create.confirm">Criar Investigação</button>
       </div>
     </div>
   `;
+  applyTranslations();
   modalContainer.classList.remove("hidden");
 
   const cleanup = () => {
@@ -788,7 +793,7 @@ function showCreateMissionModal() {
 
   document.getElementById("btn-cancel-create-mission").addEventListener("click", cleanup, { once: true });
   document.getElementById("btn-confirm-create-mission").addEventListener("click", () => {
-    const name = document.getElementById("create-mission-name").value || "Nova Investigação";
+    const name = document.getElementById("create-mission-name").value || t("missions.new");
     const sinId = document.getElementById("create-mission-sin").value || "";
     const hook = document.getElementById("create-mission-hook").value || "";
     

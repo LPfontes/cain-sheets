@@ -50,6 +50,13 @@ const ASSETS = [
   './dice/assets/background.svg',
   './dice/assets/icon.png',
   './dice/assets/nc93322.mp3',
+  './js/content-pack-manager.js',
+  './cain-talisman-board/talismans.html',
+  './cain-talisman-board/talismans.css',
+  './cain-talisman-board/talismans.js',
+  './cain-talisman-board/reference/talismans/CAIN_1.4-0505-p081.png',
+  './cain-talisman-board/reference/talismans/CAIN_1.4-0506-p081.png',
+  './cain-talisman-board/reference/talismans/CAIN_1.4-0507-p081.png',
   './assets/CAIN.png'
 ];
 

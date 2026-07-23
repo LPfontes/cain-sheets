@@ -3,7 +3,7 @@
 import { el, state, saveCurrentCharacter } from "./state.js";
 import { AGENDAS, BLASPHEMIES } from "./cain-data.js";
 import { openAgendaModal, openBlasphemiesModal } from "./modals.js";
-import { t } from "./i18n.js";
+import { t, applyTranslations } from "./i18n.js";
 
 export function renderAgendaSheet() {
   const char = state.currentCharacter;
@@ -16,9 +16,10 @@ export function renderAgendaSheet() {
 
   if (skillName) {
     for (const agendaKey in AGENDAS) {
-      const hab = AGENDAS[agendaKey].habilidades?.find(h => h.name === skillName);
+      const habs = AGENDAS[agendaKey].habilidades || AGENDAS[agendaKey].abilities || [];
+      const hab = habs.find(h => h.name === skillName);
       if (hab) {
-        skillDesc = hab.desc;
+        skillDesc = hab.desc || hab.description || "";
         break;
       }
     }
@@ -30,7 +31,7 @@ export function renderAgendaSheet() {
   el.agendaListSheet.innerHTML = `
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
       <h4 class="cain-agenda-subtitle" style="margin: 0;">${t("sheet.agenda.activeSkill")}</h4>
-      <button id="btn-edit-agenda" class="btn">Editar Agenda</button>
+      <button id="btn-edit-agenda" class="btn" data-i18n="sheet.agenda.editBtn">${t("sheet.agenda.editBtn")}</button>
     </div>
     <div class="cain-agenda-section">
         ${skillName ? `
@@ -79,6 +80,7 @@ export function renderAgendaSheet() {
       openAgendaModal();
     });
   }
+  applyTranslations();
 }
 
 export function showPowerDetailPopup(power) {
@@ -187,7 +189,7 @@ export function renderBlasphemiesSheet() {
       return `<div class="cain-blasphemy-card card-glass cain-blasphemy-accordion-card">
               <button class="cain-blasphemy-card-trigger">
                 <div class="cain-blasphemy-card-title-group">
-                  ${b.img ? `<img class="cain-blasphemy-card-thumb" src="${b.img}" alt="${b.name}">` : ''}
+                  ${b.img ? `<img class="cain-blasphemy-card-thumb" src="${b.img}" alt="${b.name}" onerror="this.style.display='none'">` : ''}
                   <span class="cain-blasphemy-name blasphemy-color-${b.id}">${b.name}</span>
                 </div>
                 <span class="card-arrow">▼</span>
@@ -202,7 +204,7 @@ export function renderBlasphemiesSheet() {
                       ${activePowers.map(p => `
                         <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; padding: 6px 10px;">
                           <span style="font-weight: bold; font-family: var(--font-heading); text-transform: uppercase; font-size: 13px; color: var(--text-secondary);">${p.name}</span>
-                          <button type="button" class="btn btn-sm btn-sheet-detail-power" data-blasphemy-id="${b.id}" data-power-name="${p.name}" style="font-size: 11px; padding: 3px 8px;">Detalhes</button>
+                          <button type="button" class="btn btn-sm btn-sheet-detail-power" data-blasphemy-id="${b.id}" data-power-name="${p.name}" style="font-size: 11px; padding: 3px 8px;" data-i18n="common.details">${t("common.details")}</button>
                         </div>
                       `).join("")}
                     </div>
@@ -253,6 +255,7 @@ export function renderBlasphemiesSheet() {
       if (power) showPowerDetailPopup(power);
     });
   });
+  applyTranslations();
 }
 
 export function renderMutationsSheet() { }

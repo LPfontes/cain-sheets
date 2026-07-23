@@ -50,6 +50,12 @@
   margin-bottom: 8px;
 }
 
+:lang(en) .portrait-wrapper::before,
+[lang="en"] .portrait-wrapper::before,
+body[data-lang="en"] .portrait-wrapper::before {
+  content: 'REGISTERED EXORCIST';
+}
+
 .portrait-wrapper {
   position: relative;
   display: flex;

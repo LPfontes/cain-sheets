@@ -769,7 +769,7 @@
 /* Item name (font-weight 600, primary color, font-size sm) */
 .item-name {
   font-weight: 600;
-  color: var(--text-primary);
+  color: black;
   font-size: var(--font-size-sm);
 }
 
@@ -1088,6 +1088,10 @@
   flex: 1;
   font-weight: bold;
   font-size: var(--font-size-md);
+}
+
+.btn-black {
+  color: black !important;
 }
 
 .sinmarks-scroll-area {

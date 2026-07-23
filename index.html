@@ -107,6 +107,10 @@
           data-i18n="header.rules">Regras</span>
       </button>
 
+      <a id="btn-buy-cain" href="https://tombloom.itch.io/cain" target="_blank" rel="noopener noreferrer" class="btn" data-i18n-title="header.buyCain.title" title="Comprar Cain no itch.io" style="text-decoration: none;">
+        <span style="font-size: 1.1em; margin-right: 4px;">🛒</span> <span class="btn-text" data-i18n="header.buyCain">Comprar Cain</span>
+      </a>
+
       <button id="btn-new-char" class="btn" data-i18n-title="header.newChar.title" title="Criar Nova Ficha">
         <span class="btn-icon" data-icon="plus"></span> <span class="btn-text" data-i18n="header.newChar">Nova
           Ficha</span>
@@ -138,6 +142,9 @@
       <button id="btn-talisman-board" class="btn" data-i18n-title="header.talisman.title" title="Painel de Talismãs">
         <span class="btn-icon" data-icon="talisman"></span> <span class="btn-text" data-i18n="header.talisman">Talismãs</span>
       </button>
+      <button id="btn-content-packs" class="btn" data-i18n-title="header.packs.title" title="Pacotes de Conteúdo / Data Packs">
+        <span style="font-size: 1.1em;">📦</span> <span class="btn-text" data-i18n="header.packs">Pacotes</span>
+      </button>
       <button id="btn-settings" class="btn" data-i18n-title="header.settings.title" title="Configurações">
         <span class="btn-icon" data-icon="settings"></span>
       </button>
@@ -154,6 +161,13 @@
     <!-- TELA 0: LANDING - Seleção de Personagens / Pecados -->
     <section id="landing-screen" class="screen">
       <div class="landing-bg-overlay"></div>
+      <div class="landing-logo-container">
+        <img id="landing-logo" 
+          src="assets/Cain_Logo_White.webp" 
+          alt="CAIN Logo" 
+          class="landing-corner-logo">
+        <span class="landing-logo-author">by Tom Bloom</span>
+      </div>
 
       <div class="landing-content">
         <!-- Abas de Navegação -->
@@ -162,7 +176,7 @@
             <span data-i18n="landing.tabs.exorcists">Exorcistas</span>
           </button>
           <button id="tab-pecados" class="btn btn-landing-tab" style="background: transparent; border: none; color: var(--text-muted); font-size: var(--font-size-lg); font-weight: bold; cursor: pointer; opacity: 0.6; padding: 4px 12px; border-radius: 4px; transition: all 0.2s;">
-            <span>Pecados</span>
+            <span data-i18n="landing.tabs.sins">Pecados</span>
           </button>
           <button id="tab-missoes" class="btn btn-landing-tab" style="background: transparent; border: none; color: var(--text-muted); font-size: var(--font-size-lg); font-weight: bold; cursor: pointer; opacity: 0.6; padding: 4px 12px; border-radius: 4px; transition: all 0.2s;">
             <span data-i18n="landing.tabs.missions">Investigações</span>
@@ -215,8 +229,8 @@
         <div id="pecados-section" class="hidden">
           <!-- Título / Subtítulo -->
           <div class="landing-header">
-            <h1 class="landing-title">Pecados</h1>
-            <p class="landing-subtitle">Gerencie as fichas de Pecados para sua campanha</p>
+            <h1 class="landing-title" data-i18n="sins.title">Pecados</h1>
+            <p class="landing-subtitle" data-i18n="sins.subtitle">Gerencie as fichas de Pecados para sua campanha</p>
             <div id="sin-counter" class="landing-counter"></div>
           </div>
 
@@ -229,8 +243,8 @@
               <path stroke-linecap="round" stroke-linejoin="round"
                 d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
-            <p class="empty-title">Nenhum pecado registrado</p>
-            <p class="empty-sub">Crie seu primeiro pecado para começar</p>
+            <p class="empty-title" data-i18n="sins.empty.title">Nenhum pecado registrado</p>
+            <p class="empty-sub" data-i18n="sins.empty.sub">Crie seu primeiro pecado para começar</p>
           </div>
 
           <!-- Ações do rodapé -->
@@ -240,14 +254,14 @@
                 <line x1="12" y1="5" x2="12" y2="19" />
                 <line x1="5" y1="12" x2="19" y2="12" />
               </svg>
-              <span>Novo Pecado</span>
+              <span data-i18n="sins.new">Novo Pecado</span>
             </button>
             <button id="btn-import-sin" class="btn btn-landing-secondary">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
                 <path stroke-linecap="round" stroke-linejoin="round"
                   d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
               </svg>
-              <span>Importar Pecado</span>
+              <span data-i18n="sins.import">Importar Pecado</span>
             </button>
             <input type="file" id="file-import-sin" accept=".json" style="display:none">
           </div>
@@ -347,15 +361,15 @@
           <div style="display:grid; grid-template-columns: repeat(2,1fr); gap:12px;">
             <div class="form-group">
               <label for="wiz-name" data-i18n="wizard.name">Nome do Exorcista:</label>
-              <input type="text" id="wiz-name" placeholder="Ex: Alex Corvis, Sarah Moon...">
+              <input type="text" id="wiz-name" placeholder="Ex: Alex Corvis, Sarah Moon..." data-i18n-placeholder="wizard.name.placeholder">
             </div>
             <div class="form-group">
-              <label for="wiz-xid" data-i18n="wizard.xid">Número de Identificação (XID):</label>
-              <input type="text" id="wiz-xid" placeholder="Ex: CX-4471" maxlength="10"
+              <label for="wiz-xid" data-i18n="wizard.xid">Número de Identificação (CID):</label>
+              <input type="text" id="wiz-xid" placeholder="Ex: CX-4471" data-i18n-placeholder="wizard.xid.placeholder" maxlength="10"
                 style="text-transform:uppercase;">
             </div>
             <div class="form-group">
-              <label for="wiz-cat">Categoria (CAT):</label>
+              <label for="wiz-cat" data-i18n="wizard.cat">Categoria (CAT):</label>
               <select id="wiz-cat" class="sheet-input-text"
                 style="width: 100%; height: 38px; border: 1.5px solid var(--border-color-dark); background: var(--bg-card-alt); border-radius: var(--radius-sm); font-family: var(--font-body); padding: 0 8px;">
                 <option value="1">CAT 1</option>
@@ -368,26 +382,26 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="wiz-cid">CID:</label>
-              <input type="text" id="wiz-cid" placeholder="Ex: CX-0000">
+              <label for="wiz-cid" data-i18n="wizard.cid">CID:</label>
+              <input type="text" id="wiz-cid" placeholder="Ex: CX-0000" data-i18n-placeholder="wizard.cid.placeholder">
             </div>
 
             <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; grid-column: span 2;">
               <div class="form-group">
-                <label for="wiz-sexo">Sexo:</label>
-                <input type="text" id="wiz-sexo" placeholder="Sexo">
+                <label for="wiz-sexo" data-i18n="wizard.sex">Sexo:</label>
+                <input type="text" id="wiz-sexo" placeholder="Sexo" data-i18n-placeholder="wizard.sex.placeholder">
               </div>
               <div class="form-group">
-                <label for="wiz-cabelo">Cabelo:</label>
-                <input type="text" id="wiz-cabelo" placeholder="Cabelo">
+                <label for="wiz-cabelo" data-i18n="wizard.hair">Cabelo:</label>
+                <input type="text" id="wiz-cabelo" placeholder="Cabelo" data-i18n-placeholder="wizard.hair.placeholder">
               </div>
               <div class="form-group">
-                <label for="wiz-olhos">Olhos:</label>
-                <input type="text" id="wiz-olhos" placeholder="Olhos">
+                <label for="wiz-olhos" data-i18n="wizard.eyes">Olhos:</label>
+                <input type="text" id="wiz-olhos" placeholder="Olhos" data-i18n-placeholder="wizard.eyes.placeholder">
               </div>
               <div class="form-group">
-                <label for="wiz-idade">Idade:</label>
-                <input type="text" id="wiz-idade" placeholder="Idade">
+                <label for="wiz-idade" data-i18n="wizard.age">Idade:</label>
+                <input type="text" id="wiz-idade" placeholder="Idade" data-i18n-placeholder="wizard.age.placeholder">
               </div>
             </div>
           </div>
@@ -570,11 +584,11 @@
                       </div>
                       <div class="roll-chat-section" id="roll-chat">
                       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                  <h3 style="margin: 0; padding: 0;">Chat de Rolagens</h3>
-                  <button class="btn btn-sm btn-danger" id="btn-clear-chat" title="Limpar">Limpar</button>
+                  <h3 style="margin: 0; padding: 0;" data-i18n="sheet.rollChat.title">Chat de Rolagens</h3>
+                  <button class="btn btn-sm btn-danger" id="btn-clear-chat" title="Limpar" data-i18n="common.clear" data-i18n-title="common.clear">Limpar</button>
                 </div>
                 <div class="roll-chat-messages cain-roll-history" id="cain-roll-history">
-                  <div class="chat-placeholder">Nenhuma rolagem.</div>
+                  <div class="chat-placeholder" data-i18n="sheet.rollChat.empty">Nenhuma rolagem.</div>
                 </div>
               </div>
                     </div>
@@ -589,8 +603,8 @@
                         <!-- Coluna Esquerda: Instruções -->
                         <div class="hooks-instructions">
                           <h3 class="hooks-title" style="display:flex; justify-content:space-between; align-items:center;">
-                            <span data-toolbox="hooks" style="cursor:pointer;">GANCHOS</span>
-                            <button id="btn-add-hook" class="btn btn-sm btn-secondary" style="font-size: 11px; padding: 2px 8px; cursor: pointer; color: #000000;">+ Adicionar</button>
+                            <span data-toolbox="hooks" style="cursor:pointer;" data-i18n="sheet.hooks">GANCHOS</span>
+                            <button id="btn-add-hook" class="btn btn-sm btn-secondary" style="font-size: 11px; padding: 2px 8px; cursor: pointer; color: #000000;" data-i18n="sheet.addHook">+ Adicionar</button>
                           </h3>
                           <div class="hooks-columns">
                             <!-- Renderizado dinamicamente via JS -->
@@ -604,7 +618,7 @@
                   <div class="sheet-tab-panel" id="tab-cain-blasphemy">
                     <div style="display:flex; justify-content:space-between; align-items:center; ">
                       <h3 class="section-title" style="margin:0;" data-i18n="sheet.blasphemies">BLASFÊMIAS</h3>
-                      <button id="btn-add-blasphemy" class="btn ">+ Blasfêmia</button>
+                      <button id="btn-add-blasphemy" class="btn " data-i18n="sheet.addBlasphemy">+ Blasfêmia</button>
                     </div>
                     <div id="blasphemies-list-sheet" class="cain-blasphemies-list"></div>
                   </div>
@@ -613,7 +627,7 @@
                   <div class="sheet-tab-panel" id="tab-cain-sin-mark">
                     <div style="display:flex; justify-content:space-between; align-items:center; ">
                       <h3 class="section-title" style="margin:0;" data-i18n="sheet.tab.sinmarks">MARCAS DO PECADO</h3>
-                      <button id="btn-add-sin-mark" class="btn ">+ MARCAS</button>
+                      <button id="btn-add-sin-mark" class="btn " data-i18n="sheet.addSinMark">+ MARCAS</button>
                     </div>
                     <div id="sin-marks-list-sheet" class="cain-sinmarks-list"></div>
                   </div>
@@ -650,7 +664,7 @@
                           <div class="notes-block">
                             <h4 class="notes-title" data-i18n="sheet.notes.mission">MISSÃO</h4>
                             <p class="notes-desc" data-i18n="sheet.notes.mission.desc">Objetivos, pistas e informações da missão atual.</p>
-                            <textarea id="char-notes-mission" class="notes-textarea" placeholder="Detalhes da missão..."></textarea>
+                            <textarea id="char-notes-mission" class="notes-textarea" placeholder="Detalhes da missão..." data-i18n-placeholder="sheet.notes.missionPlaceholder"></textarea>
                           </div>
                         </div>
                         <div class="notes-tab-panel" id="notes-contacts">
@@ -832,12 +846,12 @@
                     </div>
                     <div class="affliction-inputs-group"
                       style="display: flex; gap: 6px; align-items: center; width: 100%;">
-                      <input type="text" id="input-affliction-name" class="sheet-input-text" placeholder="Nome da Aflição"
+                      <input type="text" id="input-affliction-name" class="sheet-input-text" placeholder="Nome da Aflição" data-i18n-placeholder="sheet.afflictionNamePlaceholder"
                         style="flex: 2; height: 30px; font-size: var(--font-size-xs);">
-                      <input type="text" id="input-affliction-desc" class="sheet-input-text" placeholder="Descrição"
+                      <input type="text" id="input-affliction-desc" class="sheet-input-text" placeholder="Descrição" data-i18n-placeholder="sheet.afflictionDescPlaceholder"
                         style="flex: 3; height: 30px; font-size: var(--font-size-xs);">
                       <button id="btn-add-affliction" class="btn" style="padding: 0 10px; height: 30px; font-size: 12px;"
-                        title="Adicionar Aflição">Adicionar</button>
+                        title="Adicionar Aflição" data-i18n="common.add" data-i18n-title="sheet.addAfflictionTitle">Adicionar</button>
                     </div>
                   </div>
                     
@@ -871,11 +885,11 @@
         <button id="btn-close-drawer" class="modal-close">&times;</button>
 
         <div class="drawer-content">
-          <h2 class="modal-title">🎲 Painel de Rolagem</h2>
+          <h2 class="modal-title" data-i18n="roller.title">🎲 Painel de Rolagem</h2>
 
           <!-- Conteúdo do Painel CAIN -->
           <div id="tab-cain-roll" style="margin-top: 15px;">
-            <h3 class="section-title">ROLAGEM CAIN</h3>
+            <h3 class="section-title" data-i18n="roller.cainRoll">ROLAGEM CAIN</h3>
             <div id="cain-roll-panel" class="cain-roll-panel"></div>
           </div>
         </div> <!-- Fim .drawer-content -->
@@ -894,17 +908,17 @@
             <button id="btn-missao-back" class="btn btn-sm btn-secondary flex-shrink-0" style="display:flex; align-items:center; gap:6px; color: white;">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="15 18 9 12 15 6"></polyline>
-              </svg> Voltar
+              </svg> <span data-i18n="common.back">Voltar</span>
             </button>
-            <input type="text" id="missao-name-header" class="missao-name-input" value="Nova Investigação" placeholder="Nome do Caso" style="color: white;" >
+            <input type="text" id="missao-name-header" class="missao-name-input" value="Nova Investigação" placeholder="Nome do Caso" data-i18n-placeholder="missions.sheet.caseNamePlaceholder" style="color: white;" >
           </div>
           <div style="display:flex; align-items:center; gap:8px;">
             <!-- Alternador de Modos -->
             <div class="missao-mode-tabs" style="display:flex; background:rgba(0,0,0,0.3); padding:2px; border-radius:var(--radius-md); border: 1px solid rgba(255,255,255,0.08);">
-              <button id="btn-missao-mode-sheet" class="btn btn-sm active" style="margin:0; border:none; background:transparent; color:white;">Modo Ficha</button>
-              <button id="btn-missao-mode-canvas" class="btn btn-sm" style="margin:0; border:none; background:transparent; color:var(--text-muted);">Modo Quadro</button>
+              <button id="btn-missao-mode-sheet" class="btn btn-sm active" style="margin:0; border:none; background:transparent; color:white;" data-i18n="missions.sheet.modeSheet">Modo Ficha</button>
+              <button id="btn-missao-mode-canvas" class="btn btn-sm" style="margin:0; border:none; background:transparent; color:var(--text-muted);" data-i18n="missions.sheet.modeCanvas">Modo Quadro</button>
             </div>
-            <button id="btn-missao-delete" class="btn btn-sm btn-danger" style="color: white;">
+            <button id="btn-missao-delete" class="btn btn-sm btn-danger" style="color: white;" data-i18n="missions.sheet.deleteCase">
               Excluir Caso
             </button>
           </div>
@@ -916,53 +930,53 @@
           <!-- COLUNA 1: INFORMAÇÕES ESSENCIAIS -->
           <div class="flex-col gap-16">
             <div class="missao-card-padding">
-              <h3 class="ws-section-title missao-section-title-line">Informações Essenciais</h3>
+              <h3 class="ws-section-title missao-section-title-line" data-i18n="missions.sheet.essentialInfo">Informações Essenciais</h3>
               
               <div class="missao-form-group">
-                <label>Gancho Inicial / Incidente Incitante</label>
-                <textarea id="missao-hook" class="missao-form-input" style="height: 70px; resize: vertical;" placeholder="O Incidente Incitante..."></textarea>
+                <label data-i18n="missions.sheet.hookLabel">Gancho Inicial / Incidente Incitante</label>
+                <textarea id="missao-hook" class="missao-form-input" style="height: 70px; resize: vertical;" placeholder="O Incidente Incitante..." data-i18n-placeholder="missions.sheet.hookPlaceholder"></textarea>
               </div>
 
               <div style="display:grid; grid-template-columns: 1fr;">
                 <div class="missao-form-group">
-                  <label>Pecado Associado</label>
+                  <label data-i18n="missions.sheet.sinLabel">Pecado Associado</label>
                   <select id="missao-sin-id" class="missao-form-input" style="width: 40%;">
-                    <option value="">Nenhum</option>
+                    <option value="" data-i18n="missions.sheet.noSin">Nenhum</option>
                   </select>
                 </div>
 
                 <div class="missao-form-group">
-                  <label>Hospedeiro (Nome, Status, Identidade)</label>
+                  <label data-i18n="missions.sheet.hostLabel">Hospedeiro (Nome, Status, Identidade)</label>
                   <div class="missao-host-grid">
-                    <input type="text" id="missao-host-name" class="missao-form-input" placeholder="Nome" value="">
-                    <input type="text" id="missao-host-status" class="missao-form-input" placeholder="Status / Identidade" value="">
+                    <input type="text" id="missao-host-name" class="missao-form-input" placeholder="Nome" data-i18n-placeholder="missions.sheet.hostNamePlaceholder" value="">
+                    <input type="text" id="missao-host-status" class="missao-form-input" placeholder="Status / Identidade" data-i18n-placeholder="missions.sheet.hostStatusPlaceholder" value="">
                   </div>
                 </div>
               </div>
               <div class="missao-traumas-group">
-                <div class="missao-traumas-label">Traumas (Revelações do Hospedeiro)</div>
+                <div class="missao-traumas-label" data-i18n="missions.sheet.traumasLabel">Traumas (Revelações do Hospedeiro)</div>
                 <div class="missao-form-group">
-                  <label>Trauma 1</label>
-                  <textarea id="missao-trauma1" class="missao-form-input" style="height: 50px; resize: vertical;" placeholder="Resposta ao Trauma 1..."></textarea>
+                  <label data-i18n="missions.sheet.trauma1">Trauma 1</label>
+                  <textarea id="missao-trauma1" class="missao-form-input" style="height: 50px; resize: vertical;" placeholder="Resposta ao Trauma 1..." data-i18n-placeholder="missions.sheet.trauma1Placeholder"></textarea>
                 </div>
                 <div class="missao-form-group">
-                  <label>Trauma 2</label>
-                  <textarea id="missao-trauma2" class="missao-form-input" style="height: 50px; resize: vertical;" placeholder="Resposta ao Trauma 2..."></textarea>
+                  <label data-i18n="missions.sheet.trauma2">Trauma 2</label>
+                  <textarea id="missao-trauma2" class="missao-form-input" style="height: 50px; resize: vertical;" placeholder="Resposta ao Trauma 2..." data-i18n-placeholder="missions.sheet.trauma2Placeholder"></textarea>
                 </div>
                 <div class="missao-form-group">
-                  <label>Trauma 3</label>
-                  <textarea id="missao-trauma3" class="missao-form-input" style="height: 50px; resize: vertical;" placeholder="Resposta ao Trauma 3..."></textarea>
+                  <label data-i18n="missions.sheet.trauma3">Trauma 3</label>
+                  <textarea id="missao-trauma3" class="missao-form-input" style="height: 50px; resize: vertical;" placeholder="Resposta ao Trauma 3..." data-i18n-placeholder="missions.sheet.trauma3Placeholder"></textarea>
                 </div>
               </div>
 
               <div class="missao-form-group">
-                <label>Localização do Palácio</label>
-                <textarea id="missao-palace" class="missao-form-input" style="height: 50px; resize: vertical;" placeholder="Onde fica o Palácio e como entrar..."></textarea>
+                <label data-i18n="missions.sheet.palaceLabel">Localização do Palácio</label>
+                <textarea id="missao-palace" class="missao-form-input" style="height: 50px; resize: vertical;" placeholder="Onde fica o Palácio e como entrar..." data-i18n-placeholder="missions.sheet.palacePlaceholder"></textarea>
               </div>
 
               <div class="missao-form-group missao-custom-notes">
-                <label>Notas da Investigação</label>
-                <textarea id="missao-custom-notes" class="missao-form-input" style="height: 100px; resize: vertical;" placeholder="Anotações gerais sobre o caso..."></textarea>
+                <label data-i18n="missions.sheet.notesLabel">Notas da Investigação</label>
+                <textarea id="missao-custom-notes" class="missao-form-input" style="height: 100px; resize: vertical;" placeholder="Anotações gerais sobre o caso..." data-i18n-placeholder="missions.sheet.notesPlaceholder"></textarea>
               </div>
             </div>
           </div>
@@ -971,52 +985,52 @@
           <div class="flex-col gap-16">
             <div class="missao-card-padding">
               <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:10px; flex-wrap:wrap;">
-                <h3 class="ws-section-title" style="margin:0;">Banco de Pistas</h3>
+                <h3 class="ws-section-title" style="margin:0;" data-i18n="missions.sheet.clueBankTitle">Banco de Pistas</h3>
                 <div style="display:flex; gap:6px; align-items:center;">
                   <select id="new-node-type" class="missao-form-input" style="width:auto; padding:5px 8px; font-size:var(--font-size-xs);">
-                    <option value="pessoa">Pessoa / NPC</option>
-                    <option value="local">Local</option>
-                    <option value="evidencia">Evidência</option>
-                    <option value="objeto">Objeto</option>
-                    <option value="obstaculo">Obstáculo / Inimigo</option>
+                    <option value="pessoa" data-i18n="missions.nodes.person">Pessoa / NPC</option>
+                    <option value="local" data-i18n="missions.nodes.location">Local</option>
+                    <option value="evidencia" data-i18n="missions.nodes.evidence">Evidência</option>
+                    <option value="objeto" data-i18n="missions.nodes.object">Objeto</option>
+                    <option value="obstaculo" data-i18n="missions.nodes.obstacle">Obstáculo / Inimigo</option>
                   </select>
-                  <button id="btn-add-node" class="btn btn-sm btn-primary">+ Pista</button>
+                  <button id="btn-add-node" class="btn btn-sm btn-primary" data-i18n="missions.sheet.addClue">+ Pista</button>
                 </div>
               </div>
               
               <div id="nodes-categories-list">
                 <div class="nodes-category-container">
-                  <div class="nodes-category-header">Pessoas / NPCs</div>
+                  <div class="nodes-category-header" data-i18n="missions.nodes.person">Pessoas / NPCs</div>
                   <div class="nodes-list">
-                    <p style="color:var(--text-muted); font-size:11px; margin:4px 0 12px 0;">Nenhuma pista nesta categoria.</p>
+                    <p style="color:var(--text-muted); font-size:11px; margin:4px 0 12px 0;" data-i18n="missions.nodes.noClues">Nenhuma pista nesta categoria.</p>
                   </div>
                 </div>
               
                 <div class="nodes-category-container">
-                  <div class="nodes-category-header">Locais</div>
+                  <div class="nodes-category-header" data-i18n="missions.nodes.location">Locais</div>
                   <div class="nodes-list">
-                    <p style="color:var(--text-muted); font-size:11px; margin:4px 0 12px 0;">Nenhuma pista nesta categoria.</p>
+                    <p style="color:var(--text-muted); font-size:11px; margin:4px 0 12px 0;" data-i18n="missions.nodes.noClues">Nenhuma pista nesta categoria.</p>
                   </div>
                 </div>
               
                 <div class="nodes-category-container">
-                  <div class="nodes-category-header">Evidências</div>
+                  <div class="nodes-category-header" data-i18n="missions.nodes.evidence">Evidências</div>
                   <div class="nodes-list">
-                    <p style="color:var(--text-muted); font-size:11px; margin:4px 0 12px 0;">Nenhuma pista nesta categoria.</p>
+                    <p style="color:var(--text-muted); font-size:11px; margin:4px 0 12px 0;" data-i18n="missions.nodes.noClues">Nenhuma pista nesta categoria.</p>
                   </div>
                 </div>
               
                 <div class="nodes-category-container">
-                  <div class="nodes-category-header">Objetos</div>
+                  <div class="nodes-category-header" data-i18n="missions.nodes.object">Objetos</div>
                   <div class="nodes-list">
-                    <p style="color:var(--text-muted); font-size:11px; margin:4px 0 12px 0;">Nenhuma pista nesta categoria.</p>
+                    <p style="color:var(--text-muted); font-size:11px; margin:4px 0 12px 0;" data-i18n="missions.nodes.noClues">Nenhuma pista nesta categoria.</p>
                   </div>
                 </div>
               
                 <div class="nodes-category-container">
-                  <div class="nodes-category-header">Obstáculos / Inimigos</div>
+                  <div class="nodes-category-header" data-i18n="missions.nodes.obstacle">Obstáculos / Inimigos</div>
                   <div class="nodes-list">
-                    <p style="color:var(--text-muted); font-size:11px; margin:4px 0 12px 0;">Nenhuma pista nesta categoria.</p>
+                    <p style="color:var(--text-muted); font-size:11px; margin:4px 0 12px 0;" data-i18n="missions.nodes.noClues">Nenhuma pista nesta categoria.</p>
                   </div>
                 </div>
               </div>
@@ -1026,7 +1040,7 @@
           <!-- COLUNA 3: DETALHES DO NÓ & CONEXÕES -->
           <div class="flex-col gap-16" id="node-details-container">
             <div class="missao-card-padding" style="text-align:center; padding: 40px 20px;">
-              <p style="color:var(--text-muted); margin:0;">Selecione uma pista na lista ao lado para ver e configurar suas conexões.</p>
+              <p style="color:var(--text-muted); margin:0;" data-i18n="missions.sheet.selectClueHelp">Selecione uma pista na lista ao lado para ver e configurar suas conexões.</p>
             </div>
           </div>
 
@@ -1037,24 +1051,24 @@
           <div class="canvas-toolbar">
             <div class="canvas-toolbar-group">
               <select id="canvas-add-node-type" class="missao-form-input" style="width:auto; padding:5px 8px; font-size:var(--font-size-xs); background:rgba(0,0,0,0.4); border-color:rgba(255,255,255,0.1); display:inline-block; height:30px; margin-right:5px; color:white;">
-                <option value="pessoa">Pessoa / NPC</option>
-                <option value="local">Local</option>
-                <option value="evidencia">Evidência</option>
-                <option value="objeto">Objeto</option>
-                <option value="obstaculo">Obstáculo / Inimigo</option>
+                <option value="pessoa" data-i18n="missions.nodes.person">Pessoa / NPC</option>
+                <option value="local" data-i18n="missions.nodes.location">Local</option>
+                <option value="evidencia" data-i18n="missions.nodes.evidence">Evidência</option>
+                <option value="objeto" data-i18n="missions.nodes.object">Objeto</option>
+                <option value="obstaculo" data-i18n="missions.nodes.obstacle">Obstáculo / Inimigo</option>
               </select>
-              <button id="btn-canvas-add-clue" class="btn btn-sm btn-primary" title="Adicionar Pista">+ Pista</button>
-              <button id="btn-canvas-add-note" class="btn btn-sm btn-secondary" title="Adicionar Nota Adesiva">+ Nota</button>
-              <button id="btn-canvas-add-image" class="btn btn-sm btn-secondary" title="Adicionar Imagem">+ Imagem</button>
+              <button id="btn-canvas-add-clue" class="btn btn-sm btn-primary" title="Adicionar Pista" data-i18n="missions.sheet.addClue">+ Pista</button>
+              <button id="btn-canvas-add-note" class="btn btn-sm btn-secondary" title="Adicionar Nota Adesiva" data-i18n="missions.canvas.addNote">+ Nota</button>
+              <button id="btn-canvas-add-image" class="btn btn-sm btn-secondary" title="Adicionar Imagem" data-i18n="missions.canvas.addImage">+ Imagem</button>
               <input type="file" id="canvas-image-input" accept="image/*" style="display:none;">
             </div>
-            <div class="canvas-toolbar-instruction" style="color:var(--text-muted); font-size:var(--font-size-xs); flex:1; text-align:center;">
+            <div class="canvas-toolbar-instruction" style="color:var(--text-muted); font-size:var(--font-size-xs); flex:1; text-align:center;" data-i18n="missions.canvas.instruction">
               Arrastar: Botão do Meio/Espaço + Mouse ou fundo vazio | Zoom: Roda do Mouse
             </div>
             <div class="canvas-toolbar-group">
-              <button id="btn-canvas-fit" class="btn btn-sm btn-secondary" title="Ajustar Visualização">Ajustar</button>
+              <button id="btn-canvas-fit" class="btn btn-sm btn-secondary" title="Ajustar Visualização" data-i18n="missions.canvas.fit">Ajustar</button>
               <button id="btn-canvas-reset" class="btn btn-sm btn-secondary" title="Resetar Zoom">100%</button>
-              <button id="btn-canvas-clear" class="btn btn-sm btn-danger" style="margin-left:10px;" title="Limpar Canvas">Limpar Quadro</button>
+              <button id="btn-canvas-clear" class="btn btn-sm btn-danger" style="margin-left:10px;" title="Limpar Canvas" data-i18n="missions.canvas.clear">Limpar Quadro</button>
             </div>
           </div>
           

@@ -3,6 +3,7 @@
 import { state, saveCurrentMission } from "./state.js";
 import { esc } from "./screen-utils.js";
 import { renderMissionSheet } from "./missao.js";
+import { t } from "./i18n.js";
 
 // Estado interno do canvas
 let scale = 1.0;
@@ -350,11 +351,11 @@ function _setupToolbarListeners() {
   btnAddClue?.addEventListener("click", () => {
     const typeSelect = document.getElementById("canvas-add-node-type");
     const type = typeSelect ? typeSelect.value : "pessoa";
-    _createNewCanvasNode("Nova Pista", type);
+    _createNewCanvasNode(t("missions.canvas.defaultNodeTitle"), type);
   });
 
   btnAddNote?.addEventListener("click", () => {
-    _createNewCanvasNode("Anotação", "nota");
+    _createNewCanvasNode(t("missions.canvas.cat.nota"), "nota");
   });
 
   btnAddImage?.addEventListener("click", () => {
@@ -367,7 +368,7 @@ function _setupToolbarListeners() {
 
     const reader = new FileReader();
     reader.onload = (event) => {
-      _createNewCanvasNode("Nova Imagem", "imagem", event.target.result);
+      _createNewCanvasNode(t("missions.canvas.defaultImageTitle"), "imagem", event.target.result);
       imageInput.value = ""; // reset
     };
     reader.readAsDataURL(file);
@@ -383,7 +384,7 @@ function _setupToolbarListeners() {
   });
 
   btnClear?.addEventListener("click", () => {
-    if (confirm("Limpar todo o quadro? Isso apagará todas as pistas, notas e conexões!")) {
+    if (confirm(t("missions.canvas.confirmClearAll"))) {
       const mission = state.currentMission;
       if (mission) {
         mission.nodes = [];
@@ -593,12 +594,13 @@ function _createCardElement(node) {
 
   // Ícone/Badge de tipo
   let badgeHtml = "";
+  const catText = t(`missions.canvas.cat.${node.type}`);
   if (node.type !== "nota" && node.type !== "imagem") {
-    badgeHtml = `<span class="node-cat-badge badge-cat-${node.type}">${node.type}</span>`;
+    badgeHtml = `<span class="node-cat-badge badge-cat-${node.type}">${catText}</span>`;
   } else if (node.type === "nota") {
-    badgeHtml = `<span class="node-cat-badge badge-cat-nota" style="background:#d8b136; color:#000;">Nota</span>`;
+    badgeHtml = `<span class="node-cat-badge badge-cat-nota" style="background:#d8b136; color:#000;">${catText}</span>`;
   } else {
-    badgeHtml = `<span class="node-cat-badge badge-cat-imagem" style="background:#5e5c5c; color:#fff;">Foto</span>`;
+    badgeHtml = `<span class="node-cat-badge badge-cat-imagem" style="background:#5e5c5c; color:#fff;">${catText}</span>`;
   }
 
   header.innerHTML = `
@@ -639,7 +641,7 @@ function _createCardElement(node) {
     imgWrap.innerHTML = `
       <div class="image-placeholder" style="height:80px; display:flex; flex-direction:column; align-items:center; justify-content:center; background:rgba(255,255,255,0.03); border:1px dashed rgba(255,255,255,0.15); border-radius:var(--radius-sm); cursor:pointer;">
         <span style="font-size:20px;">🖼️</span>
-        <span style="font-size:10px; color:var(--text-muted);">Clique para enviar</span>
+        <span style="font-size:10px; color:var(--text-muted);">${t("missions.canvas.clickToUpload")}</span>
       </div>
     `;
     imgWrap.addEventListener("click", () => {
@@ -665,7 +667,7 @@ function _createCardElement(node) {
   // Descrição
   const descEl = document.createElement("div");
   descEl.className = "card-desc-text";
-  descEl.innerHTML = esc(node.desc || "Sem descrição. Clique duplo para editar.");
+  descEl.innerHTML = esc(node.desc || t("missions.canvas.noDescDoubleTap"));
   body.appendChild(descEl);
 
   card.appendChild(body);
@@ -673,7 +675,7 @@ function _createCardElement(node) {
   // Knob/Alça de Conexão (Desenhar nova linha)
   const connector = document.createElement("div");
   connector.className = "card-connector-handle";
-  connector.title = "Arraste para outro card para conectar";
+  connector.title = t("missions.canvas.connectorTitle");
   connector.innerHTML = "📌";
 
   connector.addEventListener("mousedown", (e) => {
@@ -722,10 +724,10 @@ function _createCardElement(node) {
   deleteBtn.style.border = "none";
   deleteBtn.style.cursor = "pointer";
   deleteBtn.style.fontSize = "12px";
-  deleteBtn.title = "Apagar Card";
+  deleteBtn.title = t("missions.canvas.deleteCardTitle");
   deleteBtn.addEventListener("click", (e) => {
     e.stopPropagation();
-    if (confirm(`Excluir permanentemente o card "${node.name}"?`)) {
+    if (confirm(t("missions.canvas.confirmDeleteCard").replace("{name}", node.name))) {
       // Remove do state
       const mission = state.currentMission;
       mission.nodes = (mission.nodes || []).filter(n => n.id !== node.id);
@@ -754,7 +756,7 @@ function _createCardElement(node) {
   const resizer = document.createElement("div");
   resizer.className = "card-resizer-handle";
   resizer.innerHTML = "◢";
-  resizer.title = "Redimensionar";
+  resizer.title = t("missions.canvas.resizerTitle");
   resizer.addEventListener("mousedown", (e) => {
     if (e.button !== 0) return; // apenas esquerdo
     e.stopPropagation();

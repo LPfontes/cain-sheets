@@ -1,6 +1,6 @@
 import { el, state, loadCharactersFromStorage, saveCurrentCharacter, loadCharacter, deleteActiveCharacter, importCharacterFile, getCustomTraits, getCustomMutations, updateCloudSyncBadge, saveCurrentCharacterImmediate, loadSinsFromStorage, loadMissionsFromStorage } from "./js/state.js";
 import { startWizard, wizardPrevStep, wizardNextStep, wizardFinish } from "./js/wizard.js";
-import { openSettingsModal, openExportModal, openStressSettingsModal } from "./js/modals.js";
+import { openSettingsModal, openExportModal, openStressSettingsModal, openContentPacksModal, openLanguageModal, checkFirstVisitLanguage, updateLanguageButtonLabel } from "./js/modals.js";
 import { ICONS } from "./icons.js";
 import { logger } from "./js/logger.js";
 import { initLandingScreen, showLandingScreen } from "./js/landing.js";
@@ -35,7 +35,10 @@ function initializeApp() {
 
   // Initialize i18n
   applyTranslations();
-  updateLanguageButton();
+  updateLanguageButtonLabel();
+
+  // Popup de Seleção de Idioma na primeira visita
+  checkFirstVisitLanguage();
 
   // Initialize static hooks listeners
   import("./js/sheet.js").then(({ initStaticHooksListeners }) => {
@@ -89,13 +92,13 @@ function setupEventListeners() {
   if (el.btnSettings) {
     el.btnSettings.addEventListener("click", openSettingsModal);
   }
-    document.getElementById("btn-stress-settings")?.addEventListener("click", openStressSettingsModal);
+  document.getElementById("btn-content-packs")?.addEventListener("click", openContentPacksModal);
+  document.getElementById("btn-stress-settings")?.addEventListener("click", openStressSettingsModal);
   // Language toggle
   const btnLanguage = document.getElementById("btn-language");
   if (btnLanguage) {
     btnLanguage.addEventListener("click", () => {
-      toggleLanguage();
-      updateLanguageButton();
+      openLanguageModal(false);
     });
   }
   if (el.btnManageItems) {

@@ -3,6 +3,7 @@
 import { el, state, saveCurrentMission } from "./state.js";
 import { hideAllScreens, goToLanding, esc } from "./screen-utils.js";
 import { initCanvasView, renderCanvas, fitToScreen } from "./missao-canvas.js";
+import { t, applyTranslations } from "./i18n.js";
 
 let activeNodeId = null;
 
@@ -120,6 +121,7 @@ export function renderMissionSheet() {
 
   _renderNodesList(mission);
   _renderNodeDetails(mission);
+  applyTranslations();
 
   if (!staticListenersAttached) {
     _attachListeners();
@@ -132,11 +134,11 @@ function _renderNodesList(mission) {
   if (!container) return;
 
   const categories = [
-    { type: "pessoa", label: "Pessoas / NPCs" },
-    { type: "local", label: "Locais" },
-    { type: "evidencia", label: "Evidências" },
-    { type: "objeto", label: "Objetos" },
-    { type: "obstaculo", label: "Obstáculos / Inimigos" }
+    { type: "pessoa", label: t("missions.nodes.person") },
+    { type: "local", label: t("missions.nodes.location") },
+    { type: "evidencia", label: t("missions.nodes.evidence") },
+    { type: "objeto", label: t("missions.nodes.object") },
+    { type: "obstaculo", label: t("missions.nodes.obstacle") }
   ];
 
   container.innerHTML = categories.map(cat => {
@@ -153,7 +155,7 @@ function _renderNodesList(mission) {
       <div class="nodes-category-container">
         <div class="nodes-category-header">${cat.label}</div>
         <div class="nodes-list">
-          ${nodesHtml || `<p style="font-size:14px; margin:4px 0 12px 0;">Nenhuma pista nesta categoria.</p>`}
+          ${nodesHtml || `<p style="font-size:14px; margin:4px 0 12px 0;" data-i18n="missions.nodes.noClues">${t("missions.nodes.noClues")}</p>`}
         </div>
       </div>
     `;
@@ -178,7 +180,7 @@ function _renderNodeDetails(mission) {
   if (!node) {
     container.innerHTML = `
       <div class="card-glass missao-card-padding" style="text-align:center; padding: 40px 20px;">
-        <p style="color:var(--text-muted); margin:0;">Selecione uma pista na lista ao lado para ver e configurar suas conexões.</p>
+        <p style="color:var(--text-muted); margin:0;" data-i18n="missions.sheet.selectClueHelp">${t("missions.sheet.selectClueHelp")}</p>
       </div>
     `;
     return;
@@ -205,46 +207,46 @@ function _renderNodeDetails(mission) {
       <div class="missao-node-details-header-container">
         <div class="node-details-header">
           <div class="node-details-title-row">
-            <input type="text" id="node-name" class="missao-name-input" style="font-size: var(--font-size-md); padding:0; margin:0;" value="${esc(node.name)}" placeholder="Nome da Pista">
+            <input type="text" id="node-name" class="missao-name-input" style="height: 100%; font-size: var(--font-size-md);" value="${esc(node.name)}" placeholder="${t("missions.node.clueNamePlaceholder")}">
           </div>
         </div>
 
         <div class="missao-form-group">
-          <label style="color:black;">Categoria</label>
-          <select id="node-type" class="missao-form-input" style="color:black;">
-            <option value="pessoa" ${node.type === "pessoa" ? "selected" : ""}>Pessoa / NPC</option>
-            <option value="local" ${node.type === "local" ? "selected" : ""}>Local</option>
-            <option value="evidencia" ${node.type === "evidencia" ? "selected" : ""}>Evidência</option>
-            <option value="objeto" ${node.type === "objeto" ? "selected" : ""}>Objeto</option>
-            <option value="obstaculo" ${node.type === "obstaculo" ? "selected" : ""}>Obstáculo / Inimigo</option>
+          <select id="node-type" class="missao-form-input" style="color:black !important;">
+            <option value="pessoa" ${node.type === "pessoa" ? "selected" : ""} data-i18n="missions.nodes.person">${t("missions.nodes.person")}</option>
+            <option value="local" ${node.type === "local" ? "selected" : ""} data-i18n="missions.nodes.location">${t("missions.nodes.location")}</option>
+            <option value="evidencia" ${node.type === "evidencia" ? "selected" : ""} data-i18n="missions.nodes.evidence">${t("missions.nodes.evidence")}</option>
+            <option value="objeto" ${node.type === "objeto" ? "selected" : ""} data-i18n="missions.nodes.object">${t("missions.nodes.object")}</option>
+            <option value="obstaculo" ${node.type === "obstaculo" ? "selected" : ""} data-i18n="missions.nodes.obstacle">${t("missions.nodes.obstacle")}</option>
           </select>
         </div>
-        <button id="btn-delete-node" class="btn btn-sm btn-danger" style="padding: 2px 8px;">Apagar</button>
+        <button id="btn-delete-node" class="btn btn-sm btn-danger" style="padding: 2px 8px;" data-i18n="missions.node.deleteBtn">${t("missions.node.deleteBtn")}</button>
       </div>
-      <div class="missao-form-group">
-        <label>Descrição / Informações Secretas</label>
-        <textarea id="node-desc" class="missao-form-input" style="height: 100px; resize: vertical;" placeholder="Descreva os detalhes desta pista...">${esc(node.desc || "")}</textarea>
+      <div class="missao-form-group" style="margin-bottom: 0;">
+        <label data-i18n="missions.node.descLabel" style="color:black !important;">${t("missions.node.descLabel")}</label>
+        <textarea id="node-desc" class="missao-form-input" style="height: 100px; resize: vertical;" placeholder="${t("missions.node.descPlaceholder")}">${esc(node.desc || "")}</textarea>
       </div>
 
       <!-- TEIA DE CONEXÕES -->
       <div class="node-connections-section">
-        <div class="node-connections-title">Teia de Conexões</div>
+        <div class="node-connections-title" data-i18n="missions.node.connectionsTitle">${t("missions.node.connectionsTitle")}</div>
         <div class="node-connections-list">
-          ${connectionsHtml || `<p style="color:var(--text-muted); font-size:11px; margin:0;">Este nó não está conectado a nenhuma outra pista.</p>`}
+          ${connectionsHtml || `<p style="color:var(--text-muted); font-size:11px; margin:0;" data-i18n="missions.node.noConnections">${t("missions.node.noConnections")}</p>`}
         </div>
 
         ${linkOptions ? `
           <div class="connection-add-row">
             <select id="select-add-connection" class="connection-add-select">
-              <option value="">-- Conectar a --</option>
+              <option value="" data-i18n="missions.node.connectTo">${t("missions.node.connectTo")}</option>
               ${linkOptions}
             </select>
-            <button id="btn-add-connection" class="btn btn-sm">+ Conectar</button>
+            <button id="btn-add-connection" class="btn btn-sm" data-i18n="missions.node.connectBtn">${t("missions.node.connectBtn")}</button>
           </div>
         ` : ""}
       </div>
     </div>
   `;
+  applyTranslations();
 
   // Bind Col 3 Events
   const nameInput = document.getElementById("node-name");
@@ -493,7 +495,7 @@ function _attachListeners() {
     const selectedType = typeSelect ? typeSelect.value : "pessoa";
     const newNode = {
       id: "node_" + Date.now() + "_" + Math.floor(Math.random() * 1000),
-      name: "Nova Pista",
+      name: t("missions.canvas.defaultNodeTitle"),
       type: selectedType,
       desc: "",
       connections: []

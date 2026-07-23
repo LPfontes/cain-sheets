@@ -1,22 +1,16 @@
 import { el, state, saveCurrentSin } from "./state.js";
 import { hideAllScreens, goToLanding, esc, setupImageUpload } from "./screen-utils.js";
-import { t } from "./i18n.js";
+import { t, applyTranslations } from "./i18n.js";
 import { ICONS } from "../icons.js";
+import { SINS } from "./cain-data.js";
+import { getMergedData } from "./content-pack-manager.js";
 
-let sinsData = [];
+function getSinsData() {
+  const merged = getMergedData();
+  return (merged && merged.sins && merged.sins.length > 0) ? merged.sins : (SINS || []);
+}
+
 let activeThirdColTab = "perfil";
-
-// Carrega os dados de Pecados
-fetch("data/sins.json")
-  .then(r => r.json())
-  .then(data => {
-    sinsData = data;
-    const screen = document.getElementById("pecado-screen");
-    if (screen && !screen.classList.contains("hidden") && state.currentSin) {
-      renderPecadoSheet();
-    }
-  })
-  .catch(e => console.error("Erro ao carregar data/sins.json:", e));
 
 export function loadPecadoSheet(sin) {
   state.currentSin = sin;
@@ -53,19 +47,20 @@ export function renderPecadoSheet() {
     traumasHtml += `
       <div class="trauma-card-row" data-trauma-idx="${i}">
         <div class="trauma-header-row">
-          <input type="text" class="trauma-question conflito-form-input" value="${esc(t.question)}" placeholder="Pergunta de Trauma">
+          <input type="text" class="trauma-question conflito-form-input" value="${esc(t.question)}" placeholder="Pergunta de Trauma" data-i18n-placeholder="pecado.traumaQuestionPlaceholder">
           <label class="trauma-revealed-label">
-            <input type="checkbox" class="trauma-revealed-checkbox" ${t.revealed ? 'checked' : ''}> Revelado
+            <input type="checkbox" class="trauma-revealed-checkbox" ${t.revealed ? 'checked' : ''}> <span data-i18n="pecado.traumaRevealed">Revelado</span>
           </label>
         </div>
-        <textarea class="trauma-answer-textarea conflito-form-input pecado-field-input pecado-field-h50 mt-4" placeholder="Resposta do hospedeiro investigada...">${esc(t.answer)}</textarea>
+        <textarea class="trauma-answer-textarea conflito-form-input pecado-field-input pecado-field-h50 mt-4" placeholder="Resposta do hospedeiro investigada..." data-i18n-placeholder="pecado.traumaAnswerPlaceholder">${esc(t.answer)}</textarea>
       </div>
     `;
   }
 
   // Render Domains HTML
   let domainsHtml = "";
-  const canonicalData = sinsData.find(d => d.id === sin.type);
+  const sinsData = getSinsData();
+  const canonicalData = sinsData.find(d => d.id === sin.type || d.name === sin.type || d.type === sin.type);
   if (sin.type !== "outro" && canonicalData) {
     // List canonical domains
     const availableDomains = canonicalData.domains || [];
@@ -94,8 +89,8 @@ export function renderPecadoSheet() {
       const cd = sin.customDomains[i] || { name: "", desc: "" };
       domainsHtml += `
         <div class="trauma-card-row mb-8" data-cd-idx="${i}">
-          <input type="text" class="custom-domain-name conflito-form-input custom-domain-name-input pecado-field-input" value="${esc(cd.name)}" placeholder="Nome do Domínio Customizado">
-          <textarea class="custom-domain-desc conflito-form-input pecado-field-input pecado-field-h45" placeholder="Efeito e descrição do domínio...">${esc(cd.desc)}</textarea>
+          <input type="text" class="custom-domain-name conflito-form-input custom-domain-name-input pecado-field-input" value="${esc(cd.name)}" placeholder="Nome do Domínio Customizado" data-i18n-placeholder="pecado.customDomainNamePlaceholder">
+          <textarea class="custom-domain-desc conflito-form-input pecado-field-input pecado-field-h45" placeholder="Efeito e descrição do domínio..." data-i18n-placeholder="pecado.customDomainDescPlaceholder">${esc(cd.desc)}</textarea>
         </div>
       `;
     }
@@ -104,20 +99,20 @@ export function renderPecadoSheet() {
   // Render Minions HTML
   let minionsHtml = "";
   if (!sin.minions || sin.minions.length === 0) {
-    minionsHtml = `<div class="world-list-empty pecado-empty-list">Nenhum lacaio associado.</div>`;
+    minionsHtml = `<div class="world-list-empty pecado-empty-list" data-i18n="pecado.noMinions">Nenhum lacaio associado.</div>`;
   } else {
     sin.minions.forEach((m, idx) => {
       minionsHtml += `
         <div class="minion-item-card" data-minion-idx="${idx}">
           <div class="minion-item-header">
-            <input type="text" class="minion-name-input" value="${esc(m.name)}" placeholder="Nome do Lacaio">
+            <input type="text" class="minion-name-input" value="${esc(m.name)}" placeholder="Nome do Lacaio" data-i18n-placeholder="pecado.minionNamePlaceholder">
             <div class="pecado-minion-header-actions">
-              <span class="pecado-minion-header-label">Talismã:</span>
+              <span class="pecado-minion-header-label" data-i18n="pecado.talismanLabel">Talismã:</span>
               <input type="text" class="minion-talisman-input" value="${esc(m.talisman || '2')}" placeholder="2">
               <button class="btn-remove-minion" title="Remover lacaio">&times;</button>
             </div>
           </div>
-          <textarea class="minion-desc-textarea" placeholder="Descrição ou efeitos especiais...">${esc(m.desc || '')}</textarea>
+          <textarea class="minion-desc-textarea" placeholder="Descrição ou efeitos especiais..." data-i18n-placeholder="pecado.minionDescPlaceholder">${esc(m.desc || '')}</textarea>
         </div>
       `;
     });
@@ -128,15 +123,15 @@ export function renderPecadoSheet() {
       <!-- Header -->
       <div class="section-header-row pecado-header-row">
         <div class="pecado-title-wrapper">
-          <button id="btn-pecado-back" class="btn btn-sm pecado-back-btn" title="Voltar">
+          <button id="btn-pecado-back" class="btn btn-sm pecado-back-btn" title="Voltar" data-i18n-title="common.back">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" class="pecado-back-svg">
               <polyline points="15 18 9 12 15 6" />
-            </svg> Back
+            </svg> <span data-i18n="common.back">Voltar</span>
           </button>
           <input type="text" id="pecado-name-header" class="sheet-title-input pecado-name-input" value="${esc(sin.name)}" style="color: white;">
         </div>
         <div class="pecado-header-actions">
-          <button id="btn-pecado-delete" class="btn btn-sm btn-danger pecado-delete-btn" style="color: white;">
+          <button id="btn-pecado-delete" class="btn btn-sm btn-danger pecado-delete-btn" style="color: white;" data-i18n="pecado.delete">
             Excluir
           </button>
         </div>
@@ -148,11 +143,11 @@ export function renderPecadoSheet() {
           <div class="flex-col gap-16">
             <!-- Tabs Menu -->
             <div class="pecado-third-col-tabs">
-              <button type="button" class="pecado-third-tab-btn ${activeThirdColTab === 'perfil' ? 'active' : ''}" data-tab="perfil">Perfil</button>
-              <button type="button" class="pecado-third-tab-btn ${activeThirdColTab === 'palacio' ? 'active' : ''}" data-tab="palacio">Palácio</button>
-              <button type="button" class="pecado-third-tab-btn ${activeThirdColTab === 'dominios' ? 'active' : ''}" data-tab="dominios">Domínios</button>
-              <button type="button" class="pecado-third-tab-btn ${activeThirdColTab === 'lacaios' ? 'active' : ''}" data-tab="lacaios">Lacaios</button>
-              <button type="button" class="pecado-third-tab-btn ${activeThirdColTab === 'combate' ? 'active' : ''}" data-tab="combate">Combate</button>
+              <button type="button" class="pecado-third-tab-btn ${activeThirdColTab === 'perfil' ? 'active' : ''}" data-tab="perfil" data-i18n="pecado.tab.profile">Perfil</button>
+              <button type="button" class="pecado-third-tab-btn ${activeThirdColTab === 'palacio' ? 'active' : ''}" data-tab="palacio" data-i18n="pecado.tab.palace">Palácio</button>
+              <button type="button" class="pecado-third-tab-btn ${activeThirdColTab === 'dominios' ? 'active' : ''}" data-tab="dominios" data-i18n="pecado.tab.domains">Domínios</button>
+              <button type="button" class="pecado-third-tab-btn ${activeThirdColTab === 'lacaios' ? 'active' : ''}" data-tab="lacaios" data-i18n="pecado.tab.minions">Lacaios</button>
+              <button type="button" class="pecado-third-tab-btn ${activeThirdColTab === 'combate' ? 'active' : ''}" data-tab="combate" data-i18n="pecado.tab.combat">Combate</button>
             </div>
 
             <!-- Tab Content Panels -->
@@ -170,34 +165,34 @@ export function renderPecadoSheet() {
                         
                         <div class="pecado-profile-fields-row">
                           <div>
-                            <label class="ws-label">Hospedeiro</label>
-                            <input type="text" id="pecado-host" class="conflito-form-input pecado-field-input" value="${esc(sin.hostName)}" placeholder="Nome do Hospedeiro">
+                            <label class="ws-label" data-i18n="pecado.host">Hospedeiro</label>
+                            <input type="text" id="pecado-host" class="conflito-form-input pecado-field-input" value="${esc(sin.hostName)}" placeholder="Nome do Hospedeiro" data-i18n-placeholder="pecado.hostPlaceholder">
                           </div>  
                           <div class="pecado-profile-fields-half">
-                              <label class="ws-label">Tipo de Pecado</label>
+                              <label class="ws-label" data-i18n="pecado.sinType">Tipo de Pecado</label>
                               <select id="pecado-type" class="conflito-form-input pecado-field-input">
-                                <option value="ogro" ${sin.type === 'ogro' ? 'selected' : ''}>Ogro</option>
-                                <option value="idolo" ${sin.type === 'idolo' ? 'selected' : ''}>Ídolo</option>
-                                <option value="cao" ${sin.type === 'cao' ? 'selected' : ''}>Cão</option>
-                                <option value="centopeia" ${sin.type === 'centopeia' ? 'selected' : ''}>Centopeia</option>
-                                <option value="sapo" ${sin.type === 'sapo' ? 'selected' : ''}>Sapo</option>
-                                <option value="lorde" ${sin.type === 'lorde' ? 'selected' : ''}>Lorde</option>
-                                <option value="outro" ${sin.type === 'outro' ? 'selected' : ''}>Customizado (Outro)</option>
+                                <option value="ogro" ${sin.type === 'ogro' ? 'selected' : ''} data-i18n="sins.type.ogro">Ogro (Desespero)</option>
+                                <option value="idolo" ${sin.type === 'idolo' ? 'selected' : ''} data-i18n="sins.type.idolo">Ídolo (Desejo)</option>
+                                <option value="cao" ${sin.type === 'cao' ? 'selected' : ''} data-i18n="sins.type.cao">Cão (Vingança)</option>
+                                <option value="centopeia" ${sin.type === 'centopeia' ? 'selected' : ''} data-i18n="sins.type.centopeia">Centopeia (Ódio)</option>
+                                <option value="sapo" ${sin.type === 'sapo' ? 'selected' : ''} data-i18n="sins.type.sapo">Sapo (Indulgência)</option>
+                                <option value="lorde" ${sin.type === 'lorde' ? 'selected' : ''} data-i18n="sins.type.lorde">Lorde (Medo)</option>
+                                <option value="outro" ${sin.type === 'outro' ? 'selected' : ''} data-i18n="sins.type.outro">Customizado (Outro)</option>
                               </select>
                             </div>
                         </div>
                         <div class="pecado-profile-fields-row">
                           <div class="pecado-profile-fields-half">
-                            <label class="ws-label">Forma</label>
+                            <label class="ws-label" data-i18n="pecado.form">Forma</label>
                             <select id="pecado-form" class="conflito-form-input pecado-field-input">
-                              <option value="Separado" ${sin.form === 'Separado' ? 'selected' : ''}>Forma I / Separado</option>
-                              <option value="Fundido" ${sin.form === 'Fundido' ? 'selected' : ''}>Forma II / Fundido</option>
-                              <option value="Vinculado" ${sin.form === 'Vinculado' ? 'selected' : ''}>Forma III / Vinculado</option>
+                              <option value="Separado" ${sin.form === 'Separado' ? 'selected' : ''} data-i18n="pecado.form.separated">Forma I / Separado</option>
+                              <option value="Fundido" ${sin.form === 'Fundido' ? 'selected' : ''} data-i18n="pecado.form.fused">Forma II / Fundido</option>
+                              <option value="Vinculado" ${sin.form === 'Vinculado' ? 'selected' : ''} data-i18n="pecado.form.bound">Forma III / Vinculado</option>
                             </select>
                           </div>
                         
                           <div class="pecado-profile-fields-row">
-                            <label class="ws-label">Categoria (CAT)</label>
+                            <label class="ws-label" data-i18n="pecado.cat">Categoria (CAT)</label>
                             <div id="pecado-cat-selector" class="cat-selector" title="Clique para trocar a categoria">
                               <img id="pecado-cat-img" src="./assets/cat${sin.cat}.png" alt="CAT ${sin.cat}" class="cat-image">
                               <div class="cat-arrows">
@@ -211,19 +206,19 @@ export function renderPecadoSheet() {
                     </div>
                   
                   <div class="card-glass pecado-card-padding">
-                    <h3 class="ws-section-title pecado-section-title-line">Perfil do Pecado</h3>
+                    <h3 class="ws-section-title pecado-section-title-line" data-i18n="pecado.profileTitle">Perfil do Pecado</h3>
                     <div class="pecado-profile-fields">
                       <div>
-                        <label class="ws-label">Descrição Geral</label>
-                        <textarea id="pecado-desc" class="conflito-form-input pecado-field-input pecado-field-h80" placeholder="Descrição geral...">${esc(sin.description)}</textarea>
+                        <label class="ws-label" data-i18n="pecado.desc">Descrição Geral</label>
+                        <textarea id="pecado-desc" class="conflito-form-input pecado-field-input pecado-field-h80" placeholder="Descrição geral..." data-i18n-placeholder="pecado.descPlaceholder">${esc(sin.description)}</textarea>
                       </div>
                       <div>
-                        <label class="ws-label">Aparência</label>
-                        <textarea id="pecado-appearance" class="conflito-form-input pecado-field-input pecado-field-h80" placeholder="Descreva a aparência física...">${esc(sin.appearance || '')}</textarea>
+                        <label class="ws-label" data-i18n="pecado.appearance">Aparência</label>
+                        <textarea id="pecado-appearance" class="conflito-form-input pecado-field-input pecado-field-h80" placeholder="Descreva a aparência física..." data-i18n-placeholder="pecado.appearancePlaceholder">${esc(sin.appearance || '')}</textarea>
                       </div>
                       <div>
-                        <label class="ws-label">Comportamento</label>
-                        <textarea id="pecado-behavior" class="conflito-form-input pecado-field-input pecado-field-h80" placeholder="Estilo de ação, tiques, atitudes...">${esc(sin.behavior || '')}</textarea>
+                        <label class="ws-label" data-i18n="pecado.behavior">Comportamento</label>
+                        <textarea id="pecado-behavior" class="conflito-form-input pecado-field-input pecado-field-h80" placeholder="Estilo de ação, tiques, atitudes..." data-i18n-placeholder="pecado.behaviorPlaceholder">${esc(sin.behavior || '')}</textarea>
                       </div>
                   </div>
                 </div>
@@ -232,19 +227,19 @@ export function renderPecadoSheet() {
               <!-- Palácio Panel -->
               <div class="pecado-tab-panel ${activeThirdColTab === 'palacio' ? '' : 'hidden'}" id="panel-palacio">
                 <div class="card-glass pecado-card-padding">
-                  <h3 class="ws-section-title pecado-section-title-line">O Palácio</h3>
+                  <h3 class="ws-section-title pecado-section-title-line" data-i18n="pecado.palaceTitle">O Palácio</h3>
                   <div class="pecado-profile-fields">
                     <div>
-                      <label class="ws-label">Temas Comuns</label>
-                      <input type="text" id="pecado-palace-themes" class="conflito-form-input pecado-field-input" value="${esc(sin.palace?.themes)}" placeholder="Ex: Escuro, Frio, Imundo">
+                      <label class="ws-label" data-i18n="pecado.palaceThemes">Temas Comuns</label>
+                      <input type="text" id="pecado-palace-themes" class="conflito-form-input pecado-field-input" value="${esc(sin.palace?.themes)}" placeholder="Ex: Escuro, Frio, Imundo" data-i18n-placeholder="pecado.palaceThemesPlaceholder">
                     </div>
                     <div>
-                      <label class="ws-label">Locais Típicos</label>
-                      <input type="text" id="pecado-palace-places" class="conflito-form-input pecado-field-input" value="${esc(sin.palace?.typical_places)}" placeholder="Ex: Esgotos, Galpões abandonados">
+                      <label class="ws-label" data-i18n="pecado.palacePlaces">Locais Típicos</label>
+                      <input type="text" id="pecado-palace-places" class="conflito-form-input pecado-field-input" value="${esc(sin.palace?.typical_places)}" placeholder="Ex: Esgotos, Galpões abandonados" data-i18n-placeholder="pecado.palacePlacesPlaceholder">
                     </div>
                     <div>
-                      <label class="ws-label">Descrição do Espaço</label>
-                      <textarea id="pecado-palace-desc" class="conflito-form-input pecado-field-input pecado-field-h80" placeholder="Descreva a arquitetura labiríntica e atmosfera do Palácio...">${esc(sin.palace?.desc)}</textarea>
+                      <label class="ws-label" data-i18n="pecado.palaceDesc">Descrição do Espaço</label>
+                      <textarea id="pecado-palace-desc" class="conflito-form-input pecado-field-input pecado-field-h80" placeholder="Descreva a arquitetura labiríntica e atmosfera do Palácio..." data-i18n-placeholder="pecado.palaceDescPlaceholder">${esc(sin.palace?.desc)}</textarea>
                     </div>
                   </div>
                 </div>
@@ -253,8 +248,8 @@ export function renderPecadoSheet() {
               <!-- Domínios Panel -->
               <div class="pecado-tab-panel ${activeThirdColTab === 'dominios' ? '' : 'hidden'}" id="panel-dominios">
                 <div class="card-glass pecado-card-padding">
-                  <h3 class="ws-section-title pecado-section-title-line">Domínios do Pecado</h3>
-                  <p class="domain-card-desc">
+                  <h3 class="ws-section-title pecado-section-title-line" data-i18n="pecado.domainsTitle">Domínios do Pecado</h3>
+                  <p class="domain-card-desc" data-i18n="pecado.domainsSub">
                     Selecione os 3 domínios ativos.
                   </p>
                   <div id="domains-list-container" class="pecado-domains-scroll">
@@ -267,8 +262,8 @@ export function renderPecadoSheet() {
               <div class="pecado-tab-panel ${activeThirdColTab === 'lacaios' ? '' : 'hidden'}" id="panel-lacaios">
                 <div class="card-glass pecado-card-padding">
                   <div class="pecado-minions-header">
-                    <h3 class="ws-section-title pecado-minions-title">Lacaios & Vestígios</h3>
-                    <button id="btn-add-minion" class="btn btn-sm pecado-add-minion-btn">+ Lacaio</button>
+                    <h3 class="ws-section-title pecado-minions-title" data-i18n="pecado.minionsTitle">Lacaios & Vestígios</h3>
+                    <button id="btn-add-minion" class="btn btn-sm pecado-add-minion-btn" data-i18n="pecado.addMinion">+ Lacaio</button>
                   </div>
                   <div class="minions-section-list" id="minions-list-container">
                     ${minionsHtml}
@@ -279,14 +274,14 @@ export function renderPecadoSheet() {
               <!-- Combate Panel -->
               <div class="pecado-tab-panel ${activeThirdColTab === 'combate' ? '' : 'hidden'}" id="panel-combate">
                 <div class="card-glass pecado-card-padding">
-                  <h3 class="ws-section-title pecado-section-title-line">Ataques e Complicações</h3>
+                  <h3 class="ws-section-title pecado-section-title-line" data-i18n="pecado.combatTitle">Ataques e Complicações</h3>
                   <div class="pecado-profile-fields">
                     <div>
-                      <label class="ws-label">Ataques Recomendados</label>
-                      <input type="text" id="pecado-attacks" class="conflito-form-input pecado-field-input" value="${esc(sin.attacks)}" placeholder="Armas, dentes, garras...">
+                      <label class="ws-label" data-i18n="pecado.attacks">Ataques Recomendados</label>
+                      <input type="text" id="pecado-attacks" class="conflito-form-input pecado-field-input" value="${esc(sin.attacks)}" placeholder="Armas, dentes, garras..." data-i18n-placeholder="pecado.attacksPlaceholder">
                     </div>
                     <div>
-                      <label class="ws-label">Dado de Reação (Guia de Dano)</label>
+                      <label class="ws-label" data-i18n="pecado.reactionGuide">Dado de Reação (Guia de Dano)</label>
                       <div class="pecado-reaction-box">
                         • <strong>1:</strong> 5 cortes no oponente<br>
                         • <strong>2-3:</strong> 3 cortes no oponente<br>
@@ -305,23 +300,23 @@ export function renderPecadoSheet() {
           <!-- Talismãs Tracker -->
           <div class="card-glass talisman-section pecado-card-padding">
             <h3 class="ws-section-title pecado-section-title-line pecado-settings-row">
-              <span>Talismãs e Marcadores</span>
-              <button type="button" id="btn-pecado-status-settings" class="pecado-status-settings-btn" title="Limites de Talismãs">⚙</button>
+              <span data-i18n="pecado.talismanSectionTitle">Talismãs e Marcadores</span>
+              <button type="button" id="btn-pecado-status-settings" class="pecado-status-settings-btn" title="${t("pecado.settings.title")}">⚙</button>
             </h3>
 
             <!-- Talismã de Execução -->
             <div class="talisman-tracker">
               <div class="talisman-header">
-                <span class="talisman-title">Talismã de Execução</span>
+                <span class="talisman-title" data-i18n="pecado.executionTalisman">Talismã de Execução</span>
                 <div class="talisman-align-group">
                   <label>
-                    <input type="checkbox" id="pecado-inside-palace" ${sin.insidePalace ? 'checked' : ''} style="width: 20px; height: 20px;"> No Palácio
+                    <input type="checkbox" id="pecado-inside-palace" ${sin.insidePalace ? 'checked' : ''} style="width: 20px; height: 20px;"> <span data-i18n="pecado.insidePalace">No Palácio</span>
                   </label>
                   <span class="talisman-value" id="execution-value">${sin.executionCuts || 0}/${maxExecution}</span>
                 </div>
               </div>
               <div class="talisman-formula-text">
-                Cortes máximos: ${baseExecution} + CAT (${sin.cat}) + Pressão (${sin.pressure || 0})
+                <span data-i18n="pecado.maxCutsFormula">Cortes máximos</span>: ${baseExecution} + CAT (${sin.cat}) + <span data-i18n="pecado.pressure">Pressão</span> (${sin.pressure || 0})
               </div>
               <div class="tracker-control-row">
                 <button id="btn-injury-dec" class="btn btn-sm stress-ctrl-btn flex-shrink-0">-</button>
@@ -336,7 +331,7 @@ export function renderPecadoSheet() {
             <!-- Talismã de Pressão -->
             <div class="talisman-tracker">
               <div class="talisman-header">
-                <span class="talisman-title">Talismã de Pressão</span>
+                <span class="talisman-title" data-i18n="pecado.pressureTalisman">Talismã de Pressão</span>
                 <span class="talisman-value" id="pressure-value">${sin.pressure || 0}/${maxPressure}</span>
               </div>
               <div class="tracker-control-row">
@@ -347,15 +342,15 @@ export function renderPecadoSheet() {
                 <button id="btn-pressure-inc" class="btn btn-sm stress-ctrl-btn flex-shrink-0">+</button>
               </div>
               <div id="pressure-warning" class="warning-box">
-                <strong>FORA DE CONTROLE (Pressão ${maxPressure}+):</strong>
-                <p>O pecado ganha +1 CAT temporário e efeitos ambientais secundários graves.</p>
+                <strong data-i18n="pecado.outOfControl">FORA DE CONTROLE (Pressão ${maxPressure}+):</strong>
+                <p data-i18n="pecado.outOfControlDesc">O pecado ganha +1 CAT temporário e efeitos ambientais secundários graves.</p>
                 </div>
             </div>
 
             <!-- Talismã de Tensão -->
             <div class="talisman-tracker">
               <div class="talisman-header">
-                <span class="talisman-title">Talismã de Tensão</span>
+                <span class="talisman-title" data-i18n="pecado.tensionTalisman">Talismã de Tensão</span>
                 <span class="talisman-value" id="tension-value">${sin.tension || 0}/${maxTension}</span>
               </div>
               <div class="tracker-control-row">
@@ -366,10 +361,10 @@ export function renderPecadoSheet() {
                 <button id="btn-tension-inc" class="btn btn-sm stress-ctrl-btn flex-shrink-0">+</button>
               </div>
               <div class="tension-info-row">
-                <span class="tension-info-text">
+                <span class="tension-info-text" data-i18n="pecado.tensionDesc">
                   Marque ao passar de cena ou obter 1 no dado de risco.
                 </span>
-                <button id="btn-vazar-tensao" class="btn btn-sm vazar-tension-btn">
+                <button id="btn-vazar-tensao" class="btn btn-sm vazar-tension-btn" data-i18n="pecado.leakTension">
                   Vazar Tensão
                 </button>
               </div>
@@ -378,8 +373,8 @@ export function renderPecadoSheet() {
 
           <!-- Traumas -->
           <div class="card-glass pecado-card-padding">
-            <h3 class="ws-section-title pecado-section-title-line">Traumas do Pecado (Investigação)</h3>
-            <p class="trauma-text-muted">
+            <h3 class="ws-section-title pecado-section-title-line" data-i18n="pecado.traumasTitle">Traumas do Pecado (Investigação)</h3>
+            <p class="trauma-text-muted" data-i18n="pecado.traumasDesc">
               Perguntas e respostas descobertas pelo grupo de Exorcistas.
             </p>
             <div class="trauma-fields-container">
@@ -407,6 +402,7 @@ export function renderPecadoSheet() {
 
   // Attach event listeners for inputs
   _attachPecadoListeners(sin, maxExecution);
+  applyTranslations();
 }
 
 function _renderExecutionCuts(sin, maxExecution) {
@@ -662,7 +658,8 @@ function _attachPecadoListeners(sin, maxExecution) {
     if (newType !== oldType) {
       if (confirm(`Alterar o tipo de Pecado para "${newType.toUpperCase()}"? Isso irá redefinir as habilidades, aparência, traumas e lacaios para os padrões desse pecado canônico.`)) {
         sin.type = newType;
-        const canonicalData = sinsData.find(d => d.id === newType);
+        const sinsData = getSinsData();
+        const canonicalData = sinsData.find(d => d.id === newType || d.name === newType || d.type === newType);
         if (canonicalData) {
           // Pre-populate canonical
           sin.description = canonicalData.description || "";
@@ -809,7 +806,8 @@ function _attachPecadoListeners(sin, maxExecution) {
       const domName = row.dataset.domainName;
       row.querySelector(".btn-domain-details")?.addEventListener("click", e => {
         e.stopPropagation();
-        const canonicalData = sinsData.find(d => d.id === sin.type);
+        const sinsData = getSinsData();
+        const canonicalData = sinsData.find(d => d.id === sin.type || d.name === sin.type || d.type === sin.type);
         const dom = (canonicalData?.domains || []).find(d => d.name === domName);
         if (dom) {
           import("./sheet.js").then(({ showPowerDetailPopup }) => {
@@ -948,7 +946,8 @@ export function startNewPecado(name = "Novo Pecado", hostName = "", type = "ogro
   };
 
   // Pre-populate canonical if available
-  const canonicalData = sinsData.find(d => d.id === type);
+  const sinsData = getSinsData();
+  const canonicalData = sinsData.find(d => d.id === type || d.name === type || d.type === type);
   if (canonicalData) {
     newSin.description = canonicalData.description || "";
     newSin.appearance = canonicalData.appearance || "";
@@ -984,11 +983,11 @@ export function openPecadoStressSettingsModal() {
   }
 
   el.modalBody.innerHTML = `
-    <h3 class="modal-title">Limites de Talismãs</h3>
-    <p class="pecado-settings-desc">Defina os limites máximos dos talismãs para este Pecado.</p>
+    <h3 class="modal-title">${t("pecado.settings.title")}</h3>
+    <p class="pecado-settings-desc">${t("pecado.settings.desc")}</p>
     <div class="pecado-settings-container">
       <div class="pecado-settings-row">
-        <span>Cortes Base (Execução):</span>
+        <span>${t("pecado.settings.baseExecution")}</span>
         <div class="pecado-settings-controls">
           <button type="button" class="btn btn-sm pecado-settings-btn-padding" id="btn-modal-exec-dec">-</button>
           <span id="lbl-modal-exec">${baseExecution}</span>
@@ -996,7 +995,7 @@ export function openPecadoStressSettingsModal() {
         </div>
       </div>
       <div class="pecado-settings-row">
-        <span>Pressão Máxima:</span>
+        <span>${t("pecado.settings.maxPressure")}</span>
         <div class="pecado-settings-controls">
           <button type="button" class="btn btn-sm pecado-settings-btn-padding" id="btn-modal-pressure-dec">-</button>
           <span id="lbl-modal-pressure">${maxPressure}</span>
@@ -1004,7 +1003,7 @@ export function openPecadoStressSettingsModal() {
         </div>
       </div>
       <div class="pecado-settings-row">
-        <span>Tensão Máxima:</span>
+        <span>${t("pecado.settings.maxTension")}</span>
         <div class="pecado-settings-controls">
           <button type="button" class="btn btn-sm pecado-settings-btn-padding" id="btn-modal-tension-dec">-</button>
           <span id="lbl-modal-tension">${maxTension}</span>
@@ -1013,7 +1012,7 @@ export function openPecadoStressSettingsModal() {
       </div>
     </div>
     <div class="pecado-settings-footer">
-      <button class="btn btn-primary" id="btn-pecado-settings-close">Ok</button>
+      <button class="btn btn-primary" id="btn-pecado-settings-close">${t("pecado.settings.ok")}</button>
     </div>
   `;
 

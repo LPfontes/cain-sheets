@@ -233,17 +233,19 @@ function renderWizardAgenda() {
   container.innerHTML = "";
 
   Object.entries(AGENDAS).forEach(([id, agenda]) => {
+    const habs = agenda.habilidades || agenda.abilities || [];
+    const habNames = habs.map(h => h.name).join(", ");
     const card = document.createElement("div");
     card.className = `package-wiz-card ${state.wizardData.agendaType === id ? 'active' : ''}`;
     card.innerHTML = `
     <div class="package-wiz-card-header">
       <div class="agenda-icon">
-        <img src="${agenda.icon}" alt="${agenda.name}" style="width:150px; height:auto;" />
+        <img src="${agenda.icon || 'assets/avatar.png'}" alt="${agenda.name}" style="width:150px; height:auto;" />
       </div>
       <div class="agenda-info">
         <h4>${agenda.name}</h4>
-        <p class="step-help">${agenda.desc || ''}</p>
-        <div class="items"><strong>Habilidades:</strong> ${agenda.habilidades.map(h => h.name).join(", ")}</div>
+        <p class="step-help">${agenda.desc || agenda.description || ''}</p>
+        <div class="items"><strong>${t("wizard.abilities")}</strong> ${habNames}</div>
         </div>
     </div>
     `;
@@ -256,7 +258,8 @@ function renderWizardAgenda() {
 
 function openWizardAgendaModal(agendaId) {
   const agenda = AGENDAS[agendaId];
-  if (!agenda || !agenda.habilidades.length) return;
+  const habs = agenda ? (agenda.habilidades || agenda.abilities || []) : [];
+  if (!agenda || !habs.length) return;
 
   let tempSelectedSkillName = state.wizardData.agendaType === agendaId ? state.wizardData.agendaSkill : "";
 
@@ -264,31 +267,31 @@ function openWizardAgendaModal(agendaId) {
 
   const renderModalContent = () => {
     el.modalBody.innerHTML = `
-      <h3 class="modal-title">Habilidades de ${agenda.name}</h3>
+      <h3 class="modal-title">${t("wizard.abilitiesOf")} ${agenda.name}</h3>
       <p class="step-help" style="margin-bottom: 16px; color: var(--text-secondary);">Escolha sua Habilidade Ativa inicial.<br>Ela definirá seu papel.</p>
       <div class="traits-wizard-list" id="wiz-modal-skills-list" style="max-height: 100%;">
-        ${agenda.habilidades.map(hab => {
+        ${habs.map(hab => {
           const isSelected = tempSelectedSkillName === hab.name;
           return `
             <label class="trait-wiz-item ${isSelected ? 'active' : ''}" style="cursor: pointer;">
               <input type="checkbox" class="trait-wiz-check" ${isSelected ? 'checked' : ''}>
               <div class="trait-wiz-content">
                 <div class="trait-name" style="font-weight: bold;">${hab.name}</div>
-                <div class="desc">${hab.desc}</div>
+                <div class="desc">${hab.desc || hab.description || ""}</div>
               </div>
             </label>
           `;
         }).join("")}
       </div>
       <div class="modal-actions" style="margin-top: 24px; display: flex; gap: 8px;">
-        <button class="btn btn-success" id="btn-wiz-modal-confirm">Confirmar</button>
-        <button class="btn" id="btn-wiz-modal-cancel">Cancelar</button>
+        <button class="btn btn-success" id="btn-wiz-modal-confirm">${t("common.confirm")}</button>
+        <button class="btn" id="btn-wiz-modal-cancel">${t("common.cancel")}</button>
       </div>
     `;
 
     const items = el.modalBody.querySelectorAll(".trait-wiz-item");
     items.forEach((item, index) => {
-      const hab = agenda.habilidades[index];
+      const hab = habs[index];
       const cb = item.querySelector(".trait-wiz-check");
 
       item.onclick = (e) => {
@@ -386,9 +389,9 @@ function openWizardBlasphemyPowersModal(blasphemyId) {
     </div>
     
     <div class="modal-actions">
-      <button class="btn" id="btn-wiz-powers-cancel">Cancelar</button>
-      ${isSelected ? `<button class="btn btn-danger" id="btn-wiz-powers-remove">Remover</button>` : ''}
-      <button class="btn btn-primary" id="btn-wiz-powers-save" disabled>${isSelected ? 'Salvar' : 'Selecionar'}</button>
+      <button class="btn" id="btn-wiz-powers-cancel">${t("common.cancel")}</button>
+      ${isSelected ? `<button class="btn btn-danger" id="btn-wiz-powers-remove">${t("common.remove")}</button>` : ''}
+      <button class="btn btn-primary" id="btn-wiz-powers-save" disabled>${isSelected ? t("common.save") : t("common.select")}</button>
     </div>
     </div>
   `;

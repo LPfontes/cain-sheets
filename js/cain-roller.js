@@ -1,6 +1,7 @@
 import { el, state, saveCurrentCharacter } from "./state.js";
 import { CAIN_SKILLS, ALL_SKILLS } from "./cain-data.js";
 import { logger } from "./logger.js";
+import { t } from "./i18n.js";
 
 export function renderCainRollPanel() {
   const container = document.getElementById("cain-roll-panel");
@@ -8,7 +9,7 @@ export function renderCainRollPanel() {
 
   const char = state.currentCharacter;
   if (!char) {
-    container.innerHTML = '<p class="cain-empty">Nenhum Exorcista carregado.</p>';
+    container.innerHTML = `<p class="cain-empty">${t("roller.noExorcist")}</p>`;
     return;
   }
 
@@ -41,16 +42,16 @@ export function renderCainRollPanel() {
     <div class="cain-roll-panel-inner">
     <div class="cain-roll-field-row">
       <div class="cain-roll-field">
-        <label for="cain-roll-skill">Perícia:</label>
+        <label for="cain-roll-skill">${t("roller.skill")}</label>
         <select id="cain-roll-skill" class="cain-roll-select">
-          <option value="">-- Selecione --</option>
+          <option value="">${t("roller.selectPlaceholder")}</option>
           ${skillOptionsHtml}
         </select>
       </div>
 
       <!-- VANTAGENS -->
       <div class="cain-roll-field">
-        <label>Vantagens (+D):</label>
+        <label>${t("roller.advantages")}</label>
         <div class="cain-advantages-ctrl">
           <button id="btn-cain-adv-dec" class="btn btn-sm">-</button>
           <span class="cain-adv-val">${advantages}</span>
@@ -60,19 +61,19 @@ export function renderCainRollPanel() {
     </div>
       <!-- DIFICULDADE -->
       <div class="cain-roll-field">
-        <label>Dificuldade:</label>
+        <label>${t("roller.difficulty")}</label>
         <div class="cain-diff-toggle-group">
           <label class="cain-diff-opt">
-            <input type="radio" name="cain-difficulty" value="normal" style="width:20px; height:20px;" ${!isDifficult ? 'checked' : ''}> Normal (4+)
+            <input type="radio" name="cain-difficulty" value="normal" style="width:20px; height:20px;" ${!isDifficult ? 'checked' : ''}> ${t("roller.diffNormal")} (4+)
           </label>
           <label class="cain-diff-opt">
-            <input type="radio" name="cain-difficulty" value="hard" style="width:20px; height:20px;" ${isDifficult ? 'checked' : ''}> Difícil (6)
+            <input type="radio" name="cain-difficulty" value="hard" style="width:20px; height:20px;" ${isDifficult ? 'checked' : ''}> ${t("roller.diffHard")} (6)
           </label>
         </div>
       </div>
 
       <div class="cain-roll-info-row">
-        <span class="cain-pool-display">Pool: <strong id="cain-pool-size">${poolSize}</strong>d6 ${poolSize === 0 && selectedSkillKey ? '<span class="cain-zero-pool-warning">(Rola 2d6, pega o menor)</span>' : ''}</span>
+        <span class="cain-pool-display">${t("roller.pool")}: <strong id="cain-pool-size">${poolSize}</strong>d6 ${poolSize === 0 && selectedSkillKey ? `<span class="cain-zero-pool-warning">${t("roller.zeroPoolWarning")}</span>` : ''}</span>
         <label class="cain-psyche-toggle ${psycheAvailable <= 0 ? 'disabled' : ''}">
           <input type="checkbox" id="cain-use-psyche" style="width:20px; height:20px;" ${usePsyche && psycheAvailable > 0 ? 'checked' : ''} ${psycheAvailable <= 0 ? 'disabled' : ''}>
           Psyche Burst <span class="cain-psyche-badge">${psycheAvailable}</span>
@@ -80,13 +81,13 @@ export function renderCainRollPanel() {
         <div class="cain-divine-agony-wrapper" style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px;">
           <label class="cain-divine-agony-toggle">
             <input type="checkbox" id="cain-use-divine-agony" style="width:20px; height:20px;" ${useDivineAgony ? 'checked' : ''}>
-            Agonia Divina
+            ${t("roller.divineAgony")}
           </label>
           <div class="piedade-checkbox-group" id="cain-roller-piedade-checkbox-group" style="display: flex; gap: 4px; align-items: center;"></div>
         </div>
       </div>
       <button id="btn-cain-roll" class="btn btn-primary" ${!selectedSkillKey ? 'disabled' : ''}>
-        🎲 Rolar ${selectedSkillKey ? (poolSize > 0 ? `(${poolSize}d6)` : "(2d6 menor)") : ""}
+        🎲 ${t("roller.rollBtn")} ${selectedSkillKey ? (poolSize > 0 ? `(${poolSize}d6)` : t("roller.zeroPoolLowest")) : ""}
       </button>
       <div id="cain-roll-results" class="cain-roll-results"></div>
     </div>
@@ -315,15 +316,15 @@ function renderCainResult(results, successes, skillName, skillVal, poolSize, use
 
   el.innerHTML = `
     <div class="cain-roll-result-card card-glass">
-      <div class="cain-roll-header">${skillName} ${isDifficult ? '<span class="cain-diff-badge-hard">Difícil</span>' : ''}</div>
+      <div class="cain-roll-header">${skillName} ${isDifficult ? `<span class="cain-diff-badge-hard">${t("roller.diffHardBadge")}</span>` : ''}</div>
       <div class="cain-roll-dice-row">
         ${diceHtml}
       </div>
       <div class="cain-roll-summary">
-        <span class="cain-roll-successes">${successes > 0 ? 'Sucesso!' : 'Falha'} (${successes} sucesso${successes !== 1 ? 's' : ''})</span>
+        <span class="cain-roll-successes">${successes > 0 ? t("roller.success") : t("roller.failure")} (${(successes === 1 ? t("roller.successCount") : t("roller.successesCount")).replace("{count}", successes)})</span>
       </div>
       <div class="cain-roll-stats">
-        <small>Pool: ${poolSize}d6 ${usedPsyche ? '(com Psyche Burst)' : ''} ${isZeroPool ? '(Reserva 0, pegou menor)' : ''}</small>
+        <small>${t("roller.pool")}: ${poolSize}d6 ${usedPsyche ? t("roller.withPsyche") : ''} ${isZeroPool ? t("roller.zeroPoolHistory") : ''}</small>
       </div>
     </div>
   `;

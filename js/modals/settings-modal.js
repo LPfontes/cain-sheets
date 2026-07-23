@@ -1,6 +1,7 @@
 import { el, state, saveCurrentCharacter } from "../state.js";
 import { logger } from "../logger.js";
 import { renderAptitudesSheet, renderStressHealthSheet } from "../sheet.js";
+import { applyTranslations, t } from "../i18n.js";
 
 export function openSettingsModal() {
   logger.info("Modal: Abrindo modal de configurações.");
@@ -16,12 +17,12 @@ export function openSettingsModal() {
 
   el.modalBody.innerHTML = `
     <div class="settings-modal-content">
-    <h3 class="modal-title">Configurações</h3>
+    <h3 class="modal-title" data-i18n="settings.title">Configurações</h3>
     <div class="settings-modal-content" style="margin-top: 16px;">
       <div class="setting-row">
         <div class="setting-info">
-          <div class="setting-label">Desativar Dados 3D</div>
-          <div class="setting-desc">Substitui a animação física dos dados por rolagens matemáticas instantâneas no chat.</div>
+          <div class="setting-label" data-i18n="settings.dice3d.title">Desativar Dados 3D</div>
+          <div class="setting-desc" data-i18n="settings.dice3d.desc">Substitui a animação física dos dados por rolagens matemáticas instantâneas no chat.</div>
         </div>
         <div class="setting-control">
           <label class="theme-switch">
@@ -33,40 +34,42 @@ export function openSettingsModal() {
 
       <div class="setting-row -with-divider">
         <div class="setting-info">
-          <div class="setting-label">Apagar Fichas (Local Storage)</div>
-          <div class="setting-desc">Remove todos os personagens e dados locais criados neste navegador.</div>
+          <div class="setting-label" data-i18n="settings.clearStorage.title">Apagar Fichas (Local Storage)</div>
+          <div class="setting-desc" data-i18n="settings.clearStorage.desc">Remove todos os personagens e dados locais criados neste navegador.</div>
         </div>
         <div class="setting-control">
-          <button id="btn-clear-local-storage" class="btn btn-danger btn-sm" style="white-space: nowrap;">Apagar Dados</button>
+          <button id="btn-clear-local-storage" class="btn btn-danger btn-sm" style="white-space: nowrap;" data-i18n="settings.clearStorage.btn">Apagar Dados</button>
         </div>
       </div>
 
       <div class="setting-row -with-divider">
         <div class="setting-info">
-          <div class="setting-label">Forçar Recarregamento (PWA Cache)</div>
-          <div class="setting-desc">Limpa o cache offline e força o download da versão mais recente dos arquivos.</div>
+          <div class="setting-label" data-i18n="settings.clearPwa.title">Forçar Recarregamento (PWA Cache)</div>
+          <div class="setting-desc" data-i18n="settings.clearPwa.desc">Limpa o cache offline e força o download da versão mais recente dos arquivos.</div>
         </div>
         <div class="setting-control">
-          <button id="btn-clear-pwa-cache" class="btn btn-danger btn-sm" style="white-space: nowrap;">Forçar Recarga</button>
+          <button id="btn-clear-pwa-cache" class="btn btn-danger btn-sm" style="white-space: nowrap;" data-i18n="settings.clearPwa.btn">Forçar Recarga</button>
         </div>
       </div>
       
       <div class="setting-row -with-divider">
         <div class="setting-info">
-          <div class="setting-label">Gerenciador de Armazenamento</div>
-          <div class="setting-desc">Gerencie, delete ou exporte individualmente fichas de personagens, refúgios, regiões, conflitos, locais e pacotes de Homebrew.</div>
+          <div class="setting-label" data-i18n="settings.storageManager.title">Gerenciador de Armazenamento</div>
+          <div class="setting-desc" data-i18n="settings.storageManager.desc">Gerencie, delete ou exporte individualmente fichas de personagens, refúgios, regiões, conflitos, locais e pacotes de Homebrew.</div>
         </div>
         <div class="setting-control">
-          <button id="btn-open-storage-manager" class="btn btn-md btn-outline -cyan" style="white-space: nowrap;">Gerenciar Dados</button>
+          <button id="btn-open-storage-manager" class="btn btn-md btn-outline -cyan" style="white-space: nowrap;" data-i18n="settings.storageManager.btn">Gerenciar Dados</button>
         </div>
       </div>
       
       <div class="modal-footer" style="margin-top: 24px;">
-        <button id="btn-save-settings" class="btn btn-md">Fechar</button>
+        <button id="btn-save-settings" class="btn btn-md" data-i18n="settings.close">Fechar</button>
       </div>
     </div>
   </div>
   `;
+
+  applyTranslations();
 
   const checkbox = document.getElementById("settings-disable-3d");
   checkbox.addEventListener("change", (e) => {
@@ -142,19 +145,19 @@ export function openStressSettingsModal() {
   }
 
   el.modalBody.innerHTML = `
-    <h3 class="modal-title">Limites de Status</h3>
-    <p style="margin-bottom: 16px; color: var(--text-secondary);">Defina a quantidade máxima permitida de cada recurso e limite de Feridas.</p>
+    <h3 class="modal-title" data-i18n="settings.stress.title">Limites de Status</h3>
+    <p style="margin-bottom: 16px; color: var(--text-secondary);" data-i18n="settings.stress.desc">Defina a quantidade máxima permitida de cada recurso e limite de Feridas.</p>
     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 16px; text-align: left;">
       
       ${[
-        { label: "Total de Cortes (Stress):", id: "stressmax", val: stressMax },
-        { label: "Total de Pecados:", id: "sinmax", val: sinMax },
-        { label: "Total de Pulsos Psíquicos:", id: "psychemax", val: psycheMax },
-        { label: "Total de Piedade:", id: "piedademax", val: piedadeMax },
-        { label: "Total de Feridas Max:", id: "injuriesmax", val: injuriesMax }
+        { key: "settings.stress.stressmax", id: "stressmax", val: stressMax },
+        { key: "settings.stress.sinmax", id: "sinmax", val: sinMax },
+        { key: "settings.stress.psychemax", id: "psychemax", val: psycheMax },
+        { key: "settings.stress.piedademax", id: "piedademax", val: piedadeMax },
+        { key: "settings.stress.injuriesmax", id: "injuriesmax", val: injuriesMax }
       ].map(item => `
         <div class="status-adjust-row">
-          <span class="status-adjust-label">${item.label}</span>
+          <span class="status-adjust-label" data-i18n="${item.key}">${t(item.key)}</span>
           <div class="status-adjust-controls">
             <button class="btn btn-sm" id="btn-modal-${item.id}-dec" style="padding: 2px 8px;">-</button>
             <span class="status-adjust-value" id="lbl-modal-${item.id}">${item.val}</span>
@@ -167,6 +170,8 @@ export function openStressSettingsModal() {
       <button class="btn btn-primary" id="btn-stress-settings-close">Ok</button>
     </div>
   `;
+
+  applyTranslations();
 
   // Local state for edits
   let currentStressMax = stressMax;

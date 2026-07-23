@@ -1,6 +1,7 @@
 import { el } from "../state.js";
 import { getCustomAgendas, saveCustomAgendas } from "../state.js";
 import { logger } from "../logger.js";
+import { t } from "../i18n.js";
 
 export function openCreateAgendaModal(onCreated) {
   logger.info("Modal: Abrindo modal de criação de Agenda.");
@@ -24,7 +25,7 @@ export function openCreateAgendaModal(onCreated) {
                 ${imageDataUrl ? `<img src="${imageDataUrl}" alt="Preview">` : '<span class="text-secondary" style="font-size:11px;">Nenhuma imagem</span>'}
               </div>
               <input type="file" id="create-agenda-img-input" accept="image/*" style="display:none">
-              <button id="btn-create-agenda-upload-img" class="btn btn-sm btn-secondary">Selecionar Imagem</button>
+              <button id="btn-create-agenda-upload-img" class="btn btn-sm btn-secondary btn-black">Selecionar Imagem</button>
             </div>
           </div>
 
@@ -72,8 +73,8 @@ export function openCreateAgendaModal(onCreated) {
       </div>
 
       <div class="modal-action-footer">
-        <button id="btn-create-agenda-cancel" class="btn btn-md btn-secondary">Cancelar</button>
-        <button id="btn-create-agenda-save" class="btn btn-md btn-blasphemy-save">Criar Agenda</button>
+        <button id="btn-create-agenda-cancel" class="btn btn-md btn-secondary btn-black">${t("common.cancel")}</button>
+        <button id="btn-create-agenda-save" class="btn btn-md btn-blasphemy-save btn-black">${t("agenda.modal.create")}</button>
       </div>
     `;
 

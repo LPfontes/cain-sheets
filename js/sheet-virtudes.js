@@ -1,53 +1,42 @@
 import { state, saveCurrentCharacter } from "./state.js";
 import { openVirtudesModal } from "./modals.js";
 import { t } from "./i18n.js";
+import { VIRTUES } from "./cain-data.js";
 
-let VIRTUES_DATA = [];
-
-async function loadVirtuesData() {
-  if (VIRTUES_DATA.length > 0) return;
-  const lang = localStorage.getItem("cain_lang") || "pt";
-  const file = lang === "en" ? "data/en/virtues.json" : "data/virtues.json";
-  try {
-    const res = await fetch(file);
-    const json = await res.json();
-    if (lang === "en") {
-      VIRTUES_DATA = json.virtues.map(v => ({
-        id: v.id,
-        name: v.name,
-        title: v.title,
-        img: "",
-        desc: v.desc,
-        strictures: v.bond.strictures.join(" "),
-        bond0: v.bond.abilities["0"],
-        bond1: v.bond.abilities["I"],
-        bond2: v.bond.abilities["II"],
-        bond3: v.bond.abilities["III"],
-        highBlasphemy: ""
-      }));
-    } else {
-      VIRTUES_DATA = Object.entries(json).map(([id, v]) => ({
-        id,
-        name: v.name,
-        title: v.title,
-        img: "",
-        desc: v.desc,
-        strictures: v.bond.strictures.join(" "),
-        bond0: v.bond.abilities["0"],
-        bond1: v.bond.abilities["I"],
-        bond2: v.bond.abilities["II"],
-        bond3: v.bond.abilities["III"],
-        highBlasphemy: ""
-      }));
-    }
-  } catch (e) {
-    console.error("Failed to load virtues data", e);
+function getVirtuesData() {
+  const data = VIRTUES || {};
+  if (Array.isArray(data)) {
+    return data.map(v => ({
+      id: v.id || (v.name ? v.name.toLowerCase() : "virtue"),
+      name: v.name || "",
+      title: v.title || "",
+      img: "",
+      desc: v.desc || "",
+      strictures: Array.isArray(v.bond?.strictures) ? v.bond.strictures.join(" ") : "",
+      bond0: v.bond?.abilities?.["0"] || "",
+      bond1: v.bond?.abilities?.["I"] || "",
+      bond2: v.bond?.abilities?.["II"] || "",
+      bond3: v.bond?.abilities?.["III"] || "",
+      highBlasphemy: ""
+    }));
   }
+  return Object.entries(data).map(([id, v]) => ({
+    id,
+    name: v.name || id,
+    title: v.title || "",
+    img: "",
+    desc: v.desc || "",
+    strictures: Array.isArray(v.bond?.strictures) ? v.bond.strictures.join(" ") : "",
+    bond0: v.bond?.abilities?.["0"] || "",
+    bond1: v.bond?.abilities?.["I"] || "",
+    bond2: v.bond?.abilities?.["II"] || "",
+    bond3: v.bond?.abilities?.["III"] || "",
+    highBlasphemy: ""
+  }));
 }
 
-loadVirtuesData();
-
 export function renderVirtudesSheet() {
+  const VIRTUES_DATA = getVirtuesData();
 
   const char = state.currentCharacter;
   if (!char) return;

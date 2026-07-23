@@ -3,6 +3,7 @@ import { logger } from "../logger.js";
 import { renderBlasphemiesSheet } from "../sheet.js";
 import { BLASPHEMIES } from "../cain-data.js";
 import { openCreateBlasphemyModal } from "./create-blasphemy-modal.js";
+import { t } from "../i18n.js";
 
 function getAllBlasphemies() {
   return [...BLASPHEMIES, ...getCustomBlasphemies()];
@@ -81,7 +82,7 @@ export function openBlasphemiesModal() {
 
     el.modalBody.innerHTML = `
       <div class="wide-modal-header">
-      <h3 class="modal-title blasphemy-modal-title">Gerenciar Blasfêmias</h3>
+      <h3 class="modal-title blasphemy-modal-title">${t("blasphemies.modal.title")}</h3>
       </div>
       <div class="modal-split-layout">
         
@@ -93,7 +94,7 @@ export function openBlasphemiesModal() {
       return `
               <div class="blasphemy-grid-card ${active ? 'active' : ''} ${owned ? 'owned' : ''} ${b.id.startsWith('custom_') ? 'custom-blasphemy' : ''}" data-id="${b.id}">
                 <div class="blasphemy-card-img-wrapper">
-                  ${b.img ? `<img src="${b.img}" alt="${b.name}">` : ''}
+                  ${b.img ? `<img src="${b.img}" alt="${b.name}" onerror="this.style.display='none'">` : ''}
                 </div>
                 <div class="blasphemy-card-info">
                   <span class="blasphemy-card-name">${b.name}</span>
@@ -110,7 +111,7 @@ export function openBlasphemiesModal() {
           
           <div class="modal-detail-header">
             <div class="modal-detail-img-wrapper" style="height: 430px; width: 200px;">
-              ${activeB.img ? `<img src="${activeB.img}" alt="${activeB.name}">` : `<strong></b>`}
+              ${activeB.img ? `<img src="${activeB.img}" alt="${activeB.name}" onerror="this.style.display='none'">` : `<strong></b>`}
             </div>
             <div class="blasphemy-details">
               <h4 class="blasphemy-color-${activeB.id} modal-detail-title" style="font-family: 'Cuasigothic'; text-transform: uppercase;">${activeB.name}</h4>
@@ -122,7 +123,7 @@ export function openBlasphemiesModal() {
           <!-- Passiva -->
           ${activeB.passive ? `
             <div class="blasphemy-details-passive">
-              <button class="btn btn-sm btn-passive-detail" style="font-weight: bold; background: rgba(248, 113, 113, 0.1); border: 1px solid var(--stamp-red); color: var(--stamp-red);">Ver Passiva</button>
+              <button class="btn btn-sm btn-passive-detail" style="font-weight: bold; background: rgba(248, 113, 113, 0.1); border: 1px solid var(--stamp-red); color: var(--stamp-red);">${t("blasphemies.modal.viewPassive")}</button>
             </div>
           ` : ''}
 
@@ -130,8 +131,8 @@ export function openBlasphemiesModal() {
           <label class="trait-wiz-item ${isOwned ? 'active owned' : ''} blasphemy-details-status" style="cursor: pointer;">
             <input type="checkbox" id="blasphemy-toggle-owned" class="trait-wiz-check" ${isOwned ? 'checked' : ''}>
             <div class="trait-wiz-content">
-              <div class="trait-name" style="font-size: var(--font-size-lg);">Possuir esta Blasfêmia</div>
-              <div class="desc" style="font-size: var(--font-size-lg); color: var(--text-secondary);">Adquira esta blasfêmia para liberar e escolher seus poderes ativos.</div>
+              <div class="trait-name" style="font-size: var(--font-size-lg);">${t("blasphemies.modal.ownBlasphemy")}</div>
+              <div class="desc" style="font-size: var(--font-size-lg); color: var(--text-secondary);">${t("blasphemies.modal.ownBlasphemyDesc")}</div>
             </div>
           </label>
 
@@ -139,7 +140,7 @@ export function openBlasphemiesModal() {
           ${isOwned ? `
             <div class="section-divider" style="margin-top: auto;">
               <button id="btn-manage-blasphemy-powers" class="btn btn-md" style="width: 50%; font-weight: bold; background: rgba(0,0,0,0.1); border: 1px solid var(--border-color); margin-bottom: 6px;">
-                Gerenciar Poderes Ativos (${(activeB.powers || []).filter(p => tempPowers.includes(p.name)).length})
+                ${t("blasphemies.modal.managePowers").replace("{count}", (activeB.powers || []).filter(p => tempPowers.includes(p.name)).length)}
               </button>
             </div>
           ` : ''}
@@ -151,9 +152,9 @@ export function openBlasphemiesModal() {
           </div>
       <!-- Footer Buttons -->
       <div class="modal-action-footer">
-        <button id="btn-create-blasphemy" class="btn btn-md btn-secondary">+ Criar Blasfêmia</button>
-        <button id="btn-blasphemies-modal-cancel" class="btn btn-md btn-secondary">Cancelar</button>
-        <button id="btn-blasphemies-modal-save" class="btn btn-md btn-blasphemy-save">Salvar Alterações</button>
+        <button id="btn-create-blasphemy" class="btn btn-md btn-secondary btn-black">${t("blasphemies.modal.create")}</button>
+        <button id="btn-blasphemies-modal-cancel" class="btn btn-md btn-secondary btn-black">${t("blasphemies.modal.cancel")}</button>
+        <button id="btn-blasphemies-modal-save" class="btn btn-md btn-blasphemy-save btn-black">${t("blasphemies.modal.save")}</button>
       </div>
     `;
 
@@ -281,7 +282,7 @@ export function openBlasphemyPowersModal(blasphemy, currentPowers, onSave) {
         ${power.desc}
       </div>
       <div class="modal-footer" style="margin-top:10px">
-        <button class="btn btn-secondary btn-popup-ok">Fechar</button>
+        <button class="btn btn-secondary btn-popup-ok">${t("blasphemies.modal.close")}</button>
       </div>
     `;
 
@@ -348,15 +349,15 @@ export function openBlasphemyPowersModal(blasphemy, currentPowers, onSave) {
   const renderContent = () => {
     panel.innerHTML = `
       <div class="blasphemy-powers-panel-header" style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border-color-dark);cursor:move;user-select:none;background:rgba(0,0,0,0.1);">
-        <span class="modal-title" style="font-size:var(--font-size-md);margin:0;border:none;padding:0;">${blasphemy.name} — Poderes Ativos</span>
+        <span class="modal-title" style="font-size:var(--font-size-md);margin:0;border:none;padding:0;">${t("blasphemies.powers.title").replace("{name}", blasphemy.name)}</span>
         <button class="modal-close" id="btn-panel-close" style="position:static;font-size:18px;">×</button>
       </div>
       <div style="padding:16px;overflow-y:auto;flex:1;">
         <div class="blasphemy-details-content">
 
           <div class="blasphemy-powers-section">
-            <h4>Poderes da Blasfêmia</h4>
-            <p>Selecione os poderes ativos:</p>
+            <h4>${t("blasphemies.powers.sectionTitle")}</h4>
+            <p>${t("blasphemies.powers.selectDesc")}</p>
             <div class="traits-wizard-list" id="wiz-modal-powers-list">
               ${(blasphemy.powers || []).map(p => {
       const hasPower = selectedPowers.includes(p.name);
@@ -365,7 +366,7 @@ export function openBlasphemyPowersModal(blasphemy, currentPowers, onSave) {
                     <input type="checkbox" class="trait-wiz-check submodal-power-check" data-name="${p.name}" ${hasPower ? 'checked' : ''}>
                     <div class="trait-wiz-content" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                        <div class="trait-name" style="font-family: var(--font-heading); text-transform: uppercase; font-size: var(--font-size-md);">${p.name}</div>
-                      <button type="button" class="btn btn-sm btn-detail-power btn-tiny" data-name="${p.name}">Detalhes</button>
+                      <button type="button" class="btn btn-sm btn-detail-power btn-tiny" data-name="${p.name}">${t("blasphemies.powers.details")}</button>
                     </div>
                   </div>
                 `;
@@ -375,8 +376,8 @@ export function openBlasphemyPowersModal(blasphemy, currentPowers, onSave) {
         </div>
 
         <div class="modal-actions" style="margin-top: 16px;">
-          <button class="btn" id="btn-submodal-cancel">Cancelar</button>
-          <button class="btn btn-primary" id="btn-submodal-save">Selecionar</button>
+          <button class="btn" id="btn-submodal-cancel">${t("blasphemies.modal.cancel")}</button>
+          <button class="btn btn-primary" id="btn-submodal-save">${t("blasphemies.powers.select")}</button>
         </div>
       </div>
     `;
@@ -488,12 +489,12 @@ function showPassivePopup(blasphemy) {
 
   popup.innerHTML = `
     <button class="modal-close">&times;</button>
-    <h3 class="modal-title" style="margin: 0; text-transform: uppercase; cursor: move; user-select: none;">${blasphemy.name} — Passiva</h3>
+    <h3 class="modal-title" style="margin: 0; text-transform: uppercase; cursor: move; user-select: none;">${t("blasphemies.powers.passiveTitle").replace("{name}", blasphemy.name)}</h3>
     <div style="font-size: 14px; line-height: 1.6; color: var(--text-secondary); overflow-y: auto; padding-right: 4px;">
       ${passiveHtml}
     </div>
     <div class="modal-footer" style="margin-top: 10px;">
-      <button class="btn btn-secondary btn-popup-ok">Fechar</button>
+      <button class="btn btn-secondary btn-popup-ok">${t("blasphemies.modal.close")}</button>
     </div>
   `;
 

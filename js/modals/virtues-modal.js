@@ -1,48 +1,39 @@
 import { el, state, saveCurrentCharacter } from "../state.js";
 import { logger } from "../logger.js";
 import { renderVirtudesSheet } from "../sheet.js";
+import { VIRTUES } from "../cain-data.js";
+import { t } from "../i18n.js";
 
-let VIRTUES_DATA = [];
-
-async function loadVirtuesData() {
-  if (VIRTUES_DATA.length > 0) return;
-  const lang = localStorage.getItem("cain_lang") || "pt";
-  const file = lang === "en" ? "data/en/virtues.json" : "data/virtues.json";
-  try {
-    const res = await fetch(file);
-    const json = await res.json();
-    if (lang === "en") {
-      VIRTUES_DATA = json.virtues.map(v => ({
-        id: v.id,
-        name: v.name,
-        title: v.title,
-        desc: v.desc,
-        likes: v.likes,
-        dislikes: v.dislikes,
-        favorite_food: v.favorite_food,
-        strictures: v.bond.strictures,
-        abilities: v.bond.abilities
-      }));
-    } else {
-      VIRTUES_DATA = Object.entries(json).map(([id, v]) => ({
-        id,
-        name: v.name,
-        title: v.title,
-        desc: v.desc,
-        likes: v.likes,
-        dislikes: v.dislikes,
-        favorite_food: v.favorite_food,
-        strictures: v.bond.strictures,
-        abilities: v.bond.abilities
-      }));
-    }
-  } catch (e) {
-    console.error("Failed to load virtues data", e);
+function getVirtuesData() {
+  const data = VIRTUES || {};
+  if (Array.isArray(data)) {
+    return data.map(v => ({
+      id: v.id || (v.name ? v.name.toLowerCase() : "virtue"),
+      name: v.name || "",
+      title: v.title || "",
+      desc: v.desc || "",
+      likes: v.likes || [],
+      dislikes: v.dislikes || [],
+      favorite_food: v.favorite_food || [],
+      strictures: v.bond?.strictures || [],
+      abilities: v.bond?.abilities || {}
+    }));
   }
+  return Object.entries(data).map(([id, v]) => ({
+    id,
+    name: v.name || id,
+    title: v.title || "",
+    desc: v.desc || "",
+    likes: v.likes || [],
+    dislikes: v.dislikes || [],
+    favorite_food: v.favorite_food || [],
+    strictures: v.bond?.strictures || [],
+    abilities: v.bond?.abilities || {}
+  }));
 }
 
 export async function openVirtudesModal() {
-  await loadVirtuesData();
+  const VIRTUES_DATA = getVirtuesData();
 
   const char = state.currentCharacter;
   if (!char) return;
@@ -55,7 +46,10 @@ export async function openVirtudesModal() {
 
   if (!char.virtudes) char.virtudes = {};
 
-  const currentVirtueId = Object.keys(char.virtudes)[0] || null;
+  const savedVirtueId = Object.keys(char.virtudes)[0] || null;
+  // Guard: only use saved ID if it actually exists in VIRTUES_DATA
+  const validIds = VIRTUES_DATA.map(v => v.id);
+  const currentVirtueId = savedVirtueId && validIds.includes(savedVirtueId) ? savedVirtueId : null;
   let tempVirtudes = currentVirtueId ? { [currentVirtueId]: { ...char.virtudes[currentVirtueId] } } : {};
   let activeVirtueId = currentVirtueId || VIRTUES_DATA[0]?.id || null;
 
@@ -209,8 +203,8 @@ export async function openVirtudesModal() {
 </div>
 </div>
       <div class="modal-action-footer">
-        <button id="btn-virtudes-modal-cancel" class="btn btn-md btn-secondary">${lang === "pt" ? "Cancelar" : "Cancel"}</button>
-        <button id="btn-virtudes-modal-save" class="btn btn-md btn-blasphemy-save">${lang === "pt" ? "Salvar" : "Save"}</button>
+        <button id="btn-virtudes-modal-cancel" class="btn btn-md btn-secondary btn-black">${t("common.cancel")}</button>
+        <button id="btn-virtudes-modal-save" class="btn btn-md btn-blasphemy-save btn-black">${t("common.save")}</button>
       </div>
     `;
 

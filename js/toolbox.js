@@ -761,27 +761,23 @@ export function initToolbox() {
     </div>
     <div class="toolbox-body">
       <div class="toolbox-tabs">
-        <button class="toolbox-tab-btn active" data-tab="pericias">PERÍCIAS</button>
-        <button class="toolbox-tab-btn" data-tab="estresse">ESTRESSE</button>
-        <button class="toolbox-tab-btn" data-tab="habilidade">HABILIDADES</button>
+        <button class="toolbox-tab-btn active" data-tab="pericias" data-i18n="toolbox.tabs.skills">PERÍCIAS</button>
+        <button class="toolbox-tab-btn" data-tab="estresse" data-i18n="toolbox.tabs.stress">ESTRESSE</button>
+        <button class="toolbox-tab-btn" data-tab="habilidade" data-i18n="toolbox.tabs.abilities">HABILIDADES</button>
+        <button class="toolbox-tab-btn" data-tab="drifters" data-i18n="toolbox.tabs.drifters">ERRANTES</button>
       </div>
       <div class="toolbox-glossary" id="toolbox-glossary-list"></div>
       <div class="toolbox-active-content" id="toolbox-content">
         <!-- Dynamically loaded -->
-        <p style="font-family: var(--font-body); font-size: var(--font-size-sm); color: var(--text-muted); text-align: center; margin-top: 40px;">
+        <p style="font-family: var(--font-body); font-size: var(--font-size-sm); color: var(--text-muted); text-align: center; margin-top: 40px;" data-i18n="toolbox.default.help">
           Clique em qualquer perícia ou rótulo de atributo na ficha para ver as regras detalhadas aqui.
         </p>
       </div>
     </div>
   `;
 
-  // Find sheet screen layout and append it there, or to the layout grid
-  const layoutGrid = document.querySelector(".sheet-layout-grid");
-  if (layoutGrid) {
-    layoutGrid.appendChild(toolboxElement);
-  } else {
-    document.body.appendChild(toolboxElement);
-  }
+  // Anexa diretamente ao document.body para permitir abertura em qualquer página/tela
+  document.body.appendChild(toolboxElement);
 
   setupEventListeners();
   renderGlossaryButtons();
@@ -836,10 +832,8 @@ function setupEventListeners() {
     });
   }
 
-  // Event Delegation for sheet screen click actions
-  const sheetScreen = document.getElementById("sheet-screen");
-  if (sheetScreen) {
-    sheetScreen.addEventListener("click", (e) => {
+  // Event Delegation para cliques na página inteira
+  document.body.addEventListener("click", (e) => {
       // 1. Skill Name clicked
       if (e.target.classList.contains("cain-skill-name")) {
         const nameText = e.target.textContent.trim().toLowerCase();
@@ -864,7 +858,6 @@ function setupEventListeners() {
         openToolbox("hooks");
       }
     });
-  }
 }
 
 function renderGlossaryButtons() {

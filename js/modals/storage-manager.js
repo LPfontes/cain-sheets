@@ -2,6 +2,7 @@ import { el, state, saveCurrentCharacter, loadCharacter, updateCloudSyncBadge, u
 import { getFirebaseConfig } from "../config.js";
 import { getCustomTraits, getCustomMutations, getCustomBlasphemies, getCustomAgendas } from "../state.js";
 import { logger } from "../logger.js";
+import { applyTranslations, t } from "../i18n.js";
 
 // ============================================================================
 // SISTEMA DE SINCRONIZAÇÃO EM NUVEM E LIMITAÇÃO DE ESPAÇO (SIMULADO / FIREBASE)
@@ -200,20 +201,20 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
 
     if (activeTab === "fichas") {
       html = `
-        <h4 class="section-heading" style="color:var(--text-primary); margin-bottom:12px;">Personagens Salvos (${state.characters.length})</h4>
+        <h4 class="section-heading" style="color:var(--text-primary); margin-bottom:12px;">${t("storage.sheets.saved").replace("{count}", state.characters.length)}</h4>
         ${state.characters.length === 0 ? `
-          <p class="text-secondary-md">Nenhum personagem salvo.</p>
+          <p class="text-secondary-md">${t("storage.sheets.none")}</p>
         ` : `
           <div class="scrollable-list" style="gap:8px; max-height:300px;">
             ${state.characters.map(char => `
               <div class="list-item-row -lg">
                 <div>
                   <div class="item-name">${char.name}</div>
-                  <div class="text-secondary-md">${char.ocupacao || "Sem Ocupação"}</div>
+                  <div class="text-secondary-md">${char.ocupacao || t("common.noOccupation")}</div>
                 </div>
                 <div class="flex-row -gap-sm">
-                  <button class="btn btn-sm btn-export-char" data-id="${char.id}" style="padding:4px 8px;">📥 Exportar</button>
-                  <button class="btn btn-sm btn-danger btn-delete-char" data-id="${char.id}" style="padding:4px 8px;">❌ Excluir</button>
+                  <button class="btn btn-sm btn-export-char" data-id="${char.id}" style="padding:4px 8px;">📥 ${t("storage.sheets.export")}</button>
+                  <button class="btn btn-sm btn-danger btn-delete-char" data-id="${char.id}" style="padding:4px 8px;">❌ ${t("storage.sheets.delete")}</button>
                 </div>
               </div>
             `).join('')}
@@ -228,31 +229,31 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
       const customAgendas = getCustomAgendas();
 
       html = `
-        <h4 class="section-heading" style="color:var(--text-primary);">Blasfêmias Customizadas (${customBlasphemies.length})</h4>
+        <h4 class="section-heading" style="color:var(--text-primary);">${t("storage.custom.blasphemies").replace("{count}", customBlasphemies.length)}</h4>
         <div class="scrollable-list" style="margin-bottom:16px; max-height:150px;">
-          ${customBlasphemies.length === 0 ? `<p class="text-secondary-md">Nenhuma blasfêmia criada.</p>` :
+          ${customBlasphemies.length === 0 ? `<p class="text-secondary-md">${t("storage.custom.blasphemies.none")}</p>` :
           customBlasphemies.map((b, idx) => `
               <div class="list-item-row">
                 <div>
                   <span class="item-name" style="font-size:var(--font-size-xs);">${b.name}</span>
-                  <small class="text-secondary-md" style="font-size:10px; margin-left:6px;">(${b.powers?.length || 0} poderes)</small>
+                  <small class="text-secondary-md" style="font-size:10px; margin-left:6px;">(${b.powers?.length || 0} ${t("storage.custom.powers")})</small>
                 </div>
-                <button class="btn btn-xs btn-danger btn-delete-custom-blasphemy btn-tiny" data-idx="${idx}">❌ Excluir</button>
+                <button class="btn btn-xs btn-danger btn-delete-custom-blasphemy btn-tiny" data-idx="${idx}">❌ ${t("storage.sheets.delete")}</button>
               </div>
             `).join('')
         }
         </div>
 
-        <h4 class="section-heading" style="color:var(--text-primary);">Agendas Customizadas (${customAgendas.length})</h4>
+        <h4 class="section-heading" style="color:var(--text-primary);">${t("storage.custom.agendas").replace("{count}", customAgendas.length)}</h4>
         <div class="scrollable-list" style="max-height:150px;">
-          ${customAgendas.length === 0 ? `<p class="text-secondary-md">Nenhuma agenda criada.</p>` :
+          ${customAgendas.length === 0 ? `<p class="text-secondary-md">${t("storage.custom.agendas.none")}</p>` :
           customAgendas.map((a, idx) => `
               <div class="list-item-row">
                 <div>
                   <span class="item-name" style="font-size:var(--font-size-xs);">${a.name}</span>
-                  <small class="text-secondary-md" style="font-size:10px; margin-left:6px;">(${a.habilidades?.length || 0} habilidades)</small>
+                  <small class="text-secondary-md" style="font-size:10px; margin-left:6px;">(${a.habilidades?.length || 0} ${t("storage.custom.skills")})</small>
                 </div>
-                <button class="btn btn-xs btn-danger btn-delete-custom-agenda btn-tiny" data-idx="${idx}">❌ Excluir</button>
+                <button class="btn btn-xs btn-danger btn-delete-custom-agenda btn-tiny" data-idx="${idx}">❌ ${t("storage.sheets.delete")}</button>
               </div>
             `).join('')
         }
@@ -261,11 +262,11 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
     } else if (activeTab === "nuvem") {
       if (!state.currentUser) {
         html = `
-          <h4 class="section-heading" style="color:var(--text-primary); margin-bottom:12px;">Sincronização em Nuvem</h4>
+          <h4 class="section-heading" style="color:var(--text-primary); margin-bottom:12px;" data-i18n="storage.cloud.heading">Sincronização em Nuvem</h4>
           <div style="text-align: center; padding: 20px 0;">
             <div style="font-size: 40px; margin-bottom: 16px; color: var(--border-color);">☁️</div>
-            <p class="item-name" style="margin-bottom: 8px;">Salve suas fichas na nuvem de forma segura.</p>
-            <p class="text-secondary-md" style="margin-bottom: 20px; max-width: 320px; margin-left: auto; margin-right: auto; line-height: 1.4;">
+            <p class="item-name" style="margin-bottom: 8px;" data-i18n="storage.cloud.subtitle">Salve suas fichas na nuvem de forma segura.</p>
+            <p class="text-secondary-md" style="margin-bottom: 20px; max-width: 320px; margin-left: auto; margin-right: auto; line-height: 1.4;" data-i18n="storage.cloud.desc">
               Conecte-se com sua conta Google para enviar suas fichas locais e acessá-las em qualquer outro navegador ou dispositivo móvel.
             </p>
             
@@ -273,7 +274,7 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
               <svg width="18" height="18" viewBox="0 0 18 18">
                 <path d="M17.64 9.2c0-.63-.06-1.25-.16-1.84H9v3.47h4.84c-.21 1.12-.84 2.07-1.79 2.7v2.24h2.9c1.7-1.56 2.69-3.86 2.69-6.57zm-8.64 6.8c1.89 0 3.48-.63(4.64)-1.7l-2.9-2.24c-.8.54-1.84.86-2.9.86-2.23 0-4.12-1.51-4.8-3.53H.07v2.32C1.23 14 5.02 16 9 16zm-4.8-7.93c-.17-.5-.26-1.03-.26-1.57s.09-1.07.26-1.57V2.63H.07C-.48 3.74-.8 4.97-.8 6.28s.32 2.54.87 3.65l3.27-2.53zm4.8-4.87c1.03 0 1.95.35 2.68 1.05l2.01-2.01C11.53.86 9.89.5 9 .5 5.02.5 1.23 2.5.07 6.28l3.27 2.53c.68-2.02 2.57-3.53 4.8-3.53z" fill="#4285F4"/>
               </svg>
-              Entrar com o Google
+              <span data-i18n="storage.cloud.googleSignIn">Entrar com o Google</span>
             </button>
           </div>
         `;
@@ -381,41 +382,41 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
       }
     } else if (activeTab === "backup") {
       html = `
-        <h4 class="section-heading" style="color:var(--text-primary); margin-bottom:12px;">Backup e Importação Completa</h4>
+        <h4 class="section-heading" style="color:var(--text-primary); margin-bottom:12px;">${t("storage.backup.heading")}</h4>
         <p class="text-secondary-md" style="margin-bottom:20px; line-height:1.4;">
-          Exporte absolutamente tudo do seu jogo (todas as fichas de personagens, refúgios, regiões, conflitos, locais e customizações de homebrew) em um único arquivo de backup completo, ou restaure um backup existente.
+          ${t("storage.backup.desc")}
         </p>
 
         <div style="display:grid; grid-template-columns:1fr; gap:12px; margin-bottom:24px;">
           <button id="btn-export-all-backup" class="btn btn-block btn-outline -cyan" style="padding:10px;">
-            📤 Exportar Backup Completo (.JSON)
+            📤 ${t("storage.backup.exportBtn")}
           </button>
           
           <button id="btn-trigger-import-backup" class="btn btn-block btn-outline -green" style="padding:10px;">
-            📥 Importar Backup Completo (.JSON)
+            📥 ${t("storage.backup.importBtn")}
           </button>
           <input type="file" id="file-import-all-backup" accept=".json" style="display:none;">
         </div>
 
-        <h4 class="section-heading" style="color:var(--color-danger);">Zona de Risco</h4>
+        <h4 class="section-heading" style="color:var(--color-danger);">${t("storage.backup.dangerZone")}</h4>
         <div class="alert-box -danger" style="justify-content:space-between; padding:12px;">
           <div style="flex:1; padding-right:12px;">
-            <div class="item-name" style="font-size:var(--font-size-xs); color:#fff; margin-bottom:2px;">Apagar Tudo do Navegador</div>
-            <div class="text-secondary-md" style="font-size:10px;">Isso limpará absolutamente todas as fichas locais, dados do mundo, e homebrews permanentemente.</div>
+            <div class="item-name" style="font-size:var(--font-size-xs); color:#fff; margin-bottom:2px;">${t("storage.backup.wipeTitle")}</div>
+            <div class="text-secondary-md" style="font-size:10px;">${t("storage.backup.wipeDesc")}</div>
           </div>
-          <button id="btn-wipe-everything" class="btn btn-danger btn-sm" style="white-space:nowrap;">Limpar Tudo</button>
+          <button id="btn-wipe-everything" class="btn btn-danger btn-sm" style="white-space:nowrap;">${t("storage.backup.wipeBtn")}</button>
         </div>
       `;
     }
 
     el.modalBody.innerHTML = `
-      <h3 class="modal-title">Gerenciador de Armazenamento</h3>
+      <h3 class="modal-title" data-i18n="storage.title">Gerenciador de Armazenamento</h3>
       
       <div class="lib-tab-bar" style="margin-top:16px; margin-bottom:16px;">
-        <button class="lib-tab ${activeTab === 'fichas' ? 'active' : ''}" data-tab="fichas">👤 Fichas</button>
-        <button class="lib-tab ${activeTab === 'homebrew' ? 'active' : ''}" data-tab="homebrew">🧪 Custom</button>
-        <button class="lib-tab ${activeTab === 'nuvem' ? 'active' : ''}" data-tab="nuvem">☁️ Nuvem</button>
-        <button class="lib-tab ${activeTab === 'backup' ? 'active' : ''}" data-tab="backup">💾 Backup</button>
+        <button class="lib-tab ${activeTab === 'fichas' ? 'active' : ''}" data-tab="fichas" data-i18n="storage.tabs.sheets">👤 Fichas</button>
+        <button class="lib-tab ${activeTab === 'homebrew' ? 'active' : ''}" data-tab="homebrew" data-i18n="storage.tabs.custom">🧪 Custom</button>
+        <button class="lib-tab ${activeTab === 'nuvem' ? 'active' : ''}" data-tab="nuvem" data-i18n="storage.tabs.cloud">☁️ Nuvem</button>
+        <button class="lib-tab ${activeTab === 'backup' ? 'active' : ''}" data-tab="backup" data-i18n="storage.tabs.backup">💾 Backup</button>
       </div>
 
       <div class="storage-tab-content-container" style="min-height:280px; margin-bottom:20px;">
@@ -423,10 +424,12 @@ export async function openStorageManagerModal(defaultTab = "fichas") {
       </div>
 
       <div class="section-divider modal-footer" style="justify-content:space-between;">
-        <button id="btn-back-to-settings" class="btn btn-md btn-secondary">Voltar</button>
-        <button id="btn-close-storage-manager" class="btn btn-md">Fechar</button>
+        <button id="btn-back-to-settings" class="btn btn-md btn-secondary" data-i18n="storage.back">Voltar</button>
+        <button id="btn-close-storage-manager" class="btn btn-md" data-i18n="storage.close">Fechar</button>
       </div>
     `;
+
+    applyTranslations();
 
     el.modalBody.querySelectorAll(".lib-tab").forEach(tabBtn => {
       tabBtn.addEventListener("click", () => {

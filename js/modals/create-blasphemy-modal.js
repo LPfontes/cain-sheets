@@ -1,6 +1,7 @@
 import { el } from "../state.js";
 import { getCustomBlasphemies, saveCustomBlasphemies } from "../state.js";
 import { logger } from "../logger.js";
+import { t } from "../i18n.js";
 
 export function openCreateBlasphemyModal(onCreated) {
   logger.info("Modal: Abrindo modal de criação de Blasfêmia.");
@@ -80,8 +81,8 @@ export function openCreateBlasphemyModal(onCreated) {
       </div>
 
       <div class="modal-action-footer">
-        <button id="btn-create-blasphemy-cancel" class="btn btn-md btn-secondary">Cancelar</button>
-        <button id="btn-create-blasphemy-save" class="btn btn-md btn-blasphemy-save">Criar Blasfêmia</button>
+        <button id="btn-create-blasphemy-cancel" class="btn btn-md btn-secondary">${t("common.cancel")}</button>
+        <button id="btn-create-blasphemy-save" class="btn btn-md btn-blasphemy-save">${t("blasphemies.modal.create")}</button>
       </div>
     `;
 

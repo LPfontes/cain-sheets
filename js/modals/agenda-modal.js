@@ -3,6 +3,7 @@ import { logger } from "../logger.js";
 import { renderAgendaSheet } from "../sheet.js";
 import { AGENDAS } from "../cain-data.js";
 import { openCreateAgendaModal } from "./create-agenda-modal.js";
+import { t } from "../i18n.js";
 
 function getAllAgendas() {
   const custom = getCustomAgendas();
@@ -26,7 +27,8 @@ export function openAgendaModal() {
 
   let currentAgendaId = null;
   for (const key in allAgendas) {
-    if (allAgendas[key].normal.every(n => char.agendaNormal?.includes(n))) {
+    const normList = allAgendas[key]?.normal || allAgendas[key]?.items?.normal || [];
+    if (Array.isArray(normList) && normList.length > 0 && normList.every(n => char.agendaNormal?.includes(n))) {
       currentAgendaId = key;
       break;
     }
@@ -44,6 +46,12 @@ export function openAgendaModal() {
     allAgendas = getAllAgendas();
     const agenda = selectedAgendaId ? allAgendas[selectedAgendaId] : null;
 
+    const normalItems = agenda?.normal || agenda?.items?.normal || [];
+    const normalStr = Array.isArray(normalItems) ? normalItems.join(", ") : (normalItems || "");
+    const boldItems = agenda?.bold || agenda?.bolded || agenda?.items?.bolded || [];
+    const boldStr = Array.isArray(boldItems) ? boldItems.join(", ") : (boldItems || "");
+    const habilidades = agenda?.habilidades || agenda?.abilities || [];
+
     el.modalBody.innerHTML = `
       <div class="wide-modal-header">
         <h3 class="modal-title">Escolher Agenda</h3>
@@ -57,7 +65,7 @@ export function openAgendaModal() {
             return `
               <div class="blasphemy-grid-card ${active ? 'active' : ''} ${id.startsWith('custom_') ? 'custom-blasphemy' : ''}" data-id="${id}">
                 <div class="blasphemy-card-img-wrapper">
-                  <img src="${a.icon}" alt="${a.name}">
+                  <img src="${a.icon || 'assets/avatar.png'}" alt="${a.name}">
                 </div>
                 <div class="blasphemy-card-info">
                   <span class="blasphemy-card-name">${a.name}</span>
@@ -72,27 +80,27 @@ export function openAgendaModal() {
           ${agenda ? `
             <div class="modal-detail-header">
               <div class="modal-detail-img-wrapper" style="height: 180px;">
-                <img src="${agenda.icon}" alt="${agenda.name}" class="char-portrait-img">
+                <img src="${agenda.icon || 'assets/avatar.png'}" alt="${agenda.name}" class="char-portrait-img">
               </div>
               <div class="modal-detail-header-text">
                 <h4 class="modal-detail-title" style="font-family: 'Odachi'; justify-content: flex-start;">${agenda.name}</h4>
-                ${agenda.desc ? `<p class="modal-detail-desc">${agenda.desc}</p>` : ''}
+                ${(agenda.desc || agenda.description) ? `<p class="modal-detail-desc">${agenda.desc || agenda.description}</p>` : ''}
                 <div class="agenda-triggers">
-                  <div class="agenda-trigger"><strong>Normal:</strong> ${agenda.normal.join(", ")}</div>
-                  <div class="agenda-trigger agenda-trigger--bold"><strong>Bold:</strong> ${agenda.bold.join(", ")}</div>
+                  <div class="agenda-trigger"><strong>Normal:</strong> ${normalStr}</div>
+                  <div class="agenda-trigger agenda-trigger--bold"><strong>Bold:</strong> ${boldStr}</div>
                 </div>
               </div>
             </div>
-            <h5 class="agenda-skills-title">Habilidades</h5>
+            <h5 class="agenda-skills-title">${t("agenda.modal.abilities")}</h5>
             <div class="traits-wizard-list" id="modal-agenda-skills-list">
-              ${agenda.habilidades.map(hab => {
+              ${habilidades.map(hab => {
                 const isSelected = selectedSkillName === hab.name;
                 return `
                   <div class="trait-wiz-item ${isSelected ? 'active' : ''}" data-skill="${hab.name}">
                     <input type="checkbox" class="trait-wiz-check" ${isSelected ? 'checked' : ''}>
                     <div class="trait-wiz-content">
                       <div class="trait-name" style="font-weight: bold;">${hab.name}</div>
-                      <div class="desc">${hab.desc}</div>
+                      <div class="desc">${hab.desc || hab.description || ""}</div>
                     </div>
                   </div>
                 `;
@@ -103,9 +111,9 @@ export function openAgendaModal() {
       </div>
 
       <div class="modal-action-footer">
-        <button id="btn-create-agenda" class="btn btn-md btn-secondary">+ Criar Agenda</button>
-        <button id="btn-agenda-modal-cancel" class="btn btn-md btn-secondary">Cancelar</button>
-        <button id="btn-agenda-modal-save" class="btn btn-md btn-blasphemy-save">Salvar</button>
+        <button id="btn-create-agenda" class="btn btn-md btn-secondary btn-black">${t("agenda.modal.create")}</button>
+        <button id="btn-agenda-modal-cancel" class="btn btn-md btn-secondary btn-black">${t("common.cancel")}</button>
+        <button id="btn-agenda-modal-save" class="btn btn-md btn-blasphemy-save btn-black">${t("common.save")}</button>
       </div>
     `;
 

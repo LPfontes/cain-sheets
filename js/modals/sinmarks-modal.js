@@ -1,6 +1,7 @@
 import { el, state, saveCurrentCharacter } from "../state.js";
 import { SIN_MARKS } from "../cain-data.js";
 import { renderSinMarksSheet } from "../sheet.js";
+import { t } from "../i18n.js";
 
 // Categories definition according to the book
 const CATEGORIES = [
@@ -37,18 +38,18 @@ export function openSinMarksModal() {
     const currentTransgressionReduction = sinMarksCount * 2;
 
     el.modalBody.innerHTML = `
-      <h3 class="modal-title"> Adquirir Marca do Pecado</h3>
+      <h3 class="modal-title">${t("sinmarks.modal.title")}</h3>
       
       <!-- Stats Reminder Banner -->
       <div class="sinmarks-stats-banner">
-        <span class="sinmarks-stat-cyan"><strong>Bônus de Resistência:</strong> +${currentResistBonus}</span>
-        <span class="sinmarks-stat-purple"><strong>Redução de Transgressão:</strong> -${currentTransgressionReduction}</span>
+        <span class="sinmarks-stat-cyan"><strong>${t("sinmarks.stats.resistBonus")}</strong> +${currentResistBonus}</span>
+        <span class="sinmarks-stat-purple"><strong>${t("sinmarks.stats.transgressionReduction")}</strong> -${currentTransgressionReduction}</span>
       </div>
 
       <!-- Tab Navigation -->
       <div class="sinmarks-tab-bar">
-        <button id="btn-tab-roll" class="btn sinmarks-tab-btn ${rollingState.mode === 'roll' ? 'btn-primary' : 'btn-secondary'}">Marca</button>
-        <button id="btn-tab-choose" class="btn sinmarks-tab-btn ${rollingState.mode === 'choose' ? 'btn-primary' : 'btn-secondary'}">Escolha Manual</button>
+        <button id="btn-tab-roll" class="btn sinmarks-tab-btn ${rollingState.mode === 'roll' ? 'btn-primary' : 'btn-secondary btn-black'}">${t("sinmarks.tab.roll")}</button>
+        <button id="btn-tab-choose" class="btn sinmarks-tab-btn ${rollingState.mode === 'choose' ? 'btn-primary' : 'btn-secondary btn-black'}">${t("sinmarks.tab.choose")}</button>
       </div>
 
       <div class="modal-scroll-content sinmarks-scroll-area">
@@ -56,7 +57,7 @@ export function openSinMarksModal() {
       </div>
 
       <div class="sinmarks-footer">
-        <button id="btn-close-sinmarks-modal" class="btn btn-secondary">Fechar</button>
+        <button id="btn-close-sinmarks-modal" class="btn btn-secondary btn-black">${t("common.close")}</button>
       </div>
     `;
 
@@ -91,21 +92,21 @@ export function openSinMarksModal() {
         
         <!-- Step 1: Roll Category -->
         <div class="sinmarks-step-card">
-          <div class="sinmarks-step-title">Passo 1: Categoria da Marca (1d6)</div>
+          <div class="sinmarks-step-title">${t("sinmarks.step1.title")}</div>
           
           ${rollingState.categoryRoll === null ? `
-            <button id="btn-roll-category" class="btn btn-primary sinmarks-btn-full">Rolar Categoria (1d6)</button>
+            <button id="btn-roll-category" class="btn btn-primary sinmarks-btn-full">${t("sinmarks.step1.rollBtn")}</button>
           ` : `
             <div class="sinmarks-result-row">
-              <span>Resultado do Dado: <strong>d6 = ${rollingState.categoryRoll}</strong></span>
+              <span>${t("sinmarks.step1.result")} <strong>d6 = ${rollingState.categoryRoll}</strong></span>
               <span class="sinmarks-result-value">${rollingState.selectedCategory.name}</span>
             </div>
             <div class="sinmarks-appearance-text">
-              <strong>Aparência típica:</strong> ${rollingState.selectedCategory.appearance}
+              <strong>${t("sinmarks.step1.appearance")}</strong> ${rollingState.selectedCategory.appearance}
             </div>
             ${rollingState.isEvolution ? `
               <div class="sinmarks-evolution-badge">
-                Marca já possuída! A marca irá evoluir (concedendo nova habilidade).
+                ${t("sinmarks.step1.evolution")}
               </div>
             ` : ''}
           `}
@@ -113,7 +114,7 @@ export function openSinMarksModal() {
           <!-- If rolled a 6: Category Choice -->
           ${rollingState.categoryRoll === 6 && !rollingState.selectedCategory ? `
             <div class="sinmarks-choice-section">
-              <div class="sinmarks-choice-label">Você rolou um 6! Escolha qualquer uma das categorias abaixo:</div>
+              <div class="sinmarks-choice-label">${t("sinmarks.step1.roll6")}</div>
               <div class="sinmarks-choice-buttons">
                 ${CATEGORIES.map(cat => `
                   <button class="btn btn-sm btn-select-category-choice sinmarks-select-btn" data-val="${cat.value}">
@@ -128,13 +129,13 @@ export function openSinMarksModal() {
         <!-- Step 2: Roll Ability -->
         ${rollingState.selectedCategory ? `
           <div class="sinmarks-step-card">
-            <div class="sinmarks-step-title">Passo 2: Habilidade da Marca (1d6)</div>
+            <div class="sinmarks-step-title">${t("sinmarks.step2.title")}</div>
             
             ${rollingState.optionRoll === null ? `
-              <button id="btn-roll-option" class="btn btn-primary sinmarks-btn-full">Rolar Habilidade (1d6)</button>
+              <button id="btn-roll-option" class="btn btn-primary sinmarks-btn-full">${t("sinmarks.step2.rollBtn")}</button>
             ` : `
               <div class="sinmarks-result-row">
-                <span>Resultado do Dado: <strong>d6 = ${rollingState.optionRoll}</strong></span>
+                <span>${t("sinmarks.step2.result")} <strong>d6 = ${rollingState.optionRoll}</strong></span>
                 <span class="sinmarks-result-value">${rollingState.selectedOption.name}</span>
               </div>
               
@@ -143,7 +144,7 @@ export function openSinMarksModal() {
                 <div class="sinmarks-benefit-text">✦ ${rollingState.selectedOption.benefit}</div>
               </div>
 
-              <button id="btn-confirm-rolled-mark" class="btn btn-success sinmarks-confirm-btn">Confirmar e Adicionar ao Personagem</button>
+              <button id="btn-confirm-rolled-mark" class="btn btn-success sinmarks-confirm-btn">${t("sinmarks.step2.confirm")}</button>
             `}
           </div>
         ` : ''}
@@ -151,7 +152,7 @@ export function openSinMarksModal() {
         <!-- Rolling Log -->
         ${rollingState.rollingLog.length > 0 ? `
           <div class="sinmarks-log-box">
-            <div class="sinmarks-log-header">Histórico de Rolagem</div>
+            <div class="sinmarks-log-header">${t("sinmarks.log.title")}</div>
             <div class="sinmarks-log-scroll">
               ${logHtml}
             </div>
@@ -197,9 +198,9 @@ export function openSinMarksModal() {
                   </div>
                   <div>
                     ${alreadyHas ? `
-                      <span class="sinmarks-owned-label">Adquirido</span>
+                      <span class="sinmarks-owned-label">${t("sinmarks.owned")}</span>
                     ` : `
-                      <button class="btn btn-xs btn-add-manual-sm sinmarks-add-btn" data-id="${opt.id}">Adicionar</button>
+                      <button class="btn btn-xs btn-add-manual-sm sinmarks-add-btn" data-id="${opt.id}">${t("sinmarks.add")}</button>
                     `}
                   </div>
                 </div>
@@ -281,7 +282,7 @@ export function openSinMarksModal() {
         const availableOptions = SIN_MARKS.filter(o => o.id.startsWith(cat.prefix) && !(char.sinMarks || []).includes(o.id));
 
         if (availableOptions.length === 0) {
-          alert("Você já possui todas as habilidades desta categoria!");
+          alert(t("sinmarks.step2.allOwned"));
           return;
         }
 
